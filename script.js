@@ -1064,7 +1064,7 @@ const autori = [
     {
         initiale: "CP",
         nume: "Camil Petrescu",
-        poza: "Imagini/Petrescu.jpeg",
+        poza: "Imagini/Camil.jpeg",
         descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
         operele: [
             { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Pdf/Ultima noapte de dragoste rezumat.pdf" }
@@ -1101,7 +1101,7 @@ function genereazaAutori() {
 ================================= */
 
 function deschidePDF(numeFisier) {
-    const cale = "file:///C:/Site_Lb_Romana/Lb-Romana/" + numeFisier;
+    const cale = "Pdf/" + numeFisier;
     window.open(cale, "_blank");
 }
 
