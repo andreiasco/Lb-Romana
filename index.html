@@ -7,7 +7,7 @@
     <title>Limba și Literatura Română</title>
 
     <style>
-           
+
         * {
             margin: 0;
             padding: 0;
@@ -37,7 +37,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            background: rgba(53, 21, 42, 0.96);
+            background: rgba(53, 21, 42, 0.97);
             padding: 15px 30px;
             display: flex;
             justify-content: center;
@@ -66,7 +66,7 @@
             cursor: pointer;
         }
 
-        /* HERO */
+        /* PAGINA PRINCIPALA */
 
         .hero {
             min-height: 600px;
@@ -99,19 +99,29 @@
 
         .buton {
             display: inline-block;
-            margin-top: 30px;
-            padding: 14px 28px;
-            background: white;
-            color: var(--mov);
+            margin-top: 20px;
+            padding: 13px 25px;
+            background: var(--mov);
+            color: white;
             text-decoration: none;
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: bold;
             transition: 0.3s;
         }
 
         .buton:hover {
-            transform: scale(1.07);
-            background: #f4dce7;
+            transform: scale(1.05);
+            background: #9b3d68;
+        }
+
+        .hero .buton {
+            background: white;
+            color: var(--mov);
+            margin-top: 30px;
+        }
+
+        .hero .buton:hover {
+            background: var(--roz);
         }
 
         /* SECTIUNI */
@@ -134,6 +144,7 @@
             color: #666;
             margin-bottom: 40px;
             font-size: 18px;
+            line-height: 1.6;
         }
 
         /* CARDURI */
@@ -222,62 +233,70 @@
             font-style: italic;
         }
 
-        /* QUIZ */
+        /* QUIZURI */
 
-          .quizuri {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    gap: 30px;
-}
+        .quizuri {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+        }
 
-.quiz-card {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
-    text-align: center;
-    border-top: 5px solid var(--mov);
-}
+        .quiz-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 5px solid var(--mov);
+            transition: 0.3s;
+        }
 
-.quiz-card h3 {
-    color: var(--mov);
-    font-size: 23px;
-    margin-bottom: 12px;
-}
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+        }
 
-.quiz-card p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
+        .quiz-card h3 {
+            color: var(--mov);
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
 
-.quiz-card iframe {
-    width: 100%;
-    max-width: 500px;
-    border-radius: 12px;
-}
+        .quiz-card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
 
-body.dark .quiz-card {
-    background: #271f27;
-}
+        .quiz-card iframe {
+            width: 100%;
+            max-width: 500px;
+            height: 380px;
+            border-radius: 12px;
+            border: none;
+        }
 
-body.dark .quiz-card p {
-    color: #ddd;
-}
+        /* DARK MODE */
 
-@media (max-width: 700px) {
-    .quizuri {
-        grid-template-columns: 1fr;
-    }
+        body.dark {
+            background: #181318;
+            color: white;
+        }
 
-    .quiz-card {
-        padding: 15px;
-    }
+        body.dark .card,
+        body.dark .quiz-card {
+            background: #271f27;
+            color: white;
+        }
 
-    .quiz-card iframe {
-        height: 380px;
-    }
-}
+        body.dark .card p,
+        body.dark .quiz-card p {
+            color: #ddd;
+        }
+
+        body.dark .subtitlu {
+            color: #bbb;
+        }
 
         /* FOOTER */
 
@@ -305,27 +324,6 @@ body.dark .quiz-card p {
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* DARK MODE */
-
-        body.dark {
-            background: #181318;
-            color: white;
-        }
-
-        body.dark .card,
-        body.dark .quiz {
-            background: #271f27;
-            color: white;
-        }
-
-        body.dark .card p {
-            color: #ddd;
-        }
-
-        body.dark .subtitlu {
-            color: #bbb;
         }
 
         /* TELEFON */
@@ -357,7 +355,20 @@ body.dark .quiz-card p {
             .citat p {
                 font-size: 21px;
             }
+
+            .quizuri {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-card {
+                padding: 15px;
+            }
+
+            .quiz-card iframe {
+                height: 380px;
+            }
         }
+
     </style>
 </head>
 
@@ -366,15 +377,23 @@ body.dark .quiz-card p {
     <!-- MENIU -->
 
     <nav>
+
         <a href="#acasa">Acasă</a>
+
         <a href="#limba">Limba română</a>
+
         <a href="#literatura">Literatura</a>
+
         <a href="#autori">Autori</a>
-        <a href="#quiz">Quiz</a>
+
+        <a href="#materiale">Materiale</a>
+
+        <a href="#quiz">Quiz-uri</a>
 
         <button id="darkMode" onclick="schimbaTema()">
             🌙 Mod întunecat
         </button>
+
     </nav>
 
 
@@ -478,8 +497,7 @@ body.dark .quiz-card p {
 
                 <p>
                     Poezia exprimă sentimente și idei printr-un
-                    limbaj artistic, folosind adesea imagini și
-                    figuri de stil.
+                    limbaj artistic, folosind imagini și figuri de stil.
                 </p>
 
             </div>
@@ -546,7 +564,6 @@ body.dark .quiz-card p {
         <p class="subtitlu">
             Câteva dintre cele mai importante nume ale literaturii române.
         </p>
-
 
         <div class="cards">
 
@@ -628,133 +645,197 @@ body.dark .quiz-card p {
     </section>
 
 
-    <!-- QUIZ -->
+    <!-- MATERIALE -->
 
- <section id="quiz">
+    <section id="materiale">
 
-    <h2 class="titlu">Quiz-uri 📚</h2>
+        <h2 class="titlu">Materiale 📚</h2>
 
-    <p class="subtitlu">
-        Testează-ți cunoștințele de Limba și literatura română
-        prin aceste activități interactive.
-    </p>
+        <p class="subtitlu">
+            Descoperă câteva materiale utile pentru
+            Limba și literatura română.
+        </p>
 
-    <div class="quizuri">
-
-
-        <!-- QUIZ 1 -->
-        <div class="quiz-card">
-
-            <h3>🔤 Conjuncții de coordonare</h3>
-
-            <p>
-                Exersează recunoașterea și folosirea corectă
-                a conjuncțiilor coordonatoare.
-            </p>
-
-            <iframe
-                style="max-width:100%"
-                src="https://www.wordwall.net/embed/8ca4366782f647bb8997ad76da9f57e6?themeId=1&templateId=38&fontStackId=0"
-                width="500"
-                height="380"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
-
-        </div>
+        <div class="cards">
 
 
-        <!-- QUIZ 2 -->
-        <div class="quiz-card">
+            <div class="card">
 
-            <h3>✍️ Recapitulare – Verbul</h3>
+                <div class="icon">📖</div>
 
-            <p>
-                Recapitulează noțiunile despre verb pentru
-                clasele VI–VIII.
-            </p>
+                <h3>Mihai Eminescu</h3>
 
-            <iframe
-                style="max-width:100%"
-                src="https://www.wordwall.net/embed/129ab020eea7468dae4c5c3a09adb830?themeId=44&templateId=73&fontStackId=0"
-                width="500"
-                height="380"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
+                <p>
+                    Poet important al literaturii române, cunoscut
+                    pentru opere precum „Luceafărul” și
+                    „Floare albastră”.
+                </p>
 
-        </div>
+            </div>
 
 
-        <!-- QUIZ 3 -->
-        <div class="quiz-card">
+            <div class="card">
 
-            <h3>👤 Pronumele – clasa a VII-a</h3>
+                <div class="icon">✍️</div>
 
-            <p>
-                Verifică-ți cunoștințele despre pronume
-                și caracteristicile acestuia.
-            </p>
+                <h3>Gramatică</h3>
 
-            <iframe
-                style="max-width:100%"
-                src="https://www.wordwall.net/embed/b6f4bdcdcb8544d084e1fb9f22d584a4?themeId=43&templateId=3&fontStackId=0"
-                width="500"
-                height="380"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
+                <p>
+                    Noțiuni esențiale despre părțile de vorbire,
+                    părțile de propoziție și frază.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">📚</div>
+
+                <h3>Genuri literare</h3>
+
+                <p>
+                    Descoperă genul epic, liric și dramatic și
+                    principalele lor caracteristici.
+                </p>
+
+            </div>
 
         </div>
 
+    </section>
 
-        <!-- QUIZ 4 -->
-        <div class="quiz-card">
 
-            <h3>🧠 Categorii semantice</h3>
+    <!-- QUIZURI WORDWALL -->
 
-            <p>
-                Exersează categoriile semantice și relațiile
-                dintre cuvinte.
-            </p>
+    <section id="quiz">
 
-            <iframe
-                style="max-width:100%"
-                src="https://www.wordwall.net/embed/de00f4bb22f8435682302895b9885e0c?themeId=1&templateId=38&fontStackId=0"
-                width="500"
-                height="380"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
+        <h2 class="titlu">Quiz-uri 📚</h2>
+
+        <p class="subtitlu">
+            Testează-ți cunoștințele de Limba și literatura română
+            prin aceste activități interactive.
+        </p>
+
+
+        <div class="quizuri">
+
+
+            <!-- QUIZ 1 -->
+
+            <div class="quiz-card">
+
+                <h3>🔤 Conjuncții de coordonare</h3>
+
+                <p>
+                    Exersează recunoașterea și folosirea corectă
+                    a conjuncțiilor coordonatoare.
+                </p>
+
+                <iframe
+                    src="https://www.wordwall.net/embed/8ca4366782f647bb8997ad76da9f57e6?themeId=1&templateId=38&fontStackId=0"
+                    width="500"
+                    height="380"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+
+            <!-- QUIZ 2 -->
+
+            <div class="quiz-card">
+
+                <h3>✍️ Recapitulare – Verbul</h3>
+
+                <p>
+                    Recapitulează noțiunile despre verb pentru
+                    clasele VI–VIII.
+                </p>
+
+                <iframe
+                    src="https://www.wordwall.net/embed/129ab020eea7468dae4c5c3a09adb830?themeId=44&templateId=73&fontStackId=0"
+                    width="500"
+                    height="380"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+
+            <!-- QUIZ 3 -->
+
+            <div class="quiz-card">
+
+                <h3>👤 Pronumele – clasa a VII-a</h3>
+
+                <p>
+                    Verifică-ți cunoștințele despre pronume
+                    și caracteristicile acestuia.
+                </p>
+
+                <iframe
+                    src="https://www.wordwall.net/embed/b6f4bdcdcb8544d084e1fb9f22d584a4?themeId=43&templateId=3&fontStackId=0"
+                    width="500"
+                    height="380"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+
+            <!-- QUIZ 4 -->
+
+            <div class="quiz-card">
+
+                <h3>🧠 Categorii semantice</h3>
+
+                <p>
+                    Exersează categoriile semantice și relațiile
+                    dintre cuvinte.
+                </p>
+
+                <iframe
+                    src="https://www.wordwall.net/embed/de00f4bb22f8435682302895b9885e0c?themeId=1&templateId=38&fontStackId=0"
+                    width="500"
+                    height="380"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+
+            <!-- QUIZ 5 -->
+
+            <div class="quiz-card">
+
+                <h3>📖 Textul literar</h3>
+
+                <p>
+                    Verifică-ți cunoștințele despre textul literar
+                    și elementele sale.
+                </p>
+
+                <iframe
+                    src="https://www.wordwall.net/embed/63ab2ec884864766bd01500290c4fff1?themeId=1&templateId=5&fontStackId=0"
+                    width="500"
+                    height="380"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
 
         </div>
 
+    </section>
 
-        <!-- QUIZ 5 -->
-        <div class="quiz-card">
 
-            <h3>📖 Textul literar</h3>
-
-            <p>
-                Verifică-ți cunoștințele despre textul literar
-                și elementele sale.
-            </p>
-
-            <iframe
-                style="max-width:100%"
-                src="https://www.wordwall.net/embed/63ab2ec884864766bd01500290c4fff1?themeId=1&templateId=5&fontStackId=0"
-                width="500"
-                height="380"
-                frameborder="0"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-    </div>
-
-</section>
- 
     <!-- FOOTER -->
 
     <footer>
@@ -762,7 +843,7 @@ body.dark .quiz-card p {
         <h2>Limba și Literatura Română 📖</h2>
 
         <p>
-            Un mic proiect dedicat frumuseții limbii române.
+            Un proiect dedicat frumuseții limbii române.
         </p>
 
         <br>
@@ -791,57 +872,6 @@ body.dark .quiz-card p {
             } else {
 
                 buton.innerHTML = "🌙 Mod întunecat";
-
-            }
-        }
-
-
-        function verificaQuiz() {
-
-            const raspunsuri =
-                document.getElementsByName("intrebarea1");
-
-            let raspuns = "";
-
-            for (let i = 0; i < raspunsuri.length; i++) {
-
-                if (raspunsuri[i].checked) {
-
-                    raspuns = raspunsuri[i].value;
-
-                }
-
-            }
-
-
-            const rezultat =
-                document.getElementById("rezultat");
-
-
-            if (raspuns === "") {
-
-                rezultat.innerHTML =
-                    "⚠️ Alege mai întâi un răspuns!";
-
-                rezultat.style.color = "#d17a00";
-
-            }
-
-            else if (raspuns === "corect") {
-
-                rezultat.innerHTML =
-                    "✅ Corect! Mihai Eminescu este autorul „Luceafărului”.";
-
-                rezultat.style.color = "green";
-
-            }
-
-            else {
-
-                rezultat.innerHTML =
-                    "❌ Răspuns greșit. Mai încearcă!";
-
-                rezultat.style.color = "red";
 
             }
 
