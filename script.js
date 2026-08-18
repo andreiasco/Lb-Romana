@@ -1,4 +1,160 @@
-﻿const site = document.getElementById("site");
+﻿/* =================================
+   DATA AUTORI - Lista cu operele lor
+================================= */
+
+const autori = [
+    {
+        initiale: "MS",
+        nume: "Mihail Sadoveanu",
+        descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
+        operele: [
+            { titlu: "Baltagul", pdf: "Baltagul rezumat.pdf" },
+            { titlu: "Dumbrava Minunată", pdf: "Dumbrava minunată rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "RD",
+        nume: "Roald Dahl",
+        descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
+        operele: [
+            { titlu: "Matilda", pdf: "Matilda rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "ME",
+        nume: "Michael Ende",
+        descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
+        operele: [
+            { titlu: "Povestea fără sfârșit", pdf: "Povestea fără sfârșit rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "GC",
+        nume: "George Călinescu",
+        descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+        operele: [
+            { titlu: "Enigma Otiliei", pdf: "Enigma Otiliei rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "LR",
+        nume: "Liviu Rebreanu",
+        descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
+        operele: [
+            { titlu: "Ion", pdf: "Ion rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "ME2",
+        nume: "Mircea Eliade",
+        descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
+        operele: [
+            { titlu: "La țigănci", pdf: "La țigănci rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "IS",
+        nume: "Ioan Slavici",
+        descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
+        operele: [
+            { titlu: "Moara cu noroc", pdf: "Moara cu noroc rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "IC",
+        nume: "I.L. Caragiale",
+        descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
+        operele: [
+            { titlu: "O scrisoare pierdută", pdf: "O scrisoare pierdută rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "CP",
+        nume: "Camil Petrescu",
+        descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
+        operele: [
+            { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Ultima noapte de dragoste rezumat.pdf" }
+        ]
+    }
+];
+
+/* =================================
+   GENEREAZA CARTILE AUTORILOR
+================================= */
+
+function genereazaAutori() {
+    const container = document.getElementById("autorCards");
+    if (!container) return;
+
+    container.innerHTML = autori.map(autor => `
+        <div class="card autor">
+            <div class="portret">${autor.initiale}</div>
+            <h3>${autor.nume}</h3>
+            <p>${autor.descriere}</p>
+            <div class="opera-list">
+                ${autor.operele.map((opera, index) => `
+                    <button class="opera-btn" data-pdf="${opera.pdf}" data-autor="${autor.nume}">
+                        📕 „${opera.titlu}"
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+
+    // Atașează event listeners pe butoane
+    document.querySelectorAll('.opera-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            deschidePDF(this.dataset.pdf);
+        });
+    });
+}
+
+/* =================================
+   DESCHIDE PDF
+================================= */
+
+function deschidePDF(numeFisier) {
+    // Încearcă mai întâi să deschidă din folderul local
+    const caraLocal = "./pdf/" + numeFisier;
+    const caleGithub = "https://raw.githubusercontent.com/YourUsername/YourRepo/main/Lb-Romana/" + numeFisier;
+    
+    // Pentru local, deschide direct
+    window.open(numeFisier, "_blank");
+}
+
+/* =================================
+   MOD ÎNTUNECAT
+================================= */
+
+function schimbaTema() {
+    document.body.classList.toggle("dark");
+}
+
+/* =================================
+   SCHIMBARE KAHOOT / WORDWALL
+================================= */
+
+function arataQuiz(tip) {
+    const kahoot = document.getElementById("kahoot");
+    const wordwall = document.getElementById("wordwall");
+    const butoane = document.querySelectorAll(".quiz-tab");
+
+    if (tip === "kahoot") {
+        kahoot.classList.remove("ascuns");
+        wordwall.classList.add("ascuns");
+        butoane[0].classList.add("activ");
+        butoane[1].classList.remove("activ");
+    }
+
+    if (tip === "wordwall") {
+        kahoot.classList.add("ascuns");
+        wordwall.classList.remove("ascuns");
+        butoane[0].classList.remove("activ");
+        butoane[1].classList.add("activ");
+    }
+}
+
+const site = document.getElementById("site");
 
 site.innerHTML = `
 
@@ -939,173 +1095,6 @@ footer {
 </footer>
 
 `;
-
-/* =================================
-   DATA AUTORI - Lista cu operele lor
-================================= */
-
-const autori = [
-    {
-        initiale: "MS",
-        nume: "Mihail Sadoveanu",
-        descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
-        operele: [
-            { titlu: "Baltagul", pdf: "Baltagul rezumat.pdf" },
-            { titlu: "Dumbrava Minunată", pdf: "Dumbrava minunată rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "RD",
-        nume: "Roald Dahl",
-        descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
-        operele: [
-            { titlu: "Matilda", pdf: "Matilda rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "ME",
-        nume: "Michael Ende",
-        descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
-        operele: [
-            { titlu: "Povestea fără sfârșit", pdf: "Povestea fără sfârșit rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "GC",
-        nume: "George Călinescu",
-        descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
-        operele: [
-            { titlu: "Enigma Otiliei", pdf: "Enigma Otiliei rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "LR",
-        nume: "Liviu Rebreanu",
-        descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
-        operele: [
-            { titlu: "Ion", pdf: "Ion rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "ME2",
-        nume: "Mircea Eliade",
-        descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
-        operele: [
-            { titlu: "La țigănci", pdf: "La țigănci rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "IS",
-        nume: "Ioan Slavici",
-        descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
-        operele: [
-            { titlu: "Moara cu noroc", pdf: "Moara cu noroc rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "IC",
-        nume: "I.L. Caragiale",
-        descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
-        operele: [
-            { titlu: "O scrisoare pierdută", pdf: "O scrisoare pierdută rezumat.pdf" }
-        ]
-    },
-    {
-        initiale: "CP",
-        nume: "Camil Petrescu",
-        descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
-        operele: [
-            { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Ultima noapte de dragoste rezumat.pdf" }
-        ]
-    }
-];
-
-/* =================================
-   GENEREAZA CARTILE AUTORILOR
-================================= */
-
-function genereazaAutori() {
-    const container = document.getElementById("autorCards");
-    if (!container) return;
-
-    container.innerHTML = autori.map(autor => `
-        <div class="card autor">
-            <div class="portret">${autor.initiale}</div>
-            <h3>${autor.nume}</h3>
-            <p>${autor.descriere}</p>
-            <div class="opera-list">
-                ${autor.operele.map(opera => `
-                    <button class="opera-btn" onclick="deschidePDF('${opera.pdf}')">
-                        📕 „${opera.titlu}"
-                    </button>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
-}
-
-/* =================================
-   DESCHIDE PDF
-================================= */
-
-function deschidePDF(numeFisier) {
-    const cale = "file:///C:/Site_Lb_Romana/Lb-Romana/" + numeFisier;
-    window.open(cale, "_blank");
-}
-
-/* =================================
-   SCHIMBARE KAHOOT / WORDWALL
-================================= */
-
-function arataQuiz(tip) {
-
-    const kahoot =
-        document.getElementById("kahoot");
-
-    const wordwall =
-        document.getElementById("wordwall");
-
-    const butoane =
-        document.querySelectorAll(".quiz-tab");
-
-
-    if (tip === "kahoot") {
-
-        kahoot.classList.remove("ascuns");
-
-        wordwall.classList.add("ascuns");
-
-        butoane[0].classList.add("activ");
-
-        butoane[1].classList.remove("activ");
-
-    }
-
-
-    if (tip === "wordwall") {
-
-        kahoot.classList.add("ascuns");
-
-        wordwall.classList.remove("ascuns");
-
-        butoane[0].classList.remove("activ");
-
-        butoane[1].classList.add("activ");
-
-    }
-
-}
-
-
-/* =================================
-   MOD ÎNTUNECAT
-================================= */
-
-function schimbaTema() {
-
-    document.body.classList.toggle("dark");
-
-}
 
 /* =================================
    INIȚIALIZARE PAGINA
