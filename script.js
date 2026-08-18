@@ -344,29 +344,40 @@ section {
 }
 
 .portret {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
 
     margin: auto;
     margin-bottom: 20px;
 
     border-radius: 50%;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow: hidden;
 
     background: #7b2450;
-    color: white;
-
-    font-size: 30px;
-    font-weight: bold;
 }
 
-.opera {
-    margin-top: 15px;
+.portret {
+    width: 120px;
+    height: 120px;
 
-    padding: 0;
+    margin: auto;
+    margin-bottom: 20px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #7b2450;
+}
+
+.portret img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
 }
 
 .opera-list {
@@ -1121,6 +1132,182 @@ footer {
 </footer>
 
 `;
+
+/* =================================
+   DATA AUTORI - Lista cu operele lor
+================================= */
+
+const autori = [
+    {
+        initiale: "MS",
+        nume: "Mihail Sadoveanu",
+        poza: "Imagini/Sadoveanu.jpg",
+        descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
+        operele: [
+            { titlu: "Baltagul", pdf: "Baltagul rezumat.pdf" },
+            { titlu: "Dumbrava Minunată", pdf: "Pdf/Dumbrava minunată rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "RD",
+        nume: "Roaldh Dahl",
+        poza: "Imagini/Roaldh.jpg",
+        descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
+        operele: [
+            { titlu: "Matilda", pdf: "Pdf/Matilda rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "ME",
+        nume: "Michael Ende",
+        poza: "Imagini/Michael.jpg",
+        descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
+        operele: [
+            { titlu: "Povestea fără sfârșit", pdf: "Pdfovestea fără sfârșit rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "GC",
+        nume: "George Călinescu",
+        poza: "Imagini/Calinescu.jpg",
+        descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+        operele: [
+            { titlu: "Enigma Otiliei", pdf: "Pdf/Enigma Otiliei rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "LR",
+        nume: "Liviu Rebreanu",
+        poza: "Imagini/Rebreanu.jpg",
+        descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
+        operele: [
+            { titlu: "Ion", pdf: "Pdf/Ion rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "ME2",
+        nume: "Mircea Eliade",
+        poza: "Imagini/Eliade.jpg",
+        descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
+        operele: [
+            { titlu: "La țigănci", pdf: "Pdf/La țigănci rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "IS",
+        nume: "Ioan Slavici",
+        poza: "Imagini/Slavici.jpg",
+        descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
+        operele: [
+            { titlu: "Moara cu noroc", pdf: "Pdf/Moara cu noroc rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "IC",
+        nume: "I.L. Caragiale",
+        poza: "Imagini/Caragiale.jpg",
+        descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
+        operele: [
+            { titlu: "O scrisoare pierdută", pdf: "Pdf/O scrisoare pierdută rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "CP",
+        nume: "Camil Petrescu",
+        poza: "Imagini/Petrescu.jpg",
+        descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
+        operele: [
+            { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Pdf/Ultima noapte de dragoste rezumat.pdf" }
+        ]
+    }
+];
+
+/* =================================
+   GENEREAZA CARTILE AUTORILOR
+================================= */
+
+function genereazaAutori() {
+    const container = document.getElementById("autorCards");
+    if (!container) return;
+
+    container.innerHTML = autori.map(autor => `
+        <div class="card autor">
+            <div class="portret">${autor.initiale}</div>
+            <h3>${autor.nume}</h3>
+            <p>${autor.descriere}</p>
+            <div class="opera-list">
+                ${autor.operele.map(opera => `
+                    <button class="opera-btn" onclick="deschidePDF('${opera.pdf}')">
+                        📕 „${opera.titlu}"
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+/* =================================
+   DESCHIDE PDF
+================================= */
+
+function deschidePDF(numeFisier) {
+    const cale = "file:///C:/Site_Lb_Romana/Lb-Romana/" + numeFisier;
+    window.open(cale, "_blank");
+}
+
+/* =================================
+   SCHIMBARE KAHOOT / WORDWALL
+================================= */
+
+function arataQuiz(tip) {
+
+    const kahoot =
+        document.getElementById("kahoot");
+
+    const wordwall =
+        document.getElementById("wordwall");
+
+    const butoane =
+        document.querySelectorAll(".quiz-tab");
+
+
+    if (tip === "kahoot") {
+
+        kahoot.classList.remove("ascuns");
+
+        wordwall.classList.add("ascuns");
+
+        butoane[0].classList.add("activ");
+
+        butoane[1].classList.remove("activ");
+
+    }
+
+
+    if (tip === "wordwall") {
+
+        kahoot.classList.add("ascuns");
+
+        wordwall.classList.remove("ascuns");
+
+        butoane[0].classList.remove("activ");
+
+        butoane[1].classList.add("activ");
+
+    }
+
+}
+
+
+/* =================================
+   MOD ÎNTUNECAT
+================================= */
+
+function schimbaTema() {
+
+    document.body.classList.toggle("dark");
+
+}
 
 /* =================================
    INIȚIALIZARE PAGINA
