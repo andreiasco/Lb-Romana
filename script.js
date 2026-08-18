@@ -1101,7 +1101,7 @@ function genereazaAutori() {
 ================================= */
 
 function deschidePDF(numeFisier) {
-    const cale = "Pdf/" + numeFisier;
+    const cale = numeFisier;
     window.open(cale, "_blank");
 }
 
