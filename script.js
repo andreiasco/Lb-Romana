@@ -405,7 +405,7 @@ footer {
 
     <a href="#literatura">Literatura</a>
 
-    <a href="#autori">Hei, mama</a>
+    <a href="#autori">Autori</a>
 
     <a href="#materiale">Materiale</a>
 
@@ -597,7 +597,7 @@ footer {
 <section id="autori">
 
     <h2 class="titlu">
-        Mari scriitori 📚
+        Hei, mama 📚
     </h2>
 
     <p class="subtitlu">
