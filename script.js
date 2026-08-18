@@ -1013,7 +1013,7 @@ const autori = [
         poza: "Imagini/Michael.jpeg",
         descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
         operele: [
-            { titlu: "Povestea fără sfârșit", pdf: "Pdfovestea fără sfârșit rezumat.pdf" }
+            { titlu: "Povestea fără sfârșit", pdf: "Pdf/Povestea fără sfârșit rezumat.pdf" }
         ]
     },
     {
