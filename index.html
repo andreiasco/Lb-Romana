@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,6 +24,7 @@
             --crem: #faf6ef;
             --alb: #ffffff;
             --text: #292329;
+            --kahoot: #46178f;
         }
 
         body {
@@ -38,11 +41,12 @@
             top: 0;
             z-index: 1000;
             background: rgba(53, 21, 42, 0.97);
-            padding: 15px 30px;
+            padding: 15px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px;
+            gap: 22px;
+            flex-wrap: wrap;
             box-shadow: 0 3px 15px rgba(0,0,0,0.2);
         }
 
@@ -66,7 +70,7 @@
             cursor: pointer;
         }
 
-        /* PAGINA PRINCIPALA */
+        /* HERO */
 
         .hero {
             min-height: 600px;
@@ -78,8 +82,15 @@
             padding: 40px 20px;
 
             background:
-                linear-gradient(rgba(53,21,42,0.75), rgba(123,36,80,0.75)),
-                radial-gradient(circle at center, #b95c7d, #35152a);
+                linear-gradient(
+                    rgba(53,21,42,0.75),
+                    rgba(123,36,80,0.75)
+                ),
+                radial-gradient(
+                    circle at center,
+                    #b95c7d,
+                    #35152a
+                );
         }
 
         .hero-content {
@@ -151,7 +162,8 @@
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns:
+                repeat(auto-fit, minmax(240px, 1fr));
             gap: 25px;
         }
 
@@ -196,10 +208,18 @@
             height: 110px;
             margin: 0 auto 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #7b2450, #c66b91);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7b2450,
+                    #c66b91
+                );
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             color: white;
             font-size: 38px;
             font-weight: bold;
@@ -219,12 +239,21 @@
         .citat {
             max-width: 900px;
             margin: auto;
-            background: linear-gradient(135deg, #7b2450, #a8446c);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7b2450,
+                    #a8446c
+                );
+
             color: white;
             padding: 50px 35px;
             border-radius: 25px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(123,36,80,0.3);
+
+            box-shadow:
+                0 10px 30px rgba(123,36,80,0.3);
         }
 
         .citat p {
@@ -237,7 +266,8 @@
 
         .quizuri {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns:
+                repeat(auto-fit, minmax(450px, 1fr));
             gap: 30px;
         }
 
@@ -245,15 +275,21 @@
             background: white;
             padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 7px 25px rgba(0,0,0,0.08);
+
             text-align: center;
             border-top: 5px solid var(--mov);
+
             transition: 0.3s;
         }
 
         .quiz-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.13);
         }
 
         .quiz-card h3 {
@@ -276,6 +312,65 @@
             border: none;
         }
 
+        /* KAHOOT */
+
+        .kahoot-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+
+            box-shadow:
+                0 7px 25px rgba(0,0,0,0.08);
+
+            text-align: center;
+
+            border-top: 5px solid var(--kahoot);
+
+            transition: 0.3s;
+        }
+
+        .kahoot-card:hover {
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .kahoot-card h3 {
+            color: var(--kahoot);
+            font-size: 23px;
+            margin-bottom: 15px;
+        }
+
+        .kahoot-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .kahoot-button {
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 13px 25px;
+
+            background: var(--kahoot);
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 25px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .kahoot-button:hover {
+            background: #5e22b5;
+            transform: scale(1.05);
+        }
+
         /* DARK MODE */
 
         body.dark {
@@ -284,13 +379,15 @@
         }
 
         body.dark .card,
-        body.dark .quiz-card {
+        body.dark .quiz-card,
+        body.dark .kahoot-card {
             background: #271f27;
             color: white;
         }
 
         body.dark .card p,
-        body.dark .quiz-card p {
+        body.dark .quiz-card p,
+        body.dark .kahoot-card p {
             color: #ddd;
         }
 
@@ -315,6 +412,7 @@
         /* ANIMATIE */
 
         @keyframes aparitie {
+
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -324,6 +422,7 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+
         }
 
         /* TELEFON */
@@ -331,7 +430,6 @@
         @media (max-width: 700px) {
 
             nav {
-                flex-wrap: wrap;
                 gap: 12px;
                 padding: 12px;
             }
@@ -360,19 +458,20 @@
                 grid-template-columns: 1fr;
             }
 
-            .quiz-card {
+            .quiz-card,
+            .kahoot-card {
                 padding: 15px;
             }
 
-            .quiz-card iframe {
-                height: 380px;
-            }
         }
 
     </style>
+
 </head>
 
+
 <body>
+
 
     <!-- MENIU -->
 
@@ -390,28 +489,41 @@
 
         <a href="#quiz">Quiz-uri</a>
 
-        <button id="darkMode" onclick="schimbaTema()">
+        <button
+            id="darkMode"
+            onclick="schimbaTema()">
+
             🌙 Mod întunecat
+
         </button>
 
     </nav>
 
 
-    <!-- PAGINA PRINCIPALA -->
+    <!-- ACASA -->
 
-    <header class="hero" id="acasa">
+    <header
+        class="hero"
+        id="acasa">
 
         <div class="hero-content">
 
-            <h1>Limba și Literatura Română</h1>
+            <h1>
+                Limba și Literatura Română
+            </h1>
 
             <p>
-                O călătorie prin lumea cuvintelor, a poeziei,
-                a poveștilor și a marilor scriitori români.
+                O călătorie prin lumea cuvintelor,
+                a poeziei, a poveștilor și a marilor
+                scriitori români.
             </p>
 
-            <a href="#limba" class="buton">
+            <a
+                href="#limba"
+                class="buton">
+
                 Începe călătoria 📖
+
             </a>
 
         </div>
@@ -423,7 +535,9 @@
 
     <section id="limba">
 
-        <h2 class="titlu">Limba română</h2>
+        <h2 class="titlu">
+            Limba română
+        </h2>
 
         <p class="subtitlu">
             Descoperă elementele care formează limba noastră.
@@ -431,15 +545,21 @@
 
         <div class="cards">
 
+
             <div class="card">
 
-                <div class="icon">🔤</div>
+                <div class="icon">
+                    🔤
+                </div>
 
-                <h3>Gramatică</h3>
+                <h3>
+                    Gramatică
+                </h3>
 
                 <p>
-                    Gramatica studiază regulile după care sunt
-                    construite și folosite cuvintele și propozițiile.
+                    Gramatica studiază regulile după care
+                    sunt construite și folosite cuvintele
+                    și propozițiile.
                 </p>
 
             </div>
@@ -447,13 +567,18 @@
 
             <div class="card">
 
-                <div class="icon">📚</div>
+                <div class="icon">
+                    📚
+                </div>
 
-                <h3>Vocabular</h3>
+                <h3>
+                    Vocabular
+                </h3>
 
                 <p>
-                    Vocabularul cuprinde totalitatea cuvintelor
-                    unei limbi și relațiile dintre acestea.
+                    Vocabularul cuprinde totalitatea
+                    cuvintelor unei limbi și relațiile
+                    dintre acestea.
                 </p>
 
             </div>
@@ -461,13 +586,18 @@
 
             <div class="card">
 
-                <div class="icon">✍️</div>
+                <div class="icon">
+                    ✍️
+                </div>
 
-                <h3>Ortografie</h3>
+                <h3>
+                    Ortografie
+                </h3>
 
                 <p>
-                    Ortografia ne ajută să scriem corect cuvintele
-                    și să respectăm regulile limbii române.
+                    Ortografia ne ajută să scriem corect
+                    cuvintele și să respectăm regulile
+                    limbii române.
                 </p>
 
             </div>
@@ -481,7 +611,9 @@
 
     <section id="literatura">
 
-        <h2 class="titlu">Literatura română</h2>
+        <h2 class="titlu">
+            Literatura română
+        </h2>
 
         <p class="subtitlu">
             Poezie, proză și teatru.
@@ -489,15 +621,20 @@
 
         <div class="cards">
 
+
             <div class="card">
 
-                <div class="icon">🌙</div>
+                <div class="icon">
+                    🌙
+                </div>
 
-                <h3>Poezia</h3>
+                <h3>
+                    Poezia
+                </h3>
 
                 <p>
-                    Poezia exprimă sentimente și idei printr-un
-                    limbaj artistic, folosind imagini și figuri de stil.
+                    Poezia exprimă sentimente și idei
+                    printr-un limbaj artistic.
                 </p>
 
             </div>
@@ -505,13 +642,17 @@
 
             <div class="card">
 
-                <div class="icon">📖</div>
+                <div class="icon">
+                    📖
+                </div>
 
-                <h3>Proza</h3>
+                <h3>
+                    Proza
+                </h3>
 
                 <p>
-                    Romanul, nuvela, povestirea și basmul sunt
-                    forme importante ale prozei literare.
+                    Romanul, nuvela, povestirea și basmul
+                    sunt forme importante ale prozei literare.
                 </p>
 
             </div>
@@ -519,9 +660,13 @@
 
             <div class="card">
 
-                <div class="icon">🎭</div>
+                <div class="icon">
+                    🎭
+                </div>
 
-                <h3>Teatrul</h3>
+                <h3>
+                    Teatrul
+                </h3>
 
                 <p>
                     Textele dramatice sunt construite în jurul
@@ -542,13 +687,15 @@
         <div class="citat">
 
             <p>
-                „Nu există altă avere mai prețioasă decât limba
-                unui popor.”
+                „Nu există altă avere mai prețioasă
+                decât limba unui popor.”
             </p>
 
             <br>
 
-            <strong>— Nicolae Iorga</strong>
+            <strong>
+                — Nicolae Iorga
+            </strong>
 
         </div>
 
@@ -559,10 +706,13 @@
 
     <section id="autori">
 
-        <h2 class="titlu">Mari scriitori români</h2>
+        <h2 class="titlu">
+            Mari scriitori români
+        </h2>
 
         <p class="subtitlu">
-            Câteva dintre cele mai importante nume ale literaturii române.
+            Câteva dintre cele mai importante nume
+            ale literaturii române.
         </p>
 
         <div class="cards">
@@ -570,14 +720,18 @@
 
             <div class="card autor">
 
-                <div class="portret">ME</div>
+                <div class="portret">
+                    ME
+                </div>
 
-                <h3>Mihai Eminescu</h3>
+                <h3>
+                    Mihai Eminescu
+                </h3>
 
                 <p>
-                    Poet, prozator și jurnalist român, considerat
-                    una dintre cele mai importante personalități
-                    ale literaturii române.
+                    Poet, prozator și jurnalist român,
+                    considerat una dintre cele mai importante
+                    personalități ale literaturii române.
                 </p>
 
                 <div class="opera">
@@ -589,13 +743,17 @@
 
             <div class="card autor">
 
-                <div class="portret">IC</div>
+                <div class="portret">
+                    IC
+                </div>
 
-                <h3>Ion Creangă</h3>
+                <h3>
+                    Ion Creangă
+                </h3>
 
                 <p>
-                    Prozator român cunoscut pentru umorul și stilul
-                    său original.
+                    Prozator român cunoscut pentru umorul
+                    și stilul său original.
                 </p>
 
                 <div class="opera">
@@ -607,13 +765,17 @@
 
             <div class="card autor">
 
-                <div class="portret">IC</div>
+                <div class="portret">
+                    IC
+                </div>
 
-                <h3>I.L. Caragiale</h3>
+                <h3>
+                    I.L. Caragiale
+                </h3>
 
                 <p>
-                    Dramaturg și prozator român, renumit pentru
-                    comediile și satira sa.
+                    Dramaturg și prozator român, renumit
+                    pentru comediile și satira sa.
                 </p>
 
                 <div class="opera">
@@ -625,9 +787,13 @@
 
             <div class="card autor">
 
-                <div class="portret">IS</div>
+                <div class="portret">
+                    IS
+                </div>
 
-                <h3>Ioan Slavici</h3>
+                <h3>
+                    Ioan Slavici
+                </h3>
 
                 <p>
                     Prozator important al literaturii române,
@@ -649,7 +815,9 @@
 
     <section id="materiale">
 
-        <h2 class="titlu">Materiale 📚</h2>
+        <h2 class="titlu">
+            Materiale 📚
+        </h2>
 
         <p class="subtitlu">
             Descoperă câteva materiale utile pentru
@@ -661,14 +829,18 @@
 
             <div class="card">
 
-                <div class="icon">📖</div>
+                <div class="icon">
+                    📖
+                </div>
 
-                <h3>Mihai Eminescu</h3>
+                <h3>
+                    Mihai Eminescu
+                </h3>
 
                 <p>
-                    Poet important al literaturii române, cunoscut
-                    pentru opere precum „Luceafărul” și
-                    „Floare albastră”.
+                    Poet important al literaturii române,
+                    cunoscut pentru opere precum
+                    „Luceafărul” și „Floare albastră”.
                 </p>
 
             </div>
@@ -676,13 +848,18 @@
 
             <div class="card">
 
-                <div class="icon">✍️</div>
+                <div class="icon">
+                    ✍️
+                </div>
 
-                <h3>Gramatică</h3>
+                <h3>
+                    Gramatică
+                </h3>
 
                 <p>
-                    Noțiuni esențiale despre părțile de vorbire,
-                    părțile de propoziție și frază.
+                    Noțiuni esențiale despre părțile
+                    de vorbire, părțile de propoziție
+                    și frază.
                 </p>
 
             </div>
@@ -690,13 +867,17 @@
 
             <div class="card">
 
-                <div class="icon">📚</div>
+                <div class="icon">
+                    📚
+                </div>
 
-                <h3>Genuri literare</h3>
+                <h3>
+                    Genuri literare
+                </h3>
 
                 <p>
-                    Descoperă genul epic, liric și dramatic și
-                    principalele lor caracteristici.
+                    Descoperă genul epic, liric și dramatic
+                    și principalele lor caracteristici.
                 </p>
 
             </div>
@@ -706,30 +887,34 @@
     </section>
 
 
-    <!-- QUIZURI WORDWALL -->
+    <!-- QUIZURI -->
 
     <section id="quiz">
 
-        <h2 class="titlu">Quiz-uri 📚</h2>
+        <h2 class="titlu">
+            Quiz-uri Wordwall 📚
+        </h2>
 
         <p class="subtitlu">
-            Testează-ți cunoștințele de Limba și literatura română
-            prin aceste activități interactive.
+            Testează-ți cunoștințele prin activități
+            interactive de Limba și literatura română.
         </p>
 
 
         <div class="quizuri">
 
 
-            <!-- QUIZ 1 -->
+            <!-- WORDWALL 1 -->
 
             <div class="quiz-card">
 
-                <h3>🔤 Conjuncții de coordonare</h3>
+                <h3>
+                    🔤 Conjuncții de coordonare
+                </h3>
 
                 <p>
-                    Exersează recunoașterea și folosirea corectă
-                    a conjuncțiilor coordonatoare.
+                    Exersează recunoașterea și folosirea
+                    conjuncțiilor coordonatoare.
                 </p>
 
                 <iframe
@@ -743,15 +928,17 @@
             </div>
 
 
-            <!-- QUIZ 2 -->
+            <!-- WORDWALL 2 -->
 
             <div class="quiz-card">
 
-                <h3>✍️ Recapitulare – Verbul</h3>
+                <h3>
+                    ✍️ Recapitulare – Verbul
+                </h3>
 
                 <p>
-                    Recapitulează noțiunile despre verb pentru
-                    clasele VI–VIII.
+                    Recapitulează noțiunile despre verb
+                    pentru clasele VI–VIII.
                 </p>
 
                 <iframe
@@ -765,11 +952,13 @@
             </div>
 
 
-            <!-- QUIZ 3 -->
+            <!-- WORDWALL 3 -->
 
             <div class="quiz-card">
 
-                <h3>👤 Pronumele – clasa a VII-a</h3>
+                <h3>
+                    👤 Pronumele – clasa a VII-a
+                </h3>
 
                 <p>
                     Verifică-ți cunoștințele despre pronume
@@ -787,15 +976,17 @@
             </div>
 
 
-            <!-- QUIZ 4 -->
+            <!-- WORDWALL 4 -->
 
             <div class="quiz-card">
 
-                <h3>🧠 Categorii semantice</h3>
+                <h3>
+                    🧠 Categorii semantice
+                </h3>
 
                 <p>
-                    Exersează categoriile semantice și relațiile
-                    dintre cuvinte.
+                    Exersează categoriile semantice
+                    și relațiile dintre cuvinte.
                 </p>
 
                 <iframe
@@ -809,15 +1000,17 @@
             </div>
 
 
-            <!-- QUIZ 5 -->
+            <!-- WORDWALL 5 -->
 
             <div class="quiz-card">
 
-                <h3>📖 Textul literar</h3>
+                <h3>
+                    📖 Textul literar
+                </h3>
 
                 <p>
-                    Verifică-ți cunoștințele despre textul literar
-                    și elementele sale.
+                    Verifică-ți cunoștințele despre
+                    textul literar și elementele sale.
                 </p>
 
                 <iframe
@@ -830,6 +1023,101 @@
 
             </div>
 
+        </div>
+
+
+        <!-- KAHOOT -->
+
+        <h2
+            class="titlu"
+            style="margin-top:80px;">
+
+            Quiz-uri Kahoot 🎯
+
+        </h2>
+
+        <p class="subtitlu">
+            Mai multe activități interactive pentru
+            exersarea cunoștințelor.
+        </p>
+
+
+        <div class="cards">
+
+
+            <!-- KAHOOT 1 -->
+
+            <div class="kahoot-card">
+
+                <h3>
+                    📝 Aplicarea regulilor în contexte noi
+                </h3>
+
+                <p>
+                    Exersează aplicarea regulilor de limbă
+                    română în contexte diferite.
+                </p>
+
+                <a
+                    class="kahoot-button"
+                    href="https://create.kahoot.it/details/aplicarea-regulilor-in-contexte-noi/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
+                    target="_blank">
+
+                    🎯 Deschide Kahoot
+
+                </a>
+
+            </div>
+
+
+            <!-- KAHOOT 2 -->
+
+            <div class="kahoot-card">
+
+                <h3>
+                    📚 Romanian Vocabulary in Context
+                </h3>
+
+                <p>
+                    Îmbogățește-ți vocabularul și verifică
+                    folosirea cuvintelor în contexte.
+                </p>
+
+                <a
+                    class="kahoot-button"
+                    href="https://create.kahoot.it/details/romanian-vocabulary-in-context/bf406337-3185-409c-92c7-22471cf41e38"
+                    target="_blank">
+
+                    🎯 Deschide Kahoot
+
+                </a>
+
+            </div>
+
+
+            <!-- KAHOOT 3 -->
+
+            <div class="kahoot-card">
+
+                <h3>
+                    ✍️ Recapitulare dirijată a noțiunilor de gramatică
+                </h3>
+
+                <p>
+                    Recapitulează principalele noțiuni
+                    de gramatică într-un mod interactiv.
+                </p>
+
+                <a
+                    class="kahoot-button"
+                    href="https://create.kahoot.it/details/recapitulare-dirijata-a-notiunilor-de-gramatica/7b20be02-2691-42a9-a08d-19a0996ebd78"
+                    target="_blank">
+
+                    🎯 Deschide Kahoot
+
+                </a>
+
+            </div>
 
         </div>
 
@@ -840,7 +1128,9 @@
 
     <footer>
 
-        <h2>Limba și Literatura Română 📖</h2>
+        <h2>
+            Limba și Literatura Română 📖
+        </h2>
 
         <p>
             Un proiect dedicat frumuseții limbii române.
@@ -863,15 +1153,20 @@
 
             document.body.classList.toggle("dark");
 
-            const buton = document.getElementById("darkMode");
+            const buton =
+                document.getElementById("darkMode");
 
-            if (document.body.classList.contains("dark")) {
+            if (
+                document.body.classList.contains("dark")
+            ) {
 
-                buton.innerHTML = "☀️ Mod luminos";
+                buton.innerHTML =
+                    "☀️ Mod luminos";
 
             } else {
 
-                buton.innerHTML = "🌙 Mod întunecat";
+                buton.innerHTML =
+                    "🌙 Mod întunecat";
 
             }
 
@@ -879,5 +1174,7 @@
 
     </script>
 
+
 </body>
+
 </html>
