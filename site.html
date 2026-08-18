@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Limba și Literatura Română</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --mov: #7b2450;
+            --mov-inchis: #35152a;
+            --roz: #f4dce7;
+            --crem: #faf6ef;
+            --alb: #ffffff;
+            --text: #292329;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--crem);
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        /* MENIU */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(53, 21, 42, 0.96);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #f3b8d0;
+        }
+
+        #darkMode {
+            background: var(--mov);
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+
+            background:
+                linear-gradient(rgba(53,21,42,0.75), rgba(123,36,80,0.75)),
+                radial-gradient(circle at center, #b95c7d, #35152a);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: aparitie 1.2s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 75px);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 22px;
+            line-height: 1.6;
+        }
+
+        .buton {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 28px;
+            background: white;
+            color: var(--mov);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .buton:hover {
+            transform: scale(1.07);
+            background: #f4dce7;
+        }
+
+        /* SECTIUNI */
+
+        section {
+            max-width: 1100px;
+            margin: 70px auto;
+            padding: 20px;
+        }
+
+        .titlu {
+            text-align: center;
+            color: var(--mov);
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .subtitlu {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        /* CARDURI */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            border-top: 5px solid var(--mov);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: var(--mov);
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* AUTORI */
+
+        .autor {
+            text-align: center;
+        }
+
+        .portret {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7b2450, #c66b91);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .opera {
+            margin-top: 15px;
+            padding: 10px;
+            background: var(--roz);
+            border-radius: 10px;
+            color: var(--mov);
+            font-weight: bold;
+        }
+
+        /* CITAT */
+
+        .citat {
+            max-width: 900px;
+            margin: auto;
+            background: linear-gradient(135deg, #7b2450, #a8446c);
+            color: white;
+            padding: 50px 35px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(123,36,80,0.3);
+        }
+
+        .citat p {
+            font-size: 27px;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        /* QUIZ */
+
+        .quiz {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .quiz h3 {
+            color: var(--mov);
+            margin-bottom: 20px;
+            font-size: 23px;
+        }
+
+        .quiz label {
+            display: block;
+            background: #f8edf2;
+            margin: 10px 0;
+            padding: 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .quiz label:hover {
+            background: #efd3df;
+        }
+
+        .quiz button {
+            margin-top: 20px;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 25px;
+            background: var(--mov);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #rezultat {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: var(--mov-inchis);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+            margin-top: 80px;
+        }
+
+        footer h2 {
+            margin-bottom: 10px;
+        }
+
+        /* ANIMATIE */
+
+        @keyframes aparitie {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* DARK MODE */
+
+        body.dark {
+            background: #181318;
+            color: white;
+        }
+
+        body.dark .card,
+        body.dark .quiz {
+            background: #271f27;
+            color: white;
+        }
+
+        body.dark .card p {
+            color: #ddd;
+        }
+
+        body.dark .subtitlu {
+            color: #bbb;
+        }
+
+        /* TELEFON */
+
+        @media (max-width: 700px) {
+
+            nav {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .hero {
+                min-height: 500px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .titlu {
+                font-size: 30px;
+            }
+
+            .citat p {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- MENIU -->
+
+    <nav>
+        <a href="#acasa">Acasă</a>
+        <a href="#limba">Limba română</a>
+        <a href="#literatura">Literatura</a>
+        <a href="#autori">Autori</a>
+        <a href="#quiz">Quiz</a>
+
+        <button id="darkMode" onclick="schimbaTema()">
+            🌙 Mod întunecat
+        </button>
+    </nav>
+
+
+    <!-- PAGINA PRINCIPALA -->
+
+    <header class="hero" id="acasa">
+
+        <div class="hero-content">
+
+            <h1>Limba și Literatura Română</h1>
+
+            <p>
+                O călătorie prin lumea cuvintelor, a poeziei,
+                a poveștilor și a marilor scriitori români.
+            </p>
+
+            <a href="#limba" class="buton">
+                Începe călătoria 📖
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- LIMBA ROMANA -->
+
+    <section id="limba">
+
+        <h2 class="titlu">Limba română</h2>
+
+        <p class="subtitlu">
+            Descoperă elementele care formează limba noastră.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">🔤</div>
+
+                <h3>Gramatică</h3>
+
+                <p>
+                    Gramatica studiază regulile după care sunt
+                    construite și folosite cuvintele și propozițiile.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">📚</div>
+
+                <h3>Vocabular</h3>
+
+                <p>
+                    Vocabularul cuprinde totalitatea cuvintelor
+                    unei limbi și relațiile dintre acestea.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">✍️</div>
+
+                <h3>Ortografie</h3>
+
+                <p>
+                    Ortografia ne ajută să scriem corect cuvintele
+                    și să respectăm regulile limbii române.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LITERATURA -->
+
+    <section id="literatura">
+
+        <h2 class="titlu">Literatura română</h2>
+
+        <p class="subtitlu">
+            Poezie, proză și teatru.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="icon">🌙</div>
+
+                <h3>Poezia</h3>
+
+                <p>
+                    Poezia exprimă sentimente și idei printr-un
+                    limbaj artistic, folosind adesea imagini și
+                    figuri de stil.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">📖</div>
+
+                <h3>Proza</h3>
+
+                <p>
+                    Romanul, nuvela, povestirea și basmul sunt
+                    forme importante ale prozei literare.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="icon">🎭</div>
+
+                <h3>Teatrul</h3>
+
+                <p>
+                    Textele dramatice sunt construite în jurul
+                    personajelor, dialogului și acțiunii scenice.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CITAT -->
+
+    <section>
+
+        <div class="citat">
+
+            <p>
+                „Nu există altă avere mai prețioasă decât limba
+                unui popor.”
+            </p>
+
+            <br>
+
+            <strong>— Nicolae Iorga</strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- AUTORI -->
+
+    <section id="autori">
+
+        <h2 class="titlu">Mari scriitori români</h2>
+
+        <p class="subtitlu">
+            Câteva dintre cele mai importante nume ale literaturii române.
+        </p>
+
+
+        <div class="cards">
+
+
+            <div class="card autor">
+
+                <div class="portret">ME</div>
+
+                <h3>Mihai Eminescu</h3>
+
+                <p>
+                    Poet, prozator și jurnalist român, considerat
+                    una dintre cele mai importante personalități
+                    ale literaturii române.
+                </p>
+
+                <div class="opera">
+                    📕 „Luceafărul”
+                </div>
+
+            </div>
+
+
+            <div class="card autor">
+
+                <div class="portret">IC</div>
+
+                <h3>Ion Creangă</h3>
+
+                <p>
+                    Prozator român cunoscut pentru umorul și stilul
+                    său original.
+                </p>
+
+                <div class="opera">
+                    📕 „Amintiri din copilărie”
+                </div>
+
+            </div>
+
+
+            <div class="card autor">
+
+                <div class="portret">IC</div>
+
+                <h3>I.L. Caragiale</h3>
+
+                <p>
+                    Dramaturg și prozator român, renumit pentru
+                    comediile și satira sa.
+                </p>
+
+                <div class="opera">
+                    📕 „O scrisoare pierdută”
+                </div>
+
+            </div>
+
+
+            <div class="card autor">
+
+                <div class="portret">IS</div>
+
+                <h3>Ioan Slavici</h3>
+
+                <p>
+                    Prozator important al literaturii române,
+                    reprezentant al realismului.
+                </p>
+
+                <div class="opera">
+                    📕 „Moara cu noroc”
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUIZ -->
+
+    <section id="quiz">
+
+        <h2 class="titlu">Mini-quiz 📚</h2>
+
+        <p class="subtitlu">
+            Verifică-ți cunoștințele despre literatura română.
+        </p>
+
+
+        <div class="quiz">
+
+            <h3>
+                Cine este autorul operei „Luceafărul”?
+            </h3>
+
+            <label>
+                <input type="radio" name="intrebarea1" value="corect">
+                Mihai Eminescu
+            </label>
+
+            <label>
+                <input type="radio" name="intrebarea1" value="gresit">
+                Ion Creangă
+            </label>
+
+            <label>
+                <input type="radio" name="intrebarea1" value="gresit">
+                I.L. Caragiale
+            </label>
+
+            <label>
+                <input type="radio" name="intrebarea1" value="gresit">
+                Ioan Slavici
+            </label>
+
+
+            <button onclick="verificaQuiz()">
+                Verifică răspunsul
+            </button>
+
+            <div id="rezultat"></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <h2>Limba și Literatura Română 📖</h2>
+
+        <p>
+            Un mic proiect dedicat frumuseții limbii române.
+        </p>
+
+        <br>
+
+        <p>
+            © 2026 - Proiect școlar
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+
+        function schimbaTema() {
+
+            document.body.classList.toggle("dark");
+
+            const buton = document.getElementById("darkMode");
+
+            if (document.body.classList.contains("dark")) {
+
+                buton.innerHTML = "☀️ Mod luminos";
+
+            } else {
+
+                buton.innerHTML = "🌙 Mod întunecat";
+
+            }
+        }
+
+
+        function verificaQuiz() {
+
+            const raspunsuri =
+                document.getElementsByName("intrebarea1");
+
+            let raspuns = "";
+
+            for (let i = 0; i < raspunsuri.length; i++) {
+
+                if (raspunsuri[i].checked) {
+
+                    raspuns = raspunsuri[i].value;
+
+                }
+
+            }
+
+
+            const rezultat =
+                document.getElementById("rezultat");
+
+
+            if (raspuns === "") {
+
+                rezultat.innerHTML =
+                    "⚠️ Alege mai întâi un răspuns!";
+
+                rezultat.style.color = "#d17a00";
+
+            }
+
+            else if (raspuns === "corect") {
+
+                rezultat.innerHTML =
+                    "✅ Corect! Mihai Eminescu este autorul „Luceafărului”.";
+
+                rezultat.style.color = "green";
+
+            }
+
+            else {
+
+                rezultat.innerHTML =
+                    "❌ Răspuns greșit. Mai încearcă!";
+
+                rezultat.style.color = "red";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
