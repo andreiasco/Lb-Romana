@@ -78,6 +78,19 @@ const autori = [
     }
 ];
 
+const pdfDisponibile = new Set([
+    "Baltagul rezumat.pdf",
+    "Dumbrava minunată rezumat.pdf",
+    "Matilda rezumat.pdf",
+    "Povestea fără sfârșit rezumat.pdf",
+    "Enigma Otiliei rezumat.pdf",
+    "Ion rezumat.pdf",
+    "La țigănci rezumat.pdf",
+    "Moara cu noroc rezumat.pdf",
+    "O scrisoare pierdută rezumat.pdf",
+    "Ultima noapte de dragoste rezumat.pdf"
+].map(nume => nume.trim().toLowerCase()));
+
 /* =================================
    GENEREAZA CARTILE AUTORILOR
 ================================= */
@@ -86,22 +99,28 @@ function genereazaAutori() {
     const container = document.getElementById("autorCards");
     if (!container) return;
 
-    container.innerHTML = autori.map(autor => `
-        <div class="card autor">
-            <div class="portret">${autor.initiale}</div>
-            <h3>${autor.nume}</h3>
-            <p>${autor.descriere}</p>
-            <div class="opera-list">
-                ${autor.operele.map((opera, index) => `
-                    <button class="opera-btn" data-pdf="${opera.pdf}" data-autor="${autor.nume}">
-                        📕 „${opera.titlu}"
-                    </button>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
+    container.innerHTML = autori.map(autor => {
+        const opereValide = autor.operele.filter(opera => {
+            const nume = String(opera.pdf || '').trim().toLowerCase();
+            return pdfDisponibile.has(nume);
+        });
 
-    // Atașează event listeners pe butoane
+        return `
+            <div class="card autor">
+                <div class="portret">${autor.initiale}</div>
+                <h3>${autor.nume}</h3>
+                <p>${autor.descriere}</p>
+                <div class="opera-list">
+                    ${opereValide.map(opera => `
+                        <button class="opera-btn" data-pdf="${opera.pdf}" data-autor="${autor.nume}">
+                            📕 „${opera.titlu}”
+                        </button>
+                    `).join('') || '<span class="opera-fara-pdf">Rezumatul nu este disponibil încă.</span>'}
+                </div>
+            </div>
+        `;
+    }).join('');
+
     document.querySelectorAll('.opera-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             deschidePDF(this.dataset.pdf);
@@ -114,12 +133,19 @@ function genereazaAutori() {
 ================================= */
 
 function deschidePDF(numeFisier) {
-    // Încearcă mai întâi să deschidă din folderul local
-    const caraLocal = "./pdf/" + numeFisier;
-    const caleGithub = "https://raw.githubusercontent.com/YourUsername/YourRepo/main/Lb-Romana/" + numeFisier;
-    
-    // Pentru local, deschide direct
-    window.open(numeFisier, "_blank");
+    const nume = String(numeFisier || '').trim();
+
+    if (!nume) return;
+
+    const numeNormalizat = nume.toLowerCase();
+
+    if (!pdfDisponibile.has(numeNormalizat)) {
+        alert('Rezumatul pentru acest titlu nu este disponibil în proiectul curent.');
+        return;
+    }
+
+    const calePDF = "./" + encodeURI(nume);
+    window.open(calePDF, "_blank");
 }
 
 /* =================================
