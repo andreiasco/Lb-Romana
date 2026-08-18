@@ -991,17 +991,17 @@ const autori = [
     {
         initiale: "MS",
         nume: "Mihail Sadoveanu",
-        poza: "Imagini/Sadoveanu.jpg",
+        poza: "Imagini/Sadoveanu.jpeg",
         descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
         operele: [
-            { titlu: "Baltagul", pdf: "Baltagul rezumat.pdf" },
+            { titlu: "Baltagul", pdf: "Pdf/Baltagul rezumat.pdf" },
             { titlu: "Dumbrava Minunată", pdf: "Pdf/Dumbrava minunată rezumat.pdf" }
         ]
     },
     {
         initiale: "RD",
         nume: "Roaldh Dahl",
-        poza: "Imagini/Roaldh.jpg",
+        poza: "Imagini/Roaldh.jpeg",
         descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
         operele: [
             { titlu: "Matilda", pdf: "Pdf/Matilda rezumat.pdf" }
@@ -1010,7 +1010,7 @@ const autori = [
     {
         initiale: "ME",
         nume: "Michael Ende",
-        poza: "Imagini/Michael.jpg",
+        poza: "Imagini/Michael.jpeg",
         descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
         operele: [
             { titlu: "Povestea fără sfârșit", pdf: "Pdfovestea fără sfârșit rezumat.pdf" }
@@ -1019,7 +1019,7 @@ const autori = [
     {
         initiale: "GC",
         nume: "George Călinescu",
-        poza: "Imagini/Calinescu.jpg",
+        poza: "Imagini/Calinescu.jpeg",
         descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
         operele: [
             { titlu: "Enigma Otiliei", pdf: "Pdf/Enigma Otiliei rezumat.pdf" }
@@ -1028,7 +1028,7 @@ const autori = [
     {
         initiale: "LR",
         nume: "Liviu Rebreanu",
-        poza: "Imagini/Rebreanu.jpg",
+        poza: "Imagini/Rebreanu.jpeg",
         descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
         operele: [
             { titlu: "Ion", pdf: "Pdf/Ion rezumat.pdf" }
@@ -1037,7 +1037,7 @@ const autori = [
     {
         initiale: "ME2",
         nume: "Mircea Eliade",
-        poza: "Imagini/Eliade.jpg",
+        poza: "Imagini/Eliade.jpeg",
         descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
         operele: [
             { titlu: "La țigănci", pdf: "Pdf/La țigănci rezumat.pdf" }
@@ -1046,7 +1046,7 @@ const autori = [
     {
         initiale: "IS",
         nume: "Ioan Slavici",
-        poza: "Imagini/Slavici.jpg",
+        poza: "Imagini/Slavici.jpeg",
         descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
         operele: [
             { titlu: "Moara cu noroc", pdf: "Pdf/Moara cu noroc rezumat.pdf" }
@@ -1055,7 +1055,7 @@ const autori = [
     {
         initiale: "IC",
         nume: "I.L. Caragiale",
-        poza: "Imagini/Caragiale.jpg",
+        poza: "Imagini/Caragiale.jpeg",
         descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
         operele: [
             { titlu: "O scrisoare pierdută", pdf: "Pdf/O scrisoare pierdută rezumat.pdf" }
@@ -1064,7 +1064,7 @@ const autori = [
     {
         initiale: "CP",
         nume: "Camil Petrescu",
-        poza: "Imagini/Petrescu.jpg",
+        poza: "Imagini/Petrescu.jpeg",
         descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
         operele: [
             { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Pdf/Ultima noapte de dragoste rezumat.pdf" }
