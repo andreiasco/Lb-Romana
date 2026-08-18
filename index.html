@@ -620,51 +620,36 @@
 
     <!-- QUIZ -->
 
-    <section id="quiz">
+  <section id="quiz">
 
-        <h2 class="titlu">Mini-quiz 📚</h2>
+    <h2 class="titlu">Quiz de Limba Română</h2>
 
-        <p class="subtitlu">
-            Verifică-ți cunoștințele despre literatura română.
-        </p>
+    <p class="subtitlu">
+        Verifică-ți cunoștințele cu ajutorul acestui quiz interactiv.
+    </p>
 
+    <div style="
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    ">
 
-        <div class="quiz">
+        <!-- Lipește aici codul IFrame primit de la Wordwall -->
 
-            <h3>
-                Cine este autorul operei „Luceafărul”?
-            </h3>
+        <iframe 
+            style="max-width:100%"
+            src="https://www.wordwall.net/embed/63ab2ec884864766bd01500290c4fff1?themeId=1&templateId=5&fontStackId=0" 
+            width="500" 
+            height="380" frameborder="0" 
+            allowfullscreen></iframe>
+        </iframe>
 
-            <label>
-                <input type="radio" name="intrebarea1" value="corect">
-                Mihai Eminescu
-            </label>
+    </div>
 
-            <label>
-                <input type="radio" name="intrebarea1" value="gresit">
-                Ion Creangă
-            </label>
-
-            <label>
-                <input type="radio" name="intrebarea1" value="gresit">
-                I.L. Caragiale
-            </label>
-
-            <label>
-                <input type="radio" name="intrebarea1" value="gresit">
-                Ioan Slavici
-            </label>
-
-
-            <button onclick="verificaQuiz()">
-                Verifică răspunsul
-            </button>
-
-            <div id="rezultat"></div>
-
-        </div>
-
-    </section>
+</section>
 
 
     <!-- FOOTER -->
