@@ -23,6 +23,7 @@
             --crem: #faf6ef;
             --text: #292329;
             --kahoot: #46178f;
+            --wordwall: #008c95;
         }
 
         body {
@@ -67,13 +68,9 @@
         #darkMode {
             background: var(--mov);
             color: white;
-
             border: none;
-
             padding: 9px 14px;
-
             border-radius: 20px;
-
             cursor: pointer;
         }
 
@@ -106,19 +103,16 @@
 
         .hero-content {
             max-width: 800px;
-
             animation: aparitie 1.2s ease;
         }
 
         .hero h1 {
             font-size: clamp(40px, 7vw, 75px);
-
             margin-bottom: 20px;
         }
 
         .hero p {
             font-size: 22px;
-
             line-height: 1.6;
         }
 
@@ -130,7 +124,6 @@
             padding: 13px 25px;
 
             background: white;
-
             color: var(--mov);
 
             text-decoration: none;
@@ -144,7 +137,6 @@
 
         .buton:hover {
             transform: scale(1.05);
-
             background: var(--roz);
         }
 
@@ -152,9 +144,7 @@
 
         section {
             max-width: 1100px;
-
             margin: 70px auto;
-
             padding: 20px;
         }
 
@@ -215,7 +205,6 @@
 
         .icon {
             font-size: 45px;
-
             margin-bottom: 15px;
         }
 
@@ -229,7 +218,6 @@
 
         .card p {
             line-height: 1.7;
-
             color: #555;
         }
 
@@ -255,7 +243,6 @@
                 );
 
             display: flex;
-
             align-items: center;
             justify-content: center;
 
@@ -314,6 +301,57 @@
             font-style: italic;
         }
 
+        /* ================= SELECTARE QUIZ ================= */
+
+        .quiz-selectie {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 20px;
+
+            margin: 35px 0 50px;
+
+            flex-wrap: wrap;
+        }
+
+        .quiz-tab {
+            border: none;
+
+            padding: 15px 30px;
+
+            border-radius: 30px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .quiz-tab:hover {
+            transform: translateY(-3px);
+        }
+
+        .quiz-tab.kahoot {
+            background: var(--kahoot);
+            color: white;
+        }
+
+        .quiz-tab.wordwall {
+            background: var(--wordwall);
+            color: white;
+        }
+
+        .quiz-tab.activ {
+            box-shadow:
+                0 5px 18px rgba(0,0,0,0.25);
+
+            transform: scale(1.04);
+        }
+
         /* ================= QUIZURI ================= */
 
         .quizuri {
@@ -337,7 +375,7 @@
 
             text-align: center;
 
-            border-top: 5px solid var(--mov);
+            border-top: 5px solid var(--wordwall);
 
             transition: 0.3s;
         }
@@ -350,7 +388,7 @@
         }
 
         .quiz-card h3 {
-            color: var(--mov);
+            color: var(--wordwall);
 
             font-size: 23px;
 
@@ -382,7 +420,7 @@
         .kahoot-card {
             background: white;
 
-            padding: 25px;
+            padding: 30px;
 
             border-radius: 20px;
 
@@ -408,7 +446,7 @@
 
             font-size: 23px;
 
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .kahoot-card p {
@@ -419,23 +457,40 @@
             margin-bottom: 20px;
         }
 
-        .kahoot-card iframe {
-            width: 100%;
+        .kahoot-link {
+            display: inline-block;
 
-            max-width: 620px;
+            background: var(--kahoot);
 
-            height: 420px;
+            color: white;
 
-            border: none;
+            text-decoration: none;
 
-            border-radius: 12px;
+            padding: 13px 25px;
+
+            border-radius: 25px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .kahoot-link:hover {
+            background: #5d20b5;
+
+            transform: scale(1.05);
+        }
+
+        /* ================= ASCUNDERE ================= */
+
+        .ascuns {
+            display: none;
         }
 
         /* ================= DARK MODE ================= */
 
         body.dark {
             background: #181318;
-
             color: white;
         }
 
@@ -443,7 +498,6 @@
         body.dark .quiz-card,
         body.dark .kahoot-card {
             background: #271f27;
-
             color: white;
         }
 
@@ -501,7 +555,6 @@
 
             nav {
                 gap: 12px;
-
                 padding: 12px;
             }
 
@@ -532,10 +585,6 @@
             .quiz-card,
             .kahoot-card {
                 padding: 15px;
-            }
-
-            .kahoot-card iframe {
-                height: 420px;
             }
 
         }
@@ -618,7 +667,7 @@
     </header>
 
 
-    <!-- ================= LIMBA ================= -->
+    <!-- ================= LIMBA ROMANA ================= -->
 
     <section id="limba">
 
@@ -632,12 +681,9 @@
 
         <div class="cards">
 
-
             <div class="card">
 
-                <div class="icon">
-                    🔤
-                </div>
+                <div class="icon">🔤</div>
 
                 <h3>
                     Gramatică
@@ -654,9 +700,7 @@
 
             <div class="card">
 
-                <div class="icon">
-                    📚
-                </div>
+                <div class="icon">📚</div>
 
                 <h3>
                     Vocabular
@@ -673,9 +717,7 @@
 
             <div class="card">
 
-                <div class="icon">
-                    ✍️
-                </div>
+                <div class="icon">✍️</div>
 
                 <h3>
                     Ortografie
@@ -708,12 +750,9 @@
 
         <div class="cards">
 
-
             <div class="card">
 
-                <div class="icon">
-                    🌙
-                </div>
+                <div class="icon">🌙</div>
 
                 <h3>
                     Poezia
@@ -729,9 +768,7 @@
 
             <div class="card">
 
-                <div class="icon">
-                    📖
-                </div>
+                <div class="icon">📖</div>
 
                 <h3>
                     Proza
@@ -747,9 +784,7 @@
 
             <div class="card">
 
-                <div class="icon">
-                    🎭
-                </div>
+                <div class="icon">🎭</div>
 
                 <h3>
                     Teatrul
@@ -803,7 +838,6 @@
         </p>
 
         <div class="cards">
-
 
             <div class="card autor">
 
@@ -907,18 +941,14 @@
         </h2>
 
         <p class="subtitlu">
-            Descoperă câteva materiale utile pentru
-            Limba și literatura română.
+            Materiale utile pentru Limba și literatura română.
         </p>
 
         <div class="cards">
 
-
             <div class="card">
 
-                <div class="icon">
-                    📖
-                </div>
+                <div class="icon">📖</div>
 
                 <h3>
                     Mihai Eminescu
@@ -935,9 +965,7 @@
 
             <div class="card">
 
-                <div class="icon">
-                    ✍️
-                </div>
+                <div class="icon">✍️</div>
 
                 <h3>
                     Gramatică
@@ -954,9 +982,7 @@
 
             <div class="card">
 
-                <div class="icon">
-                    📚
-                </div>
+                <div class="icon">📚</div>
 
                 <h3>
                     Genuri literare
@@ -974,21 +1000,141 @@
     </section>
 
 
-    <!-- ================= QUIZURI ================= -->
+    <!-- ================================================= -->
+    <!-- ================= QUIZURI ======================= -->
+    <!-- ================================================= -->
 
     <section id="quiz">
 
         <h2 class="titlu">
-            Quiz-uri Wordwall 📚
+            Quiz-uri 🎮
         </h2>
 
         <p class="subtitlu">
-            Testează-ți cunoștințele prin activități
-            interactive de Limba și literatura română.
+            Alege platforma pe care vrei să exersezi.
         </p>
 
 
-        <div class="quizuri">
+        <!-- BUTOANELE DE SELECTARE -->
+
+        <div class="quiz-selectie">
+
+            <button
+                class="quiz-tab kahoot activ"
+                onclick="arataQuiz('kahoot')">
+
+                🎯 Kahoot
+
+            </button>
+
+
+            <button
+                class="quiz-tab wordwall"
+                onclick="arataQuiz('wordwall')">
+
+                🧩 Wordwall
+
+            </button>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ================= KAHOOT ======================== -->
+        <!-- ================================================= -->
+
+        <div
+            id="kahoot"
+            class="quizuri">
+
+
+            <!-- KAHOOT 1 -->
+
+            <div class="kahoot-card">
+
+                <h3>
+                    📝 Aplicarea regulilor în contexte noi
+                </h3>
+
+                <p>
+                    Exersează aplicarea regulilor de limbă
+                    română în contexte diferite.
+                </p>
+
+                <a
+                    class="kahoot-link"
+                    href="https://create.kahoot.it/details/aplicarea-regulilor-in-contexte-noi/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
+                    target="_blank"
+                    rel="noopener">
+
+                    🎯 Deschide Kahoot
+
+                </a>
+
+            </div>
+
+
+            <!-- KAHOOT 2 -->
+
+            <div class="kahoot-card">
+
+                <h3>
+                    📚 Romanian Vocabulary in Context
+                </h3>
+
+                <p>
+                    Exersează vocabularul românesc
+                    în contexte.
+                </p>
+
+                <a
+                    class="kahoot-link"
+                    href="https://create.kahoot.it/details/romanian-vocabulary-in-context/bf406337-3185-409c-92c7-22471cf41e38"
+                    target="_blank"
+                    rel="noopener">
+
+                    🎯 Deschide Kahoot
+
+                </a>
+
+            </div>
+
+
+            <!-- KAHOOT 3 -->
+
+            <div class="kahoot-card">
+
+                <h3>
+                    ✍️ Recapitulare dirijată a noțiunilor de gramatică
+                </h3>
+
+                <p>
+                    Recapitulează principalele noțiuni
+                    de gramatică.
+                </p>
+
+                <a
+                    class="kahoot-link"
+                    href="https://create.kahoot.it/details/recapitulare-dirijata-a-notiunilor-de-gramatica/7b20be02-2691-42a9-a08d-19a0996ebd78"
+                    target="_blank"
+                    rel="noopener">
+
+                    🎯 Deschide Kahoot
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ================= WORDWALL ====================== -->
+        <!-- ================================================= -->
+
+        <div
+            id="wordwall"
+            class="quizuri ascuns">
 
 
             <!-- WORDWALL 1 -->
@@ -1112,98 +1258,6 @@
 
         </div>
 
-
-        <!-- ================= KAHOOT ================= -->
-
-        <h2
-            class="titlu"
-            style="margin-top:80px;">
-
-            Quiz-uri Kahoot 🎯
-
-        </h2>
-
-        <p class="subtitlu">
-            Testează-ți cunoștințele cu activități Kahoot.
-        </p>
-
-
-        <div class="quizuri">
-
-
-            <!-- KAHOOT 1 -->
-
-            <div class="kahoot-card">
-
-                <h3>
-                    📝 Aplicarea regulilor în contexte noi
-                </h3>
-
-                <p>
-                    Exersează aplicarea regulilor de limbă
-                    română în contexte diferite.
-                </p>
-
-                <iframe
-                    src="https://embed.kahoot.it/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
-                    width="620"
-                    height="280"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
-
-            </div>
-
-
-            <!-- KAHOOT 2 -->
-
-            <div class="kahoot-card">
-
-                <h3>
-                    📚 Romanian Vocabulary in Context
-                </h3>
-
-                <p>
-                    Exersează vocabularul românesc
-                    în contexte.
-                </p>
-
-                <iframe
-                    src="https://embed.kahoot.it/bf406337-3185-409c-92c7-22471cf41e38"
-                    width="620"
-                    height="280"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
-
-            </div>
-
-
-            <!-- KAHOOT 3 -->
-
-            <div class="kahoot-card">
-
-                <h3>
-                    ✍️ Recapitulare dirijată a noțiunilor de gramatică
-                </h3>
-
-                <p>
-                    Recapitulează principalele noțiuni
-                    de gramatică.
-                </p>
-
-                <iframe
-                    src="https://embed.kahoot.it/7b20be02-2691-42a9-a08d-19a0996ebd78"
-                    width="620"
-                    height="280"
-                    frameborder="0"
-                    allowfullscreen>
-                </iframe>
-
-            </div>
-
-        </div>
-
     </section>
 
 
@@ -1232,12 +1286,53 @@
 
     <script>
 
+        function arataQuiz(tip) {
+
+            const kahoot =
+                document.getElementById("kahoot");
+
+            const wordwall =
+                document.getElementById("wordwall");
+
+            const butoane =
+                document.querySelectorAll(".quiz-tab");
+
+
+            if (tip === "kahoot") {
+
+                kahoot.classList.remove("ascuns");
+
+                wordwall.classList.add("ascuns");
+
+                butoane[0].classList.add("activ");
+
+                butoane[1].classList.remove("activ");
+
+            }
+
+
+            if (tip === "wordwall") {
+
+                kahoot.classList.add("ascuns");
+
+                wordwall.classList.remove("ascuns");
+
+                butoane[0].classList.remove("activ");
+
+                butoane[1].classList.add("activ");
+
+            }
+
+        }
+
+
         function schimbaTema() {
 
             document.body.classList.toggle("dark");
 
             const buton =
                 document.getElementById("darkMode");
+
 
             if (
                 document.body.classList.contains("dark")
@@ -1256,6 +1351,7 @@
         }
 
     </script>
+
 
 </body>
 
