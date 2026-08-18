@@ -218,7 +218,7 @@ section {
 }
 
 /* =========================
-   BUTOANE QUIZ
+   BUTOANE QUIZ for test
 ========================= */
 
 .quiz-selectie {
