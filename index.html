@@ -2,7 +2,6 @@
 <html lang="ro">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,7 +21,6 @@
             --mov-inchis: #35152a;
             --roz: #f4dce7;
             --crem: #faf6ef;
-            --alb: #ffffff;
             --text: #292329;
             --kahoot: #46178f;
         }
@@ -34,19 +32,24 @@
             transition: 0.3s;
         }
 
-        /* MENIU */
+        /* ================= MENIU ================= */
 
         nav {
             position: sticky;
             top: 0;
             z-index: 1000;
+
             background: rgba(53, 21, 42, 0.97);
+
             padding: 15px 20px;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             gap: 22px;
             flex-wrap: wrap;
+
             box-shadow: 0 3px 15px rgba(0,0,0,0.2);
         }
 
@@ -64,21 +67,29 @@
         #darkMode {
             background: var(--mov);
             color: white;
+
             border: none;
+
             padding: 9px 14px;
+
             border-radius: 20px;
+
             cursor: pointer;
         }
 
-        /* HERO */
+        /* ================= HERO ================= */
 
         .hero {
             min-height: 600px;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             text-align: center;
+
             color: white;
+
             padding: 40px 20px;
 
             background:
@@ -95,109 +106,134 @@
 
         .hero-content {
             max-width: 800px;
+
             animation: aparitie 1.2s ease;
         }
 
         .hero h1 {
             font-size: clamp(40px, 7vw, 75px);
+
             margin-bottom: 20px;
         }
 
         .hero p {
             font-size: 22px;
+
             line-height: 1.6;
         }
 
         .buton {
             display: inline-block;
-            margin-top: 20px;
+
+            margin-top: 30px;
+
             padding: 13px 25px;
-            background: var(--mov);
-            color: white;
+
+            background: white;
+
+            color: var(--mov);
+
             text-decoration: none;
+
             border-radius: 25px;
+
             font-weight: bold;
+
             transition: 0.3s;
         }
 
         .buton:hover {
             transform: scale(1.05);
-            background: #9b3d68;
-        }
 
-        .hero .buton {
-            background: white;
-            color: var(--mov);
-            margin-top: 30px;
-        }
-
-        .hero .buton:hover {
             background: var(--roz);
         }
 
-        /* SECTIUNI */
+        /* ================= SECTIUNI ================= */
 
         section {
             max-width: 1100px;
+
             margin: 70px auto;
+
             padding: 20px;
         }
 
         .titlu {
             text-align: center;
+
             color: var(--mov);
+
             font-size: 38px;
+
             margin-bottom: 15px;
         }
 
         .subtitlu {
             text-align: center;
+
             color: #666;
+
             margin-bottom: 40px;
+
             font-size: 18px;
+
             line-height: 1.6;
         }
 
-        /* CARDURI */
+        /* ================= CARDURI ================= */
 
         .cards {
             display: grid;
+
             grid-template-columns:
                 repeat(auto-fit, minmax(240px, 1fr));
+
             gap: 25px;
         }
 
         .card {
             background: white;
+
             padding: 30px;
+
             border-radius: 18px;
-            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+
+            box-shadow:
+                0 7px 25px rgba(0,0,0,0.08);
+
             transition: 0.3s;
+
             border-top: 5px solid var(--mov);
         }
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,0.15);
         }
 
         .icon {
             font-size: 45px;
+
             margin-bottom: 15px;
         }
 
         .card h3 {
             color: var(--mov);
+
             font-size: 23px;
+
             margin-bottom: 12px;
         }
 
         .card p {
             line-height: 1.7;
+
             color: #555;
         }
 
-        /* AUTORI */
+        /* ================= AUTORI ================= */
 
         .autor {
             text-align: center;
@@ -206,7 +242,9 @@
         .portret {
             width: 110px;
             height: 110px;
+
             margin: 0 auto 20px;
+
             border-radius: 50%;
 
             background:
@@ -217,27 +255,36 @@
                 );
 
             display: flex;
+
             align-items: center;
             justify-content: center;
 
             color: white;
+
             font-size: 38px;
+
             font-weight: bold;
         }
 
         .opera {
             margin-top: 15px;
+
             padding: 10px;
+
             background: var(--roz);
+
             border-radius: 10px;
+
             color: var(--mov);
+
             font-weight: bold;
         }
 
-        /* CITAT */
+        /* ================= CITAT ================= */
 
         .citat {
             max-width: 900px;
+
             margin: auto;
 
             background:
@@ -248,8 +295,11 @@
                 );
 
             color: white;
+
             padding: 50px 35px;
+
             border-radius: 25px;
+
             text-align: center;
 
             box-shadow:
@@ -258,28 +308,35 @@
 
         .citat p {
             font-size: 27px;
+
             line-height: 1.5;
+
             font-style: italic;
         }
 
-        /* QUIZURI */
+        /* ================= QUIZURI ================= */
 
         .quizuri {
             display: grid;
+
             grid-template-columns:
                 repeat(auto-fit, minmax(450px, 1fr));
+
             gap: 30px;
         }
 
         .quiz-card {
             background: white;
+
             padding: 25px;
+
             border-radius: 20px;
 
             box-shadow:
                 0 7px 25px rgba(0,0,0,0.08);
 
             text-align: center;
+
             border-top: 5px solid var(--mov);
 
             transition: 0.3s;
@@ -294,29 +351,39 @@
 
         .quiz-card h3 {
             color: var(--mov);
+
             font-size: 23px;
+
             margin-bottom: 12px;
         }
 
         .quiz-card p {
             color: #555;
+
             line-height: 1.6;
+
             margin-bottom: 20px;
         }
 
         .quiz-card iframe {
             width: 100%;
+
             max-width: 500px;
+
             height: 380px;
+
             border-radius: 12px;
+
             border: none;
         }
 
-        /* KAHOOT */
+        /* ================= KAHOOT ================= */
 
         .kahoot-card {
             background: white;
-            padding: 30px;
+
+            padding: 25px;
+
             border-radius: 20px;
 
             box-shadow:
@@ -330,51 +397,45 @@
         }
 
         .kahoot-card:hover {
-            transform: translateY(-7px);
+            transform: translateY(-5px);
 
             box-shadow:
-                0 12px 30px rgba(0,0,0,0.15);
+                0 12px 30px rgba(0,0,0,0.13);
         }
 
         .kahoot-card h3 {
             color: var(--kahoot);
+
             font-size: 23px;
-            margin-bottom: 15px;
+
+            margin-bottom: 12px;
         }
 
         .kahoot-card p {
             color: #555;
+
             line-height: 1.6;
+
+            margin-bottom: 20px;
         }
 
-        .kahoot-button {
-            display: inline-block;
+        .kahoot-card iframe {
+            width: 100%;
 
-            margin-top: 20px;
+            max-width: 620px;
 
-            padding: 13px 25px;
+            height: 420px;
 
-            background: var(--kahoot);
-            color: white;
+            border: none;
 
-            text-decoration: none;
-
-            border-radius: 25px;
-
-            font-weight: bold;
-
-            transition: 0.3s;
+            border-radius: 12px;
         }
 
-        .kahoot-button:hover {
-            background: #5e22b5;
-            transform: scale(1.05);
-        }
-
-        /* DARK MODE */
+        /* ================= DARK MODE ================= */
 
         body.dark {
             background: #181318;
+
             color: white;
         }
 
@@ -382,6 +443,7 @@
         body.dark .quiz-card,
         body.dark .kahoot-card {
             background: #271f27;
+
             color: white;
         }
 
@@ -395,13 +457,17 @@
             color: #bbb;
         }
 
-        /* FOOTER */
+        /* ================= FOOTER ================= */
 
         footer {
             background: var(--mov-inchis);
+
             color: white;
+
             text-align: center;
+
             padding: 35px 20px;
+
             margin-top: 80px;
         }
 
@@ -409,28 +475,33 @@
             margin-bottom: 10px;
         }
 
-        /* ANIMATIE */
+        /* ================= ANIMATIE ================= */
 
         @keyframes aparitie {
 
             from {
                 opacity: 0;
-                transform: translateY(30px);
+
+                transform:
+                    translateY(30px);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+
+                transform:
+                    translateY(0);
             }
 
         }
 
-        /* TELEFON */
+        /* ================= TELEFON ================= */
 
         @media (max-width: 700px) {
 
             nav {
                 gap: 12px;
+
                 padding: 12px;
             }
 
@@ -463,6 +534,10 @@
                 padding: 15px;
             }
 
+            .kahoot-card iframe {
+                height: 420px;
+            }
+
         }
 
     </style>
@@ -473,21 +548,33 @@
 <body>
 
 
-    <!-- MENIU -->
+    <!-- ================= MENIU ================= -->
 
     <nav>
 
-        <a href="#acasa">Acasă</a>
+        <a href="#acasa">
+            Acasă
+        </a>
 
-        <a href="#limba">Limba română</a>
+        <a href="#limba">
+            Limba română
+        </a>
 
-        <a href="#literatura">Literatura</a>
+        <a href="#literatura">
+            Literatura
+        </a>
 
-        <a href="#autori">Autori</a>
+        <a href="#autori">
+            Autori
+        </a>
 
-        <a href="#materiale">Materiale</a>
+        <a href="#materiale">
+            Materiale
+        </a>
 
-        <a href="#quiz">Quiz-uri</a>
+        <a href="#quiz">
+            Quiz-uri
+        </a>
 
         <button
             id="darkMode"
@@ -500,7 +587,7 @@
     </nav>
 
 
-    <!-- ACASA -->
+    <!-- ================= ACASA ================= -->
 
     <header
         class="hero"
@@ -531,7 +618,7 @@
     </header>
 
 
-    <!-- LIMBA ROMANA -->
+    <!-- ================= LIMBA ================= -->
 
     <section id="limba">
 
@@ -607,7 +694,7 @@
     </section>
 
 
-    <!-- LITERATURA -->
+    <!-- ================= LITERATURA ================= -->
 
     <section id="literatura">
 
@@ -680,7 +767,7 @@
     </section>
 
 
-    <!-- CITAT -->
+    <!-- ================= CITAT ================= -->
 
     <section>
 
@@ -702,7 +789,7 @@
     </section>
 
 
-    <!-- AUTORI -->
+    <!-- ================= AUTORI ================= -->
 
     <section id="autori">
 
@@ -730,8 +817,8 @@
 
                 <p>
                     Poet, prozator și jurnalist român,
-                    considerat una dintre cele mai importante
-                    personalități ale literaturii române.
+                    una dintre personalitățile importante
+                    ale literaturii române.
                 </p>
 
                 <div class="opera">
@@ -811,7 +898,7 @@
     </section>
 
 
-    <!-- MATERIALE -->
+    <!-- ================= MATERIALE ================= -->
 
     <section id="materiale">
 
@@ -840,7 +927,7 @@
                 <p>
                     Poet important al literaturii române,
                     cunoscut pentru opere precum
-                    „Luceafărul” și „Floare albastră”.
+                    „Luceafărul”.
                 </p>
 
             </div>
@@ -887,7 +974,7 @@
     </section>
 
 
-    <!-- QUIZURI -->
+    <!-- ================= QUIZURI ================= -->
 
     <section id="quiz">
 
@@ -1026,7 +1113,7 @@
         </div>
 
 
-        <!-- KAHOOT -->
+        <!-- ================= KAHOOT ================= -->
 
         <h2
             class="titlu"
@@ -1037,12 +1124,11 @@
         </h2>
 
         <p class="subtitlu">
-            Mai multe activități interactive pentru
-            exersarea cunoștințelor.
+            Testează-ți cunoștințele cu activități Kahoot.
         </p>
 
 
-        <div class="cards">
+        <div class="quizuri">
 
 
             <!-- KAHOOT 1 -->
@@ -1058,14 +1144,13 @@
                     română în contexte diferite.
                 </p>
 
-                <a
-                    class="kahoot-button"
-                    href="https://create.kahoot.it/details/aplicarea-regulilor-in-contexte-noi/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
-                    target="_blank">
-
-                    🎯 Deschide Kahoot
-
-                </a>
+                <iframe
+                    src="https://embed.kahoot.it/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
+                    width="620"
+                    height="280"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
 
             </div>
 
@@ -1079,18 +1164,17 @@
                 </h3>
 
                 <p>
-                    Îmbogățește-ți vocabularul și verifică
-                    folosirea cuvintelor în contexte.
+                    Exersează vocabularul românesc
+                    în contexte.
                 </p>
 
-                <a
-                    class="kahoot-button"
-                    href="https://create.kahoot.it/details/romanian-vocabulary-in-context/bf406337-3185-409c-92c7-22471cf41e38"
-                    target="_blank">
-
-                    🎯 Deschide Kahoot
-
-                </a>
+                <iframe
+                    src="https://embed.kahoot.it/bf406337-3185-409c-92c7-22471cf41e38"
+                    width="620"
+                    height="280"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
 
             </div>
 
@@ -1105,17 +1189,16 @@
 
                 <p>
                     Recapitulează principalele noțiuni
-                    de gramatică într-un mod interactiv.
+                    de gramatică.
                 </p>
 
-                <a
-                    class="kahoot-button"
-                    href="https://create.kahoot.it/details/recapitulare-dirijata-a-notiunilor-de-gramatica/7b20be02-2691-42a9-a08d-19a0996ebd78"
-                    target="_blank">
-
-                    🎯 Deschide Kahoot
-
-                </a>
+                <iframe
+                    src="https://embed.kahoot.it/7b20be02-2691-42a9-a08d-19a0996ebd78"
+                    width="620"
+                    height="280"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
 
             </div>
 
@@ -1124,7 +1207,7 @@
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- ================= FOOTER ================= -->
 
     <footer>
 
@@ -1145,7 +1228,7 @@
     </footer>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- ================= JAVASCRIPT ================= -->
 
     <script>
 
@@ -1173,7 +1256,6 @@
         }
 
     </script>
-
 
 </body>
 
