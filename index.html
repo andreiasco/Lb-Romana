@@ -7,6 +7,7 @@
     <title>Limba și Literatura Română</title>
 
     <style>
+           
         * {
             margin: 0;
             padding: 0;
@@ -223,51 +224,60 @@
 
         /* QUIZ */
 
-        .quiz {
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 7px 25px rgba(0,0,0,0.08);
-            max-width: 750px;
-            margin: auto;
-        }
+          .quizuri {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+}
 
-        .quiz h3 {
-            color: var(--mov);
-            margin-bottom: 20px;
-            font-size: 23px;
-        }
+.quiz-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    text-align: center;
+    border-top: 5px solid var(--mov);
+}
 
-        .quiz label {
-            display: block;
-            background: #f8edf2;
-            margin: 10px 0;
-            padding: 14px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+.quiz-card h3 {
+    color: var(--mov);
+    font-size: 23px;
+    margin-bottom: 12px;
+}
 
-        .quiz label:hover {
-            background: #efd3df;
-        }
+.quiz-card p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
 
-        .quiz button {
-            margin-top: 20px;
-            padding: 13px 25px;
-            border: none;
-            border-radius: 25px;
-            background: var(--mov);
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.quiz-card iframe {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+}
 
-        #rezultat {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 20px;
-        }
+body.dark .quiz-card {
+    background: #271f27;
+}
+
+body.dark .quiz-card p {
+    color: #ddd;
+}
+
+@media (max-width: 700px) {
+    .quizuri {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-card {
+        padding: 15px;
+    }
+
+    .quiz-card iframe {
+        height: 380px;
+    }
+}
 
         /* FOOTER */
 
@@ -620,107 +630,131 @@
 
     <!-- QUIZ -->
 
-  <section id="quiz">
+ <section id="quiz">
 
     <h2 class="titlu">Quiz-uri 📚</h2>
 
     <p class="subtitlu">
-        Alege un quiz și verifică-ți cunoștințele.
+        Testează-ți cunoștințele de Limba și literatura română
+        prin aceste activități interactive.
     </p>
 
-    <div class="cards">
+    <div class="quizuri">
+
 
         <!-- QUIZ 1 -->
-        <div class="card">
-            <h3>Quiz de gramatică</h3>
+        <div class="quiz-card">
+
+            <h3>🔤 Conjuncții de coordonare</h3>
+
             <p>
-                Exersează părțile de vorbire și regulile de gramatică.
+                Exersează recunoașterea și folosirea corectă
+                a conjuncțiilor coordonatoare.
             </p>
 
             <iframe
-                src="https://www.wordwall.net/embed/de00f4bb22f8435682302895b9885e0c?themeId=1&templateId=38&fontStackId=0"
-                width="100%"
-                height="400"
+                style="max-width:100%"
+                src="https://www.wordwall.net/embed/8ca4366782f647bb8997ad76da9f57e6?themeId=1&templateId=38&fontStackId=0"
+                width="500"
+                height="380"
                 frameborder="0"
                 allowfullscreen>
             </iframe>
+
         </div>
 
 
         <!-- QUIZ 2 -->
-        <div class="card">
-            <h3>Quiz de literatură</h3>
+        <div class="quiz-card">
+
+            <h3>✍️ Recapitulare – Verbul</h3>
+
             <p>
-                Verifică-ți cunoștințele despre literatura română.
+                Recapitulează noțiunile despre verb pentru
+                clasele VI–VIII.
             </p>
 
-            <iframe>
-                src="https://www.wordwall.net/embed/63ab2ec884864766bd01500290c4fff1?themeId=1&templateId=5&fontStackId=0"
-                width="100%"
-                height="400"
+            <iframe
+                style="max-width:100%"
+                src="https://www.wordwall.net/embed/129ab020eea7468dae4c5c3a09adb830?themeId=44&templateId=73&fontStackId=0"
+                width="500"
+                height="380"
                 frameborder="0"
                 allowfullscreen>
             </iframe>
+
         </div>
 
 
         <!-- QUIZ 3 -->
-        <div class="card">
-            <h3>Marii scriitori români</h3>
+        <div class="quiz-card">
+
+            <h3>👤 Pronumele – clasa a VII-a</h3>
+
             <p>
-                Cât de bine îi cunoști pe Eminescu, Creangă,
-                Caragiale și Slavici?
+                Verifică-ți cunoștințele despre pronume
+                și caracteristicile acestuia.
             </p>
 
             <iframe
+                style="max-width:100%"
                 src="https://www.wordwall.net/embed/b6f4bdcdcb8544d084e1fb9f22d584a4?themeId=43&templateId=3&fontStackId=0"
-                width="100%"
-                height="400"
+                width="500"
+                height="380"
                 frameborder="0"
                 allowfullscreen>
             </iframe>
+
         </div>
 
 
         <!-- QUIZ 4 -->
-        <div class="card">
-            <h3>Figuri de stil</h3>
+        <div class="quiz-card">
+
+            <h3>🧠 Categorii semantice</h3>
+
             <p>
-                Identifică principalele figuri de stil.
+                Exersează categoriile semantice și relațiile
+                dintre cuvinte.
             </p>
 
             <iframe
-               src="https://www.wordwall.net/embed/129ab020eea7468dae4c5c3a09adb830?themeId=44&templateId=73&fontStackId=0"
-                width="100%"
-                height="400"
+                style="max-width:100%"
+                src="https://www.wordwall.net/embed/de00f4bb22f8435682302895b9885e0c?themeId=1&templateId=38&fontStackId=0"
+                width="500"
+                height="380"
                 frameborder="0"
                 allowfullscreen>
             </iframe>
+
         </div>
 
-        
- <!-- QUIZ 5 -->
-        <div class="card">
-            <h3>Figuri de stil</h3>
+
+        <!-- QUIZ 5 -->
+        <div class="quiz-card">
+
+            <h3>📖 Textul literar</h3>
+
             <p>
-                Identifică principalele figuri de stil.
+                Verifică-ți cunoștințele despre textul literar
+                și elementele sale.
             </p>
 
-            <iframe 
-                style="max-width:100%" 
-                src="https://www.wordwall.net/embed/8ca4366782f647bb8997ad76da9f57e6?themeId=1&templateId=38&fontStackId=0" 
-                width="500" 
-                height="380" 
-                frameborder="0" 
+            <iframe
+                style="max-width:100%"
+                src="https://www.wordwall.net/embed/63ab2ec884864766bd01500290c4fff1?themeId=1&templateId=5&fontStackId=0"
+                width="500"
+                height="380"
+                frameborder="0"
                 allowfullscreen>
-                
-                </iframe>
+            </iframe>
+
         </div>
+
     </div>
 
 </section>
-
-
+ 
     <!-- FOOTER -->
 
     <footer>
