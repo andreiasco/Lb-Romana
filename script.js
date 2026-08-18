@@ -1,43 +1,42 @@
-﻿/* =================================
-   MOD ÎNTUNECAT
-================================= */
+﻿// ======================================================
+// SUPABASE
+// ======================================================
 
-function schimbaTema() {
-    document.body.classList.toggle("dark");
-}
+const SUPABASE_URL = "https://eagjavifluwolqeuctzk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_QSG9OFrCANpRxA-moQCQgQ_mtkx-hWX";
+const BUCKET = "Pdf";
 
-/* =================================
-   SCHIMBARE KAHOOT / WORDWALL
-================================= */
+const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-function arataQuiz(tip) {
-    const kahoot = document.getElementById("kahoot");
-    const wordwall = document.getElementById("wordwall");
-    const butoane = document.querySelectorAll(".quiz-tab");
 
-    if (tip === "kahoot") {
-        kahoot.classList.remove("ascuns");
-        wordwall.classList.add("ascuns");
-        butoane[0].classList.add("activ");
-        butoane[1].classList.remove("activ");
-    }
-
-    if (tip === "wordwall") {
-        kahoot.classList.add("ascuns");
-        wordwall.classList.remove("ascuns");
-        butoane[0].classList.remove("activ");
-        butoane[1].classList.add("activ");
-    }
-}
+// ======================================================
+// CONTAINER PRINCIPAL
+// ======================================================
 
 const site = document.getElementById("site");
+
+
+// ======================================================
+// HTML + CSS
+// ======================================================
 
 site.innerHTML = `
 
 <style>
 
+/* ======================================================
+   RESET
+====================================================== */
+
 * {
     box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html {
     scroll-behavior: smooth;
 }
 
@@ -46,7 +45,13 @@ body {
     font-family: Arial, sans-serif;
     background: #faf6ef;
     color: #292329;
+    transition: background .3s, color .3s;
 }
+
+
+/* ======================================================
+   NAVBAR
+====================================================== */
 
 nav {
     position: sticky;
@@ -54,11 +59,13 @@ nav {
     z-index: 1000;
 
     background: #35152a;
+
     padding: 15px;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
     gap: 20px;
     flex-wrap: wrap;
 }
@@ -67,6 +74,8 @@ nav a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+
+    transition: .3s;
 }
 
 nav a:hover {
@@ -75,12 +84,30 @@ nav a:hover {
 
 nav button {
     border: none;
+
     background: #7b2450;
     color: white;
+
     padding: 10px 15px;
+
     border-radius: 20px;
+
     cursor: pointer;
+
+    font-weight: bold;
+
+    transition: .3s;
 }
+
+nav button:hover {
+    background: #a8446c;
+    transform: translateY(-2px);
+}
+
+
+/* ======================================================
+   HERO
+====================================================== */
 
 .hero {
     min-height: 550px;
@@ -90,14 +117,15 @@ nav button {
     justify-content: center;
 
     text-align: center;
+
     color: white;
 
     padding: 30px;
 
     background:
         linear-gradient(
-            rgba(53,21,42,.8),
-            rgba(123,36,80,.8)
+            rgba(53, 21, 42, .8),
+            rgba(123, 36, 80, .8)
         ),
         radial-gradient(
             circle,
@@ -120,33 +148,58 @@ nav button {
     display: inline-block;
 
     margin-top: 25px;
+
     padding: 14px 25px;
 
     background: white;
     color: #7b2450;
 
     border-radius: 25px;
+
     text-decoration: none;
+
     font-weight: bold;
+
+    transition: .3s;
 }
+
+.buton:hover {
+    transform: scale(1.05);
+}
+
+
+/* ======================================================
+   SECTIUNI
+====================================================== */
 
 section {
     max-width: 1100px;
+
     margin: 70px auto;
+
     padding: 20px;
 }
 
 .titlu {
     text-align: center;
+
     color: #7b2450;
+
     font-size: 38px;
 }
 
 .subtitlu {
     text-align: center;
+
     color: #666;
+
     margin-bottom: 40px;
 }
+
+
+/* ======================================================
+   CARDURI
+====================================================== */
 
 .cards {
     display: grid;
@@ -165,7 +218,7 @@ section {
     border-radius: 18px;
 
     box-shadow:
-        0 7px 25px rgba(0,0,0,.08);
+        0 7px 25px rgba(0, 0, 0, .08);
 
     border-top: 5px solid #7b2450;
 
@@ -189,6 +242,11 @@ section {
     font-size: 45px;
 }
 
+
+/* ======================================================
+   AUTORI
+====================================================== */
+
 .autor {
     text-align: center;
 }
@@ -197,22 +255,7 @@ section {
     width: 120px;
     height: 120px;
 
-    margin: auto;
-    margin-bottom: 20px;
-
-    border-radius: 50%;
-
-    overflow: hidden;
-
-    background: #7b2450;
-}
-
-.portret {
-    width: 120px;
-    height: 120px;
-
-    margin: auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
 
     border-radius: 50%;
 
@@ -232,33 +275,50 @@ section {
 
 .opera-list {
     display: flex;
+
     flex-direction: column;
+
     gap: 10px;
+
     margin-top: 15px;
 }
 
 .opera-btn {
     display: inline-block;
+
     padding: 10px 15px;
+
     background: #f4dce7;
     color: #7b2450;
+
     border: 2px solid #7b2450;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-weight: bold;
-    text-decoration: none;
+
     transition: .3s;
+
     text-align: center;
 }
 
 .opera-btn:hover {
     background: #7b2450;
     color: #f4dce7;
-    transform: scale(1.05);
+
+    transform: scale(1.03);
 }
+
+
+/* ======================================================
+   CITAT
+====================================================== */
 
 .citat {
     max-width: 900px;
+
     margin: auto;
 
     padding: 45px;
@@ -279,12 +339,16 @@ section {
 
 .citat p {
     font-size: 25px;
+
     font-style: italic;
+
+    line-height: 1.6;
 }
 
-/* =========================
-   BUTOANE QUIZ for test
-========================= */
+
+/* ======================================================
+   QUIZ SELECTIE
+====================================================== */
 
 .quiz-selectie {
     display: flex;
@@ -308,6 +372,7 @@ section {
     color: white;
 
     font-size: 17px;
+
     font-weight: bold;
 
     cursor: pointer;
@@ -319,24 +384,25 @@ section {
     transform: scale(1.05);
 }
 
-.kahoot {
+.quiz-tab.kahoot {
     background: #46178f;
 }
 
-.wordwall {
+.quiz-tab.wordwall {
     background: #96008c;
 }
 
-.activ {
+.quiz-tab.activ {
     box-shadow:
-        0 5px 20px rgba(0,0,0,.3);
+        0 5px 20px rgba(0, 0, 0, .3);
 
     transform: scale(1.05);
 }
 
-/* =========================
+
+/* ======================================================
    QUIZURI
-========================= */
+====================================================== */
 
 .quizuri {
     display: grid;
@@ -358,7 +424,7 @@ section {
     text-align: center;
 
     box-shadow:
-        0 7px 25px rgba(0,0,0,.08);
+        0 7px 25px rgba(0, 0, 0, .08);
 }
 
 .quiz-card {
@@ -379,6 +445,7 @@ section {
 
 .quiz-card iframe {
     width: 100%;
+
     height: 380px;
 
     border: none;
@@ -390,6 +457,7 @@ section {
     display: inline-block;
 
     background: #46178f;
+
     color: white;
 
     padding: 14px 25px;
@@ -399,22 +467,43 @@ section {
     text-decoration: none;
 
     font-weight: bold;
+
+    transition: .3s;
 }
 
 .kahoot-link:hover {
     background: #5f25b2;
+
+    transform: scale(1.03);
 }
 
 .ascuns {
-    display: none;
+    display: none !important;
 }
 
-/* =========================
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+footer {
+    background: #35152a;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 35px;
+}
+
+
+/* ======================================================
    DARK MODE
-========================= */
+====================================================== */
 
 body.dark {
     background: #181318;
+
     color: white;
 }
 
@@ -434,16 +523,12 @@ body.dark .subtitlu {
     color: #bbb;
 }
 
-footer {
-    background: #35152a;
-    color: white;
 
-    text-align: center;
+/* ======================================================
+   RESPONSIVE
+====================================================== */
 
-    padding: 35px;
-}
-
-@media(max-width:700px) {
+@media (max-width: 700px) {
 
     .quizuri {
         grid-template-columns: 1fr;
@@ -453,28 +538,60 @@ footer {
         min-height: 500px;
     }
 
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    section {
+        margin: 40px auto;
+    }
+
+    .citat {
+        padding: 30px 20px;
+    }
+
+    .citat p {
+        font-size: 20px;
+    }
+
 }
 
 </style>
 
 
-<!-- =========================
+<!-- ======================================================
      MENIU
-========================= -->
+====================================================== -->
 
 <nav>
 
-    <a href="#acasa">Acasă</a>
+    <a href="#acasa">
+        Acasă
+    </a>
 
-    <a href="#limba">Limba română</a>
+    <a href="#limba">
+        Limba română
+    </a>
 
-    <a href="#literatura">Literatura</a>
+    <a href="#literatura">
+        Literatura
+    </a>
 
-    <a href="#autori">Autori</a>
+    <a href="#autori">
+        Autori
+    </a>
 
-    <a href="#materiale">Materiale</a>
+    <a href="#materiale">
+        Materiale
+    </a>
 
-    <a href="#quiz">Quiz-uri</a>
+    <a href="#quiz">
+        Quiz-uri
+    </a>
 
     <button onclick="schimbaTema()">
         🌙 Mod întunecat
@@ -483,9 +600,9 @@ footer {
 </nav>
 
 
-<!-- =========================
+<!-- ======================================================
      ACASA
-========================= -->
+====================================================== -->
 
 <header class="hero" id="acasa">
 
@@ -500,8 +617,12 @@ footer {
             a literaturii și a marilor scriitori români.
         </p>
 
-        <a href="#limba" class="buton">
+        <a
+            href="#limba"
+            class="buton">
+
             Începe călătoria 📖
+
         </a>
 
     </div>
@@ -509,9 +630,9 @@ footer {
 </header>
 
 
-<!-- =========================
+<!-- ======================================================
      LIMBA ROMANA
-========================= -->
+====================================================== -->
 
 <section id="limba">
 
@@ -527,9 +648,13 @@ footer {
 
         <div class="card">
 
-            <div class="icon">🔤</div>
+            <div class="icon">
+                🔤
+            </div>
 
-            <h3>Gramatică</h3>
+            <h3>
+                Gramatică
+            </h3>
 
             <p>
                 Descoperă regulile după care sunt
@@ -541,9 +666,13 @@ footer {
 
         <div class="card">
 
-            <div class="icon">📚</div>
+            <div class="icon">
+                📚
+            </div>
 
-            <h3>Vocabular</h3>
+            <h3>
+                Vocabular
+            </h3>
 
             <p>
                 Vocabularul cuprinde totalitatea
@@ -555,9 +684,13 @@ footer {
 
         <div class="card">
 
-            <div class="icon">✍️</div>
+            <div class="icon">
+                ✍️
+            </div>
 
-            <h3>Ortografie</h3>
+            <h3>
+                Ortografie
+            </h3>
 
             <p>
                 Învață să scrii corect și să respecți
@@ -571,9 +704,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      LITERATURA
-========================= -->
+====================================================== -->
 
 <section id="literatura">
 
@@ -589,9 +722,13 @@ footer {
 
         <div class="card">
 
-            <div class="icon">🌙</div>
+            <div class="icon">
+                🌙
+            </div>
 
-            <h3>Poezia</h3>
+            <h3>
+                Poezia
+            </h3>
 
             <p>
                 Poezia exprimă sentimente și idei
@@ -603,9 +740,13 @@ footer {
 
         <div class="card">
 
-            <div class="icon">📖</div>
+            <div class="icon">
+                📖
+            </div>
 
-            <h3>Proza</h3>
+            <h3>
+                Proza
+            </h3>
 
             <p>
                 Romanul, nuvela, povestirea și basmul
@@ -617,9 +758,13 @@ footer {
 
         <div class="card">
 
-            <div class="icon">🎭</div>
+            <div class="icon">
+                🎭
+            </div>
 
-            <h3>Teatrul</h3>
+            <h3>
+                Teatrul
+            </h3>
 
             <p>
                 Textele dramatice sunt construite
@@ -633,9 +778,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      CITAT
-========================= -->
+====================================================== -->
 
 <section>
 
@@ -643,7 +788,7 @@ footer {
 
         <p>
             „Nu există altă avere mai prețioasă
-            decât limba unui popor."
+            decât limba unui popor.”
         </p>
 
         <strong>
@@ -655,9 +800,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      AUTORI
-========================= -->
+====================================================== -->
 
 <section id="autori">
 
@@ -669,15 +814,18 @@ footer {
         Descoperă autori importanți și operele lor.
     </p>
 
-    <div class="cards" id="autorCards">
-        <!-- Autorii vor fi generati dinamic de JavaScript -->
+    <div
+        class="cards"
+        id="autorCards">
+
     </div>
 
 </section>
 
-<!-- =========================
+
+<!-- ======================================================
      MATERIALE
-========================= -->
+====================================================== -->
 
 <section id="materiale">
 
@@ -693,7 +841,9 @@ footer {
 
         <div class="card">
 
-            <div class="icon">📖</div>
+            <div class="icon">
+                📖
+            </div>
 
             <h3>
                 Mihai Eminescu
@@ -709,7 +859,9 @@ footer {
 
         <div class="card">
 
-            <div class="icon">✍️</div>
+            <div class="icon">
+                ✍️
+            </div>
 
             <h3>
                 Gramatică
@@ -725,7 +877,9 @@ footer {
 
         <div class="card">
 
-            <div class="icon">📚</div>
+            <div class="icon">
+                📚
+            </div>
 
             <h3>
                 Genuri literare
@@ -742,9 +896,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      QUIZURI
-========================= -->
+====================================================== -->
 
 <section id="quiz">
 
@@ -779,9 +933,9 @@ footer {
     </div>
 
 
-    <!-- =========================
+    <!-- ==================================================
          KAHOOT
-    ========================= -->
+    ================================================== -->
 
     <div
         id="kahoot"
@@ -802,7 +956,8 @@ footer {
             <a
                 class="kahoot-link"
                 href="https://create.kahoot.it/details/aplicarea-regulilor-in-contexte-noi/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
 
                 🎯 Deschide Kahoot
 
@@ -824,7 +979,8 @@ footer {
             <a
                 class="kahoot-link"
                 href="https://create.kahoot.it/details/romanian-vocabulary-in-context/bf406337-3185-409c-92c7-22471cf41e38"
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
 
                 🎯 Deschide Kahoot
 
@@ -847,7 +1003,8 @@ footer {
             <a
                 class="kahoot-link"
                 href="https://create.kahoot.it/details/recapitulare-dirijata-a-notiunilor-de-gramatica/7b20be02-2691-42a9-a08d-19a0996ebd78"
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
 
                 🎯 Deschide Kahoot
 
@@ -858,9 +1015,9 @@ footer {
     </div>
 
 
-    <!-- =========================
+    <!-- ==================================================
          WORDWALL
-    ========================= -->
+    ================================================== -->
 
     <div
         id="wordwall"
@@ -961,9 +1118,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      FOOTER
-========================= -->
+====================================================== -->
 
 <footer>
 
@@ -983,131 +1140,338 @@ footer {
 
 `;
 
-/* =================================
-   DATA AUTORI - Lista cu operele lor
-================================= */
+
+// ======================================================
+// AUTORI
+// ======================================================
 
 const autori = [
+
     {
         initiale: "MS",
+
         nume: "Mihail Sadoveanu",
+
         poza: "Imagini/Sadoveanu.jpeg",
-        descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
+
+        descriere:
+            "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
+
         operele: [
-            { titlu: "Baltagul", pdf: "Pdf/Baltagul rezumat.pdf" },
-            { titlu: "Dumbrava Minunată", pdf: "Pdf/Dumbrava minunată rezumat.pdf" }
+            {
+                titlu: "Baltagul",
+                pdf: "Baltagul rezumat.pdf"
+            },
+            {
+                titlu: "Dumbrava Minunată",
+                pdf: "Dumbrava minunată rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "RD",
-        nume: "Roaldh Dahl",
+
+        nume: "Roald Dahl",
+
         poza: "Imagini/Roaldh.jpeg",
-        descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
+
+        descriere:
+            "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
+
         operele: [
-            { titlu: "Matilda", pdf: "Pdf/Matilda rezumat.pdf" }
+            {
+                titlu: "Matilda",
+                pdf: "Matilda rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "ME",
+
         nume: "Michael Ende",
+
         poza: "Imagini/Michael.jpeg",
-        descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
+
+        descriere:
+            "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
+
         operele: [
-            { titlu: "Povestea fără sfârșit", pdf: "Pdf/Povestea fără sfârșit rezumat.pdf" }
+            {
+                titlu: "Povestea fără sfârșit",
+                pdf: "Povestea fără sfârșit rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "GC",
+
         nume: "George Călinescu",
+
         poza: "Imagini/Calinescu.jpeg",
-        descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+
+        descriere:
+            "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+
         operele: [
-            { titlu: "Enigma Otiliei", pdf: "Pdf/Enigma Otiliei rezumat.pdf" }
+            {
+                titlu: "Enigma Otiliei",
+                pdf: "Enigma Otiliei rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "LR",
+
         nume: "Liviu Rebreanu",
+
         poza: "Imagini/Rebreanu.jpeg",
-        descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
+
+        descriere:
+            "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
+
         operele: [
-            { titlu: "Ion", pdf: "Pdf/Ion rezumat.pdf" }
+            {
+                titlu: "Ion",
+                pdf: "Ion rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "ME2",
+
         nume: "Mircea Eliade",
+
         poza: "Imagini/Eliade.jpeg",
-        descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
+
+        descriere:
+            "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
+
         operele: [
-            { titlu: "La țigănci", pdf: "Pdf/La țigănci rezumat.pdf" }
+            {
+                titlu: "La țigănci",
+                pdf: "La țigănci rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "IS",
+
         nume: "Ioan Slavici",
+
         poza: "Imagini/Slavici.jpeg",
-        descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
+
+        descriere:
+            "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
+
         operele: [
-            { titlu: "Moara cu noroc", pdf: "Pdf/Moara cu noroc rezumat.pdf" }
+            {
+                titlu: "Moara cu noroc",
+                pdf: "Moara cu noroc rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "IC",
+
         nume: "I.L. Caragiale",
+
         poza: "Imagini/Caragiale.jpeg",
-        descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
+
+        descriere:
+            "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
+
         operele: [
-            { titlu: "O scrisoare pierdută", pdf: "Pdf/O scrisoare pierdută rezumat.pdf" }
+            {
+                titlu: "O scrisoare pierdută",
+                pdf: "O scrisoare pierdută rezumat.pdf"
+            }
         ]
     },
+
+
     {
         initiale: "CP",
+
         nume: "Camil Petrescu",
+
         poza: "Imagini/Camil.jpeg",
-        descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
+
+        descriere:
+            "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
+
         operele: [
-            { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Pdf/Ultima noapte de dragoste rezumat.pdf" }
+            {
+                titlu: "Ultima noapte de dragoste, întâia noapte de război",
+                pdf: "Ultima noapte de dragoste rezumat.pdf"
+            }
         ]
     }
+
 ];
 
-/* =================================
-   GENEREAZA CARTILE AUTORILOR
-================================= */
+
+// ======================================================
+// GENEREAZĂ AUTORII
+// ======================================================
 
 function genereazaAutori() {
-    const container = document.getElementById("autorCards");
-    if (!container) return;
+
+    const container =
+        document.getElementById("autorCards");
+
+    if (!container) {
+        console.error("Nu există #autorCards.");
+        return;
+    }
+
 
     container.innerHTML = autori.map(autor => `
+
         <div class="card autor">
-            <div class="portret"><img src="${autor.poza}" alt="N/A"></div>
-            <h3>${autor.nume}</h3>
-            <p>${autor.descriere}</p>
-            <div class="opera-list">
-                ${autor.operele.map(opera => `
-                    <button class="opera-btn" onclick="deschidePDF('${opera.pdf}')">
-                        📕 „${opera.titlu}"
-                    </button>
-                `).join('')}
+
+            <div class="portret">
+
+                <img
+                    src="${autor.poza}"
+                    alt="${autor.nume}"
+                    loading="lazy"
+                    onerror="this.style.display='none';"
+                >
+
             </div>
+
+
+            <h3>
+                ${autor.nume}
+            </h3>
+
+
+            <p>
+                ${autor.descriere}
+            </p>
+
+
+            <div class="opera-list">
+
+                ${autor.operele.map(opera => `
+
+                    <button
+                        class="opera-btn"
+                        type="button"
+                        onclick="deschidePDF(${JSON.stringify(opera.pdf)})">
+
+                        📕 „${opera.titlu}”
+
+                    </button>
+
+                `).join("")}
+
+            </div>
+
         </div>
-    `).join('');
+
+    `).join("");
 }
 
-/* =================================
-   DESCHIDE PDF
-================================= */
 
-function deschidePDF(numeFisier) {
-    const cale = numeFisier;
-    window.open(cale, "_blank");
+// ======================================================
+// DESCHIDE PDF DIN SUPABASE STORAGE
+// ======================================================
+
+async function deschidePDF(numeFisier) {
+
+    try {
+
+        console.log(
+            "Se caută PDF-ul:",
+            numeFisier
+        );
+
+
+        const { data, error } = await supabase
+            .storage
+            .from(BUCKET)
+            .createSignedUrl(
+                numeFisier,
+                60
+            );
+
+
+        if (error) {
+
+            console.error(
+                "Eroare Supabase:",
+                error
+            );
+
+            alert(
+                "Nu am putut deschide materialul. Verifică dacă PDF-ul există în bucketul „Pdf”."
+            );
+
+            return;
+        }
+
+
+        if (!data || !data.signedUrl) {
+
+            console.error(
+                "Nu există signedUrl:",
+                data
+            );
+
+            alert(
+                "Supabase nu a generat linkul pentru PDF."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "PDF găsit:",
+            data.signedUrl
+        );
+
+
+        window.open(
+            data.signedUrl,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Eroare la deschiderea PDF-ului:",
+            error
+        );
+
+        alert(
+            "A apărut o eroare la deschiderea PDF-ului."
+        );
+    }
 }
 
-/* =================================
-   SCHIMBARE KAHOOT / WORDWALL
-================================= */
+
+// ======================================================
+// SCHIMBARE KAHOOT / WORDWALL
+// ======================================================
 
 function arataQuiz(tip) {
 
@@ -1121,15 +1485,24 @@ function arataQuiz(tip) {
         document.querySelectorAll(".quiz-tab");
 
 
+    if (!kahoot || !wordwall) {
+        return;
+    }
+
+
     if (tip === "kahoot") {
 
         kahoot.classList.remove("ascuns");
 
         wordwall.classList.add("ascuns");
 
-        butoane[0].classList.add("activ");
+        if (butoane[0]) {
+            butoane[0].classList.add("activ");
+        }
 
-        butoane[1].classList.remove("activ");
+        if (butoane[1]) {
+            butoane[1].classList.remove("activ");
+        }
 
     }
 
@@ -1140,18 +1513,22 @@ function arataQuiz(tip) {
 
         wordwall.classList.remove("ascuns");
 
-        butoane[0].classList.remove("activ");
+        if (butoane[0]) {
+            butoane[0].classList.remove("activ");
+        }
 
-        butoane[1].classList.add("activ");
+        if (butoane[1]) {
+            butoane[1].classList.add("activ");
+        }
 
     }
 
 }
 
 
-/* =================================
-   MOD ÎNTUNECAT
-================================= */
+// ======================================================
+// MOD ÎNTUNECAT
+// ======================================================
 
 function schimbaTema() {
 
@@ -1159,11 +1536,23 @@ function schimbaTema() {
 
 }
 
-/* =================================
-   INIȚIALIZARE PAGINA
-================================= */
 
-// Genereaza autorii atunci cand pagina se incarca
-document.addEventListener("DOMContentLoaded", function() {
-    genereazaAutori();
-});
+// ======================================================
+// INIȚIALIZARE
+// ======================================================
+
+genereazaAutori();
+
+
+// ======================================================
+// VERIFICARE SUPABASE
+// ======================================================
+
+console.log(
+    "Supabase inițializat."
+);
+
+console.log(
+    "Bucket PDF:",
+    BUCKET
+);
