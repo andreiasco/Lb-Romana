@@ -597,7 +597,7 @@ footer {
 <section id="autori">
 
     <h2 class="titlu">
-        Hei, mama 📚
+        TataBranch 📚
     </h2>
 
     <p class="subtitlu">
