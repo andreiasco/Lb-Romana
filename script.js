@@ -1,4 +1,4 @@
-const site = document.getElementById("site");
+﻿const site = document.getElementById("site");
 
 site.innerHTML = `
 
@@ -184,12 +184,34 @@ section {
 .opera {
     margin-top: 15px;
 
-    padding: 10px;
+    padding: 0;
+}
 
+.opera-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.opera-btn {
+    display: inline-block;
+    padding: 10px 15px;
     background: #f4dce7;
     color: #7b2450;
+    border: 2px solid #7b2450;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    transition: .3s;
+    text-align: center;
+}
 
-    border-radius: 10px;
+.opera-btn:hover {
+    background: #7b2450;
+    color: #f4dce7;
+    transform: scale(1.05);
 }
 
 .citat {
@@ -578,7 +600,7 @@ footer {
 
         <p>
             „Nu există altă avere mai prețioasă
-            decât limba unui popor.”
+            decât limba unui popor."
         </p>
 
         <strong>
@@ -604,232 +626,8 @@ footer {
         Descoperă autori importanți și operele lor.
     </p>
 
-    <div class="cards">
-
-        <!-- 1. MIHAIL SADOVEANU -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                MS
-            </div>
-
-            <h3>
-                Mihail Sadoveanu
-            </h3>
-
-            <p>
-                Prozator român cunoscut pentru operele sale
-                inspirate din istorie, natură și lumea
-                tradițională românească.
-            </p>
-
-            <div class="opera">
-                📕 „Baltagul”
-            </div>
-
-        </div>
-
-
-        <!-- 2. ROALD DAHL -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                RD
-            </div>
-
-            <h3>
-                Roald Dahl
-            </h3>
-
-            <p>
-                Scriitor britanic cunoscut mai ales pentru
-                cărțile sale pentru copii, pline de imaginație,
-                umor și aventură.
-            </p>
-
-            <div class="opera">
-                📕 „Matilda”
-            </div>
-
-        </div>
-
-
-        <!-- 3. MICHAEL ENDE -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                ME
-            </div>
-
-            <h3>
-                Michael Ende
-            </h3>
-
-            <p>
-                Scriitor german cunoscut pentru literatura
-                fantastică și pentru poveștile sale pline
-                de imaginație.
-            </p>
-
-            <div class="opera">
-                📕 „Povestea fără sfârșit”
-            </div>
-
-        </div>
-
-
-        <!-- 4. GEORGE CĂLINESCU -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                GC
-            </div>
-
-            <h3>
-                George Călinescu
-            </h3>
-
-            <p>
-                Critic literar, istoric literar, romancier
-                și academician român, una dintre marile
-                personalități ale culturii române.
-            </p>
-
-            <div class="opera">
-                📕 „Enigma Otiliei”
-            </div>
-
-        </div>
-
-
-        <!-- 5. LIVIU REBREANU -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                LR
-            </div>
-
-            <h3>
-                Liviu Rebreanu
-            </h3>
-
-            <p>
-                Prozator român important, cunoscut pentru
-                romanele sale realiste și pentru prezentarea
-                societății românești.
-            </p>
-
-            <div class="opera">
-                📕 „Ion”
-            </div>
-
-        </div>
-
-
-        <!-- 6. MIRCEA ELIADE -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                ME
-            </div>
-
-            <h3>
-                Mircea Eliade
-            </h3>
-
-            <p>
-                Scriitor, istoric al religiilor și filozof
-                român, cunoscut pentru literatura sa
-                fantastică și pentru studiile despre religie.
-            </p>
-
-            <div class="opera">
-                📕 „La țigănci”
-            </div>
-
-        </div>
-
-
-        <!-- 7. IOAN SLAVICI -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                IS
-            </div>
-
-            <h3>
-                Ioan Slavici
-            </h3>
-
-            <p>
-                Prozator român important, cunoscut pentru
-                operele sale inspirate din viața satului
-                și pentru analiza personajelor.
-            </p>
-
-            <div class="opera">
-                📕 „Moara cu noroc”
-            </div>
-
-        </div>
-
-
-        <!-- 8. I.L. CARAGIALE -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                IC
-            </div>
-
-            <h3>
-                I.L. Caragiale
-            </h3>
-
-            <p>
-                Dramaturg și prozator român, cunoscut pentru
-                comediile și satira sa asupra societății.
-            </p>
-
-            <div class="opera">
-                📕 „O scrisoare pierdută”
-            </div>
-
-        </div>
-
-
-        <!-- 9. CAMIL PETRESCU -->
-
-        <div class="card autor">
-
-            <div class="portret">
-                CP
-            </div>
-
-            <h3>
-                Camil Petrescu
-            </h3>
-
-            <p>
-                Romancier, dramaturg și poet român,
-                reprezentant important al modernismului
-                în literatura română.
-            </p>
-
-            <div class="opera">
-                📕 „Ultima noapte de dragoste,
-                întâia noapte de război”
-            </div>
-
-        </div>
-
+    <div class="cards" id="autorCards">
+        <!-- Autorii vor fi generati dinamic de JavaScript -->
     </div>
 
 </section>
@@ -1142,6 +940,118 @@ footer {
 
 `;
 
+/* =================================
+   DATA AUTORI - Lista cu operele lor
+================================= */
+
+const autori = [
+    {
+        initiale: "MS",
+        nume: "Mihail Sadoveanu",
+        descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
+        operele: [
+            { titlu: "Baltagul", pdf: "Baltagul rezumat.pdf" },
+            { titlu: "Dumbrava Minunată", pdf: "Dumbrava minunată rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "RD",
+        nume: "Roald Dahl",
+        descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
+        operele: [
+            { titlu: "Matilda", pdf: "Matilda rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "ME",
+        nume: "Michael Ende",
+        descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
+        operele: [
+            { titlu: "Povestea fără sfârșit", pdf: "Povestea fără sfârșit rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "GC",
+        nume: "George Călinescu",
+        descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+        operele: [
+            { titlu: "Enigma Otiliei", pdf: "Enigma Otiliei rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "LR",
+        nume: "Liviu Rebreanu",
+        descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
+        operele: [
+            { titlu: "Ion", pdf: "Ion rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "ME2",
+        nume: "Mircea Eliade",
+        descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
+        operele: [
+            { titlu: "La țigănci", pdf: "La țigănci rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "IS",
+        nume: "Ioan Slavici",
+        descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
+        operele: [
+            { titlu: "Moara cu noroc", pdf: "Moara cu noroc rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "IC",
+        nume: "I.L. Caragiale",
+        descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
+        operele: [
+            { titlu: "O scrisoare pierdută", pdf: "O scrisoare pierdută rezumat.pdf" }
+        ]
+    },
+    {
+        initiale: "CP",
+        nume: "Camil Petrescu",
+        descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
+        operele: [
+            { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Ultima noapte de dragoste rezumat.pdf" }
+        ]
+    }
+];
+
+/* =================================
+   GENEREAZA CARTILE AUTORILOR
+================================= */
+
+function genereazaAutori() {
+    const container = document.getElementById("autorCards");
+    if (!container) return;
+
+    container.innerHTML = autori.map(autor => `
+        <div class="card autor">
+            <div class="portret">${autor.initiale}</div>
+            <h3>${autor.nume}</h3>
+            <p>${autor.descriere}</p>
+            <div class="opera-list">
+                ${autor.operele.map(opera => `
+                    <button class="opera-btn" onclick="deschidePDF('${opera.pdf}')">
+                        📕 „${opera.titlu}"
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+/* =================================
+   DESCHIDE PDF
+================================= */
+
+function deschidePDF(numeFisier) {
+    const cale = "file:///C:/Site_Lb_Romana/Lb-Romana/" + numeFisier;
+    window.open(cale, "_blank");
+}
 
 /* =================================
    SCHIMBARE KAHOOT / WORDWALL
@@ -1196,3 +1106,12 @@ function schimbaTema() {
     document.body.classList.toggle("dark");
 
 }
+
+/* =================================
+   INIȚIALIZARE PAGINA
+================================= */
+
+// Genereaza autorii atunci cand pagina se incarca
+document.addEventListener("DOMContentLoaded", function() {
+    genereazaAutori();
+});
