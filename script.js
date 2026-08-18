@@ -594,18 +594,73 @@ footer {
      AUTORI
 ========================= -->
 
+<!-- =========================
+     AUTORI
+========================= -->
+
 <section id="autori">
 
     <h2 class="titlu">
-        Mari scriitori români
+        Mari scriitori 📚
     </h2>
 
     <p class="subtitlu">
-        Personalități importante ale literaturii române.
+        Descoperă autori importanți și operele lor.
     </p>
 
     <div class="cards">
 
+        <!-- 1. MIHAIL SADOVEANU -->
+
+        <div class="card autor">
+
+            <div class="portret">
+                MS
+            </div>
+
+            <h3>
+                Mihail Sadoveanu
+            </h3>
+
+            <p>
+                Prozator român cunoscut pentru operele sale
+                inspirate din istorie, natură și lumea
+                tradițională românească.
+            </p>
+
+            <div class="opera">
+                📕 „Baltagul”
+            </div>
+
+        </div>
+
+
+        <!-- 2. ROALD DAHL -->
+
+        <div class="card autor">
+
+            <div class="portret">
+                RD
+            </div>
+
+            <h3>
+                Roald Dahl
+            </h3>
+
+            <p>
+                Scriitor britanic cunoscut mai ales pentru
+                cărțile sale pentru copii, pline de imaginație,
+                umor și aventură.
+            </p>
+
+            <div class="opera">
+                📕 „Matilda”
+            </div>
+
+        </div>
+
+
+        <!-- 3. MICHAEL ENDE -->
 
         <div class="card autor">
 
@@ -614,62 +669,98 @@ footer {
             </div>
 
             <h3>
-                Mihai Eminescu
+                Michael Ende
             </h3>
 
             <p>
-                Poet, prozator și jurnalist român.
+                Scriitor german cunoscut pentru literatura
+                fantastică și pentru poveștile sale pline
+                de imaginație.
             </p>
 
             <div class="opera">
-                📕 „Luceafărul”
+                📕 „Povestea fără sfârșit”
             </div>
 
         </div>
 
+
+        <!-- 4. GEORGE CĂLINESCU -->
 
         <div class="card autor">
 
             <div class="portret">
-                IC
+                GC
             </div>
 
             <h3>
-                Ion Creangă
+                George Călinescu
             </h3>
 
             <p>
-                Prozator român cunoscut pentru
-                stilul său original și umor.
+                Critic literar, istoric literar, romancier
+                și academician român, una dintre marile
+                personalități ale culturii române.
             </p>
 
             <div class="opera">
-                📕 „Amintiri din copilărie”
+                📕 „Enigma Otiliei”
             </div>
 
         </div>
 
+
+        <!-- 5. LIVIU REBREANU -->
 
         <div class="card autor">
 
             <div class="portret">
-                IC
+                LR
             </div>
 
             <h3>
-                I.L. Caragiale
+                Liviu Rebreanu
             </h3>
 
             <p>
-                Dramaturg și prozator român.
+                Prozator român important, cunoscut pentru
+                romanele sale realiste și pentru prezentarea
+                societății românești.
             </p>
 
             <div class="opera">
-                📕 „O scrisoare pierdută”
+                📕 „Ion”
             </div>
 
         </div>
 
+
+        <!-- 6. MIRCEA ELIADE -->
+
+        <div class="card autor">
+
+            <div class="portret">
+                ME
+            </div>
+
+            <h3>
+                Mircea Eliade
+            </h3>
+
+            <p>
+                Scriitor, istoric al religiilor și filozof
+                român, cunoscut pentru literatura sa
+                fantastică și pentru studiile despre religie.
+            </p>
+
+            <div class="opera">
+                📕 „La țigănci”
+            </div>
+
+        </div>
+
+
+        <!-- 7. IOAN SLAVICI -->
 
         <div class="card autor">
 
@@ -682,7 +773,9 @@ footer {
             </h3>
 
             <p>
-                Prozator important al literaturii române.
+                Prozator român important, cunoscut pentru
+                operele sale inspirate din viața satului
+                și pentru analiza personajelor.
             </p>
 
             <div class="opera">
@@ -691,10 +784,59 @@ footer {
 
         </div>
 
+
+        <!-- 8. I.L. CARAGIALE -->
+
+        <div class="card autor">
+
+            <div class="portret">
+                IC
+            </div>
+
+            <h3>
+                I.L. Caragiale
+            </h3>
+
+            <p>
+                Dramaturg și prozator român, cunoscut pentru
+                comediile și satira sa asupra societății.
+            </p>
+
+            <div class="opera">
+                📕 „O scrisoare pierdută”
+            </div>
+
+        </div>
+
+
+        <!-- 9. CAMIL PETRESCU -->
+
+        <div class="card autor">
+
+            <div class="portret">
+                CP
+            </div>
+
+            <h3>
+                Camil Petrescu
+            </h3>
+
+            <p>
+                Romancier, dramaturg și poet român,
+                reprezentant important al modernismului
+                în literatura română.
+            </p>
+
+            <div class="opera">
+                📕 „Ultima noapte de dragoste,
+                întâia noapte de război”
+            </div>
+
+        </div>
+
     </div>
 
 </section>
-
 
 <!-- =========================
      MATERIALE
