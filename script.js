@@ -1082,7 +1082,7 @@ function genereazaAutori() {
 
     container.innerHTML = autori.map(autor => `
         <div class="card autor">
-            <div class="portret">${autor.poza}</div>
+            <div class="portret"><img src="${autor.poza}" alt="N/A"></div>
             <h3>${autor.nume}</h3>
             <p>${autor.descriere}</p>
             <div class="opera-list">
