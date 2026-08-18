@@ -259,7 +259,7 @@ section {
 }
 
 .wordwall {
-    background: #008c95;
+    background: #96008c;
 }
 
 .activ {
