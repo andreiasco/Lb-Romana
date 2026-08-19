@@ -1412,12 +1412,8 @@ const autori = [
             "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
         operele: [
             {
-                titlu: "Baltagul",
-                pdf: "Baltagul rezumat.pdf"
-            },
-            {
                 titlu: "Dumbrava Minunată",
-                pdf: "Dumbrava minunată rezumat.pdf"
+                pdf: "Dumbrava minunata rezumat.pdf"
             }
         ]
     },
@@ -1443,7 +1439,7 @@ const autori = [
         operele: [
             {
                 titlu: "Povestea fără sfârșit",
-                pdf: "Povestea fără sfârșit rezumat.pdf"
+                pdf: "Povestea fara sfarsit rezumat.pdf"
             }
         ]
     },
@@ -1452,7 +1448,7 @@ const autori = [
         nume: "George Călinescu",
         poza: "Imagini/Calinescu.jpeg",
         descriere:
-            "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+            "Critic literar, istoric literar, romancier și academician român.",
         operele: [
             {
                 titlu: "Enigma Otiliei",
@@ -1478,11 +1474,11 @@ const autori = [
         nume: "Mircea Eliade",
         poza: "Imagini/Eliade.jpeg",
         descriere:
-            "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică.",
+            "Scriitor, istoric al religiilor și filozof român.",
         operele: [
             {
                 titlu: "La țigănci",
-                pdf: "La țigănci rezumat.pdf"
+                pdf: "La tiganci rezumat.pdf"
             }
         ]
     },
@@ -1491,7 +1487,7 @@ const autori = [
         nume: "Ioan Slavici",
         poza: "Imagini/Slavici.jpeg",
         descriere:
-            "Prozator român important, cunoscut pentru operele sale inspirate din viața satului.",
+            "Prozator român important.",
         operele: [
             {
                 titlu: "Moara cu noroc",
@@ -1504,11 +1500,11 @@ const autori = [
         nume: "I.L. Caragiale",
         poza: "Imagini/Caragiale.jpeg",
         descriere:
-            "Dramaturg și prozator român, cunoscut pentru comediile și satira sa.",
+            "Dramaturg și prozator român.",
         operele: [
             {
                 titlu: "O scrisoare pierdută",
-                pdf: "O scrisoare pierdută rezumat.pdf"
+                pdf: "O scrisoare pierduta rezumat.pdf"
             }
         ]
     },
@@ -1517,7 +1513,7 @@ const autori = [
         nume: "Camil Petrescu",
         poza: "Imagini/Camil.jpeg",
         descriere:
-            "Romancier, dramaturg și poet român, reprezentant important al modernismului.",
+            "Romancier, dramaturg și poet român.",
         operele: [
             {
                 titlu: "Ultima noapte de dragoste, întâia noapte de război",
@@ -1527,7 +1523,6 @@ const autori = [
     }
 
 ];
-
 
 // ======================================================
 // GENEREAZĂ AUTORI
