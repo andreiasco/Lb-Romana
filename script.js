@@ -1,36 +1,30 @@
-﻿/* =================================
-   MOD ÎNTUNECAT
-================================= */
+console.log("SCRIPT.JS NOU SE ÎNCARCĂ");
+// ======================================================
+// SUPABASE
+// ==================================================
+const SUPABASE_URL = "https://eagjavifluwolqeuctzk.supabase.co";
 
-function schimbaTema() {
-    document.body.classList.toggle("dark");
-}
+const SUPABASE_KEY =
+    "sb_publishable_QSG9OFrCANpRxA-moQCQgQ_mtkx-hWX";
 
-/* =================================
-   SCHIMBARE KAHOOT / WORDWALL
-================================= */
+const BUCKET = "Pdf";
 
-function arataQuiz(tip) {
-    const kahoot = document.getElementById("kahoot");
-    const wordwall = document.getElementById("wordwall");
-    const butoane = document.querySelectorAll(".quiz-tab");
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
-    if (tip === "kahoot") {
-        kahoot.classList.remove("ascuns");
-        wordwall.classList.add("ascuns");
-        butoane[0].classList.add("activ");
-        butoane[1].classList.remove("activ");
-    }
 
-    if (tip === "wordwall") {
-        kahoot.classList.add("ascuns");
-        wordwall.classList.remove("ascuns");
-        butoane[0].classList.remove("activ");
-        butoane[1].classList.add("activ");
-    }
-}
+// ======================================================
+// CONTAINER
+// ======================================================
 
 const site = document.getElementById("site");
+
+
+// ======================================================
+// HTML + CSS
+// ======================================================
 
 site.innerHTML = `
 
@@ -41,11 +35,16 @@ site.innerHTML = `
     scroll-behavior: smooth;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #faf6ef;
     color: #292329;
+    transition: .3s;
 }
 
 nav {
@@ -54,12 +53,14 @@ nav {
     z-index: 1000;
 
     background: #35152a;
+
     padding: 15px;
 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+
+    gap: 15px;
     flex-wrap: wrap;
 }
 
@@ -77,10 +78,23 @@ nav button {
     border: none;
     background: #7b2450;
     color: white;
+
     padding: 10px 15px;
+
     border-radius: 20px;
+
     cursor: pointer;
+    font-weight: bold;
 }
+
+nav button:hover {
+    background: #a8446c;
+}
+
+
+/* ======================================================
+   HERO
+====================================================== */
 
 .hero {
     min-height: 550px;
@@ -90,6 +104,7 @@ nav button {
     justify-content: center;
 
     text-align: center;
+
     color: white;
 
     padding: 30px;
@@ -120,15 +135,22 @@ nav button {
     display: inline-block;
 
     margin-top: 25px;
+
     padding: 14px 25px;
 
     background: white;
     color: #7b2450;
 
     border-radius: 25px;
+
     text-decoration: none;
     font-weight: bold;
 }
+
+
+/* ======================================================
+   SECTIUNI
+====================================================== */
 
 section {
     max-width: 1100px;
@@ -147,6 +169,11 @@ section {
     color: #666;
     margin-bottom: 40px;
 }
+
+
+/* ======================================================
+   CARDURI
+====================================================== */
 
 .cards {
     display: grid;
@@ -189,6 +216,11 @@ section {
     font-size: 45px;
 }
 
+
+/* ======================================================
+   AUTORI
+====================================================== */
+
 .autor {
     text-align: center;
 }
@@ -197,22 +229,7 @@ section {
     width: 120px;
     height: 120px;
 
-    margin: auto;
-    margin-bottom: 20px;
-
-    border-radius: 50%;
-
-    overflow: hidden;
-
-    background: #7b2450;
-}
-
-.portret {
-    width: 120px;
-    height: 120px;
-
-    margin: auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
 
     border-radius: 50%;
 
@@ -234,28 +251,34 @@ section {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
     margin-top: 15px;
 }
 
 .opera-btn {
-    display: inline-block;
     padding: 10px 15px;
+
     background: #f4dce7;
     color: #7b2450;
+
     border: 2px solid #7b2450;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-weight: bold;
-    text-decoration: none;
-    transition: .3s;
-    text-align: center;
 }
 
 .opera-btn:hover {
     background: #7b2450;
-    color: #f4dce7;
-    transform: scale(1.05);
+    color: white;
 }
+
+
+/* ======================================================
+   CITAT
+====================================================== */
 
 .citat {
     max-width: 900px;
@@ -280,15 +303,16 @@ section {
 .citat p {
     font-size: 25px;
     font-style: italic;
+    line-height: 1.6;
 }
 
-/* =========================
-   BUTOANE QUIZ for test
-========================= */
+
+/* ======================================================
+   QUIZ
+====================================================== */
 
 .quiz-selectie {
     display: flex;
-
     justify-content: center;
 
     gap: 20px;
@@ -311,32 +335,22 @@ section {
     font-weight: bold;
 
     cursor: pointer;
-
-    transition: .3s;
 }
 
-.quiz-tab:hover {
-    transform: scale(1.05);
-}
-
-.kahoot {
+.quiz-tab.kahoot {
     background: #46178f;
 }
 
-.wordwall {
+.quiz-tab.wordwall {
     background: #96008c;
 }
 
-.activ {
+.quiz-tab.activ {
     box-shadow:
         0 5px 20px rgba(0,0,0,.3);
 
     transform: scale(1.05);
 }
-
-/* =========================
-   QUIZURI
-========================= */
 
 .quizuri {
     display: grid;
@@ -382,7 +396,6 @@ section {
     height: 380px;
 
     border: none;
-
     border-radius: 12px;
 }
 
@@ -397,21 +410,278 @@ section {
     border-radius: 25px;
 
     text-decoration: none;
+    font-weight: bold;
+}
+
+.ascuns {
+    display: none !important;
+}
+
+
+/* ======================================================
+   LOGIN MODAL
+====================================================== */
+
+.login-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,.75);
+}
+
+.login-modal.ascuns {
+    display: none;
+}
+
+.login-box {
+    position: relative;
+
+    width: min(90%, 420px);
+
+    padding: 35px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.4);
+
+    text-align: center;
+}
+
+.login-box h2 {
+    color: #7b2450;
+}
+
+.login-box input {
+    width: 100%;
+
+    padding: 13px;
+
+    margin: 7px 0;
+
+    border: 2px solid #ddd;
+
+    border-radius: 10px;
+
+    font-size: 16px;
+}
+
+.login-btn {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #7b2450;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.login-btn:hover {
+    background: #a8446c;
+}
+
+.inchide-login {
+    position: absolute;
+
+    right: 15px;
+    top: 10px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+#loginMesaj {
+    min-height: 20px;
 
     font-weight: bold;
 }
 
-.kahoot-link:hover {
-    background: #5f25b2;
+
+/* ======================================================
+   ADMIN PANEL
+====================================================== */
+
+.admin-panel {
+    max-width: 1100px;
+
+    margin: 40px auto;
+
+    padding: 25px;
+
+    background: #f4dce7;
+
+    border: 3px solid #7b2450;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.15);
 }
 
-.ascuns {
+.admin-panel.ascuns {
     display: none;
 }
 
-/* =========================
+.admin-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.admin-header h2 {
+    color: #7b2450;
+}
+
+.admin-box {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.08);
+}
+
+.admin-box h3 {
+    color: #7b2450;
+}
+
+.admin-box input[type="file"] {
+    width: 100%;
+
+    padding: 12px;
+
+    background: #faf6ef;
+
+    border: 2px solid #ddd;
+
+    border-radius: 10px;
+}
+
+.admin-btn {
+    margin-top: 12px;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 10px;
+
+    background: #7b2450;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.admin-btn:hover {
+    background: #a8446c;
+}
+
+.logout-btn {
+    background: #c62828;
+}
+
+.admin-status {
+    margin-top: 15px;
+
+    font-weight: bold;
+
+    min-height: 20px;
+}
+
+.lista-pdf {
+    margin-top: 20px;
+}
+
+.pdf-item {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    margin-bottom: 8px;
+
+    background: #f8eef3;
+
+    border-radius: 8px;
+}
+
+.pdf-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sterge-btn {
+    border: none;
+
+    background: #c62828;
+
+    color: white;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+}
+
+
+/* ======================================================
+   FOOTER
+====================================================== */
+
+footer {
+    background: #35152a;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 35px;
+}
+
+
+/* ======================================================
    DARK MODE
-========================= */
+====================================================== */
 
 body.dark {
     background: #181318;
@@ -420,7 +690,9 @@ body.dark {
 
 body.dark .card,
 body.dark .quiz-card,
-body.dark .kahoot-card {
+body.dark .kahoot-card,
+body.dark .login-box,
+body.dark .admin-box {
     background: #271f27;
 }
 
@@ -434,14 +706,18 @@ body.dark .subtitlu {
     color: #bbb;
 }
 
-footer {
+body.dark .admin-panel {
     background: #35152a;
-    color: white;
-
-    text-align: center;
-
-    padding: 35px;
 }
+
+body.dark .pdf-item {
+    background: #181318;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
 
 @media(max-width:700px) {
 
@@ -453,14 +729,30 @@ footer {
         min-height: 500px;
     }
 
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    section {
+        margin: 40px auto;
+    }
+
+    .pdf-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
 </style>
 
 
-<!-- =========================
+<!-- ======================================================
      MENIU
-========================= -->
+====================================================== -->
 
 <nav>
 
@@ -480,12 +772,16 @@ footer {
         🌙 Mod întunecat
     </button>
 
+    <button onclick="afiseazaLogin()">
+        🔐 Logare admin
+    </button>
+
 </nav>
 
 
-<!-- =========================
-     ACASA
-========================= -->
+<!-- ======================================================
+     HERO
+====================================================== -->
 
 <header class="hero" id="acasa">
 
@@ -509,9 +805,9 @@ footer {
 </header>
 
 
-<!-- =========================
-     LIMBA ROMANA
-========================= -->
+<!-- ======================================================
+     LIMBA
+====================================================== -->
 
 <section id="limba">
 
@@ -526,7 +822,6 @@ footer {
     <div class="cards">
 
         <div class="card">
-
             <div class="icon">🔤</div>
 
             <h3>Gramatică</h3>
@@ -535,12 +830,9 @@ footer {
                 Descoperă regulile după care sunt
                 construite cuvintele și propozițiile.
             </p>
-
         </div>
 
-
         <div class="card">
-
             <div class="icon">📚</div>
 
             <h3>Vocabular</h3>
@@ -549,12 +841,9 @@ footer {
                 Vocabularul cuprinde totalitatea
                 cuvintelor unei limbi.
             </p>
-
         </div>
 
-
         <div class="card">
-
             <div class="icon">✍️</div>
 
             <h3>Ortografie</h3>
@@ -563,7 +852,6 @@ footer {
                 Învață să scrii corect și să respecți
                 regulile limbii române.
             </p>
-
         </div>
 
     </div>
@@ -571,9 +859,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      LITERATURA
-========================= -->
+====================================================== -->
 
 <section id="literatura">
 
@@ -588,7 +876,6 @@ footer {
     <div class="cards">
 
         <div class="card">
-
             <div class="icon">🌙</div>
 
             <h3>Poezia</h3>
@@ -597,12 +884,9 @@ footer {
                 Poezia exprimă sentimente și idei
                 printr-un limbaj artistic.
             </p>
-
         </div>
 
-
         <div class="card">
-
             <div class="icon">📖</div>
 
             <h3>Proza</h3>
@@ -611,12 +895,9 @@ footer {
                 Romanul, nuvela, povestirea și basmul
                 sunt forme importante ale prozei.
             </p>
-
         </div>
 
-
         <div class="card">
-
             <div class="icon">🎭</div>
 
             <h3>Teatrul</h3>
@@ -625,7 +906,6 @@ footer {
                 Textele dramatice sunt construite
                 în jurul personajelor și dialogului.
             </p>
-
         </div>
 
     </div>
@@ -633,9 +913,9 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      CITAT
-========================= -->
+====================================================== -->
 
 <section>
 
@@ -643,7 +923,7 @@ footer {
 
         <p>
             „Nu există altă avere mai prețioasă
-            decât limba unui popor."
+            decât limba unui popor.”
         </p>
 
         <strong>
@@ -655,29 +935,31 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
      AUTORI
-========================= -->
+====================================================== -->
 
 <section id="autori">
 
     <h2 class="titlu">
-        TataBranch 📚
+        Autori 📚
     </h2>
 
     <p class="subtitlu">
         Descoperă autori importanți și operele lor.
     </p>
 
-    <div class="cards" id="autorCards">
-        <!-- Autorii vor fi generati dinamic de JavaScript -->
+    <div
+        class="cards"
+        id="autorCards">
     </div>
 
 </section>
 
-<!-- =========================
+
+<!-- ======================================================
      MATERIALE
-========================= -->
+====================================================== -->
 
 <section id="materiale">
 
@@ -693,7 +975,9 @@ footer {
 
         <div class="card">
 
-            <div class="icon">📖</div>
+            <div class="icon">
+                📖
+            </div>
 
             <h3>
                 Mihai Eminescu
@@ -706,10 +990,11 @@ footer {
 
         </div>
 
-
         <div class="card">
 
-            <div class="icon">✍️</div>
+            <div class="icon">
+                ✍️
+            </div>
 
             <h3>
                 Gramatică
@@ -722,10 +1007,11 @@ footer {
 
         </div>
 
-
         <div class="card">
 
-            <div class="icon">📚</div>
+            <div class="icon">
+                📚
+            </div>
 
             <h3>
                 Genuri literare
@@ -742,9 +1028,9 @@ footer {
 </section>
 
 
-<!-- =========================
-     QUIZURI
-========================= -->
+<!-- ======================================================
+     QUIZ
+====================================================== -->
 
 <section id="quiz">
 
@@ -756,7 +1042,6 @@ footer {
         Alege platforma pe care vrei să exersezi.
     </p>
 
-
     <div class="quiz-selectie">
 
         <button
@@ -766,7 +1051,6 @@ footer {
             🎯 Kahoot
 
         </button>
-
 
         <button
             class="quiz-tab wordwall"
@@ -779,14 +1063,7 @@ footer {
     </div>
 
 
-    <!-- =========================
-         KAHOOT
-    ========================= -->
-
-    <div
-        id="kahoot"
-        class="quizuri">
-
+    <div id="kahoot" class="quizuri">
 
         <div class="kahoot-card">
 
@@ -802,7 +1079,8 @@ footer {
             <a
                 class="kahoot-link"
                 href="https://create.kahoot.it/details/aplicarea-regulilor-in-contexte-noi/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
 
                 🎯 Deschide Kahoot
 
@@ -824,7 +1102,8 @@ footer {
             <a
                 class="kahoot-link"
                 href="https://create.kahoot.it/details/romanian-vocabulary-in-context/bf406337-3185-409c-92c7-22471cf41e38"
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
 
                 🎯 Deschide Kahoot
 
@@ -847,7 +1126,8 @@ footer {
             <a
                 class="kahoot-link"
                 href="https://create.kahoot.it/details/recapitulare-dirijata-a-notiunilor-de-gramatica/7b20be02-2691-42a9-a08d-19a0996ebd78"
-                target="_blank">
+                target="_blank"
+                rel="noopener noreferrer">
 
                 🎯 Deschide Kahoot
 
@@ -858,14 +1138,9 @@ footer {
     </div>
 
 
-    <!-- =========================
-         WORDWALL
-    ========================= -->
-
     <div
         id="wordwall"
         class="quizuri ascuns">
-
 
         <div class="quiz-card">
 
@@ -961,9 +1236,149 @@ footer {
 </section>
 
 
-<!-- =========================
+<!-- ======================================================
+     ADMIN PANEL
+====================================================== -->
+
+<section
+    id="adminPanel"
+    class="admin-panel ascuns">
+
+    <div class="admin-header">
+
+        <div>
+
+            <h2>
+                🔐 Panou administrator
+            </h2>
+
+            <p id="adminUser">
+                Administrator conectat
+            </p>
+
+        </div>
+
+        <button
+            class="admin-btn logout-btn"
+            onclick="logoutAdmin()">
+
+            🚪 Deconectare
+
+        </button>
+
+    </div>
+
+
+    <div class="admin-box">
+
+        <h3>
+            📤 Încarcă PDF
+        </h3>
+
+        <input
+            type="file"
+            id="pdfInput"
+            accept="application/pdf">
+
+        <button
+            class="admin-btn"
+            onclick="uploadPDF()">
+
+            📤 Upload PDF
+
+        </button>
+
+        <div
+            id="uploadStatus"
+            class="admin-status">
+        </div>
+
+    </div>
+
+
+    <div class="admin-box" style="margin-top:20px;">
+
+        <h3>
+            📚 PDF-uri din bucket
+        </h3>
+
+        <button
+            class="admin-btn"
+            onclick="incarcaListaPDF()">
+
+            🔄 Reîmprospătează lista
+
+        </button>
+
+        <div
+            id="listaPDF"
+            class="lista-pdf">
+
+            <p>
+                Apasă „Reîmprospătează lista”.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ======================================================
+     LOGIN
+====================================================== -->
+
+<div
+    id="loginModal"
+    class="login-modal ascuns">
+
+    <div class="login-box">
+
+        <button
+            class="inchide-login"
+            onclick="inchideLogin()">
+
+            ✕
+
+        </button>
+
+        <h2>
+            🔐 Logare administrator
+        </h2>
+
+        <p>
+            Introdu datele contului de administrator.
+        </p>
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email">
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Parolă">
+
+        <button
+            class="login-btn"
+            onclick="loginAdmin()">
+
+            🔐 Intră în panou
+
+        </button>
+
+        <p id="loginMesaj"></p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
      FOOTER
-========================= -->
+====================================================== -->
 
 <footer>
 
@@ -983,131 +1398,287 @@ footer {
 
 `;
 
-/* =================================
-   DATA AUTORI - Lista cu operele lor
-================================= */
+
+// ======================================================
+// AUTORI
+// ======================================================
 
 const autori = [
+
     {
-        initiale: "MS",
         nume: "Mihail Sadoveanu",
         poza: "Imagini/Sadoveanu.jpeg",
-        descriere: "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
+        descriere:
+            "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
         operele: [
-            { titlu: "Baltagul", pdf: "Pdf/Baltagul rezumat.pdf" },
-            { titlu: "Dumbrava Minunată", pdf: "Pdf/Dumbrava minunată rezumat.pdf" }
+            {
+                titlu: "Dumbrava Minunată",
+                pdf: "Dumbrava minunata rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "RD",
-        nume: "Roaldh Dahl",
+        nume: "Roald Dahl",
         poza: "Imagini/Roaldh.jpeg",
-        descriere: "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
+        descriere:
+            "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
         operele: [
-            { titlu: "Matilda", pdf: "Pdf/Matilda rezumat.pdf" }
+            {
+                titlu: "Matilda",
+                pdf: "Matilda rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "ME",
         nume: "Michael Ende",
         poza: "Imagini/Michael.jpeg",
-        descriere: "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
+        descriere:
+            "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
         operele: [
-            { titlu: "Povestea fără sfârșit", pdf: "Pdf/Povestea fără sfârșit rezumat.pdf" }
+            {
+                titlu: "Povestea fără sfârșit",
+                pdf: "Povestea fara sfarsit rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "GC",
         nume: "George Călinescu",
         poza: "Imagini/Calinescu.jpeg",
-        descriere: "Critic literar, istoric literar, romancier și academician român, una dintre marile personalități ale culturii române.",
+        descriere:
+            "Critic literar, istoric literar, romancier și academician român.",
         operele: [
-            { titlu: "Enigma Otiliei", pdf: "Pdf/Enigma Otiliei rezumat.pdf" }
+            {
+                titlu: "Enigma Otiliei",
+                pdf: "Enigma Otiliei rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "LR",
         nume: "Liviu Rebreanu",
         poza: "Imagini/Rebreanu.jpeg",
-        descriere: "Prozator român important, cunoscut pentru romanele sale realiste și pentru prezentarea societății românești.",
+        descriere:
+            "Prozator român important, cunoscut pentru romanele sale realiste.",
         operele: [
-            { titlu: "Ion", pdf: "Pdf/Ion rezumat.pdf" }
+            {
+                titlu: "Ion",
+                pdf: "Ion rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "ME2",
         nume: "Mircea Eliade",
         poza: "Imagini/Eliade.jpeg",
-        descriere: "Scriitor, istoric al religiilor și filozof român, cunoscut pentru literatura sa fantastică și pentru studiile despre religie.",
+        descriere:
+            "Scriitor, istoric al religiilor și filozof român.",
         operele: [
-            { titlu: "La țigănci", pdf: "Pdf/La țigănci rezumat.pdf" }
+            {
+                titlu: "La țigănci",
+                pdf: "La tiganci rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "IS",
         nume: "Ioan Slavici",
         poza: "Imagini/Slavici.jpeg",
-        descriere: "Prozator român important, cunoscut pentru operele sale inspirate din viața satului și pentru analiza personajelor.",
+        descriere:
+            "Prozator român important.",
         operele: [
-            { titlu: "Moara cu noroc", pdf: "Pdf/Moara cu noroc rezumat.pdf" }
+            {
+                titlu: "Moara cu noroc",
+                pdf: "Moara cu noroc rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "IC",
         nume: "I.L. Caragiale",
         poza: "Imagini/Caragiale.jpeg",
-        descriere: "Dramaturg și prozator român, cunoscut pentru comediile și satira sa asupra societății.",
+        descriere:
+            "Dramaturg și prozator român.",
         operele: [
-            { titlu: "O scrisoare pierdută", pdf: "Pdf/O scrisoare pierdută rezumat.pdf" }
+            {
+                titlu: "O scrisoare pierdută",
+                pdf: "O scrisoare pierduta rezumat.pdf"
+            }
         ]
     },
+
     {
-        initiale: "CP",
         nume: "Camil Petrescu",
         poza: "Imagini/Camil.jpeg",
-        descriere: "Romancier, dramaturg și poet român, reprezentant important al modernismului în literatura română.",
+        descriere:
+            "Romancier, dramaturg și poet român.",
         operele: [
-            { titlu: "Ultima noapte de dragoste, întâia noapte de război", pdf: "Pdf/Ultima noapte de dragoste rezumat.pdf" }
+            {
+                titlu: "Ultima noapte de dragoste, întâia noapte de război",
+                pdf: "Ultima noapte de dragoste rezumat.pdf"
+            }
         ]
     }
+
 ];
 
-/* =================================
-   GENEREAZA CARTILE AUTORILOR
-================================= */
+
+// ======================================================
+// GENEREAZĂ AUTORI
+// ======================================================
 
 function genereazaAutori() {
-    const container = document.getElementById("autorCards");
+
+    const container =
+        document.getElementById("autorCards");
+
     if (!container) return;
 
-    container.innerHTML = autori.map(autor => `
-        <div class="card autor">
-            <div class="portret"><img src="${autor.poza}" alt="N/A"></div>
-            <h3>${autor.nume}</h3>
-            <p>${autor.descriere}</p>
-            <div class="opera-list">
-                ${autor.operele.map(opera => `
-                    <button class="opera-btn" onclick="deschidePDF('${opera.pdf}')">
-                        📕 „${opera.titlu}"
-                    </button>
-                `).join('')}
+    container.innerHTML =
+        autori.map(autor => `
+
+            <div class="card autor">
+
+                <div class="portret">
+
+                    <img
+                        src="${autor.poza}"
+                        alt="${autor.nume}"
+                        loading="lazy"
+                        onerror="this.style.display='none';">
+
+                </div>
+
+                <h3>
+                    ${autor.nume}
+                </h3>
+
+                <p>
+                    ${autor.descriere}
+                </p>
+
+                <div class="opera-list">
+
+                    ${autor.operele.map(opera => `
+
+                        <button
+                            class="opera-btn"
+                            type="button"
+                            onclick='deschidePDF(${JSON.stringify(opera.pdf)})'>
+
+                            📕 „${opera.titlu}”
+
+                        </button>
+
+                    `).join("")}
+
+                </div>
+
             </div>
-        </div>
-    `).join('');
+
+        `).join("");
 }
 
-/* =================================
-   DESCHIDE PDF
-================================= */
 
-function deschidePDF(numeFisier) {
-    const cale = numeFisier;
-    window.open(cale, "_blank");
+// ======================================================
+// DESCHIDE PDF DIN BUCKET PRIVAT
+// ======================================================
+
+async function deschidePDF(numeFisier) {
+
+    try {
+
+        console.log(
+            "Se solicită PDF:",
+            numeFisier
+        );
+
+        // ------------------------------------------------
+        // CREARE LINK TEMPORAR
+        // ------------------------------------------------
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .createSignedUrl(
+                    numeFisier,
+                    60 * 10
+                );
+
+        if (error) {
+
+            console.error(
+                "Eroare Supabase PDF:",
+                error
+            );
+
+            alert(
+                "Nu pot deschide PDF-ul.\n\n" +
+                error.message
+            );
+
+            return;
+        }
+
+        if (!data || !data.signedUrl) {
+
+            console.error(
+                "Nu există signedUrl:",
+                data
+            );
+
+            alert(
+                "Supabase nu a generat linkul PDF."
+            );
+
+            return;
+        }
+
+        console.log(
+            "Signed URL generat cu succes."
+        );
+
+        // ------------------------------------------------
+        // DESCHIDE PDF
+        // ------------------------------------------------
+
+        window.open(
+            data.signedUrl,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Eroare deschidere PDF:",
+            error
+        );
+
+        alert(
+            "A apărut o eroare la deschiderea PDF-ului."
+        );
+    }
 }
 
-/* =================================
-   SCHIMBARE KAHOOT / WORDWALL
-================================= */
+
+// ======================================================
+// DARK MODE
+// ======================================================
+
+function schimbaTema() {
+
+    document.body.classList.toggle("dark");
+
+}
+
+
+// ======================================================
+// QUIZ
+// ======================================================
 
 function arataQuiz(tip) {
 
@@ -1131,10 +1702,7 @@ function arataQuiz(tip) {
 
         butoane[1].classList.remove("activ");
 
-    }
-
-
-    if (tip === "wordwall") {
+    } else {
 
         kahoot.classList.add("ascuns");
 
@@ -1143,27 +1711,791 @@ function arataQuiz(tip) {
         butoane[0].classList.remove("activ");
 
         butoane[1].classList.add("activ");
+    }
+}
 
+
+// ======================================================
+// LOGIN MODAL
+// ======================================================
+
+function afiseazaLogin() {
+
+    const modal =
+        document.getElementById("loginModal");
+
+    modal.classList.remove("ascuns");
+
+    const email =
+        document.getElementById("loginEmail");
+
+    if (email) {
+        email.focus();
+    }
+}
+
+
+function inchideLogin() {
+
+    document
+        .getElementById("loginModal")
+        .classList.add("ascuns");
+
+    document.getElementById("loginMesaj").textContent = "";
+
+}
+
+
+// ======================================================
+// LOGIN ADMIN
+// ======================================================
+
+async function loginAdmin() {
+
+    const email =
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
+
+    const password =
+        document
+            .getElementById("loginPassword")
+            .value;
+
+    const mesaj =
+        document.getElementById("loginMesaj");
+
+
+    if (!email || !password) {
+
+        mesaj.textContent =
+            "Completează emailul și parola.";
+
+        mesaj.style.color =
+            "#c62828";
+
+        return;
     }
 
+
+    mesaj.textContent =
+        "Se verifică datele...";
+
+    mesaj.style.color =
+        "#7b2450";
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient.auth
+                .signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+
+        if (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            mesaj.textContent =
+                "Email sau parolă incorectă.";
+
+            mesaj.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        if (!data || !data.user) {
+
+            mesaj.textContent =
+                "Autentificarea nu a reușit.";
+
+            mesaj.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        console.log(
+            "Administrator conectat:",
+            data.user.email
+        );
+
+
+        inchideLogin();
+
+        afiseazaAdmin(
+            data.user
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Login exception:",
+            error
+        );
+
+        mesaj.textContent =
+            "A apărut o eroare la autentificare.";
+
+        mesaj.style.color =
+            "#c62828";
+    }
 }
 
 
-/* =================================
-   MOD ÎNTUNECAT
-================================= */
+// ======================================================
+// AFIȘEAZĂ PANOU ADMIN
+// ======================================================
 
-function schimbaTema() {
+function afiseazaAdmin(user) {
 
-    document.body.classList.toggle("dark");
+    const panel =
+        document.getElementById("adminPanel");
 
+    const adminUser =
+        document.getElementById("adminUser");
+
+
+    if (!panel || !adminUser) {
+        return;
+    }
+
+
+    panel.classList.remove("ascuns");
+
+
+    adminUser.textContent =
+        "Conectat ca: " +
+        user.email;
+
+
+    incarcaListaPDF();
+
+
+    panel.scrollIntoView({
+        behavior: "smooth"
+    });
 }
 
-/* =================================
-   INIȚIALIZARE PAGINA
-================================= */
 
-// Genereaza autorii atunci cand pagina se incarca
-document.addEventListener("DOMContentLoaded", function() {
-    genereazaAutori();
-});
+// ======================================================
+// LOGOUT
+// ======================================================
+
+async function logoutAdmin() {
+
+    try {
+
+        const { error } =
+            await supabaseClient.auth
+                .signOut();
+
+
+        if (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            alert(
+                "Nu am putut realiza deconectarea."
+            );
+
+            return;
+        }
+
+
+        document
+            .getElementById("adminPanel")
+            .classList.add("ascuns");
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout exception:",
+            error
+        );
+    }
+}
+
+
+// ======================================================
+// VERIFICĂ AUTENTIFICAREA
+// ======================================================
+
+async function utilizatorAutentificat() {
+
+    const { data, error } =
+        await supabaseClient.auth
+            .getSession();
+
+
+    if (error) {
+
+        console.error(
+            "Eroare verificare sesiune:",
+            error
+        );
+
+        return null;
+    }
+
+
+    if (!data || !data.session) {
+
+        return null;
+    }
+
+
+    return data.session.user;
+}
+
+
+// ======================================================
+// UPLOAD PDF
+// ======================================================
+
+async function uploadPDF() {
+
+    const input =
+        document.getElementById("pdfInput");
+
+    const status =
+        document.getElementById("uploadStatus");
+
+
+    if (!input || !status) {
+        return;
+    }
+
+
+    const file =
+        input.files[0];
+
+
+    if (!file) {
+
+        status.textContent =
+            "Selectează mai întâi un PDF.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    if (
+        file.type !== "application/pdf" &&
+        !file.name.toLowerCase().endsWith(".pdf")
+    ) {
+
+        status.textContent =
+            "Poți încărca doar fișiere PDF.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    // ------------------------------------------------
+    // VERIFICĂ ADMIN
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii autentificat ca administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    status.textContent =
+        "Se încarcă PDF-ul...";
+
+    status.style.color =
+        "#7b2450";
+
+
+    try {
+
+        // ------------------------------------------------
+        // CURĂȚĂ NUMELE
+        // ------------------------------------------------
+
+        const filePath =
+            file.name.trim();
+
+
+        // ------------------------------------------------
+        // UPLOAD
+        // ------------------------------------------------
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .upload(
+                    filePath,
+                    file,
+                    {
+                        contentType:
+                            "application/pdf",
+
+                        upsert:
+                            true
+                    }
+                );
+
+
+        if (error) {
+
+            console.error(
+                "Upload error:",
+                error
+            );
+
+            status.textContent =
+                "Upload eșuat: " +
+                error.message;
+
+            status.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        console.log(
+            "Upload reușit:",
+            data
+        );
+
+
+        status.textContent =
+            "PDF încărcat cu succes!";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        input.value = "";
+
+
+        await incarcaListaPDF();
+
+
+    } catch (error) {
+
+        console.error(
+            "Upload exception:",
+            error
+        );
+
+        status.textContent =
+            "A apărut o eroare la upload.";
+
+        status.style.color =
+            "#c62828";
+    }
+}
+
+
+// ======================================================
+// LISTĂ PDF
+// ======================================================
+
+async function incarcaListaPDF() {
+
+    const container =
+        document.getElementById("listaPDF");
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML =
+        "<p>Se încarcă...</p>";
+
+
+    // ------------------------------------------------
+    // VERIFICĂ ADMIN
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        container.innerHTML =
+            "<p style='color:#c62828'>" +
+            "Trebuie să fii autentificat." +
+            "</p>";
+
+        return;
+    }
+
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .list(
+                    "",
+                    {
+                        limit: 100,
+                        offset: 0,
+
+                        sortBy: {
+                            column: "name",
+                            order: "asc"
+                        }
+                    }
+                );
+
+
+        if (error) {
+
+            console.error(
+                "List error:",
+                error
+            );
+
+            container.innerHTML =
+                "<p style='color:#c62828'>" +
+                "Nu am putut încărca lista PDF-urilor.<br><br>" +
+                error.message +
+                "</p>";
+
+            return;
+        }
+
+
+        const pdfuri =
+            (data || []).filter(
+                fisier =>
+                    fisier.name &&
+                    fisier.name
+                        .toLowerCase()
+                        .endsWith(".pdf")
+            );
+
+
+        if (pdfuri.length === 0) {
+
+            container.innerHTML =
+                "<p>Nu există PDF-uri în bucket.</p>";
+
+            return;
+        }
+
+
+        container.innerHTML =
+            pdfuri.map(
+                fisier => `
+
+                    <div class="pdf-item">
+
+                        <span>
+                            📕 ${escapeHTML(fisier.name)}
+                        </span>
+
+                        <button
+                            class="sterge-btn"
+                            type="button"
+                            onclick='stergePDF(${JSON.stringify(fisier.name)})'>
+
+                            🗑️ Șterge
+
+                        </button>
+
+                    </div>
+
+                `
+            ).join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "List exception:",
+            error
+        );
+
+        container.innerHTML =
+            "<p style='color:#c62828'>" +
+            "A apărut o eroare la încărcarea listei." +
+            "</p>";
+    }
+}
+
+
+// ======================================================
+// ESCAPE HTML
+// ======================================================
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+}
+
+
+// ======================================================
+// ȘTERGE PDF
+// ======================================================
+
+async function stergePDF(numeFisier) {
+
+    const confirmare =
+        confirm(
+            'Sigur vrei să ștergi "' +
+            numeFisier +
+            '"?'
+        );
+
+
+    if (!confirmare) {
+        return;
+    }
+
+
+    // ------------------------------------------------
+    // VERIFICĂ ADMIN
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        alert(
+            "Sesiunea administratorului a expirat."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const { error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .remove([
+                    numeFisier
+                ]);
+
+
+        if (error) {
+
+            console.error(
+                "Delete error:",
+                error
+            );
+
+            alert(
+                "Nu am putut șterge PDF-ul:\n\n" +
+                error.message
+            );
+
+            return;
+        }
+
+
+        alert(
+            "PDF șters cu succes."
+        );
+
+
+        await incarcaListaPDF();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete exception:",
+            error
+        );
+
+        alert(
+            "A apărut o eroare la ștergerea PDF-ului."
+        );
+    }
+}
+
+
+// ======================================================
+// VERIFICĂ SESIUNEA LA PORNIRE
+// ======================================================
+
+async function verificaSesiunea() {
+
+    try {
+
+        const { data, error } =
+            await supabaseClient.auth
+                .getSession();
+
+
+        if (error) {
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            return;
+        }
+
+
+        if (data && data.session) {
+
+            afiseazaAdmin(
+                data.session.user
+            );
+
+        } else {
+
+            document
+                .getElementById("adminPanel")
+                .classList.add("ascuns");
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Session exception:",
+            error
+        );
+    }
+}
+
+
+// ======================================================
+// DETECTEAZĂ LOGIN / LOGOUT
+// ======================================================
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        console.log(
+            "Auth:",
+            event
+        );
+
+
+        if (session) {
+
+            afiseazaAdmin(
+                session.user
+            );
+
+        } else {
+
+            const panel =
+                document.getElementById(
+                    "adminPanel"
+                );
+
+            if (panel) {
+
+                panel.classList.add(
+                    "ascuns"
+                );
+            }
+        }
+    }
+);
+
+
+// ======================================================
+// ENTER PENTRU LOGIN
+// ======================================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "loginModal"
+            );
+
+
+        if (
+            event.key === "Enter" &&
+            modal &&
+            !modal.classList.contains("ascuns")
+        ) {
+
+            loginAdmin();
+        }
+
+
+        if (
+            event.key === "Escape" &&
+            modal &&
+            !modal.classList.contains("ascuns")
+        ) {
+
+            inchideLogin();
+        }
+
+    }
+);
+
+
+// ======================================================
+// INITIALIZARE
+// ======================================================
+
+genereazaAutori();
+
+verificaSesiunea();
+
+
+console.log(
+    "Site inițializat."
+);
+
+console.log(
+    "Bucket PDF:",
+    BUCKET
+);
