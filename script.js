@@ -1400,345 +1400,209 @@ body.dark .pdf-item {
 
 
 // ======================================================
-// AUTORI + OPERE
+// AUTORI + OPERE DIN SUPABASE
 // ======================================================
 
-const autori = [
-
-    {
-        nume: "Mihail Sadoveanu",
-        poza: "Imagini/Sadoveanu.jpeg",
-        descriere:
-            "Prozator român cunoscut pentru operele sale inspirate din istorie, natură și lumea tradițională românească.",
-        operele: [
-            {
-                titlu: "Dumbrava Minunată",
-                rezumat: "Dumbrava minunata rezumat.pdf",
-                valoriMorale: "Dumbrava minunata valori morale.pdf",
-                caracterizare: "Dumbrava minunata caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "Roald Dahl",
-        poza: "Imagini/Roaldh.jpeg",
-        descriere:
-            "Scriitor britanic cunoscut mai ales pentru cărțile sale pentru copii, pline de imaginație, umor și aventură.",
-        operele: [
-            {
-                titlu: "Matilda",
-                rezumat: "Matilda rezumat.pdf",
-                valoriMorale: "Matilda valori morale.pdf",
-                caracterizare: "Matilda caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "Michael Ende",
-        poza: "Imagini/Michael.jpeg",
-        descriere:
-            "Scriitor german cunoscut pentru literatura fantastică și pentru poveștile sale pline de imaginație.",
-        operele: [
-            {
-                titlu: "Povestea fără sfârșit",
-                rezumat: "Povestea fara sfarsit rezumat.pdf",
-                valoriMorale: "Povestea fara sfarsit valori morale.pdf",
-                caracterizare: "Povestea fara sfarsit caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "George Călinescu",
-        poza: "Imagini/Calinescu.jpeg",
-        descriere:
-            "Critic literar, istoric literar, romancier și academician român.",
-        operele: [
-            {
-                titlu: "Enigma Otiliei",
-                rezumat: "Enigma Otiliei rezumat.pdf",
-                valoriMorale: "Enigma Otiliei valori morale.pdf",
-                caracterizare: "Enigma Otiliei caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "Liviu Rebreanu",
-        poza: "Imagini/Rebreanu.jpeg",
-        descriere:
-            "Prozator român important, cunoscut pentru romanele sale realiste.",
-        operele: [
-            {
-                titlu: "Ion",
-                rezumat: "Ion rezumat.pdf",
-                valoriMorale: "Ion valori morale.pdf",
-                caracterizare: "Ion caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "Mircea Eliade",
-        poza: "Imagini/Eliade.jpeg",
-        descriere:
-            "Scriitor, istoric al religiilor și filozof român.",
-        operele: [
-            {
-                titlu: "La țigănci",
-                rezumat: "La tiganci rezumat.pdf",
-                valoriMorale: "La tiganci valori morale.pdf",
-                caracterizare: "La tiganci caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "Ioan Slavici",
-        poza: "Imagini/Slavici.jpeg",
-        descriere:
-            "Prozator român important.",
-        operele: [
-            {
-                titlu: "Moara cu noroc",
-                rezumat: "Moara cu noroc rezumat.pdf",
-                valoriMorale: "Moara cu noroc valori morale.pdf",
-                caracterizare: "Moara cu noroc caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "I.L. Caragiale",
-        poza: "Imagini/Caragiale.jpeg",
-        descriere:
-            "Dramaturg și prozator român.",
-        operele: [
-            {
-                titlu: "O scrisoare pierdută",
-                rezumat: "O scrisoare pierduta rezumat.pdf",
-                valoriMorale: "O scrisoare pierduta valori morale.pdf",
-                caracterizare: "O scrisoare pierduta caracterizarea personajelor.pdf"
-            }
-        ]
-    },
-
-    {
-        nume: "Camil Petrescu",
-        poza: "Imagini/Camil.jpeg",
-        descriere:
-            "Romancier, dramaturg și poet român.",
-        operele: [
-            {
-                titlu:
-                    "Ultima noapte de dragoste, întâia noapte de război",
-                rezumat:
-                    "Ultima noapte de dragoste rezumat.pdf",
-                valoriMorale:
-                    "Ultima noapte de dragoste valori morale.pdf",
-                caracterizare:
-                    "Ultima noapte de dragoste caracterizarea personajelor.pdf"
-            }
-        ]
-    }
-
-];
-
-
-// ======================================================
-// VERIFICĂ DACĂ PDF-UL EXISTĂ
-// ======================================================
-
-async function existaPDF(numeFisier) {
-
-    if (!numeFisier) {
-        return false;
-    }
-
-    try {
-
-        const { data, error } =
-            await supabaseClient
-                .storage
-                .from(BUCKET)
-                .list("", {
-                    search: numeFisier,
-                    limit: 100
-                });
-
-        if (error) {
-
-            console.error(
-                "Eroare verificare PDF:",
-                numeFisier,
-                error
-            );
-
-            return false;
-        }
-
-        return (data || []).some(
-            fisier => fisier.name === numeFisier
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Eroare verificare PDF:",
-            error
-        );
-
-        return false;
-    }
-}
-
-
-// ======================================================
-// GENEREAZĂ BUTON PDF
-// ======================================================
-
-function butonPDF(numeFisier, text, icon) {
-
-    if (!numeFisier) {
-        return "";
-    }
-
-    return `
-        <button
-            class="opera-btn"
-            type="button"
-            onclick='deschidePDF(${JSON.stringify(numeFisier)})'>
-
-            ${icon} ${text}
-
-        </button>
-    `;
-}
-
-
-// ======================================================
-// GENEREAZĂ O OPERĂ
-// ======================================================
-
-async function genereazaOpera(opera) {
-
-    const [
-        areRezumat,
-        areValoriMorale,
-        areCaracterizare
-    ] = await Promise.all([
-
-        existaPDF(opera.rezumat),
-
-        existaPDF(opera.valoriMorale),
-
-        existaPDF(opera.caracterizare)
-
-    ]);
-
-
-    let butoane = "";
-
-
-    if (areRezumat) {
-
-        butoane += butonPDF(
-            opera.rezumat,
-            "Rezumat",
-            "📕"
-        );
-
-    }
-
-
-    if (areValoriMorale) {
-
-        butoane += butonPDF(
-            opera.valoriMorale,
-            "Valori morale",
-            "❤️"
-        );
-
-    }
-
-
-    if (areCaracterizare) {
-
-        butoane += butonPDF(
-            opera.caracterizare,
-            "Caracterizarea personajelor",
-            "👤"
-        );
-
-    }
-
-
-    // Dacă nu există niciun PDF,
-    // nu afișăm opera.
-
-    if (!butoane) {
-        return "";
-    }
-
-
-    return `
-
-        <div class="opera">
-
-            <h4>
-                📖 ${escapeHTML(opera.titlu)}
-            </h4>
-
-            <div class="opera-list">
-
-                ${butoane}
-
-            </div>
-
-        </div>
-
-    `;
-}
-
-
-// ======================================================
-// GENEREAZĂ AUTORI
-// ======================================================
-
-async function genereazaAutori() {
+async function incarcaAutori() {
 
     const container =
         document.getElementById("autorCards");
 
-    if (!container) {
-        return;
-    }
+    if (!container) return;
 
-
-    container.innerHTML =
-        "<p style='text-align:center'>Se încarcă operele...</p>";
-
+    container.innerHTML = `
+        <p style="text-align:center">
+            Se încarcă autorii...
+        </p>
+    `;
 
     try {
+
+        // ------------------------------------------------
+        // 1. ÎNCARCĂ AUTORII
+        // ------------------------------------------------
+
+        const {
+            data: autori,
+            error: eroareAutori
+        } = await supabaseClient
+            .from("autori")
+            .select("*")
+            .order("nume", {
+                ascending: true
+            });
+
+
+        if (eroareAutori) {
+
+            console.error(
+                "Eroare încărcare autori:",
+                eroareAutori
+            );
+
+            container.innerHTML = `
+                <p style="color:#c62828;text-align:center">
+                    Nu am putut încărca autorii.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        if (!autori || autori.length === 0) {
+
+            container.innerHTML = `
+                <p style="text-align:center">
+                    Momentan nu există autori disponibili.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        // ------------------------------------------------
+        // 2. ÎNCARCĂ OPERELE
+        // ------------------------------------------------
+
+        const {
+            data: opere,
+            error: eroareOpere
+        } = await supabaseClient
+            .from("opere")
+            .select("*")
+            .order("titlu", {
+                ascending: true
+            });
+
+
+        if (eroareOpere) {
+
+            console.error(
+                "Eroare încărcare opere:",
+                eroareOpere
+            );
+
+            container.innerHTML = `
+                <p style="color:#c62828;text-align:center">
+                    Nu am putut încărca operele.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        // ------------------------------------------------
+        // 3. CONSTRUIEȘTE CARDURILE
+        // ------------------------------------------------
 
         const carduri = [];
 
 
         for (const autor of autori) {
 
+            const opereAutor =
+                (opere || []).filter(
+                    opera =>
+                        String(opera.autor_id) ===
+                        String(autor.id)
+                );
+
+
             const opereHTML = [];
 
-            for (const opera of autor.operele) {
 
-                const html =
-                    await genereazaOpera(opera);
+            for (const opera of opereAutor) {
 
-                if (html) {
-                    opereHTML.push(html);
+                const areRezumat =
+                    !!opera.pdf;
+
+                const areValoriMorale =
+                    !!opera.pdf_valori_morale;
+
+                const areCaracterizare =
+                    !!opera.pdf_caracterizare;
+
+
+                // Dacă opera nu are niciun PDF,
+                // nu o afișăm.
+
+                if (
+                    !areRezumat &&
+                    !areValoriMorale &&
+                    !areCaracterizare
+                ) {
+                    continue;
                 }
 
+
+                let butoane = "";
+
+
+                if (areRezumat) {
+
+                    butoane += `
+                        <button
+                            class="opera-btn"
+                            type="button"
+                            onclick='deschidePDF(${JSON.stringify(opera.pdf)})'>
+
+                            📕 Rezumat
+
+                        </button>
+                    `;
+                }
+
+
+                if (areValoriMorale) {
+
+                    butoane += `
+                        <button
+                            class="opera-btn"
+                            type="button"
+                            onclick='deschidePDF(${JSON.stringify(opera.pdf_valori_morale)})'>
+
+                            ❤️ Valori morale
+
+                        </button>
+                    `;
+                }
+
+
+                if (areCaracterizare) {
+
+                    butoane += `
+                        <button
+                            class="opera-btn"
+                            type="button"
+                            onclick='deschidePDF(${JSON.stringify(opera.pdf_caracterizare)})'>
+
+                            👤 Caracterizarea personajelor
+
+                        </button>
+                    `;
+                }
+
+
+                opereHTML.push(`
+
+                    <div class="opera">
+
+                        <h4>
+                            📖 ${escapeHTML(opera.titlu)}
+                        </h4>
+
+                        <div class="opera-list">
+
+                            ${butoane}
+
+                        </div>
+
+                    </div>
+
+                `);
             }
 
 
@@ -1757,19 +1621,19 @@ async function genereazaAutori() {
                     <div class="portret">
 
                         <img
-                            src="${escapeHTML(autor.poza)}"
-                            alt="${escapeHTML(autor.nume)}"
+                            src="${escapeHTML(autor.poza || "")}"
+                            alt="${escapeHTML(autor.nume || "")}"
                             loading="lazy"
                             onerror="this.style.display='none';">
 
                     </div>
 
                     <h3>
-                        ${escapeHTML(autor.nume)}
+                        ${escapeHTML(autor.nume || "")}
                     </h3>
 
                     <p>
-                        ${escapeHTML(autor.descriere)}
+                        ${escapeHTML(autor.descriere || "")}
                     </p>
 
                     <div class="opera-list">
@@ -1781,9 +1645,12 @@ async function genereazaAutori() {
                 </div>
 
             `);
-
         }
 
+
+        // ------------------------------------------------
+        // 4. AFIȘARE
+        // ------------------------------------------------
 
         if (carduri.length === 0) {
 
@@ -1804,101 +1671,17 @@ async function genereazaAutori() {
     } catch (error) {
 
         console.error(
-            "Eroare generare autori:",
+            "Eroare încărcare autori:",
             error
         );
 
         container.innerHTML = `
-            <p style="text-align:center;color:#c62828">
-                Nu am putut încărca operele.
+            <p style="color:#c62828;text-align:center">
+                A apărut o eroare la încărcarea autorilor.
             </p>
         `;
     }
 }
-
-
-// ======================================================
-// DESCHIDE PDF DIN BUCKET PRIVAT
-// ======================================================
-
-async function deschidePDF(numeFisier) {
-
-    try {
-
-        console.log(
-            "Se solicită PDF:",
-            numeFisier
-        );
-
-        // ------------------------------------------------
-        // CREARE LINK TEMPORAR
-        // ------------------------------------------------
-
-        const { data, error } =
-            await supabaseClient
-                .storage
-                .from(BUCKET)
-                .createSignedUrl(
-                    numeFisier,
-                    60 * 10
-                );
-
-        if (error) {
-
-            console.error(
-                "Eroare Supabase PDF:",
-                error
-            );
-
-            alert(
-                "Nu pot deschide PDF-ul.\n\n" +
-                error.message
-            );
-
-            return;
-        }
-
-        if (!data || !data.signedUrl) {
-
-            console.error(
-                "Nu există signedUrl:",
-                data
-            );
-
-            alert(
-                "Supabase nu a generat linkul PDF."
-            );
-
-            return;
-        }
-
-        console.log(
-            "Signed URL generat cu succes."
-        );
-
-        // ------------------------------------------------
-        // DESCHIDE PDF
-        // ------------------------------------------------
-
-        window.open(
-            data.signedUrl,
-            "_blank",
-            "noopener,noreferrer"
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Eroare deschidere PDF:",
-            error
-        );
-
-        alert(
-            "A apărut o eroare la deschiderea PDF-ului."
-        );
-    }
-}
-
 
 // ======================================================
 // DARK MODE
@@ -2721,10 +2504,9 @@ document.addEventListener(
 // INITIALIZARE
 // ======================================================
 
-genereazaAutori();
+incarcaAutori();
 
 verificaSesiunea();
-
 
 console.log(
     "Site inițializat."
