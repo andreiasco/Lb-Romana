@@ -9,6 +9,8 @@ const SUPABASE_KEY =
 
 const BUCKET = "Pdf";
 
+const IMAGINI_BUCKET = "Imagini";
+
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
@@ -1355,10 +1357,14 @@ body.dark .pdf-item {
             id="autorNume"
             placeholder="Numele autorului">
 
-        <input
-            type="text"
-            id="autorPoza"
-            placeholder="Calea imaginii, ex. Imagini/Eminescu.jpeg">
+        <label>
+    🖼️ Imagine autor
+</label>
+
+<input
+    type="file"
+    id="autorPoza"
+    accept="image/*">
 
         <textarea
             id="autorDescriere"
@@ -1910,6 +1916,10 @@ async function incarcaAutori() {
 // ADAUGĂ AUTOR
 // ======================================================
 
+// ======================================================
+// ADAUGĂ AUTOR
+// ======================================================
+
 async function adaugaAutor() {
 
     const initiale =
@@ -1918,8 +1928,11 @@ async function adaugaAutor() {
     const nume =
         document.getElementById("autorNume").value.trim();
 
+    const pozaInput =
+        document.getElementById("autorPoza");
+
     const poza =
-        document.getElementById("autorPoza").value.trim();
+        pozaInput.files[0];
 
     const descriere =
         document.getElementById("autorDescriere").value.trim();
@@ -1937,11 +1950,299 @@ async function adaugaAutor() {
         status.textContent =
             "Completează inițialele și numele autorului.";
 
-        status.style.color = "#c62828";
+        status.style.color =
+            "#c62828";
 
         return;
     }
 
+
+    if (!poza) {
+
+        status.textContent =
+            "Selectează imaginea autorului.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    // ------------------------------------------------
+    // VERIFICĂ TIPUL IMAGINII
+    // ------------------------------------------------
+
+    if (!poza.type.startsWith("image/")) {
+
+        status.textContent =
+            "Fișierul selectat nu este o imagine.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    // ------------------------------------------------
+    // VERIFICĂ ADMINISTRATORUL
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii autentificat ca administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    status.textContent =
+        "Se încarcă imaginea...";
+
+    status.style.color =
+        "#7b2450";
+
+
+    try {
+
+        // ------------------------------------------------
+        // PREGĂTEȘTE NUMELE IMAGINII
+        // ------------------------------------------------
+
+        const extensie =
+            poza.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+        const numeCurat =
+            nume
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^a-zA-Z0-9]/g, "_")
+                .toLowerCase();
+
+
+        const timestamp =
+            Date.now();
+
+
+        const caleImagine =
+            `autori/${timestamp}_${numeCurat}.${extensie}`;
+
+
+        console.log(
+            "Cale imagine:",
+            caleImagine
+        );
+
+
+        // ------------------------------------------------
+        // UPLOAD ÎN BUCKETUL IMAGINI
+        // ------------------------------------------------
+
+        const {
+            data: uploadData,
+            error: uploadError
+        } =
+            await supabaseClient
+                .storage
+                .from(IMAGINI_BUCKET)
+                .upload(
+                    caleImagine,
+                    poza,
+                    {
+                        contentType:
+                            poza.type,
+
+                        upsert:
+                            false
+                    }
+                );
+
+
+        if (uploadError) {
+
+            console.error(
+                "Eroare upload imagine:",
+                uploadError
+            );
+
+            status.textContent =
+                "Nu am putut încărca imaginea: " +
+                uploadError.message;
+
+            status.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        console.log(
+            "Imagine încărcată:",
+            uploadData
+        );
+
+
+        // ------------------------------------------------
+        // OBȚINE URL-UL PUBLIC
+        // ------------------------------------------------
+
+        const {
+            data: publicUrlData
+        } =
+            supabaseClient
+                .storage
+                .from(IMAGINI_BUCKET)
+                .getPublicUrl(caleImagine);
+
+
+        const urlImagine =
+            publicUrlData.publicUrl;
+
+
+        console.log(
+            "URL imagine:",
+            urlImagine
+        );
+
+
+        // ------------------------------------------------
+        // SALVEAZĂ AUTORUL ÎN TABEL
+        // ------------------------------------------------
+
+        status.textContent =
+            "Se salvează autorul...";
+
+
+        const {
+            data: autorNou,
+            error: autorError
+        } =
+            await supabaseClient
+                .from("autori")
+                .insert([
+                    {
+                        initiale:
+                            initiale,
+
+                        nume:
+                            nume,
+
+                        poza:
+                            urlImagine,
+
+                        descriere:
+                            descriere
+                    }
+                ])
+                .select();
+
+
+        if (autorError) {
+
+            console.error(
+                "Eroare salvare autor:",
+                autorError
+            );
+
+
+            // Dacă autorul nu s-a putut salva,
+            // ștergem imaginea încărcată.
+
+            await supabaseClient
+                .storage
+                .from(IMAGINI_BUCKET)
+                .remove([
+                    caleImagine
+                ]);
+
+
+            status.textContent =
+                "Imaginea a fost încărcată, dar autorul nu a putut fi salvat: " +
+                autorError.message;
+
+            status.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        console.log(
+            "Autor nou:",
+            autorNou
+        );
+
+
+        // ------------------------------------------------
+        // SUCCES
+        // ------------------------------------------------
+
+        status.textContent =
+            "Autorul și imaginea au fost adăugate cu succes!";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        // ------------------------------------------------
+        // GOLIRE FORMULAR
+        // ------------------------------------------------
+
+        document.getElementById(
+            "autorInitiale"
+        ).value = "";
+
+        document.getElementById(
+            "autorNume"
+        ).value = "";
+
+        document.getElementById(
+            "autorPoza"
+        ).value = "";
+
+        document.getElementById(
+            "autorDescriere"
+        ).value = "";
+
+
+        // ------------------------------------------------
+        // REÎNCARCĂ DATELE
+        // ------------------------------------------------
+
+        await incarcaAutoriAdmin();
+
+        await incarcaListaAutoriSelect();
+
+        await incarcaAutori();
+
+
+    } catch (error) {
+
+        console.error(
+            "Eroare adăugare autor:",
+            error
+        );
+
+        status.textContent =
+            "A apărut o eroare: " +
+            error.message;
+
+        status.style.color =
+            "#c62828";
+    }
+}
 
     // ------------------------------------------------
     // VERIFICĂ ADMIN
