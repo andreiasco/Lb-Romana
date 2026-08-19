@@ -589,6 +589,67 @@ section {
     border-radius: 10px;
 }
 
+.admin-box input[type="text"],
+.admin-box input[type="email"],
+.admin-box textarea,
+.admin-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0 12px;
+
+    border: 2px solid #ddd;
+    border-radius: 10px;
+
+    font-size: 16px;
+
+    font-family: Arial, sans-serif;
+}
+
+.admin-box textarea {
+    resize: vertical;
+}
+
+.admin-box label {
+    display: block;
+
+    margin-top: 12px;
+    margin-bottom: 5px;
+
+    font-weight: bold;
+    color: #7b2450;
+}
+
+.admin-autor {
+    padding: 15px;
+    margin-top: 15px;
+
+    background: #f8eef3;
+
+    border-radius: 10px;
+
+    border-left: 5px solid #7b2450;
+}
+
+.admin-opera {
+    padding: 15px;
+    margin-top: 15px;
+
+    background: #f8eef3;
+
+    border-radius: 10px;
+
+    border-left: 5px solid #7b2450;
+}
+
+.pdf-exista {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.pdf-lipsa {
+    color: #c62828;
+}
+
 
 .admin-btn {
     margin-top: 12px;
