@@ -1400,7 +1400,7 @@ body.dark .pdf-item {
 
 
 // ======================================================
-// AUTORI
+// AUTORI + OPERE
 // ======================================================
 
 const autori = [
@@ -1413,7 +1413,9 @@ const autori = [
         operele: [
             {
                 titlu: "Dumbrava Minunată",
-                pdf: "Dumbrava minunata rezumat.pdf"
+                rezumat: "Dumbrava minunata rezumat.pdf",
+                valoriMorale: "Dumbrava minunata valori morale.pdf",
+                caracterizare: "Dumbrava minunata caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1426,7 +1428,9 @@ const autori = [
         operele: [
             {
                 titlu: "Matilda",
-                pdf: "Matilda rezumat.pdf"
+                rezumat: "Matilda rezumat.pdf",
+                valoriMorale: "Matilda valori morale.pdf",
+                caracterizare: "Matilda caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1439,7 +1443,9 @@ const autori = [
         operele: [
             {
                 titlu: "Povestea fără sfârșit",
-                pdf: "Povestea fara sfarsit rezumat.pdf"
+                rezumat: "Povestea fara sfarsit rezumat.pdf",
+                valoriMorale: "Povestea fara sfarsit valori morale.pdf",
+                caracterizare: "Povestea fara sfarsit caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1452,7 +1458,9 @@ const autori = [
         operele: [
             {
                 titlu: "Enigma Otiliei",
-                pdf: "Enigma Otiliei rezumat.pdf"
+                rezumat: "Enigma Otiliei rezumat.pdf",
+                valoriMorale: "Enigma Otiliei valori morale.pdf",
+                caracterizare: "Enigma Otiliei caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1465,7 +1473,9 @@ const autori = [
         operele: [
             {
                 titlu: "Ion",
-                pdf: "Ion rezumat.pdf"
+                rezumat: "Ion rezumat.pdf",
+                valoriMorale: "Ion valori morale.pdf",
+                caracterizare: "Ion caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1478,7 +1488,9 @@ const autori = [
         operele: [
             {
                 titlu: "La țigănci",
-                pdf: "La tiganci rezumat.pdf"
+                rezumat: "La tiganci rezumat.pdf",
+                valoriMorale: "La tiganci valori morale.pdf",
+                caracterizare: "La tiganci caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1491,7 +1503,9 @@ const autori = [
         operele: [
             {
                 titlu: "Moara cu noroc",
-                pdf: "Moara cu noroc rezumat.pdf"
+                rezumat: "Moara cu noroc rezumat.pdf",
+                valoriMorale: "Moara cu noroc valori morale.pdf",
+                caracterizare: "Moara cu noroc caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1504,7 +1518,9 @@ const autori = [
         operele: [
             {
                 titlu: "O scrisoare pierdută",
-                pdf: "O scrisoare pierduta rezumat.pdf"
+                rezumat: "O scrisoare pierduta rezumat.pdf",
+                valoriMorale: "O scrisoare pierduta valori morale.pdf",
+                caracterizare: "O scrisoare pierduta caracterizarea personajelor.pdf"
             }
         ]
     },
@@ -1516,8 +1532,14 @@ const autori = [
             "Romancier, dramaturg și poet român.",
         operele: [
             {
-                titlu: "Ultima noapte de dragoste, întâia noapte de război",
-                pdf: "Ultima noapte de dragoste rezumat.pdf"
+                titlu:
+                    "Ultima noapte de dragoste, întâia noapte de război",
+                rezumat:
+                    "Ultima noapte de dragoste rezumat.pdf",
+                valoriMorale:
+                    "Ultima noapte de dragoste valori morale.pdf",
+                caracterizare:
+                    "Ultima noapte de dragoste caracterizarea personajelor.pdf"
             }
         ]
     }
@@ -1526,59 +1548,272 @@ const autori = [
 
 
 // ======================================================
+// VERIFICĂ DACĂ PDF-UL EXISTĂ
+// ======================================================
+
+async function existaPDF(numeFisier) {
+
+    if (!numeFisier) {
+        return false;
+    }
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .list("", {
+                    search: numeFisier,
+                    limit: 100
+                });
+
+        if (error) {
+
+            console.error(
+                "Eroare verificare PDF:",
+                numeFisier,
+                error
+            );
+
+            return false;
+        }
+
+        return (data || []).some(
+            fisier => fisier.name === numeFisier
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Eroare verificare PDF:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+// ======================================================
+// GENEREAZĂ BUTON PDF
+// ======================================================
+
+function butonPDF(numeFisier, text, icon) {
+
+    if (!numeFisier) {
+        return "";
+    }
+
+    return `
+        <button
+            class="opera-btn"
+            type="button"
+            onclick='deschidePDF(${JSON.stringify(numeFisier)})'>
+
+            ${icon} ${text}
+
+        </button>
+    `;
+}
+
+
+// ======================================================
+// GENEREAZĂ O OPERĂ
+// ======================================================
+
+async function genereazaOpera(opera) {
+
+    const [
+        areRezumat,
+        areValoriMorale,
+        areCaracterizare
+    ] = await Promise.all([
+
+        existaPDF(opera.rezumat),
+
+        existaPDF(opera.valoriMorale),
+
+        existaPDF(opera.caracterizare)
+
+    ]);
+
+
+    let butoane = "";
+
+
+    if (areRezumat) {
+
+        butoane += butonPDF(
+            opera.rezumat,
+            "Rezumat",
+            "📕"
+        );
+
+    }
+
+
+    if (areValoriMorale) {
+
+        butoane += butonPDF(
+            opera.valoriMorale,
+            "Valori morale",
+            "❤️"
+        );
+
+    }
+
+
+    if (areCaracterizare) {
+
+        butoane += butonPDF(
+            opera.caracterizare,
+            "Caracterizarea personajelor",
+            "👤"
+        );
+
+    }
+
+
+    // Dacă nu există niciun PDF,
+    // nu afișăm opera.
+
+    if (!butoane) {
+        return "";
+    }
+
+
+    return `
+
+        <div class="opera">
+
+            <h4>
+                📖 ${escapeHTML(opera.titlu)}
+            </h4>
+
+            <div class="opera-list">
+
+                ${butoane}
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+// ======================================================
 // GENEREAZĂ AUTORI
 // ======================================================
 
-function genereazaAutori() {
+async function genereazaAutori() {
 
     const container =
         document.getElementById("autorCards");
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
+
 
     container.innerHTML =
-        autori.map(autor => `
+        "<p style='text-align:center'>Se încarcă operele...</p>";
 
-            <div class="card autor">
 
-                <div class="portret">
+    try {
 
-                    <img
-                        src="${autor.poza}"
-                        alt="${autor.nume}"
-                        loading="lazy"
-                        onerror="this.style.display='none';">
+        const carduri = [];
+
+
+        for (const autor of autori) {
+
+            const opereHTML = [];
+
+            for (const opera of autor.operele) {
+
+                const html =
+                    await genereazaOpera(opera);
+
+                if (html) {
+                    opereHTML.push(html);
+                }
+
+            }
+
+
+            // Dacă autorul nu are nicio operă
+            // cu PDF disponibil, nu îl afișăm.
+
+            if (opereHTML.length === 0) {
+                continue;
+            }
+
+
+            carduri.push(`
+
+                <div class="card autor">
+
+                    <div class="portret">
+
+                        <img
+                            src="${escapeHTML(autor.poza)}"
+                            alt="${escapeHTML(autor.nume)}"
+                            loading="lazy"
+                            onerror="this.style.display='none';">
+
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(autor.nume)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(autor.descriere)}
+                    </p>
+
+                    <div class="opera-list">
+
+                        ${opereHTML.join("")}
+
+                    </div>
 
                 </div>
 
-                <h3>
-                    ${autor.nume}
-                </h3>
+            `);
 
-                <p>
-                    ${autor.descriere}
+        }
+
+
+        if (carduri.length === 0) {
+
+            container.innerHTML = `
+                <p style="text-align:center">
+                    Momentan nu există materiale PDF disponibile.
                 </p>
+            `;
 
-                <div class="opera-list">
+            return;
+        }
 
-                    ${autor.operele.map(opera => `
 
-                        <button
-                            class="opera-btn"
-                            type="button"
-                            onclick='deschidePDF(${JSON.stringify(opera.pdf)})'>
+        container.innerHTML =
+            carduri.join("");
 
-                            📕 „${opera.titlu}”
 
-                        </button>
+    } catch (error) {
 
-                    `).join("")}
+        console.error(
+            "Eroare generare autori:",
+            error
+        );
 
-                </div>
-
-            </div>
-
-        `).join("");
+        container.innerHTML = `
+            <p style="text-align:center;color:#c62828">
+                Nu am putut încărca operele.
+            </p>
+        `;
+    }
 }
 
 
