@@ -589,6 +589,7 @@ section {
     border-radius: 10px;
 }
 
+
 .admin-btn {
     margin-top: 12px;
 
@@ -1247,60 +1248,196 @@ body.dark .pdf-item {
     <div class="admin-header">
 
         <div>
-
-            <h2>
-                🔐 Panou administrator
-            </h2>
-
-            <p id="adminUser">
-                Administrator conectat
-            </p>
-
+            <h2>🔐 Panou administrator</h2>
+            <p id="adminUser">Administrator conectat</p>
         </div>
 
         <button
             class="admin-btn logout-btn"
             onclick="logoutAdmin()">
-
             🚪 Deconectare
-
         </button>
 
     </div>
 
 
+    <!-- ==================================================
+         ADAUGĂ AUTOR
+    ================================================== -->
+
     <div class="admin-box">
 
-        <h3>
-            📤 Încarcă PDF
-        </h3>
+        <h3>👤 Adaugă autor</h3>
 
         <input
-            type="file"
-            id="pdfInput"
-            accept="application/pdf">
+            type="text"
+            id="autorInitiale"
+            placeholder="Inițiale">
+
+        <input
+            type="text"
+            id="autorNume"
+            placeholder="Numele autorului">
+
+        <input
+            type="text"
+            id="autorPoza"
+            placeholder="Calea imaginii, ex. Imagini/Eminescu.jpeg">
+
+        <textarea
+            id="autorDescriere"
+            placeholder="Descrierea autorului"
+            rows="4"></textarea>
 
         <button
             class="admin-btn"
-            onclick="uploadPDF()">
+            onclick="adaugaAutor()">
 
-            📤 Upload PDF
+            ➕ Adaugă autor
 
         </button>
 
         <div
-            id="uploadStatus"
+            id="autorStatus"
             class="admin-status">
         </div>
 
     </div>
 
 
-    <div class="admin-box" style="margin-top:20px;">
+    <!-- ==================================================
+         ADAUGĂ OPERĂ
+    ================================================== -->
 
-        <h3>
-            📚 PDF-uri din bucket
-        </h3>
+    <div
+        class="admin-box"
+        style="margin-top:20px;">
+
+        <h3>📚 Adaugă operă</h3>
+
+        <label>
+            Autor:
+        </label>
+
+        <select id="operaAutor">
+            <option value="">
+                Selectează autorul
+            </option>
+        </select>
+
+
+        <input
+            type="text"
+            id="operaTitlu"
+            placeholder="Titlul operei">
+
+
+        <label>
+            📖 Rezumat PDF
+        </label>
+
+        <input
+            type="file"
+            id="operaRezumat"
+            accept="application/pdf">
+
+
+        <label>
+            💡 Valori morale PDF
+        </label>
+
+        <input
+            type="file"
+            id="operaValoriMorale"
+            accept="application/pdf">
+
+
+        <label>
+            👤 Caracterizarea personajelor PDF
+        </label>
+
+        <input
+            type="file"
+            id="operaCaracterizare"
+            accept="application/pdf">
+
+
+        <button
+            class="admin-btn"
+            onclick="adaugaOpera()">
+
+            ➕ Adaugă operă
+
+        </button>
+
+
+        <div
+            id="operaStatus"
+            class="admin-status">
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         LISTA AUTORI
+    ================================================== -->
+
+    <div
+        class="admin-box"
+        style="margin-top:20px;">
+
+        <h3>👥 Autori existenți</h3>
+
+        <button
+            class="admin-btn"
+            onclick="incarcaAutoriAdmin()">
+
+            🔄 Reîmprospătează
+
+        </button>
+
+        <div id="listaAutoriAdmin">
+            <p>Se încarcă...</p>
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         LISTA OPERE
+    ================================================== -->
+
+    <div
+        class="admin-box"
+        style="margin-top:20px;">
+
+        <h3>📚 Opere existente</h3>
+
+        <button
+            class="admin-btn"
+            onclick="incarcaOpereAdmin()">
+
+            🔄 Reîmprospătează
+
+        </button>
+
+        <div id="listaOpereAdmin">
+            <p>Se încarcă...</p>
+        </div>
+
+    </div>
+
+
+    <!-- ==================================================
+         PDF-URI DIN BUCKET
+    ================================================== -->
+
+    <div
+        class="admin-box"
+        style="margin-top:20px;">
+
+        <h3>📁 PDF-uri din bucket</h3>
 
         <button
             class="admin-btn"
