@@ -1302,6 +1302,10 @@ body.dark .pdf-item {
      ADMIN PANEL
 ====================================================== -->
 
+<!-- ======================================================
+     ADMIN PANEL
+====================================================== -->
+
 <section
     id="adminPanel"
     class="admin-panel ascuns">
@@ -1309,14 +1313,23 @@ body.dark .pdf-item {
     <div class="admin-header">
 
         <div>
-            <h2>🔐 Panou administrator</h2>
-            <p id="adminUser">Administrator conectat</p>
+
+            <h2>
+                🔐 Panou administrator
+            </h2>
+
+            <p id="adminUser">
+                Administrator conectat
+            </p>
+
         </div>
 
         <button
             class="admin-btn logout-btn"
             onclick="logoutAdmin()">
+
             🚪 Deconectare
+
         </button>
 
     </div>
@@ -1328,7 +1341,9 @@ body.dark .pdf-item {
 
     <div class="admin-box">
 
-        <h3>👤 Adaugă autor</h3>
+        <h3>
+            👤 Adaugă autor
+        </h3>
 
         <input
             type="text"
@@ -1374,24 +1389,26 @@ body.dark .pdf-item {
         class="admin-box"
         style="margin-top:20px;">
 
-        <h3>📚 Adaugă operă</h3>
+        <h3>
+            📚 Adaugă operă
+        </h3>
 
         <label>
             Autor:
         </label>
 
         <select id="operaAutor">
+
             <option value="">
                 Selectează autorul
             </option>
-        </select>
 
+        </select>
 
         <input
             type="text"
             id="operaTitlu"
             placeholder="Titlul operei">
-
 
         <label>
             📖 Rezumat PDF
@@ -1402,7 +1419,6 @@ body.dark .pdf-item {
             id="operaRezumat"
             accept="application/pdf">
 
-
         <label>
             💡 Valori morale PDF
         </label>
@@ -1411,7 +1427,6 @@ body.dark .pdf-item {
             type="file"
             id="operaValoriMorale"
             accept="application/pdf">
-
 
         <label>
             👤 Caracterizarea personajelor PDF
@@ -1422,7 +1437,6 @@ body.dark .pdf-item {
             id="operaCaracterizare"
             accept="application/pdf">
 
-
         <button
             class="admin-btn"
             onclick="adaugaOpera()">
@@ -1430,7 +1444,6 @@ body.dark .pdf-item {
             ➕ Adaugă operă
 
         </button>
-
 
         <div
             id="operaStatus"
@@ -1448,7 +1461,9 @@ body.dark .pdf-item {
         class="admin-box"
         style="margin-top:20px;">
 
-        <h3>👥 Autori existenți</h3>
+        <h3>
+            👥 Autori existenți
+        </h3>
 
         <button
             class="admin-btn"
@@ -1459,7 +1474,11 @@ body.dark .pdf-item {
         </button>
 
         <div id="listaAutoriAdmin">
-            <p>Se încarcă...</p>
+
+            <p>
+                Se încarcă...
+            </p>
+
         </div>
 
     </div>
@@ -1473,7 +1492,9 @@ body.dark .pdf-item {
         class="admin-box"
         style="margin-top:20px;">
 
-        <h3>📚 Opere existente</h3>
+        <h3>
+            📚 Opere existente
+        </h3>
 
         <button
             class="admin-btn"
@@ -1484,7 +1505,11 @@ body.dark .pdf-item {
         </button>
 
         <div id="listaOpereAdmin">
-            <p>Se încarcă...</p>
+
+            <p>
+                Se încarcă...
+            </p>
+
         </div>
 
     </div>
@@ -1498,7 +1523,9 @@ body.dark .pdf-item {
         class="admin-box"
         style="margin-top:20px;">
 
-        <h3>📁 PDF-uri din bucket</h3>
+        <h3>
+            📁 PDF-uri din bucket
+        </h3>
 
         <button
             class="admin-btn"
@@ -1521,7 +1548,6 @@ body.dark .pdf-item {
     </div>
 
 </section>
-
 
 <!-- ======================================================
      LOGIN
