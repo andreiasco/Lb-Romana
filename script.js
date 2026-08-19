@@ -1,27 +1,47 @@
 console.log("SCRIPT.JS NOU SE ÎNCARCĂ");
+
 // ======================================================
 // SUPABASE
-// ==================================================
-const SUPABASE_URL = "https://eagjavifluwolqeuctzk.supabase.co";
+// ======================================================
+
+const SUPABASE_URL =
+    "https://eagjavifluwolqeuctzk.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_QSG9OFrCANpRxA-moQCQgQ_mtkx-hWX";
+    "sb_publishable_QSG9OfrCANpRxA-moQCQgQ_mtkx-hWX";
 
 const BUCKET = "Pdf";
-
 const IMAGINI_BUCKET = "Imagini";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 // ======================================================
 // CONTAINER
 // ======================================================
 
-const site = document.getElementById("site");
+const site =
+    document.getElementById("site");
+
+
+// ======================================================
+// VERIFICARE CONTAINER
+// ======================================================
+
+if (!site) {
+
+    console.error(
+        "Nu există elementul #site în HTML."
+    );
+
+    throw new Error(
+        "Elementul #site nu a fost găsit."
+    );
+}
 
 
 // ======================================================
@@ -238,6 +258,10 @@ section {
     overflow: hidden;
 
     background: #7b2450;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .portret img {
@@ -247,6 +271,12 @@ section {
     object-fit: cover;
 
     display: block;
+}
+
+.portret-fallback {
+    color: white;
+    font-size: 38px;
+    font-weight: bold;
 }
 
 .opera-list {
@@ -652,7 +682,6 @@ section {
     color: #c62828;
 }
 
-
 .admin-btn {
     margin-top: 12px;
 
@@ -809,6 +838,7 @@ body.dark .pdf-item {
         flex-direction: column;
         align-items: stretch;
     }
+
 }
 
 </style>
@@ -1304,10 +1334,6 @@ body.dark .pdf-item {
      ADMIN PANEL
 ====================================================== -->
 
-<!-- ======================================================
-     ADMIN PANEL
-====================================================== -->
-
 <section
     id="adminPanel"
     class="admin-panel ascuns">
@@ -1358,13 +1384,13 @@ body.dark .pdf-item {
             placeholder="Numele autorului">
 
         <label>
-    🖼️ Imagine autor
-</label>
+            🖼️ Imagine autor
+        </label>
 
-<input
-    type="file"
-    id="autorPoza"
-    accept="image/*">
+        <input
+            type="file"
+            id="autorPoza"
+            accept="image/jpeg,image/png,image/webp,image/gif">
 
         <textarea
             id="autorDescriere"
@@ -1555,6 +1581,7 @@ body.dark .pdf-item {
 
 </section>
 
+
 <!-- ======================================================
      LOGIN
 ====================================================== -->
@@ -1630,7 +1657,70 @@ body.dark .pdf-item {
 
 
 // ======================================================
-// AUTORI + OPERE DIN SUPABASE
+// ESCAPE HTML
+// ======================================================
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text == null ? "" : String(text);
+
+    return div.innerHTML;
+}
+
+
+// ======================================================
+// UTILIZATOR AUTENTIFICAT
+// ======================================================
+
+async function utilizatorAutentificat() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
+
+        if (error) {
+
+            console.error(
+                "Eroare verificare sesiune:",
+                error
+            );
+
+            return null;
+        }
+
+        if (
+            !data ||
+            !data.session ||
+            !data.session.user
+        ) {
+
+            return null;
+        }
+
+        return data.session.user;
+
+    } catch (error) {
+
+        console.error(
+            "Eroare sesiune:",
+            error
+        );
+
+        return null;
+    }
+}
+
+
+// ======================================================
+// AUTORI + OPERE
 // ======================================================
 
 async function incarcaAutori() {
@@ -1638,7 +1728,9 @@ async function incarcaAutori() {
     const container =
         document.getElementById("autorCards");
 
-    if (!container) return;
+    if (!container) {
+        return;
+    }
 
     container.innerHTML = `
         <p style="text-align:center">
@@ -1648,20 +1740,20 @@ async function incarcaAutori() {
 
     try {
 
-        // ------------------------------------------------
-        // 1. ÎNCARCĂ AUTORII
-        // ------------------------------------------------
+        // ----------------------------------------------
+        // AUTORI
+        // ----------------------------------------------
 
         const {
             data: autori,
             error: eroareAutori
-        } = await supabaseClient
-            .from("autori")
-            .select("*")
-            .order("nume", {
-                ascending: true
-            });
-
+        } =
+            await supabaseClient
+                .from("autori")
+                .select("*")
+                .order("nume", {
+                    ascending: true
+                });
 
         if (eroareAutori) {
 
@@ -1679,7 +1771,6 @@ async function incarcaAutori() {
             return;
         }
 
-
         if (!autori || autori.length === 0) {
 
             container.innerHTML = `
@@ -1692,20 +1783,20 @@ async function incarcaAutori() {
         }
 
 
-        // ------------------------------------------------
-        // 2. ÎNCARCĂ OPERELE
-        // ------------------------------------------------
+        // ----------------------------------------------
+        // OPERE
+        // ----------------------------------------------
 
         const {
             data: opere,
             error: eroareOpere
-        } = await supabaseClient
-            .from("opere")
-            .select("*")
-            .order("titlu", {
-                ascending: true
-            });
-
+        } =
+            await supabaseClient
+                .from("opere")
+                .select("*")
+                .order("titlu", {
+                    ascending: true
+                });
 
         if (eroareOpere) {
 
@@ -1724,9 +1815,9 @@ async function incarcaAutori() {
         }
 
 
-        // ------------------------------------------------
-        // 3. CONSTRUIEȘTE CARDURILE
-        // ------------------------------------------------
+        // ----------------------------------------------
+        // CARDURI
+        // ----------------------------------------------
 
         const carduri = [];
 
@@ -1739,7 +1830,6 @@ async function incarcaAutori() {
                         String(opera.autor_id) ===
                         String(autor.id)
                 );
-
 
             const opereHTML = [];
 
@@ -1755,9 +1845,6 @@ async function incarcaAutori() {
                 const areCaracterizare =
                     !!opera.pdf_caracterizare;
 
-
-                // Dacă opera nu are niciun PDF,
-                // nu o afișăm.
 
                 if (
                     !areRezumat &&
@@ -1836,13 +1923,71 @@ async function incarcaAutori() {
             }
 
 
-            // Dacă autorul nu are nicio operă
-            // cu PDF disponibil, nu îl afișăm.
+            // ------------------------------------------
+            // AUTORUL TREBUIE SĂ AIBĂ MATERIALE
+            // ------------------------------------------
 
             if (opereHTML.length === 0) {
                 continue;
             }
 
+
+            // ------------------------------------------
+            // IMAGINE AUTOR
+            // ------------------------------------------
+
+            const pozaAutor =
+                autor.poza
+                    ? escapeHTML(autor.poza)
+                    : "";
+
+            const numeAutor =
+                escapeHTML(autor.nume || "");
+
+            const initialeAutor =
+                escapeHTML(autor.initiale || "");
+
+
+            let imagineHTML = "";
+
+
+            if (pozaAutor) {
+
+                imagineHTML = `
+                    <img
+                        src="${pozaAutor}"
+                        alt="${numeAutor}"
+                        loading="lazy"
+                        onerror="
+                            this.style.display='none';
+                            this.parentElement
+                                .querySelector('.portret-fallback')
+                                .style.display='flex';
+                        ">
+                `;
+            }
+
+
+            imagineHTML += `
+                <div
+                    class="portret-fallback"
+                    style="
+                        display:${pozaAutor ? "none" : "flex"};
+                        width:100%;
+                        height:100%;
+                        align-items:center;
+                        justify-content:center;
+                    ">
+
+                    ${initialeAutor || "👤"}
+
+                </div>
+            `;
+
+
+            // ------------------------------------------
+            // CARD AUTOR
+            // ------------------------------------------
 
             carduri.push(`
 
@@ -1850,20 +1995,18 @@ async function incarcaAutori() {
 
                     <div class="portret">
 
-                        <img
-                            src="${escapeHTML(autor.poza || "")}"
-                            alt="${escapeHTML(autor.nume || "")}"
-                            loading="lazy"
-                            onerror="this.style.display='none';">
+                        ${imagineHTML}
 
                     </div>
 
                     <h3>
-                        ${escapeHTML(autor.nume || "")}
+                        ${numeAutor}
                     </h3>
 
                     <p>
-                        ${escapeHTML(autor.descriere || "")}
+                        ${escapeHTML(
+                            autor.descriere || ""
+                        )}
                     </p>
 
                     <div class="opera-list">
@@ -1878,9 +2021,9 @@ async function incarcaAutori() {
         }
 
 
-        // ------------------------------------------------
-        // 4. AFIȘARE
-        // ------------------------------------------------
+        // ----------------------------------------------
+        // AFIȘARE
+        // ----------------------------------------------
 
         if (carduri.length === 0) {
 
@@ -1912,21 +2055,48 @@ async function incarcaAutori() {
         `;
     }
 }
-// ======================================================
-// ADAUGĂ AUTOR
-// ======================================================
+
 
 // ======================================================
-// ADAUGĂ AUTOR
+// DESCHIDE PDF
+// ======================================================
+
+function deschidePDF(url) {
+
+    if (!url) {
+
+        alert(
+            "PDF-ul nu este disponibil."
+        );
+
+        return;
+    }
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+}
+
+
+// ======================================================
+// ADAUGĂ AUTOR + IMAGINE
 // ======================================================
 
 async function adaugaAutor() {
 
     const initiale =
-        document.getElementById("autorInitiale").value.trim();
+        document
+            .getElementById("autorInitiale")
+            .value
+            .trim();
 
     const nume =
-        document.getElementById("autorNume").value.trim();
+        document
+            .getElementById("autorNume")
+            .value
+            .trim();
 
     const pozaInput =
         document.getElementById("autorPoza");
@@ -1935,15 +2105,18 @@ async function adaugaAutor() {
         pozaInput.files[0];
 
     const descriere =
-        document.getElementById("autorDescriere").value.trim();
+        document
+            .getElementById("autorDescriere")
+            .value
+            .trim();
 
     const status =
         document.getElementById("autorStatus");
 
 
-    // ------------------------------------------------
-    // VERIFICĂ DATELE
-    // ------------------------------------------------
+    // ----------------------------------------------
+    // VALIDARE
+    // ----------------------------------------------
 
     if (!initiale || !nume) {
 
@@ -1969,10 +2142,6 @@ async function adaugaAutor() {
     }
 
 
-    // ------------------------------------------------
-    // VERIFICĂ TIPUL IMAGINII
-    // ------------------------------------------------
-
     if (!poza.type.startsWith("image/")) {
 
         status.textContent =
@@ -1985,9 +2154,25 @@ async function adaugaAutor() {
     }
 
 
-    // ------------------------------------------------
-    // VERIFICĂ ADMINISTRATORUL
-    // ------------------------------------------------
+    // ----------------------------------------------
+    // LIMITĂ IMAGINE
+    // ----------------------------------------------
+
+    if (poza.size > 10 * 1024 * 1024) {
+
+        status.textContent =
+            "Imaginea este prea mare. Maximum 10 MB.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    // ----------------------------------------------
+    // VERIFICĂ ADMIN
+    // ----------------------------------------------
 
     const user =
         await utilizatorAutentificat();
@@ -2005,40 +2190,71 @@ async function adaugaAutor() {
 
 
     status.textContent =
-        "Se încarcă imaginea...";
+        "Se pregătește imaginea...";
 
     status.style.color =
         "#7b2450";
 
 
+    let caleImagine = null;
+
+
     try {
 
-        // ------------------------------------------------
-        // PREGĂTEȘTE NUMELE IMAGINII
-        // ------------------------------------------------
+        // ------------------------------------------
+        // EXTENSIE
+        // ------------------------------------------
 
-        const extensie =
+        let extensie =
             poza.name
                 .split(".")
                 .pop()
                 .toLowerCase();
 
+        if (extensie === "jpeg") {
+            extensie = "jpg";
+        }
+
+
+        // ------------------------------------------
+        // NUME CURAT
+        // ------------------------------------------
 
         const numeCurat =
             nume
                 .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .replace(/[^a-zA-Z0-9]/g, "_")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                )
+                .replace(
+                    /[^a-zA-Z0-9]/g,
+                    "_"
+                )
                 .toLowerCase();
 
+
+        // ------------------------------------------
+        // CALE UNICĂ
+        // ------------------------------------------
 
         const timestamp =
             Date.now();
 
+        const random =
+            Math.random()
+                .toString(36)
+                .substring(2, 8);
 
-        const caleImagine =
-            `autori/${timestamp}_${numeCurat}.${extensie}`;
 
+        caleImagine =
+            `autori/${timestamp}_${random}_${numeCurat}.${extensie}`;
+
+
+        console.log(
+            "Upload imagine în:",
+            IMAGINI_BUCKET
+        );
 
         console.log(
             "Cale imagine:",
@@ -2046,9 +2262,13 @@ async function adaugaAutor() {
         );
 
 
-        // ------------------------------------------------
-        // UPLOAD ÎN BUCKETUL IMAGINI
-        // ------------------------------------------------
+        // ------------------------------------------
+        // UPLOAD IMAGINE
+        // ------------------------------------------
+
+        status.textContent =
+            "Se încarcă imaginea în bucketul Imagini...";
+
 
         const {
             data: uploadData,
@@ -2061,11 +2281,9 @@ async function adaugaAutor() {
                     caleImagine,
                     poza,
                     {
-                        contentType:
-                            poza.type,
-
-                        upsert:
-                            false
+                        cacheControl: "3600",
+                        contentType: poza.type,
+                        upsert: false
                     }
                 );
 
@@ -2073,7 +2291,7 @@ async function adaugaAutor() {
         if (uploadError) {
 
             console.error(
-                "Eroare upload imagine:",
+                "EROARE UPLOAD IMAGINE:",
                 uploadError
             );
 
@@ -2094,9 +2312,9 @@ async function adaugaAutor() {
         );
 
 
-        // ------------------------------------------------
-        // OBȚINE URL-UL PUBLIC
-        // ------------------------------------------------
+        // ------------------------------------------
+        // URL PUBLIC
+        // ------------------------------------------
 
         const {
             data: publicUrlData
@@ -2105,6 +2323,17 @@ async function adaugaAutor() {
                 .storage
                 .from(IMAGINI_BUCKET)
                 .getPublicUrl(caleImagine);
+
+
+        if (
+            !publicUrlData ||
+            !publicUrlData.publicUrl
+        ) {
+
+            throw new Error(
+                "Nu am putut obține URL-ul public al imaginii."
+            );
+        }
 
 
         const urlImagine =
@@ -2117,12 +2346,12 @@ async function adaugaAutor() {
         );
 
 
-        // ------------------------------------------------
-        // SALVEAZĂ AUTORUL ÎN TABEL
-        // ------------------------------------------------
+        // ------------------------------------------
+        // SALVEAZĂ AUTORUL
+        // ------------------------------------------
 
         status.textContent =
-            "Se salvează autorul...";
+            "Se salvează autorul în baza de date...";
 
 
         const {
@@ -2146,26 +2375,42 @@ async function adaugaAutor() {
                             descriere
                     }
                 ])
-                .select();
+                .select()
+                .single();
 
 
         if (autorError) {
 
             console.error(
-                "Eroare salvare autor:",
+                "EROARE SALVARE AUTOR:",
                 autorError
             );
 
 
-            // Dacă autorul nu s-a putut salva,
-            // ștergem imaginea încărcată.
+            // --------------------------------------
+            // ȘTERGE IMAGINEA DACĂ INSERT EȘUEAZĂ
+            // --------------------------------------
 
-            await supabaseClient
-                .storage
-                .from(IMAGINI_BUCKET)
-                .remove([
-                    caleImagine
-                ]);
+            if (caleImagine) {
+
+                const {
+                    error: removeError
+                } =
+                    await supabaseClient
+                        .storage
+                        .from(IMAGINI_BUCKET)
+                        .remove([
+                            caleImagine
+                        ]);
+
+                if (removeError) {
+
+                    console.error(
+                        "Nu am putut șterge imaginea:",
+                        removeError
+                    );
+                }
+            }
 
 
             status.textContent =
@@ -2185,9 +2430,9 @@ async function adaugaAutor() {
         );
 
 
-        // ------------------------------------------------
+        // ------------------------------------------
         // SUCCES
-        // ------------------------------------------------
+        // ------------------------------------------
 
         status.textContent =
             "Autorul și imaginea au fost adăugate cu succes!";
@@ -2196,42 +2441,40 @@ async function adaugaAutor() {
             "#2e7d32";
 
 
-        // ------------------------------------------------
+        // ------------------------------------------
         // GOLIRE FORMULAR
-        // ------------------------------------------------
+        // ------------------------------------------
 
-        document.getElementById(
-            "autorInitiale"
-        ).value = "";
+        document
+            .getElementById("autorInitiale")
+            .value = "";
 
-        document.getElementById(
-            "autorNume"
-        ).value = "";
+        document
+            .getElementById("autorNume")
+            .value = "";
 
-        document.getElementById(
-            "autorPoza"
-        ).value = "";
+        document
+            .getElementById("autorPoza")
+            .value = "";
 
-        document.getElementById(
-            "autorDescriere"
-        ).value = "";
+        document
+            .getElementById("autorDescriere")
+            .value = "";
 
 
-        // ------------------------------------------------
-        // REÎNCARCĂ DATELE
-        // ------------------------------------------------
+        // ------------------------------------------
+        // REÎNCARCĂ DATE
+        // ------------------------------------------
 
         await incarcaAutoriAdmin();
-
         await incarcaListaAutoriSelect();
-
         await incarcaAutori();
 
 
     } catch (error) {
 
         console.error(
-            "Eroare adăugare autor:",
+            "EROARE ADAUGARE AUTOR:",
             error
         );
 
@@ -2241,120 +2484,6 @@ async function adaugaAutor() {
 
         status.style.color =
             "#c62828";
-    }
-}
-
-    // ------------------------------------------------
-    // VERIFICĂ ADMIN
-    // ------------------------------------------------
-
-    const user =
-        await utilizatorAutentificat();
-
-    if (!user) {
-
-        status.textContent =
-            "Trebuie să fii autentificat ca administrator.";
-
-        status.style.color = "#c62828";
-
-        return;
-    }
-
-
-    status.textContent =
-        "Se adaugă autorul...";
-
-    status.style.color = "#7b2450";
-
-
-    try {
-
-        const { data, error } =
-            await supabaseClient
-                .from("autori")
-                .insert([
-                    {
-                        initiale: initiale,
-                        nume: nume,
-                        poza: poza,
-                        descriere: descriere
-                    }
-                ])
-                .select();
-
-
-        if (error) {
-
-            console.error(
-                "Eroare adăugare autor:",
-                error
-            );
-
-            status.textContent =
-                "Nu am putut adăuga autorul: " +
-                error.message;
-
-            status.style.color = "#c62828";
-
-            return;
-        }
-
-
-        console.log(
-            "Autor adăugat:",
-            data
-        );
-
-
-        status.textContent =
-            "Autorul a fost adăugat cu succes!";
-
-        status.style.color = "#2e7d32";
-
-
-        // Curățăm formularul
-
-        document.getElementById(
-            "autorInitiale"
-        ).value = "";
-
-        document.getElementById(
-            "autorNume"
-        ).value = "";
-
-        document.getElementById(
-            "autorPoza"
-        ).value = "";
-
-        document.getElementById(
-            "autorDescriere"
-        ).value = "";
-
-
-        // Reîncărcăm listele
-
-        await incarcaAutoriAdmin();
-
-        await incarcaListaAutoriSelect();
-
-
-        // Reîncărcăm autorii de pe site
-
-        await incarcaAutori();
-
-
-    } catch (error) {
-
-        console.error(
-            "Eroare adăugare autor:",
-            error
-        );
-
-        status.textContent =
-            "A apărut o eroare.";
-
-        status.style.color = "#c62828";
     }
 }
 
@@ -2373,10 +2502,15 @@ async function incarcaListaAutoriSelect() {
     }
 
 
-    const { data: autori, error } =
+    const {
+        data: autori,
+        error
+    } =
         await supabaseClient
             .from("autori")
-            .select("id, initiale, nume")
+            .select(
+                "id, initiale, nume"
+            )
             .order("nume", {
                 ascending: true
             });
@@ -2404,7 +2538,9 @@ async function incarcaListaAutoriSelect() {
         autor => {
 
             const option =
-                document.createElement("option");
+                document.createElement(
+                    "option"
+                );
 
             option.value =
                 autor.id;
@@ -2412,7 +2548,9 @@ async function incarcaListaAutoriSelect() {
             option.textContent =
                 `${autor.initiale || ""} - ${autor.nume || ""}`;
 
-            select.appendChild(option);
+            select.appendChild(
+                option
+            );
         }
     );
 }
@@ -2425,34 +2563,44 @@ async function incarcaListaAutoriSelect() {
 async function adaugaOpera() {
 
     const autorId =
-        document.getElementById("operaAutor").value;
+        document
+            .getElementById("operaAutor")
+            .value;
 
     const titlu =
-        document.getElementById("operaTitlu").value.trim();
+        document
+            .getElementById("operaTitlu")
+            .value
+            .trim();
 
     const rezumat =
-        document.getElementById("operaRezumat").files[0];
+        document
+            .getElementById("operaRezumat")
+            .files[0];
 
     const valoriMorale =
-        document.getElementById("operaValoriMorale").files[0];
+        document
+            .getElementById("operaValoriMorale")
+            .files[0];
 
     const caracterizare =
-        document.getElementById("operaCaracterizare").files[0];
+        document
+            .getElementById("operaCaracterizare")
+            .files[0];
 
     const status =
-        document.getElementById("operaStatus");
+        document.getElementById(
+            "operaStatus"
+        );
 
-
-    // ------------------------------------------------
-    // VERIFICĂ DATELE
-    // ------------------------------------------------
 
     if (!autorId) {
 
         status.textContent =
             "Selectează autorul.";
 
-        status.style.color = "#c62828";
+        status.style.color =
+            "#c62828";
 
         return;
     }
@@ -2463,7 +2611,8 @@ async function adaugaOpera() {
         status.textContent =
             "Introdu titlul operei.";
 
-        status.style.color = "#c62828";
+        status.style.color =
+            "#c62828";
 
         return;
     }
@@ -2478,15 +2627,12 @@ async function adaugaOpera() {
         status.textContent =
             "Selectează cel puțin un PDF.";
 
-        status.style.color = "#c62828";
+        status.style.color =
+            "#c62828";
 
         return;
     }
 
-
-    // ------------------------------------------------
-    // VERIFICĂ ADMIN
-    // ------------------------------------------------
 
     const user =
         await utilizatorAutentificat();
@@ -2496,7 +2642,8 @@ async function adaugaOpera() {
         status.textContent =
             "Trebuie să fii autentificat ca administrator.";
 
-        status.style.color = "#c62828";
+        status.style.color =
+            "#c62828";
 
         return;
     }
@@ -2505,14 +2652,18 @@ async function adaugaOpera() {
     status.textContent =
         "Se adaugă opera...";
 
-    status.style.color = "#7b2450";
+    status.style.color =
+        "#7b2450";
+
+
+    const fisiereIncarcate = [];
 
 
     try {
 
-        // ------------------------------------------------
-        // FUNCȚIE UPLOAD
-        // ------------------------------------------------
+        // ------------------------------------------
+        // FUNCȚIE UPLOAD PDF
+        // ------------------------------------------
 
         async function incarcaFisier(
             fisier,
@@ -2525,21 +2676,25 @@ async function adaugaOpera() {
 
 
             if (
-                fisier.type !== "application/pdf" &&
-                !fisier.name.toLowerCase().endsWith(".pdf")
+                fisier.type !==
+                    "application/pdf" &&
+                !fisier.name
+                    .toLowerCase()
+                    .endsWith(".pdf")
             ) {
 
                 throw new Error(
-                    "Fișierul \"" +
-                    fisier.name +
-                    "\" nu este PDF."
+                    `Fișierul "${fisier.name}" nu este PDF.`
                 );
             }
 
 
             const numeCurat =
                 fisier.name
-                    .replace(/[^\w.\-ăâîșțĂÂÎȘȚ ]/g, "_");
+                    .replace(
+                        /[^\w.\-ăâîșțĂÂÎȘȚ ]/g,
+                        "_"
+                    );
 
 
             const timestamp =
@@ -2550,7 +2705,9 @@ async function adaugaOpera() {
                 `${autorId}/${timestamp}_${prefix}_${numeCurat}`;
 
 
-            const { error } =
+            const {
+                error
+            } =
                 await supabaseClient
                     .storage
                     .from(BUCKET)
@@ -2561,7 +2718,8 @@ async function adaugaOpera() {
                             contentType:
                                 "application/pdf",
 
-                            upsert: false
+                            upsert:
+                                false
                         }
                     );
 
@@ -2571,7 +2729,10 @@ async function adaugaOpera() {
             }
 
 
-            // Bucketul este public, deci construim URL-ul
+            fisiereIncarcate.push(
+                cale
+            );
+
 
             const {
                 data: publicUrlData
@@ -2579,16 +2740,18 @@ async function adaugaOpera() {
                 supabaseClient
                     .storage
                     .from(BUCKET)
-                    .getPublicUrl(cale);
+                    .getPublicUrl(
+                        cale
+                    );
 
 
             return publicUrlData.publicUrl;
         }
 
 
-        // ------------------------------------------------
-        // UPLOAD CELE 3 PDF-URI
-        // ------------------------------------------------
+        // ------------------------------------------
+        // UPLOAD
+        // ------------------------------------------
 
         status.textContent =
             "Se încarcă PDF-urile...";
@@ -2615,15 +2778,18 @@ async function adaugaOpera() {
             );
 
 
-        // ------------------------------------------------
-        // SALVEAZĂ OPERA ÎN TABEL
-        // ------------------------------------------------
+        // ------------------------------------------
+        // SALVARE
+        // ------------------------------------------
 
         status.textContent =
             "Se salvează opera în baza de date...";
 
 
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
             await supabaseClient
                 .from("opere")
                 .insert([
@@ -2654,11 +2820,30 @@ async function adaugaOpera() {
                 error
             );
 
+
+            // --------------------------------------
+            // CURĂȚĂ PDF-URILE DACĂ INSERT EȘUEAZĂ
+            // --------------------------------------
+
+            if (
+                fisiereIncarcate.length > 0
+            ) {
+
+                await supabaseClient
+                    .storage
+                    .from(BUCKET)
+                    .remove(
+                        fisiereIncarcate
+                    );
+            }
+
+
             status.textContent =
-                "PDF-urile au fost încărcate, dar opera nu a fost salvată: " +
+                "Opera nu a putut fi salvată: " +
                 error.message;
 
-            status.style.color = "#c62828";
+            status.style.color =
+                "#c62828";
 
             return;
         }
@@ -2673,42 +2858,41 @@ async function adaugaOpera() {
         status.textContent =
             "Opera a fost adăugată cu succes!";
 
-        status.style.color = "#2e7d32";
+        status.style.color =
+            "#2e7d32";
 
 
-        // ------------------------------------------------
-        // CURĂȚĂ FORMULARUL
-        // ------------------------------------------------
+        // ------------------------------------------
+        // GOLIRE
+        // ------------------------------------------
 
-        document.getElementById(
-            "operaAutor"
-        ).value = "";
+        document
+            .getElementById("operaAutor")
+            .value = "";
 
-        document.getElementById(
-            "operaTitlu"
-        ).value = "";
+        document
+            .getElementById("operaTitlu")
+            .value = "";
 
-        document.getElementById(
-            "operaRezumat"
-        ).value = "";
+        document
+            .getElementById("operaRezumat")
+            .value = "";
 
-        document.getElementById(
-            "operaValoriMorale"
-        ).value = "";
+        document
+            .getElementById("operaValoriMorale")
+            .value = "";
 
-        document.getElementById(
-            "operaCaracterizare"
-        ).value = "";
+        document
+            .getElementById("operaCaracterizare")
+            .value = "";
 
 
-        // ------------------------------------------------
-        // REÎNCARCĂ LISTELE
-        // ------------------------------------------------
+        // ------------------------------------------
+        // REÎNCARCĂ
+        // ------------------------------------------
 
         await incarcaOpereAdmin();
-
         await incarcaListaPDF();
-
         await incarcaAutori();
 
 
@@ -2719,11 +2903,30 @@ async function adaugaOpera() {
             error
         );
 
+
+        // ------------------------------------------
+        // CURĂȚĂ UPLOADURILE
+        // ------------------------------------------
+
+        if (
+            fisiereIncarcate.length > 0
+        ) {
+
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .remove(
+                    fisiereIncarcate
+                );
+        }
+
+
         status.textContent =
             "A apărut o eroare: " +
             error.message;
 
-        status.style.color = "#c62828";
+        status.style.color =
+            "#c62828";
     }
 }
 
@@ -2735,7 +2938,9 @@ async function adaugaOpera() {
 async function incarcaAutoriAdmin() {
 
     const container =
-        document.getElementById("listaAutoriAdmin");
+        document.getElementById(
+            "listaAutoriAdmin"
+        );
 
     if (!container) {
         return;
@@ -2762,7 +2967,10 @@ async function incarcaAutoriAdmin() {
 
     try {
 
-        const { data: autori, error } =
+        const {
+            data: autori,
+            error
+        } =
             await supabaseClient
                 .from("autori")
                 .select("*")
@@ -2780,14 +2988,19 @@ async function incarcaAutoriAdmin() {
 
             container.innerHTML =
                 `<p style="color:#c62828">
-                    ${escapeHTML(error.message)}
+                    ${escapeHTML(
+                        error.message
+                    )}
                 </p>`;
 
             return;
         }
 
 
-        if (!autori || autori.length === 0) {
+        if (
+            !autori ||
+            autori.length === 0
+        ) {
 
             container.innerHTML =
                 "<p>Nu există autori.</p>";
@@ -2797,31 +3010,57 @@ async function incarcaAutoriAdmin() {
 
 
         container.innerHTML =
-            autori.map(
-                autor => `
+            autori
+                .map(
+                    autor => `
 
-                    <div class="admin-autor">
+                        <div class="admin-autor">
 
-                        <strong>
-                            ${escapeHTML(autor.initiale || "")}
-                            -
-                            ${escapeHTML(autor.nume || "")}
-                        </strong>
+                            <strong>
+                                ${escapeHTML(
+                                    autor.initiale || ""
+                                )}
+                                -
+                                ${escapeHTML(
+                                    autor.nume || ""
+                                )}
+                            </strong>
 
-                        <p>
-                            ${escapeHTML(
-                                autor.descriere || ""
-                            )}
-                        </p>
+                            <p>
+                                ${escapeHTML(
+                                    autor.descriere || ""
+                                )}
+                            </p>
 
-                        <small>
-                            ID: ${autor.id}
-                        </small>
+                            <small>
+                                ID: ${autor.id}
+                            </small>
 
-                    </div>
+                            ${
+                                autor.poza
+                                    ? `
+                                        <p>
+                                            🖼️ Imagine:
+                                            <a
+                                                href="${escapeHTML(autor.poza)}"
+                                                target="_blank"
+                                                rel="noopener noreferrer">
+                                                Vezi imaginea
+                                            </a>
+                                        </p>
+                                      `
+                                    : `
+                                        <p>
+                                            ❌ Fără imagine
+                                        </p>
+                                      `
+                            }
 
-                `
-            ).join("");
+                        </div>
+
+                    `
+                )
+                .join("");
 
 
     } catch (error) {
@@ -2846,7 +3085,9 @@ async function incarcaAutoriAdmin() {
 async function incarcaOpereAdmin() {
 
     const container =
-        document.getElementById("listaOpereAdmin");
+        document.getElementById(
+            "listaOpereAdmin"
+        );
 
     if (!container) {
         return;
@@ -2872,10 +3113,6 @@ async function incarcaOpereAdmin() {
 
 
     try {
-
-        // ------------------------------------------------
-        // ÎNCARCĂ OPERELE
-        // ------------------------------------------------
 
         const {
             data: opere,
@@ -2907,17 +3144,15 @@ async function incarcaOpereAdmin() {
         }
 
 
-        // ------------------------------------------------
-        // ÎNCARCĂ AUTORII
-        // ------------------------------------------------
-
         const {
             data: autori,
             error: eroareAutori
         } =
             await supabaseClient
                 .from("autori")
-                .select("id, initiale, nume");
+                .select(
+                    "id, initiale, nume"
+                );
 
 
         if (eroareAutori) {
@@ -2938,11 +3173,10 @@ async function incarcaOpereAdmin() {
         }
 
 
-        // ------------------------------------------------
-        // DACĂ NU EXISTĂ OPERE
-        // ------------------------------------------------
-
-        if (!opere || opere.length === 0) {
+        if (
+            !opere ||
+            opere.length === 0
+        ) {
 
             container.innerHTML =
                 "<p>Nu există opere.</p>";
@@ -2951,103 +3185,104 @@ async function incarcaOpereAdmin() {
         }
 
 
-        // ------------------------------------------------
-        // CONSTRUIEȘTE LISTA
-        // ------------------------------------------------
-
         container.innerHTML =
-            opere.map(
-                opera => {
+            opere
+                .map(
+                    opera => {
 
-                    const autor =
-                        (autori || []).find(
-                            a =>
-                                String(a.id) ===
-                                String(opera.autor_id)
-                        );
-
-
-                    const areRezumat =
-                        !!opera.pdf;
-
-                    const areValori =
-                        !!opera.pdf_valori_morale;
-
-                    const areCaracterizare =
-                        !!opera.pdf_caracterizare;
+                        const autor =
+                            (autori || [])
+                                .find(
+                                    a =>
+                                        String(a.id) ===
+                                        String(
+                                            opera.autor_id
+                                        )
+                                );
 
 
-                    return `
+                        const areRezumat =
+                            !!opera.pdf;
 
-                        <div class="admin-opera">
+                        const areValori =
+                            !!opera.pdf_valori_morale;
 
-                            <strong>
-                                📖 ${escapeHTML(
-                                    opera.titlu || ""
-                                )}
-                            </strong>
+                        const areCaracterizare =
+                            !!opera.pdf_caracterizare;
 
-                            <p>
-                                Autor:
-                                <b>
-                                    ${escapeHTML(
-                                        autor
-                                            ? autor.nume
-                                            : "Necunoscut"
+
+                        return `
+
+                            <div class="admin-opera">
+
+                                <strong>
+                                    📖 ${escapeHTML(
+                                        opera.titlu || ""
                                     )}
-                                </b>
-                            </p>
+                                </strong>
 
-                            <p>
+                                <p>
+                                    Autor:
+                                    <b>
+                                        ${escapeHTML(
+                                            autor
+                                                ? autor.nume
+                                                : "Necunoscut"
+                                        )}
+                                    </b>
+                                </p>
 
-                                Rezumat:
-                                ${
-                                    areRezumat
-                                        ? `<span class="pdf-exista">
-                                            ✔ Există
-                                          </span>`
-                                        : `<span class="pdf-lipsa">
-                                            ✖ Lipsește
-                                          </span>`
-                                }
+                                <p>
 
-                                <br>
+                                    Rezumat:
+                                    ${
+                                        areRezumat
+                                            ? `<span class="pdf-exista">
+                                                ✔ Există
+                                              </span>`
+                                            : `<span class="pdf-lipsa">
+                                                ✖ Lipsește
+                                              </span>`
+                                    }
 
-                                Valori morale:
-                                ${
-                                    areValori
-                                        ? `<span class="pdf-exista">
-                                            ✔ Există
-                                          </span>`
-                                        : `<span class="pdf-lipsa">
-                                            ✖ Lipsește
-                                          </span>`
-                                }
+                                    <br>
 
-                                <br>
+                                    Valori morale:
+                                    ${
+                                        areValori
+                                            ? `<span class="pdf-exista">
+                                                ✔ Există
+                                              </span>`
+                                            : `<span class="pdf-lipsa">
+                                                ✖ Lipsește
+                                              </span>`
+                                    }
 
-                                Caracterizare:
-                                ${
-                                    areCaracterizare
-                                        ? `<span class="pdf-exista">
-                                            ✔ Există
-                                          </span>`
-                                        : `<span class="pdf-lipsa">
-                                            ✖ Lipsește
-                                          </span>`
-                                }
+                                    <br>
 
-                            </p>
+                                    Caracterizare:
+                                    ${
+                                        areCaracterizare
+                                            ? `<span class="pdf-exista">
+                                                ✔ Există
+                                              </span>`
+                                            : `<span class="pdf-lipsa">
+                                                ✖ Lipsește
+                                              </span>`
+                                    }
 
-                            <small>
-                                ID operă: ${opera.id}
-                            </small>
+                                </p>
 
-                        </div>
+                                <small>
+                                    ID operă: ${opera.id}
+                                </small>
 
-                    `;
-                }
-            ).join("");
+                            </div>
+
+                        `;
+                    }
+                )
+                .join("");
 
 
     } catch (error) {
@@ -3063,14 +3298,17 @@ async function incarcaOpereAdmin() {
             "</p>";
     }
 }
+
+
 // ======================================================
 // DARK MODE
 // ======================================================
 
 function schimbaTema() {
 
-    document.body.classList.toggle("dark");
-
+    document.body
+        .classList
+        .toggle("dark");
 }
 
 
@@ -3087,28 +3325,46 @@ function arataQuiz(tip) {
         document.getElementById("wordwall");
 
     const butoane =
-        document.querySelectorAll(".quiz-tab");
+        document.querySelectorAll(
+            ".quiz-tab"
+        );
 
 
     if (tip === "kahoot") {
 
-        kahoot.classList.remove("ascuns");
+        kahoot
+            .classList
+            .remove("ascuns");
 
-        wordwall.classList.add("ascuns");
+        wordwall
+            .classList
+            .add("ascuns");
 
-        butoane[0].classList.add("activ");
+        butoane[0]
+            .classList
+            .add("activ");
 
-        butoane[1].classList.remove("activ");
+        butoane[1]
+            .classList
+            .remove("activ");
 
     } else {
 
-        kahoot.classList.add("ascuns");
+        kahoot
+            .classList
+            .add("ascuns");
 
-        wordwall.classList.remove("ascuns");
+        wordwall
+            .classList
+            .remove("ascuns");
 
-        butoane[0].classList.remove("activ");
+        butoane[0]
+            .classList
+            .remove("activ");
 
-        butoane[1].classList.add("activ");
+        butoane[1]
+            .classList
+            .add("activ");
     }
 }
 
@@ -3120,12 +3376,25 @@ function arataQuiz(tip) {
 function afiseazaLogin() {
 
     const modal =
-        document.getElementById("loginModal");
+        document.getElementById(
+            "loginModal"
+        );
 
-    modal.classList.remove("ascuns");
+    if (!modal) {
+        return;
+    }
+
+
+    modal
+        .classList
+        .remove("ascuns");
+
 
     const email =
-        document.getElementById("loginEmail");
+        document.getElementById(
+            "loginEmail"
+        );
+
 
     if (email) {
         email.focus();
@@ -3135,12 +3404,28 @@ function afiseazaLogin() {
 
 function inchideLogin() {
 
-    document
-        .getElementById("loginModal")
-        .classList.add("ascuns");
+    const modal =
+        document.getElementById(
+            "loginModal"
+        );
 
-    document.getElementById("loginMesaj").textContent = "";
+    const mesaj =
+        document.getElementById(
+            "loginMesaj"
+        );
 
+
+    if (modal) {
+
+        modal
+            .classList
+            .add("ascuns");
+    }
+
+
+    if (mesaj) {
+        mesaj.textContent = "";
+    }
 }
 
 
@@ -3152,17 +3437,21 @@ async function loginAdmin() {
 
     const email =
         document
-            .getElementById("loginEmail")
+            .getElementById(
+                "loginEmail"
+            )
             .value
             .trim();
 
     const password =
-        document
-            .getElementById("loginPassword")
-            .value;
+        document.getElementById(
+            "loginPassword"
+        ).value;
 
     const mesaj =
-        document.getElementById("loginMesaj");
+        document.getElementById(
+            "loginMesaj"
+        );
 
 
     if (!email || !password) {
@@ -3186,11 +3475,17 @@ async function loginAdmin() {
 
     try {
 
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
             await supabaseClient.auth
                 .signInWithPassword({
-                    email: email,
-                    password: password
+                    email:
+                        email,
+
+                    password:
+                        password
                 });
 
 
@@ -3211,7 +3506,10 @@ async function loginAdmin() {
         }
 
 
-        if (!data || !data.user) {
+        if (
+            !data ||
+            !data.user
+        ) {
 
             mesaj.textContent =
                 "Autentificarea nu a reușit.";
@@ -3259,18 +3557,27 @@ async function loginAdmin() {
 function afiseazaAdmin(user) {
 
     const panel =
-        document.getElementById("adminPanel");
+        document.getElementById(
+            "adminPanel"
+        );
 
     const adminUser =
-        document.getElementById("adminUser");
+        document.getElementById(
+            "adminUser"
+        );
 
 
-    if (!panel || !adminUser) {
+    if (
+        !panel ||
+        !adminUser
+    ) {
         return;
     }
 
 
-    panel.classList.remove("ascuns");
+    panel
+        .classList
+        .remove("ascuns");
 
 
     adminUser.textContent =
@@ -3298,7 +3605,9 @@ async function logoutAdmin() {
 
     try {
 
-        const { error } =
+        const {
+            error
+        } =
             await supabaseClient.auth
                 .signOut();
 
@@ -3318,9 +3627,18 @@ async function logoutAdmin() {
         }
 
 
-        document
-            .getElementById("adminPanel")
-            .classList.add("ascuns");
+        const panel =
+            document.getElementById(
+                "adminPanel"
+            );
+
+
+        if (panel) {
+
+            panel
+                .classList
+                .add("ascuns");
+        }
 
 
     } catch (error) {
@@ -3334,48 +3652,20 @@ async function logoutAdmin() {
 
 
 // ======================================================
-// VERIFICĂ AUTENTIFICAREA
-// ======================================================
-
-async function utilizatorAutentificat() {
-
-    const { data, error } =
-        await supabaseClient.auth
-            .getSession();
-
-
-    if (error) {
-
-        console.error(
-            "Eroare verificare sesiune:",
-            error
-        );
-
-        return null;
-    }
-
-
-    if (!data || !data.session) {
-
-        return null;
-    }
-
-
-    return data.session.user;
-}
-
-
-// ======================================================
 // UPLOAD PDF
 // ======================================================
 
 async function uploadPDF() {
 
     const input =
-        document.getElementById("pdfInput");
+        document.getElementById(
+            "pdfInput"
+        );
 
     const status =
-        document.getElementById("uploadStatus");
+        document.getElementById(
+            "uploadStatus"
+        );
 
 
     if (!input || !status) {
@@ -3401,7 +3691,9 @@ async function uploadPDF() {
 
     if (
         file.type !== "application/pdf" &&
-        !file.name.toLowerCase().endsWith(".pdf")
+        !file.name
+            .toLowerCase()
+            .endsWith(".pdf")
     ) {
 
         status.textContent =
@@ -3413,10 +3705,6 @@ async function uploadPDF() {
         return;
     }
 
-
-    // ------------------------------------------------
-    // VERIFICĂ ADMIN
-    // ------------------------------------------------
 
     const user =
         await utilizatorAutentificat();
@@ -3443,19 +3731,14 @@ async function uploadPDF() {
 
     try {
 
-        // ------------------------------------------------
-        // CURĂȚĂ NUMELE
-        // ------------------------------------------------
-
         const filePath =
             file.name.trim();
 
 
-        // ------------------------------------------------
-        // UPLOAD
-        // ------------------------------------------------
-
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
             await supabaseClient
                 .storage
                 .from(BUCKET)
@@ -3532,7 +3815,9 @@ async function uploadPDF() {
 async function incarcaListaPDF() {
 
     const container =
-        document.getElementById("listaPDF");
+        document.getElementById(
+            "listaPDF"
+        );
 
 
     if (!container) {
@@ -3543,10 +3828,6 @@ async function incarcaListaPDF() {
     container.innerHTML =
         "<p>Se încarcă...</p>";
 
-
-    // ------------------------------------------------
-    // VERIFICĂ ADMIN
-    // ------------------------------------------------
 
     const user =
         await utilizatorAutentificat();
@@ -3565,7 +3846,10 @@ async function incarcaListaPDF() {
 
     try {
 
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
             await supabaseClient
                 .storage
                 .from(BUCKET)
@@ -3573,11 +3857,15 @@ async function incarcaListaPDF() {
                     "",
                     {
                         limit: 100,
+
                         offset: 0,
 
                         sortBy: {
-                            column: "name",
-                            order: "asc"
+                            column:
+                                "name",
+
+                            order:
+                                "asc"
                         }
                     }
                 );
@@ -3592,8 +3880,11 @@ async function incarcaListaPDF() {
 
             container.innerHTML =
                 "<p style='color:#c62828'>" +
-                "Nu am putut încărca lista PDF-urilor.<br><br>" +
-                error.message +
+                "Nu am putut încărca lista PDF-urilor." +
+                "<br><br>" +
+                escapeHTML(
+                    error.message
+                ) +
                 "</p>";
 
             return;
@@ -3610,7 +3901,9 @@ async function incarcaListaPDF() {
             );
 
 
-        if (pdfuri.length === 0) {
+        if (
+            pdfuri.length === 0
+        ) {
 
             container.innerHTML =
                 "<p>Nu există PDF-uri în bucket.</p>";
@@ -3620,28 +3913,32 @@ async function incarcaListaPDF() {
 
 
         container.innerHTML =
-            pdfuri.map(
-                fisier => `
+            pdfuri
+                .map(
+                    fisier => `
 
-                    <div class="pdf-item">
+                        <div class="pdf-item">
 
-                        <span>
-                            📕 ${escapeHTML(fisier.name)}
-                        </span>
+                            <span>
+                                📕 ${escapeHTML(
+                                    fisier.name
+                                )}
+                            </span>
 
-                        <button
-                            class="sterge-btn"
-                            type="button"
-                            onclick='stergePDF(${JSON.stringify(fisier.name)})'>
+                            <button
+                                class="sterge-btn"
+                                type="button"
+                                onclick='stergePDF(${JSON.stringify(fisier.name)})'>
 
-                            🗑️ Șterge
+                                🗑️ Șterge
 
-                        </button>
+                            </button>
 
-                    </div>
+                        </div>
 
-                `
-            ).join("");
+                    `
+                )
+                .join("");
 
 
     } catch (error) {
@@ -3660,26 +3957,12 @@ async function incarcaListaPDF() {
 
 
 // ======================================================
-// ESCAPE HTML
-// ======================================================
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement("div");
-
-    div.textContent =
-        text;
-
-    return div.innerHTML;
-}
-
-
-// ======================================================
 // ȘTERGE PDF
 // ======================================================
 
-async function stergePDF(numeFisier) {
+async function stergePDF(
+    numeFisier
+) {
 
     const confirmare =
         confirm(
@@ -3693,10 +3976,6 @@ async function stergePDF(numeFisier) {
         return;
     }
 
-
-    // ------------------------------------------------
-    // VERIFICĂ ADMIN
-    // ------------------------------------------------
 
     const user =
         await utilizatorAutentificat();
@@ -3714,7 +3993,9 @@ async function stergePDF(numeFisier) {
 
     try {
 
-        const { error } =
+        const {
+            error
+        } =
             await supabaseClient
                 .storage
                 .from(BUCKET)
@@ -3762,14 +4043,17 @@ async function stergePDF(numeFisier) {
 
 
 // ======================================================
-// VERIFICĂ SESIUNEA LA PORNIRE
+// VERIFICĂ SESIUNEA
 // ======================================================
 
 async function verificaSesiunea() {
 
     try {
 
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
             await supabaseClient.auth
                 .getSession();
 
@@ -3785,7 +4069,10 @@ async function verificaSesiunea() {
         }
 
 
-        if (data && data.session) {
+        if (
+            data &&
+            data.session
+        ) {
 
             afiseazaAdmin(
                 data.session.user
@@ -3793,9 +4080,18 @@ async function verificaSesiunea() {
 
         } else {
 
-            document
-                .getElementById("adminPanel")
-                .classList.add("ascuns");
+            const panel =
+                document.getElementById(
+                    "adminPanel"
+                );
+
+
+            if (panel) {
+
+                panel
+                    .classList
+                    .add("ascuns");
+            }
         }
 
 
@@ -3810,7 +4106,7 @@ async function verificaSesiunea() {
 
 
 // ======================================================
-// DETECTEAZĂ LOGIN / LOGOUT
+// AUTH STATE CHANGE
 // ======================================================
 
 supabaseClient.auth.onAuthStateChange(
@@ -3835,11 +4131,12 @@ supabaseClient.auth.onAuthStateChange(
                     "adminPanel"
                 );
 
+
             if (panel) {
 
-                panel.classList.add(
-                    "ascuns"
-                );
+                panel
+                    .classList
+                    .add("ascuns");
             }
         }
     }
@@ -3847,7 +4144,7 @@ supabaseClient.auth.onAuthStateChange(
 
 
 // ======================================================
-// ENTER PENTRU LOGIN
+// ENTER / ESCAPE LOGIN
 // ======================================================
 
 document.addEventListener(
@@ -3863,7 +4160,9 @@ document.addEventListener(
         if (
             event.key === "Enter" &&
             modal &&
-            !modal.classList.contains("ascuns")
+            !modal
+                .classList
+                .contains("ascuns")
         ) {
 
             loginAdmin();
@@ -3873,7 +4172,9 @@ document.addEventListener(
         if (
             event.key === "Escape" &&
             modal &&
-            !modal.classList.contains("ascuns")
+            !modal
+                .classList
+                .contains("ascuns")
         ) {
 
             inchideLogin();
@@ -3887,15 +4188,30 @@ document.addEventListener(
 // INITIALIZARE
 // ======================================================
 
-incarcaAutori();
+(async function initializare() {
 
-verificaSesiunea();
+    console.log(
+        "Inițializare site..."
+    );
 
-console.log(
-    "Site inițializat."
-);
+    console.log(
+        "Bucket PDF:",
+        BUCKET
+    );
 
-console.log(
-    "Bucket PDF:",
-    BUCKET
-);
+    console.log(
+        "Bucket imagini:",
+        IMAGINI_BUCKET
+    );
+
+
+    await incarcaAutori();
+
+    await verificaSesiunea();
+
+
+    console.log(
+        "Site inițializat."
+    );
+
+})();
