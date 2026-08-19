@@ -9,7 +9,7 @@ const SUPABASE_KEY =
 
 const BUCKET = "Pdf";
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
@@ -1595,7 +1595,7 @@ async function deschidePDF(numeFisier) {
     try {
 
         const { data, error } =
-            await supabase
+            await supabaseClient
                 .storage
                 .from(BUCKET)
                 .createSignedUrl(
@@ -1742,7 +1742,7 @@ async function loginAdmin() {
     mesaj.style.color = "#7b2450";
 
     const { data, error } =
-        await supabase.auth.signInWithPassword({
+        await supabaseClient.auth.signInWithPassword({
             email,
             password
         });
@@ -1801,7 +1801,7 @@ function afiseazaAdmin(user) {
 
 async function logoutAdmin() {
 
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 
     document
         .getElementById("adminPanel")
@@ -1858,7 +1858,7 @@ async function uploadPDF() {
 
 
     const { data: sessionData } =
-        await supabase.auth.getSession();
+        await supabaseClient.auth.getSession();
 
     if (!sessionData.session) {
 
@@ -1877,7 +1877,7 @@ async function uploadPDF() {
 
 
     const { error } =
-        await supabase
+        await supabaseClient
             .storage
             .from(BUCKET)
             .upload(
@@ -1932,7 +1932,7 @@ async function incarcaListaPDF() {
 
 
     const { data, error } =
-        await supabase
+        await supabaseClient
             .storage
             .from(BUCKET)
             .list("", {
@@ -2014,7 +2014,7 @@ async function stergePDF(numeFisier) {
 
 
     const { error } =
-        await supabase
+        await supabaseClient
             .storage
             .from(BUCKET)
             .remove([
@@ -2049,7 +2049,7 @@ async function stergePDF(numeFisier) {
 async function verificaSesiunea() {
 
     const { data } =
-        await supabase.auth.getSession();
+        await supabaseClient.auth.getSession();
 
     if (data.session) {
 
@@ -2065,7 +2065,7 @@ async function verificaSesiunea() {
 // DETECTEAZĂ LOGIN / LOGOUT
 // ======================================================
 
-supabase.auth.onAuthStateChange(
+supabaseClient.auth.onAuthStateChange(
     (event, session) => {
 
         console.log(
