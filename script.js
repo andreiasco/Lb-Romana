@@ -1,8 +1,7 @@
 console.log("SCRIPT.JS NOU SE ÎNCARCĂ");
 // ======================================================
 // SUPABASE
-// ======================================================
-
+// ==================================================
 const SUPABASE_URL = "https://eagjavifluwolqeuctzk.supabase.co";
 
 const SUPABASE_KEY =
@@ -1567,7 +1566,7 @@ function genereazaAutori() {
                         <button
                             class="opera-btn"
                             type="button"
-                            onclick="deschidePDF(${JSON.stringify(opera.pdf)})">
+                            onclick='deschidePDF(${JSON.stringify(opera.pdf)})'>
 
                             📕 „${opera.titlu}”
 
@@ -2232,7 +2231,7 @@ async function incarcaListaPDF() {
                         <button
                             class="sterge-btn"
                             type="button"
-                            onclick="stergePDF(${JSON.stringify(fisier.name)})">
+                            onclick='stergePDF(${JSON.stringify(fisier.name)})'>
 
                             🗑️ Șterge
 
