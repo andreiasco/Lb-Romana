@@ -8,7 +8,7 @@ const SUPABASE_URL =
     "https://eagjavifluwolqeuctzk.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_QSG9OfrCANpRxA-moQCQgQ_mtkx-hWX";
+    "sb_publishable_QSG9OFrCANpRxA-moQCQgQ_mtkx-hWX";
 
 const BUCKET = "Pdf";
 const IMAGINI_BUCKET = "Imagini";
