@@ -1585,51 +1585,36 @@ function genereazaAutori() {
 // DESCHIDE PDF
 // ======================================================
 
-async function deschidePDF(numeFisier) {
+function deschidePDF(numeFisier) {
 
     try {
 
-        const { data, error } =
-            await supabaseClient
-                .storage
-                .from(BUCKET)
-                .createSignedUrl(
-                    numeFisier,
-                    300
-                );
+        const { data } = supabaseClient
+            .storage
+            .from(BUCKET)
+            .getPublicUrl(numeFisier);
 
-        if (error) {
+        if (!data || !data.publicUrl) {
 
-            console.error(error);
-
-            alert(
-                "Nu am putut deschide PDF-ul. Verifică numele fișierului din Supabase."
-            );
-
+            alert("Nu am putut genera linkul PDF.");
             return;
         }
 
-        if (!data || !data.signedUrl) {
-
-            alert(
-                "Nu s-a putut genera linkul PDF."
-            );
-
-            return;
-        }
+        console.log("PDF:", numeFisier);
+        console.log("URL:", data.publicUrl);
 
         window.open(
-            data.signedUrl,
+            data.publicUrl,
             "_blank",
             "noopener,noreferrer"
         );
 
     } catch (error) {
 
-        console.error(error);
+        console.error("Eroare PDF:", error);
 
         alert(
-            "A apărut o eroare la deschiderea PDF-ului."
+            "Nu am putut deschide PDF-ul."
         );
     }
 }
