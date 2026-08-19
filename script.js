@@ -1078,7 +1078,7 @@ body.dark .pdf-item {
 
             <a
                 class="kahoot-link"
-                href="https://create.kahoot.it/details/aplicarea-regulilor-in-contexte-noi/071aa0d4-21d3-426f-a7a3-4c8ab375d61b"
+                href="https://play.kahoot.it/v2/?quizId=071aa0d4-21d3-426f-a7a3-4c8ab375d61b&hostId=abe4ceb9-8934-4647-a7f8-ee81f1f1ac7c"
                 target="_blank"
                 rel="noopener noreferrer">
 
@@ -1101,7 +1101,7 @@ body.dark .pdf-item {
 
             <a
                 class="kahoot-link"
-                href="https://create.kahoot.it/details/romanian-vocabulary-in-context/bf406337-3185-409c-92c7-22471cf41e38"
+                href="https://play.kahoot.it/v2/?quizId=bf406337-3185-409c-92c7-22471cf41e38&hostId=abe4ceb9-8934-4647-a7f8-ee81f1f1ac7c"
                 target="_blank"
                 rel="noopener noreferrer">
 
@@ -1125,7 +1125,7 @@ body.dark .pdf-item {
 
             <a
                 class="kahoot-link"
-                href="https://create.kahoot.it/details/recapitulare-dirijata-a-notiunilor-de-gramatica/7b20be02-2691-42a9-a08d-19a0996ebd78"
+                href="https://play.kahoot.it/v2/?quizId=7b20be02-2691-42a9-a08d-19a0996ebd78&hostId=abe4ceb9-8934-4647-a7f8-ee81f1f1ac7c"
                 target="_blank"
                 rel="noopener noreferrer">
 
@@ -1153,7 +1153,7 @@ body.dark .pdf-item {
             </p>
 
             <iframe
-                src="https://www.wordwall.net/embed/8ca4366782f647bb8997ad76da9f57e6?themeId=1&templateId=38&fontStackId=0"
+                src="https://www.wordwall.net/resource/71605201/limba-rom%C3%A2n%C4%83/conjunc%C8%9Bii-coordonare"
                 allowfullscreen>
             </iframe>
 
@@ -1171,7 +1171,7 @@ body.dark .pdf-item {
             </p>
 
             <iframe
-                src="https://www.wordwall.net/embed/129ab020eea7468dae4c5c3a09adb830?themeId=44&templateId=73&fontStackId=0"
+                src="https://www.wordwall.net/resource/71415598/limba-rom%C3%A2n%C4%83/recapitulare-vi-viii-verbul"
                 allowfullscreen>
             </iframe>
 
@@ -1189,7 +1189,7 @@ body.dark .pdf-item {
             </p>
 
             <iframe
-                src="https://www.wordwall.net/embed/b6f4bdcdcb8544d084e1fb9f22d584a4?themeId=43&templateId=3&fontStackId=0"
+                src="https://www.wordwall.net/resource/71427257/limba-rom%C3%A2n%C4%83/pronumele-vii"
                 allowfullscreen>
             </iframe>
 
@@ -1207,7 +1207,7 @@ body.dark .pdf-item {
             </p>
 
             <iframe
-                src="https://www.wordwall.net/embed/de00f4bb22f8435682302895b9885e0c?themeId=1&templateId=38&fontStackId=0"
+                src="https://www.wordwall.net/resource/71428256/limba-rom%C3%A2n%C4%83/categorii-semantice"
                 allowfullscreen>
             </iframe>
 
@@ -1225,7 +1225,7 @@ body.dark .pdf-item {
             </p>
 
             <iframe
-                src="https://www.wordwall.net/embed/63ab2ec884864766bd01500290c4fff1?themeId=1&templateId=5&fontStackId=0"
+                src="https://www.wordwall.net/resource/113639745/textul-literar-ces"
                 allowfullscreen>
             </iframe>
 
