@@ -1524,6 +1524,7 @@ const autori = [
 
 ];
 
+
 // ======================================================
 // GENEREAZĂ AUTORI
 // ======================================================
@@ -1582,39 +1583,83 @@ function genereazaAutori() {
 
 
 // ======================================================
-// DESCHIDE PDF
+// DESCHIDE PDF DIN BUCKET PRIVAT
 // ======================================================
 
-function deschidePDF(numeFisier) {
+async function deschidePDF(numeFisier) {
 
     try {
 
-        const { data } = supabaseClient
-            .storage
-            .from(BUCKET)
-            .getPublicUrl(numeFisier);
+        console.log(
+            "Se solicită PDF:",
+            numeFisier
+        );
 
-        if (!data || !data.publicUrl) {
+        // ------------------------------------------------
+        // CREARE LINK TEMPORAR
+        // ------------------------------------------------
 
-            alert("Nu am putut genera linkul PDF.");
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .createSignedUrl(
+                    numeFisier,
+                    60 * 10
+                );
+
+        if (error) {
+
+            console.error(
+                "Eroare Supabase PDF:",
+                error
+            );
+
+            alert(
+                "Nu pot deschide PDF-ul.\n\n" +
+                error.message
+            );
+
             return;
         }
 
-        console.log("PDF:", numeFisier);
-        console.log("URL:", data.publicUrl);
+        if (!data || !data.signedUrl) {
+
+            console.error(
+                "Nu există signedUrl:",
+                data
+            );
+
+            alert(
+                "Supabase nu a generat linkul PDF."
+            );
+
+            return;
+        }
+
+        console.log(
+            "Signed URL generat cu succes."
+        );
+
+        // ------------------------------------------------
+        // DESCHIDE PDF
+        // ------------------------------------------------
 
         window.open(
-            data.publicUrl,
+            data.signedUrl,
             "_blank",
             "noopener,noreferrer"
         );
 
     } catch (error) {
 
-        console.error("Eroare PDF:", error);
+        console.error(
+            "Eroare deschidere PDF:",
+            error
+        );
 
         alert(
-            "Nu am putut deschide PDF-ul."
+            "A apărut o eroare la deschiderea PDF-ului."
         );
     }
 }
@@ -1646,22 +1691,26 @@ function arataQuiz(tip) {
     const butoane =
         document.querySelectorAll(".quiz-tab");
 
+
     if (tip === "kahoot") {
 
         kahoot.classList.remove("ascuns");
+
         wordwall.classList.add("ascuns");
 
         butoane[0].classList.add("activ");
+
         butoane[1].classList.remove("activ");
 
     } else {
 
         kahoot.classList.add("ascuns");
+
         wordwall.classList.remove("ascuns");
 
         butoane[0].classList.remove("activ");
-        butoane[1].classList.add("activ");
 
+        butoane[1].classList.add("activ");
     }
 }
 
@@ -1677,7 +1726,12 @@ function afiseazaLogin() {
 
     modal.classList.remove("ascuns");
 
-    document.getElementById("loginEmail").focus();
+    const email =
+        document.getElementById("loginEmail");
+
+    if (email) {
+        email.focus();
+    }
 }
 
 
@@ -1688,65 +1742,115 @@ function inchideLogin() {
         .classList.add("ascuns");
 
     document.getElementById("loginMesaj").textContent = "";
+
 }
 
 
 // ======================================================
-// LOGIN ADMIN SUPABASE
+// LOGIN ADMIN
 // ======================================================
 
 async function loginAdmin() {
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+            .getElementById("loginPassword")
+            .value;
 
     const mesaj =
         document.getElementById("loginMesaj");
+
 
     if (!email || !password) {
 
         mesaj.textContent =
             "Completează emailul și parola.";
 
-        mesaj.style.color = "#c62828";
+        mesaj.style.color =
+            "#c62828";
 
         return;
     }
+
 
     mesaj.textContent =
         "Se verifică datele...";
 
-    mesaj.style.color = "#7b2450";
+    mesaj.style.color =
+        "#7b2450";
 
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-        });
 
-    if (error) {
+    try {
 
-        console.error(error);
+        const { data, error } =
+            await supabaseClient.auth
+                .signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+
+        if (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            mesaj.textContent =
+                "Email sau parolă incorectă.";
+
+            mesaj.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        if (!data || !data.user) {
+
+            mesaj.textContent =
+                "Autentificarea nu a reușit.";
+
+            mesaj.style.color =
+                "#c62828";
+
+            return;
+        }
+
+
+        console.log(
+            "Administrator conectat:",
+            data.user.email
+        );
+
+
+        inchideLogin();
+
+        afiseazaAdmin(
+            data.user
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Login exception:",
+            error
+        );
 
         mesaj.textContent =
-            "Email sau parolă incorectă.";
+            "A apărut o eroare la autentificare.";
 
-        mesaj.style.color = "#c62828";
-
-        return;
+        mesaj.style.color =
+            "#c62828";
     }
-
-    console.log(
-        "Administrator conectat:",
-        data.user.email
-    );
-
-    inchideLogin();
-
-    afiseazaAdmin(data.user);
 }
 
 
@@ -1762,12 +1866,22 @@ function afiseazaAdmin(user) {
     const adminUser =
         document.getElementById("adminUser");
 
+
+    if (!panel || !adminUser) {
+        return;
+    }
+
+
     panel.classList.remove("ascuns");
 
+
     adminUser.textContent =
-        "Conectat ca: " + user.email;
+        "Conectat ca: " +
+        user.email;
+
 
     incarcaListaPDF();
+
 
     panel.scrollIntoView({
         behavior: "smooth"
@@ -1781,15 +1895,72 @@ function afiseazaAdmin(user) {
 
 async function logoutAdmin() {
 
-    await supabaseClient.auth.signOut();
+    try {
 
-    document
-        .getElementById("adminPanel")
-        .classList.add("ascuns");
+        const { error } =
+            await supabaseClient.auth
+                .signOut();
 
-    alert(
-        "Ai fost deconectat."
-    );
+
+        if (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            alert(
+                "Nu am putut realiza deconectarea."
+            );
+
+            return;
+        }
+
+
+        document
+            .getElementById("adminPanel")
+            .classList.add("ascuns");
+
+
+    } catch (error) {
+
+        console.error(
+            "Logout exception:",
+            error
+        );
+    }
+}
+
+
+// ======================================================
+// VERIFICĂ AUTENTIFICAREA
+// ======================================================
+
+async function utilizatorAutentificat() {
+
+    const { data, error } =
+        await supabaseClient.auth
+            .getSession();
+
+
+    if (error) {
+
+        console.error(
+            "Eroare verificare sesiune:",
+            error
+        );
+
+        return null;
+    }
+
+
+    if (!data || !data.session) {
+
+        return null;
+    }
+
+
+    return data.session.user;
 }
 
 
@@ -1805,8 +1976,15 @@ async function uploadPDF() {
     const status =
         document.getElementById("uploadStatus");
 
+
+    if (!input || !status) {
+        return;
+    }
+
+
     const file =
         input.files[0];
+
 
     if (!file) {
 
@@ -1819,7 +1997,11 @@ async function uploadPDF() {
         return;
     }
 
-    if (file.type !== "application/pdf") {
+
+    if (
+        file.type !== "application/pdf" &&
+        !file.name.toLowerCase().endsWith(".pdf")
+    ) {
 
         status.textContent =
             "Poți încărca doar fișiere PDF.";
@@ -1830,6 +2012,27 @@ async function uploadPDF() {
         return;
     }
 
+
+    // ------------------------------------------------
+    // VERIFICĂ ADMIN
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii autentificat ca administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
     status.textContent =
         "Se încarcă PDF-ul...";
 
@@ -1837,62 +2040,87 @@ async function uploadPDF() {
         "#7b2450";
 
 
-    const { data: sessionData } =
-        await supabaseClient.auth.getSession();
+    try {
 
-    if (!sessionData.session) {
+        // ------------------------------------------------
+        // CURĂȚĂ NUMELE
+        // ------------------------------------------------
 
-        status.textContent =
-            "Sesiunea de administrator a expirat.";
-
-        status.style.color =
-            "#c62828";
-
-        return;
-    }
+        const filePath =
+            file.name.trim();
 
 
-    const filePath =
-        file.name;
+        // ------------------------------------------------
+        // UPLOAD
+        // ------------------------------------------------
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .upload(
+                    filePath,
+                    file,
+                    {
+                        contentType:
+                            "application/pdf",
+
+                        upsert:
+                            true
+                    }
+                );
 
 
-    const { error } =
-        await supabaseClient
-            .storage
-            .from(BUCKET)
-            .upload(
-                filePath,
-                file,
-                {
-                    contentType: "application/pdf",
-                    upsert: true
-                }
+        if (error) {
+
+            console.error(
+                "Upload error:",
+                error
             );
 
+            status.textContent =
+                "Upload eșuat: " +
+                error.message;
 
-    if (error) {
+            status.style.color =
+                "#c62828";
 
-        console.error(error);
+            return;
+        }
+
+
+        console.log(
+            "Upload reușit:",
+            data
+        );
+
 
         status.textContent =
-            "Upload eșuat: " + error.message;
+            "PDF încărcat cu succes!";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        input.value = "";
+
+
+        await incarcaListaPDF();
+
+
+    } catch (error) {
+
+        console.error(
+            "Upload exception:",
+            error
+        );
+
+        status.textContent =
+            "A apărut o eroare la upload.";
 
         status.style.color =
             "#c62828";
-
-        return;
     }
-
-
-    status.textContent =
-        "PDF încărcat cu succes!";
-
-    status.style.color =
-        "#2e7d32";
-
-    input.value = "";
-
-    incarcaListaPDF();
 }
 
 
@@ -1905,75 +2133,144 @@ async function incarcaListaPDF() {
     const container =
         document.getElementById("listaPDF");
 
-    if (!container) return;
+
+    if (!container) {
+        return;
+    }
+
 
     container.innerHTML =
         "<p>Se încarcă...</p>";
 
 
-    const { data, error } =
-        await supabaseClient
-            .storage
-            .from(BUCKET)
-            .list("", {
-                limit: 100,
-                offset: 0,
-                sortBy: {
-                    column: "name",
-                    order: "asc"
-                }
-            });
+    // ------------------------------------------------
+    // VERIFICĂ ADMIN
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
 
 
-    if (error) {
-
-        console.error(error);
+    if (!user) {
 
         container.innerHTML =
-            "<p style='color:#c62828'>Nu am putut încărca lista PDF-urilor.</p>";
+            "<p style='color:#c62828'>" +
+            "Trebuie să fii autentificat." +
+            "</p>";
 
         return;
     }
 
 
-    const pdfuri =
-        (data || []).filter(
-            fisier =>
-                fisier.name
-                    .toLowerCase()
-                    .endsWith(".pdf")
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .list(
+                    "",
+                    {
+                        limit: 100,
+                        offset: 0,
+
+                        sortBy: {
+                            column: "name",
+                            order: "asc"
+                        }
+                    }
+                );
+
+
+        if (error) {
+
+            console.error(
+                "List error:",
+                error
+            );
+
+            container.innerHTML =
+                "<p style='color:#c62828'>" +
+                "Nu am putut încărca lista PDF-urilor.<br><br>" +
+                error.message +
+                "</p>";
+
+            return;
+        }
+
+
+        const pdfuri =
+            (data || []).filter(
+                fisier =>
+                    fisier.name &&
+                    fisier.name
+                        .toLowerCase()
+                        .endsWith(".pdf")
+            );
+
+
+        if (pdfuri.length === 0) {
+
+            container.innerHTML =
+                "<p>Nu există PDF-uri în bucket.</p>";
+
+            return;
+        }
+
+
+        container.innerHTML =
+            pdfuri.map(
+                fisier => `
+
+                    <div class="pdf-item">
+
+                        <span>
+                            📕 ${escapeHTML(fisier.name)}
+                        </span>
+
+                        <button
+                            class="sterge-btn"
+                            type="button"
+                            onclick="stergePDF(${JSON.stringify(fisier.name)})">
+
+                            🗑️ Șterge
+
+                        </button>
+
+                    </div>
+
+                `
+            ).join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "List exception:",
+            error
         );
 
-
-    if (pdfuri.length === 0) {
-
         container.innerHTML =
-            "<p>Nu există PDF-uri în bucket.</p>";
-
-        return;
+            "<p style='color:#c62828'>" +
+            "A apărut o eroare la încărcarea listei." +
+            "</p>";
     }
+}
 
 
-    container.innerHTML =
-        pdfuri.map(fisier => `
+// ======================================================
+// ESCAPE HTML
+// ======================================================
 
-            <div class="pdf-item">
+function escapeHTML(text) {
 
-                <span>
-                    📕 ${fisier.name}
-                </span>
+    const div =
+        document.createElement("div");
 
-                <button
-                    class="sterge-btn"
-                    onclick="stergePDF(${JSON.stringify(fisier.name)})">
+    div.textContent =
+        text;
 
-                    🗑️ Șterge
-
-                </button>
-
-            </div>
-
-        `).join("");
+    return div.innerHTML;
 }
 
 
@@ -1990,35 +2287,76 @@ async function stergePDF(numeFisier) {
             '"?'
         );
 
-    if (!confirmare) return;
+
+    if (!confirmare) {
+        return;
+    }
 
 
-    const { error } =
-        await supabaseClient
-            .storage
-            .from(BUCKET)
-            .remove([
-                numeFisier
-            ]);
+    // ------------------------------------------------
+    // VERIFICĂ ADMIN
+    // ------------------------------------------------
+
+    const user =
+        await utilizatorAutentificat();
 
 
-    if (error) {
-
-        console.error(error);
+    if (!user) {
 
         alert(
-            "Nu am putut șterge PDF-ul."
+            "Sesiunea administratorului a expirat."
         );
 
         return;
     }
 
 
-    alert(
-        "PDF șters cu succes."
-    );
+    try {
 
-    incarcaListaPDF();
+        const { error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .remove([
+                    numeFisier
+                ]);
+
+
+        if (error) {
+
+            console.error(
+                "Delete error:",
+                error
+            );
+
+            alert(
+                "Nu am putut șterge PDF-ul:\n\n" +
+                error.message
+            );
+
+            return;
+        }
+
+
+        alert(
+            "PDF șters cu succes."
+        );
+
+
+        await incarcaListaPDF();
+
+
+    } catch (error) {
+
+        console.error(
+            "Delete exception:",
+            error
+        );
+
+        alert(
+            "A apărut o eroare la ștergerea PDF-ului."
+        );
+    }
 }
 
 
@@ -2028,15 +2366,44 @@ async function stergePDF(numeFisier) {
 
 async function verificaSesiunea() {
 
-    const { data } =
-        await supabaseClient.auth.getSession();
+    try {
 
-    if (data.session) {
+        const { data, error } =
+            await supabaseClient.auth
+                .getSession();
 
-        afiseazaAdmin(
-            data.session.user
+
+        if (error) {
+
+            console.error(
+                "Session error:",
+                error
+            );
+
+            return;
+        }
+
+
+        if (data && data.session) {
+
+            afiseazaAdmin(
+                data.session.user
+            );
+
+        } else {
+
+            document
+                .getElementById("adminPanel")
+                .classList.add("ascuns");
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Session exception:",
+            error
         );
-
     }
 }
 
@@ -2053,6 +2420,7 @@ supabaseClient.auth.onAuthStateChange(
             event
         );
 
+
         if (session) {
 
             afiseazaAdmin(
@@ -2061,10 +2429,55 @@ supabaseClient.auth.onAuthStateChange(
 
         } else {
 
-            document
-                .getElementById("adminPanel")
-                .classList.add("ascuns");
+            const panel =
+                document.getElementById(
+                    "adminPanel"
+                );
+
+            if (panel) {
+
+                panel.classList.add(
+                    "ascuns"
+                );
+            }
         }
+    }
+);
+
+
+// ======================================================
+// ENTER PENTRU LOGIN
+// ======================================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "loginModal"
+            );
+
+
+        if (
+            event.key === "Enter" &&
+            modal &&
+            !modal.classList.contains("ascuns")
+        ) {
+
+            loginAdmin();
+        }
+
+
+        if (
+            event.key === "Escape" &&
+            modal &&
+            !modal.classList.contains("ascuns")
+        ) {
+
+            inchideLogin();
+        }
+
     }
 );
 
@@ -2076,6 +2489,7 @@ supabaseClient.auth.onAuthStateChange(
 genereazaAutori();
 
 verificaSesiunea();
+
 
 console.log(
     "Site inițializat."
