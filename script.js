@@ -1796,16 +1796,29 @@ async function incarcaAutori() {
 async function deschidePDF(pdfUrl) {
 
     if (!pdfUrl) {
+
+        alert(
+            "PDF-ul nu există."
+        );
+
         return;
     }
-
 
     try {
 
         const cale =
-            obtineCaleStorage(
-                pdfUrl
-            );
+            obtineCalePDF(pdfUrl);
+
+
+        console.log(
+            "Referință PDF:",
+            pdfUrl
+        );
+
+        console.log(
+            "Cale PDF în Storage:",
+            cale
+        );
 
 
         if (!cale) {
@@ -1815,7 +1828,6 @@ async function deschidePDF(pdfUrl) {
             );
 
             return;
-
         }
 
 
@@ -1845,8 +1857,31 @@ async function deschidePDF(pdfUrl) {
             );
 
             return;
-
         }
+
+
+        if (
+            !data ||
+            !data.signedUrl
+        ) {
+
+            console.error(
+                "Nu există signedUrl:",
+                data
+            );
+
+            alert(
+                "Supabase nu a returnat URL-ul PDF-ului."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "URL PDF semnat:",
+            data.signedUrl
+        );
 
 
         window.open(
@@ -1863,10 +1898,12 @@ async function deschidePDF(pdfUrl) {
         );
 
         alert(
-            "A apărut o eroare la deschiderea PDF-ului."
+            "A apărut o eroare la deschiderea PDF-ului: " +
+            error.message
         );
 
     }
+
 }
 
 
@@ -2583,27 +2620,71 @@ async function adaugaOpera() {
 function obtineCalePDF(valoare) {
 
     if (!valoare) {
+
         return null;
+
     }
 
 
+    // ==================================================
+    // FORMATUL FOLOSIT LA ÎNCĂRCARE
+    //
+    // storage://Pdf/123/fisier.pdf
+    // ==================================================
+
+    const prefix =
+        `storage://${BUCKET}/`;
+
+
     if (
-        valoare.startsWith(
-            `storage://${BUCKET}/`
-        )
+        valoare.startsWith(prefix)
     ) {
 
-        return valoare.replace(
-            `storage://${BUCKET}/`,
-            ""
+        return decodeURIComponent(
+            valoare.substring(
+                prefix.length
+            )
         );
 
     }
 
 
-    return obtineCaleStorage(
-        valoare
-    );
+    // ==================================================
+    // DACĂ ÎN BAZA DE DATE EXISTĂ UN URL SUPABASE
+    // ==================================================
+
+    if (
+        valoare.includes(
+            "/storage/v1/object/"
+        )
+    ) {
+
+        return obtineCaleStorage(
+            valoare
+        );
+
+    }
+
+
+    // ==================================================
+    // DACĂ VALOAREA ESTE DEJA O CALE STORAGE
+    //
+    // ex:
+    // 123/rezumat_document.pdf
+    // ==================================================
+
+    if (
+        !valoare.startsWith("http://") &&
+        !valoare.startsWith("https://")
+    ) {
+
+        return valoare;
+
+    }
+
+
+    return null;
+
 }
 
 
