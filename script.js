@@ -2387,7 +2387,7 @@ async function adaugaOpera() {
 
             if (
                 fisier.type !==
-                    "application/pdf" &&
+                "application/pdf" &&
                 !fisier.name
                     .toLowerCase()
                     .endsWith(".pdf")
@@ -2753,19 +2753,43 @@ async function incarcaAutoriAdmin() {
 
                     <strong>
                         ${escapeHTML(
-                            autor.initiale
-                        )}
+                autor.initiale
+            )}
                         -
                         ${escapeHTML(
-                            autor.nume
-                        )}
+                autor.nume
+            )}
                     </strong>
 
                     <p>
                         ${escapeHTML(
-                            autor.descriere
-                        )}
+                autor.descriere
+            )}
                     </p>
+
+                    <label>
+                        Descriere autor:
+                    </label>
+
+                    <textarea
+                        id="autorDescriereEdit-${autor.id}"
+                        rows="4">${escapeHTML(
+                autor.descriere
+            )}</textarea>
+
+                    <button
+                        class="admin-btn"
+                        type="button"
+                        onclick="actualizeazaDescriereAutor(${autor.id})">
+
+                        💾 Salvează descrierea
+
+                    </button>
+
+                    <div
+                        id="autorStatus-${autor.id}"
+                        class="admin-status">
+                    </div>
 
                     <small>
                         ID: ${autor.id}
@@ -2776,6 +2800,101 @@ async function incarcaAutoriAdmin() {
             `
         ).join("");
 
+}
+
+
+// ======================================================
+// ACTUALIZEAZĂ DESCRIEREA AUTORULUI
+// ======================================================
+
+async function actualizeazaDescriereAutor(autorId) {
+
+    const descriereInput =
+        document.getElementById(
+            `autorDescriereEdit-${autorId}`
+        );
+
+    const status =
+        document.getElementById(
+            `autorStatus-${autorId}`
+        );
+
+
+    if (!descriereInput || !status) {
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii autentificat ca administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+
+    }
+
+
+    status.textContent =
+        "Se salvează descrierea...";
+
+    status.style.color =
+        "#7b2450";
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("autori")
+                .update({
+                    descriere:
+                        descriereInput.value.trim()
+                })
+                .eq(
+                    "id",
+                    autorId
+                );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        status.textContent =
+            "Descrierea a fost actualizată.";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        await incarcaAutori();
+
+    } catch (error) {
+
+        console.error(
+            "Eroare actualizare descriere autor:",
+            error
+        );
+
+        status.textContent =
+            "Nu am putut actualiza descrierea: " +
+            error.message;
+
+        status.style.color =
+            "#c62828";
+
+    }
 }
 
 
@@ -2871,8 +2990,8 @@ async function incarcaOpereAdmin() {
 
                             <strong>
                                 📖 ${escapeHTML(
-                                    opera.titlu
-                                )}
+                        opera.titlu
+                    )}
                             </strong>
 
                             <p>
@@ -2881,10 +3000,10 @@ async function incarcaOpereAdmin() {
 
                                 <b>
                                     ${escapeHTML(
-                                        autor
-                                            ? autor.nume
-                                            : "Necunoscut"
-                                    )}
+                        autor
+                            ? autor.nume
+                            : "Necunoscut"
+                    )}
                                 </b>
 
                             </p>
@@ -2892,29 +3011,26 @@ async function incarcaOpereAdmin() {
                             <p>
 
                                 Rezumat:
-                                ${
-                                    opera.pdf
-                                        ? "✔ Există"
-                                        : "✖ Lipsește"
-                                }
+                                ${opera.pdf
+                            ? "✔ Există"
+                            : "✖ Lipsește"
+                        }
 
                                 <br>
 
                                 Valori morale:
-                                ${
-                                    opera.pdf_valori_morale
-                                        ? "✔ Există"
-                                        : "✖ Lipsește"
-                                }
+                                ${opera.pdf_valori_morale
+                            ? "✔ Există"
+                            : "✖ Lipsește"
+                        }
 
                                 <br>
 
                                 Caracterizare:
-                                ${
-                                    opera.pdf_caracterizare
-                                        ? "✔ Există"
-                                        : "✖ Lipsește"
-                                }
+                                ${opera.pdf_caracterizare
+                            ? "✔ Există"
+                            : "✖ Lipsește"
+                        }
 
                             </p>
 
@@ -2933,7 +3049,7 @@ async function incarcaOpereAdmin() {
 
                 }
             )
-            .join("");
+                .join("");
 
 
     } catch (error) {
@@ -3141,15 +3257,15 @@ async function incarcaListaPDF() {
 
                         <span>
                             📕 ${escapeHTML(
-                                fisier
-                            )}
+                    fisier
+                )}
                         </span>
 
                     </div>
 
                 `
             )
-            .join("");
+                .join("");
 
 
     } catch (error) {
@@ -3792,7 +3908,7 @@ supabaseClient.auth.onAuthStateChange(
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function (event) {
 
         const modal =
             document.getElementById(
