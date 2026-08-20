@@ -30,7 +30,7 @@ const site =
 
 
 // ======================================================
-// HTML + CSS
+// HTML + CSS   
 // ======================================================
 
 site.innerHTML = `
@@ -213,6 +213,11 @@ section {
 
 .card:hover {
     transform: translateY(-7px);
+}
+
+.literatura-box {
+    color: inherit;
+    text-decoration: none;
 }
 
 .card h3 {
@@ -817,7 +822,9 @@ body.dark .pdf-item {
     <a href="#acasa">Acasă</a>
     <a href="#limba">Limba română</a>
     <a href="#literatura">Literatura</a>
-    <a href="#autori">Autori</a>
+    <a href="#poezie">Poezie</a>
+    <a href="#proza">Proză</a>
+    <a href="#teatru">Teatru</a>
     <a href="#materiale">Materiale</a>
     <a href="#quiz">Quiz-uri</a>
 
@@ -910,32 +917,32 @@ body.dark .pdf-item {
 
     <div class="cards">
 
-        <div class="card">
+        <a class="card literatura-box" href="#poezie">
             <div class="icon">🌙</div>
             <h3>Poezia</h3>
             <p>
                 Poezia exprimă sentimente și idei
                 printr-un limbaj artistic.
             </p>
-        </div>
+        </a>
 
-        <div class="card">
+        <a class="card literatura-box" href="#proza">
             <div class="icon">📖</div>
             <h3>Proza</h3>
             <p>
                 Romanul, nuvela, povestirea și basmul
                 sunt forme importante ale prozei.
             </p>
-        </div>
+        </a>
 
-        <div class="card">
+        <a class="card literatura-box" href="#teatru">
             <div class="icon">🎭</div>
             <h3>Teatrul</h3>
             <p>
                 Textele dramatice sunt construite
                 în jurul personajelor și dialogului.
             </p>
-        </div>
+        </a>
 
     </div>
 
@@ -960,19 +967,55 @@ body.dark .pdf-item {
 </section>
 
 
-<section id="autori">
+<section id="poezie">
 
     <h2 class="titlu">
-        Autori 📚
+        Poezie 📜
     </h2>
 
     <p class="subtitlu">
-        Descoperă autori importanți și operele lor.
+        Autori și opere de poezie.
     </p>
 
     <div
         class="cards"
-        id="autorCards">
+        id="poezieCards">
+    </div>
+
+</section>
+
+
+<section id="proza">
+
+    <h2 class="titlu">
+        Proză 📖
+    </h2>
+
+    <p class="subtitlu">
+        Autori și opere de proză.
+    </p>
+
+    <div
+        class="cards"
+        id="prozaCards">
+    </div>
+
+</section>
+
+
+<section id="teatru">
+
+    <h2 class="titlu">
+        Teatru 🎭
+    </h2>
+
+    <p class="subtitlu">
+        Autori și opere de teatru.
+    </p>
+
+    <div
+        class="cards"
+        id="teatruCards">
     </div>
 
 </section>
@@ -1183,6 +1226,17 @@ body.dark .pdf-item {
             type="text"
             id="autorNume"
             placeholder="Numele autorului">
+
+        <label for="autorCategorie">
+            Gen literar
+        </label>
+
+        <select id="autorCategorie">
+            <option value="">Selectează genul literar</option>
+            <option value="poezie">Poezie</option>
+            <option value="proza">Proză</option>
+            <option value="teatru">Teatru</option>
+        </select>
 
         <label>
             🖼️ Imagine autor
@@ -1509,19 +1563,22 @@ function obtineCaleStorage(url) {
 
 async function incarcaAutori() {
 
-    const container =
-        document.getElementById(
-            "autorCards"
-        );
+    const containere = {
+        poezie: document.getElementById("poezieCards"),
+        proza: document.getElementById("prozaCards"),
+        teatru: document.getElementById("teatruCards")
+    };
 
 
-    if (!container) {
+    if (!containere.poezie || !containere.proza || !containere.teatru) {
         return;
     }
 
 
-    container.innerHTML =
-        "<p style='text-align:center'>Se încarcă autorii...</p>";
+    Object.values(containere).forEach(container => {
+        container.innerHTML =
+            "<p style='text-align:center'>Se încarcă autorii...</p>";
+    });
 
 
     try {
@@ -1544,10 +1601,12 @@ async function incarcaAutori() {
                 eroareAutori
             );
 
-            container.innerHTML =
-                "<p style='color:#c62828;text-align:center'>" +
-                "Nu am putut încărca autorii." +
-                "</p>";
+            Object.values(containere).forEach(container => {
+                container.innerHTML =
+                    "<p style='color:#c62828;text-align:center'>" +
+                    "Nu am putut încărca autorii." +
+                    "</p>";
+            });
 
             return;
         }
@@ -1571,16 +1630,22 @@ async function incarcaAutori() {
                 eroareOpere
             );
 
-            container.innerHTML =
-                "<p style='color:#c62828;text-align:center'>" +
-                "Nu am putut încărca operele." +
-                "</p>";
+            Object.values(containere).forEach(container => {
+                container.innerHTML =
+                    "<p style='color:#c62828;text-align:center'>" +
+                    "Nu am putut încărca operele." +
+                    "</p>";
+            });
 
             return;
         }
 
 
-        const carduri = [];
+        const carduri = {
+            poezie: [],
+            proza: [],
+            teatru: []
+        };
 
 
         for (
@@ -1724,7 +1789,17 @@ async function incarcaAutori() {
                     : "";
 
 
-            carduri.push(`
+            const categorie =
+                String(autor.categorie || "")
+                    .trim()
+                    .toLowerCase();
+
+            if (!carduri[categorie]) {
+                continue;
+            }
+
+
+            carduri[categorie].push(`
 
                 <div class="card autor">
 
@@ -1755,22 +1830,14 @@ async function incarcaAutori() {
         }
 
 
-        if (
-            carduri.length === 0
-        ) {
-
+        Object.entries(containere).forEach(([categorie, container]) => {
             container.innerHTML =
-                "<p style='text-align:center'>" +
-                "Momentan nu există materiale disponibile." +
-                "</p>";
-
-            return;
-
-        }
-
-
-        container.innerHTML =
-            carduri.join("");
+                carduri[categorie].length > 0
+                    ? carduri[categorie].join("")
+                    : "<p style='text-align:center'>" +
+                      "Momentan nu există materiale disponibile." +
+                      "</p>";
+        });
 
 
     } catch (error) {
@@ -1780,10 +1847,12 @@ async function incarcaAutori() {
             error
         );
 
-        container.innerHTML =
-            "<p style='color:#c62828;text-align:center'>" +
-            "A apărut o eroare." +
-            "</p>";
+        Object.values(containere).forEach(container => {
+            container.innerHTML =
+                "<p style='color:#c62828;text-align:center'>" +
+                "A apărut o eroare." +
+                "</p>";
+        });
 
     }
 }
@@ -1927,6 +1996,12 @@ async function adaugaAutor() {
             .trim();
 
 
+    const categorie =
+        document
+            .getElementById("autorCategorie")
+            .value;
+
+
     const pozaInput =
         document.getElementById(
             "autorPoza"
@@ -1954,6 +2029,19 @@ async function adaugaAutor() {
 
         status.textContent =
             "Completează inițialele și numele autorului.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+
+    }
+
+
+    if (!categorie) {
+
+        status.textContent =
+            "Selectează genul literar al autorului.";
 
         status.style.color =
             "#c62828";
@@ -2102,6 +2190,9 @@ async function adaugaAutor() {
                         nume:
                             nume,
 
+                        categorie:
+                            categorie,
+
                         poza:
                             urlImagine,
 
@@ -2143,6 +2234,13 @@ async function adaugaAutor() {
         document
             .getElementById(
                 "autorNume"
+            )
+            .value = "";
+
+
+        document
+            .getElementById(
+                "autorCategorie"
             )
             .value = "";
 
@@ -2387,7 +2485,7 @@ async function adaugaOpera() {
 
             if (
                 fisier.type !==
-                    "application/pdf" &&
+                "application/pdf" &&
                 !fisier.name
                     .toLowerCase()
                     .endsWith(".pdf")
@@ -2753,19 +2851,50 @@ async function incarcaAutoriAdmin() {
 
                     <strong>
                         ${escapeHTML(
-                            autor.initiale
-                        )}
+                autor.initiale
+            )}
                         -
                         ${escapeHTML(
-                            autor.nume
-                        )}
+                autor.nume
+            )}
                     </strong>
 
                     <p>
-                        ${escapeHTML(
-                            autor.descriere
-                        )}
+                        Gen literar:
+                        <b>${escapeHTML(
+                autor.categorie || "Neclasificat"
+            )}</b>
                     </p>
+
+                    <p>
+                        ${escapeHTML(
+                autor.descriere
+            )}
+                    </p>
+
+                    <label>
+                        Descriere autor:
+                    </label>
+
+                    <textarea
+                        id="autorDescriereEdit-${autor.id}"
+                        rows="4">${escapeHTML(
+                autor.descriere
+            )}</textarea>
+
+                    <button
+                        class="admin-btn"
+                        type="button"
+                        onclick="actualizeazaDescriereAutor(${autor.id})">
+
+                        💾 Salvează descrierea
+
+                    </button>
+
+                    <div
+                        id="autorStatus-${autor.id}"
+                        class="admin-status">
+                    </div>
 
                     <small>
                         ID: ${autor.id}
@@ -2776,6 +2905,101 @@ async function incarcaAutoriAdmin() {
             `
         ).join("");
 
+}
+
+
+// ======================================================
+// ACTUALIZEAZĂ DESCRIEREA AUTORULUI
+// ======================================================
+
+async function actualizeazaDescriereAutor(autorId) {
+
+    const descriereInput =
+        document.getElementById(
+            `autorDescriereEdit-${autorId}`
+        );
+
+    const status =
+        document.getElementById(
+            `autorStatus-${autorId}`
+        );
+
+
+    if (!descriereInput || !status) {
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii autentificat ca administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+
+    }
+
+
+    status.textContent =
+        "Se salvează descrierea...";
+
+    status.style.color =
+        "#7b2450";
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("autori")
+                .update({
+                    descriere:
+                        descriereInput.value.trim()
+                })
+                .eq(
+                    "id",
+                    autorId
+                );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        status.textContent =
+            "Descrierea a fost actualizată.";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        await incarcaAutori();
+
+    } catch (error) {
+
+        console.error(
+            "Eroare actualizare descriere autor:",
+            error
+        );
+
+        status.textContent =
+            "Nu am putut actualiza descrierea: " +
+            error.message;
+
+        status.style.color =
+            "#c62828";
+
+    }
 }
 
 
@@ -2871,8 +3095,8 @@ async function incarcaOpereAdmin() {
 
                             <strong>
                                 📖 ${escapeHTML(
-                                    opera.titlu
-                                )}
+                        opera.titlu
+                    )}
                             </strong>
 
                             <p>
@@ -2881,10 +3105,10 @@ async function incarcaOpereAdmin() {
 
                                 <b>
                                     ${escapeHTML(
-                                        autor
-                                            ? autor.nume
-                                            : "Necunoscut"
-                                    )}
+                        autor
+                            ? autor.nume
+                            : "Necunoscut"
+                    )}
                                 </b>
 
                             </p>
@@ -2892,29 +3116,26 @@ async function incarcaOpereAdmin() {
                             <p>
 
                                 Rezumat:
-                                ${
-                                    opera.pdf
-                                        ? "✔ Există"
-                                        : "✖ Lipsește"
-                                }
+                                ${opera.pdf
+                            ? "✔ Există"
+                            : "✖ Lipsește"
+                        }
 
                                 <br>
 
                                 Valori morale:
-                                ${
-                                    opera.pdf_valori_morale
-                                        ? "✔ Există"
-                                        : "✖ Lipsește"
-                                }
+                                ${opera.pdf_valori_morale
+                            ? "✔ Există"
+                            : "✖ Lipsește"
+                        }
 
                                 <br>
 
                                 Caracterizare:
-                                ${
-                                    opera.pdf_caracterizare
-                                        ? "✔ Există"
-                                        : "✖ Lipsește"
-                                }
+                                ${opera.pdf_caracterizare
+                            ? "✔ Există"
+                            : "✖ Lipsește"
+                        }
 
                             </p>
 
@@ -2933,7 +3154,7 @@ async function incarcaOpereAdmin() {
 
                 }
             )
-            .join("");
+                .join("");
 
 
     } catch (error) {
@@ -3141,15 +3362,15 @@ async function incarcaListaPDF() {
 
                         <span>
                             📕 ${escapeHTML(
-                                fisier
-                            )}
+                    fisier
+                )}
                         </span>
 
                     </div>
 
                 `
             )
-            .join("");
+                .join("");
 
 
     } catch (error) {
@@ -3792,7 +4013,7 @@ supabaseClient.auth.onAuthStateChange(
 
 document.addEventListener(
     "keydown",
-    function(event) {
+    function (event) {
 
         const modal =
             document.getElementById(
