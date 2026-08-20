@@ -822,9 +822,6 @@ body.dark .pdf-item {
     <a href="#acasa">Acasă</a>
     <a href="#limba">Limba română</a>
     <a href="#literatura">Literatura</a>
-    <a href="#poezie">Poezie</a>
-    <a href="#proza">Proză</a>
-    <a href="#teatru">Teatru</a>
     <a href="#materiale">Materiale</a>
     <a href="#quiz">Quiz-uri</a>
 
