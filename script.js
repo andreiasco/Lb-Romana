@@ -1312,7 +1312,7 @@ body.dark .pdf-item {
             accept="application/pdf">
 
         <label>
-            👤 Caracterizarea personajelor PDF
+            👤 Personaje si semnificatii PDF
         </label>
 
         <input
@@ -1736,7 +1736,7 @@ async function incarcaAutori() {
                             type="button"
                             onclick='deschidePDF(${JSON.stringify(opera.pdf_caracterizare)})'>
 
-                            👤 Caracterizarea personajelor
+                            👤 Personaje si semnificatii
 
                         </button>
 
