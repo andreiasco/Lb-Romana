@@ -3692,27 +3692,15 @@ async function incarcaAutoriAdmin() {
     }
 
 
-    const {
-        data: autori,
-        error
-    } =
-        await supabaseClient
-            .from("autori")
-            .select("*")
-        const {
-    data: opere,
-    error: eroareOpere
-} =
-    await supabaseClient
-        .from("opere")
-        .select("*")
-            .order(
-                "nume",
-                {
-                    ascending: true
-                }
-            );
-
+   const {
+    data: autori,
+    error
+} = await supabaseClient
+    .from("autori")
+    .select("*")
+    .order("nume", {
+        ascending: true
+    });
 
     if (error) {
 
