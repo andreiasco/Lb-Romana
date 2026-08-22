@@ -184,27 +184,26 @@ nav button:hover {
 ====================================================== */
 
 .search-container {
-    width: min(600px, 100%);
-    margin: 15px auto 0;
+    width: 250px;
+    margin: 8px auto 0;
     position: relative;
 }
 
 .search-input {
     width: 100%;
-    padding: 13px 45px 13px 18px;
+    padding: 7px 34px 7px 11px;
 
     border: 2px solid rgba(255,255,255,.3);
-    border-radius: 25px;
+    border-radius: 18px;
 
     background: rgba(255,255,255,.12);
     color: white;
 
-    font-size: 16px;
+    font-size: 13px;
     outline: none;
 
     transition: .25s;
 }
-
 .search-input::placeholder {
     color: rgba(255,255,255,.75);
 }
@@ -217,12 +216,13 @@ nav button:hover {
 
 .search-icon {
     position: absolute;
-    right: 16px;
+    right: 11px;
     top: 50%;
 
     transform: translateY(-50%);
 
     color: white;
+    font-size: 13px
     pointer-events: none;
 }
 
