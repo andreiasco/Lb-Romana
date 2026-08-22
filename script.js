@@ -1258,11 +1258,11 @@ body.dark .pdf-item {
 <nav>
 
     <div class="nav-links">
-        <a href="#acasa">Acasă</a>
-        <a href="#limba">Limba română</a>
-        <a href="#literatura">Literatura română</a>
-        <a href="#quiz">Quiz-uri</a>
-        <a href="#revista">Revista</a>
+        <a href="${estePaginaAdmin ? "index.html" : ""}#acasa">Acasă</a>
+        <a href="${estePaginaAdmin ? "index.html" : ""}#limba">Limba română</a>
+        <a href="${estePaginaAdmin ? "index.html" : ""}#literatura">Literatura română</a>
+        <a href="${estePaginaAdmin ? "index.html" : ""}#quiz">Quiz-uri</a>
+        <a href="${estePaginaAdmin ? "index.html" : ""}#revista">Revista</a>
         <a id="adminLink" class="ascuns" href="admin.html">Panou admin</a>
     </div>
     
@@ -2177,6 +2177,19 @@ function escapeHTML(text) {
     return div.innerHTML;
 }
 
+function golesteCampuri(...iduri) {
+
+    iduri.forEach(id => {
+
+        const element = document.getElementById(id);
+
+        if (element) {
+            element.value = "";
+        }
+
+    });
+}
+
 // ======================================================
 // CĂUTARE
 // ======================================================
@@ -3006,33 +3019,45 @@ async function deschidePDF(pdfUrl) {
 
 }
 
-async function descarcaRezumatWord(wordUrl) {
+async function obtineURLSemnat(valoare, optiuni = {}) {
 
-    const cale = obtineCalePDF(wordUrl);
+    const cale = obtineCalePDF(valoare);
 
     if (!cale) {
+        throw new Error("Nu am putut identifica fișierul din Storage.");
+    }
+
+    const { data, error } =
+        await supabaseClient
+            .storage
+            .from(BUCKET)
+            .createSignedUrl(cale, 60 * 60, optiuni);
+
+    if (error) {
+        throw error;
+    }
+
+    if (!data || !data.signedUrl) {
+        throw new Error("Supabase nu a returnat URL-ul semnat.");
+    }
+
+    return data.signedUrl;
+}
+
+async function descarcaRezumatWord(wordUrl) {
+
+    if (!wordUrl) {
         alert("Rezumatul Word nu există.");
         return;
     }
 
     try {
 
-        const { data, error } =
-            await supabaseClient
-                .storage
-                .from(BUCKET)
-                .createSignedUrl(
-                    cale,
-                    60 * 60,
-                    { download: true }
-                );
-
-        if (error || !data || !data.signedUrl) {
-            throw error || new Error("Nu s-a putut genera linkul de descărcare.");
-        }
+        const urlSemnat =
+            await obtineURLSemnat(wordUrl, { download: true });
 
         const link = document.createElement("a");
-        link.href = data.signedUrl;
+        link.href = urlSemnat;
         link.download = "rezumat.docx";
         document.body.appendChild(link);
         link.click();
@@ -3867,69 +3892,18 @@ async function adaugaOpera() {
             "#2e7d32";
 
 
-        document
-            .getElementById(
-                "operaAutor"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "operaTitlu"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "operaRezumat"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "operaValoriMorale"
-            )
-            .value = "";
-
-
-        document
-            .getElementById(
-                "operaCaracterizare"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "operaRezumatWord"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "operaLinkFilm"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "operaLinkAudiobook"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "operaLinkTestLectura"
-            )
-            .value = "";
-
-        document
-            .getElementById(
-                "operaPersonajeInstagram"
-            )
-            .value = "";
+        golesteCampuri(
+            "operaAutor",
+            "operaTitlu",
+            "operaRezumat",
+            "operaValoriMorale",
+            "operaCaracterizare",
+            "operaRezumatWord",
+            "operaLinkFilm",
+            "operaLinkAudiobook",
+            "operaLinkTestLectura",
+            "operaPersonajeInstagram"
+        );
 
 
         await incarcaOpereAdmin();
