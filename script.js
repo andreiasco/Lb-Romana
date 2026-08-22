@@ -180,6 +180,160 @@ nav button:hover {
 
 
 /* ======================================================
+   BARA DE CĂUTARE
+====================================================== */
+.search-toggle {
+    border: 1px solid rgba(255,255,255,.4);
+    background: #7b2450;
+    color: white;
+    padding: 9px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-toggle:hover {
+    background: #a8446c;
+}
+
+
+.search-container {
+    width: 100%;
+    margin: 10px auto 0;
+    position: relative;
+    text-align: center;
+}
+
+.search-container.ascuns {
+    display: none !important;
+}
+
+
+.search-input {
+    width: 100%;
+    padding: 7px 34px 7px 11px;
+
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 18px;
+
+    background: rgba(255,255,255,.12);
+    color: white;
+
+    font-size: 13px;
+    outline: none;
+
+    transition: .25s;
+}
+.search-input::placeholder {
+    color: rgba(255,255,255,.75);
+}
+
+.search-input:focus {
+    background: white;
+    color: #292329;
+    border-color: #f4b6d0;
+}
+
+.search-icon {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: white;
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.search-results {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+
+    z-index: 5000;
+
+    background: white;
+    border-radius: 14px;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.25);
+
+    max-height: 400px;
+    overflow-y: auto;
+
+    display: none;
+
+    text-align: left;
+}
+
+.search-results.activ {
+    display: block;
+}
+
+.search-result {
+    padding: 13px 16px;
+
+    border-bottom: 1px solid #eee;
+
+    cursor: pointer;
+}
+
+.search-result:last-child {
+    border-bottom: none;
+}
+
+.search-result:hover {
+    background: #f8eef3;
+}
+
+.search-result strong {
+    display: block;
+    color: #7b2450;
+    margin-bottom: 4px;
+}
+
+.search-result small {
+    color: #777;
+}
+
+.search-no-results {
+    padding: 18px;
+    text-align: center;
+    color: #777;
+}
+
+body.dark .search-results {
+    background: #271f27;
+}
+
+body.dark .search-result {
+    border-bottom-color: #3b303b;
+}
+
+body.dark .search-result:hover {
+    background: #35152a;
+}
+
+body.dark .search-result small {
+    color: #bbb;
+}
+
+@media(max-width:700px) {
+
+    .search-container {
+        order: 3;
+        width: 100%;
+    }
+
+    .search-input {
+        font-size: 15px;
+    }
+
+}
+
+/* ======================================================
    HERO
 ====================================================== */
 
@@ -1024,7 +1178,9 @@ body.dark .pdf-item {
 @media(max-width:700px) {
 
     nav {
-        padding: 12px 10px 58px;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
     }
 
     .account-menu {
@@ -1076,6 +1232,23 @@ body.dark .pdf-item {
         <a href="#literatura">Literatura română</a>
         <a href="#quiz">Quiz-uri</a>
         <a href="#revista">Revista</a>
+    </div>
+    
+ <button id="searchToggle" class="search-toggle">
+        🔍 Search
+    </button>
+
+    <div class="search-container ascuns">
+
+        <input
+            type="search"
+            id="searchInput"
+            class="search-input"
+            placeholder="Caută autori, opere, poezii..."
+            autocomplete="off">
+
+        <div id="searchResults" class="search-results"></div>
+
     </div>
 
     <details class="account-menu">
@@ -1888,6 +2061,29 @@ body.dark .pdf-item {
 
 `;
 
+// ======================================================
+// BUTON SEARCH
+// ======================================================
+
+const searchToggle =
+    document.getElementById("searchToggle");
+
+const searchContainer =
+    document.querySelector(".search-container");
+
+
+searchToggle.addEventListener("click", function () {
+
+    searchContainer.classList.toggle("ascuns");
+
+    if (!searchContainer.classList.contains("ascuns")) {
+
+        searchInput.focus();
+
+    }
+
+});
+
 
 // ======================================================
 // ESCAPE HTML
@@ -1902,6 +2098,283 @@ function escapeHTML(text) {
         text || "";
 
     return div.innerHTML;
+}
+
+// ======================================================
+// CĂUTARE
+// ======================================================
+
+let dateCautare = [];
+
+
+function pregatesteDateCautare(autori, opere) {
+
+    dateCautare = [];
+
+    (autori || []).forEach(autor => {
+
+        dateCautare.push({
+            tip: "Autor",
+            titlu: autor.nume || "",
+            descriere: autor.descriere || "",
+            categorie: autor.categorie || "",
+            autorId: autor.id
+        });
+
+    });
+
+
+    (opere || []).forEach(opera => {
+
+        const autor = (autori || []).find(
+            a =>
+                String(a.id) ===
+                String(opera.autor_id)
+        );
+
+        dateCautare.push({
+            tip: "Operă",
+            titlu: opera.titlu || "",
+            descriere: autor
+                ? autor.nume
+                : "",
+            categorie: autor
+                ? autor.categorie
+                : "",
+            autorId: opera.autor_id,
+            operaId: opera.id
+        });
+
+    });
+
+}
+
+
+function cautaSite(text) {
+
+    const results =
+        document.getElementById(
+            "searchResults"
+        );
+
+    if (!results) {
+        return;
+    }
+
+
+    const cautare =
+        text
+            .trim()
+            .toLowerCase();
+
+
+    if (!cautare) {
+
+        results.innerHTML = "";
+        results.classList.remove("activ");
+
+        return;
+
+    }
+
+
+    const rezultate =
+        dateCautare.filter(item => {
+
+            const continut = [
+
+                item.tip,
+                item.titlu,
+                item.descriere,
+                item.categorie
+
+            ]
+                .join(" ")
+                .toLowerCase();
+
+            return continut.includes(cautare);
+
+        });
+
+
+    if (rezultate.length === 0) {
+
+        results.innerHTML = `
+            <div class="search-no-results">
+                🔍 Nu am găsit rezultate pentru
+                „${escapeHTML(text)}”.
+            </div>
+        `;
+
+        results.classList.add("activ");
+
+        return;
+
+    }
+
+
+    results.innerHTML =
+        rezultate
+            .slice(0, 20)
+            .map(item => `
+
+                <div
+                    class="search-result"
+                    onclick="deschideRezultatCautare(
+                        '${item.tip}',
+                        '${item.autorId}',
+                        '${item.operaId || ""}'
+                    )">
+
+                    <strong>
+                        ${escapeHTML(item.titlu)}
+                    </strong>
+
+                    <small>
+                        ${escapeHTML(item.tip)}
+                        ${item.categorie
+                            ? " • " +
+                              escapeHTML(item.categorie)
+                            : ""}
+                        ${item.tip === "Operă" &&
+                          item.descriere
+                            ? " • " +
+                              escapeHTML(item.descriere)
+                            : ""}
+                    </small>
+
+                </div>
+
+            `)
+            .join("");
+
+
+    results.classList.add("activ");
+
+}
+
+
+async function deschideRezultatCautare(
+    tip,
+    autorId,
+    operaId
+) {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+    const results =
+        document.getElementById(
+            "searchResults"
+        );
+
+
+    if (input) {
+        input.value = "";
+    }
+
+    if (results) {
+        results.classList.remove("activ");
+        results.innerHTML = "";
+    }
+
+
+    if (tip === "Autor") {
+
+        const { data: autor } =
+            await supabaseClient
+                .from("autori")
+                .select("categorie")
+                .eq("id", autorId)
+                .single();
+
+
+        if (!autor) {
+            return;
+        }
+
+
+        const categorie =
+            String(
+                autor.categorie || ""
+            )
+                .trim()
+                .toLowerCase();
+
+
+        const sectiuni = {
+            poezie: "poezie",
+            proza: "proza",
+            teatru: "teatru"
+        };
+
+
+        const ancora =
+            sectiuni[categorie];
+
+
+        if (ancora) {
+
+            window.location.hash =
+                ancora;
+
+        }
+
+        return;
+
+    }
+
+
+    if (tip === "Operă") {
+
+        const { data: opera } =
+            await supabaseClient
+                .from("opere")
+                .select("autor_id")
+                .eq("id", operaId)
+                .single();
+
+
+        if (!opera) {
+            return;
+        }
+
+
+        const { data: autor } =
+            await supabaseClient
+                .from("autori")
+                .select("categorie")
+                .eq("id", opera.autor_id)
+                .single();
+
+
+        if (!autor) {
+            return;
+        }
+
+
+        const categorie =
+            String(
+                autor.categorie || ""
+            )
+                .trim()
+                .toLowerCase();
+
+
+        if (
+            ["poezie", "proza", "teatru"]
+                .includes(categorie)
+        ) {
+
+            window.location.hash =
+                categorie;
+
+        }
+
+    }
+
 }
 
 
@@ -2050,7 +2523,11 @@ async function incarcaAutori() {
             return;
         }
 
-
+pregatesteDateCautare(
+    autori,
+    opere
+);
+        
         const carduri = {
             poezie: [],
             proza: [],
@@ -2266,6 +2743,8 @@ async function incarcaAutori() {
 
     }
 }
+
+
 
 
 // ======================================================
@@ -3213,20 +3692,15 @@ async function incarcaAutoriAdmin() {
     }
 
 
-    const {
-        data: autori,
-        error
-    } =
-        await supabaseClient
-            .from("autori")
-            .select("*")
-            .order(
-                "nume",
-                {
-                    ascending: true
-                }
-            );
-
+   const {
+    data: autori,
+    error
+} = await supabaseClient
+    .from("autori")
+    .select("*")
+    .order("nume", {
+        ascending: true
+    });
 
     if (error) {
 
@@ -4968,6 +5442,62 @@ afiseazaPagina();
 incarcaAutori();
 
 verificaSesiunea();
+
+// ======================================================
+// INITIALIZARE CĂUTARE
+// ======================================================
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            cautaSite(
+                this.value
+            );
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        const container =
+            document.querySelector(
+                ".search-container"
+            );
+
+        const results =
+            document.getElementById(
+                "searchResults"
+            );
+
+
+        if (
+            container &&
+            results &&
+            !container.contains(event.target)
+        ) {
+
+            results.classList.remove(
+                "activ"
+            );
+
+        }
+
+    }
+);
 
 console.log(
     "Site inițializat."
