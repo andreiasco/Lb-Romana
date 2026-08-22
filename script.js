@@ -557,6 +557,14 @@ body.dark .status-cont {
     display: none !important;
 }
 
+.pagina {
+    display: none;
+}
+
+.pagina.activ {
+    display: block;
+}
+
 
 /* ======================================================
    LOGIN
@@ -937,13 +945,10 @@ body.dark .pdf-item {
 <nav>
 
     <a href="#acasa">Acasă</a>
-    <a href="#despre-noi">Despre noi</a>
-    <a href="#functionalitati">Funcționalități</a>
-    <a href="#how-to">How to</a>
     <a href="#limba">Limba română</a>
-    <a href="#literatura">Literatura</a>
-    <a href="#materiale">Materiale</a>
+    <a href="#literatura">Literatura română</a>
     <a href="#quiz">Quiz-uri</a>
+    <a href="#revista">Revista</a>
 
     <button onclick="schimbaTema()">
         🌙 Mod întunecat
@@ -955,6 +960,10 @@ body.dark .pdf-item {
 
 </nav>
 
+
+<main>
+
+<div id="pagina-acasa" class="pagina activ">
 
 <header class="hero" id="acasa">
 
@@ -991,7 +1000,7 @@ body.dark .pdf-item {
         <div class="intro-box">
             <h3>Învățare într-un singur loc</h3>
             <p>
-                Adunăm explicații, autori, opere, materiale și activități
+                Adunăm explicații, autori, opere și activități
                 interactive pentru ca învățarea să fie mai clară și mai ușor de urmărit.
             </p>
         </div>
@@ -1069,7 +1078,7 @@ body.dark .pdf-item {
                 <summary>Vezi ce este disponibil</summary>
                 <p>
                     Ai acces la secțiunile publice despre limbă, literatură,
-                    autori, opere, materiale și quiz-uri.
+                    autori, opere și quiz-uri.
                 </p>
             </details>
         </div>
@@ -1108,9 +1117,9 @@ body.dark .pdf-item {
                 Consultă explicațiile, autorii și operele din fiecare categorie.
             </p>
             <details>
-                <summary>Unde găsesc materialele?</summary>
+                <summary>Unde găsesc resursele?</summary>
                 <p>
-                    Intră în „Materiale” pentru documente sau alege „Literatura”
+                    Alege „Limba română” pentru noțiuni de limbă sau „Literatura română”
                     pentru poezie, proză și teatru.
                 </p>
             </details>
@@ -1132,6 +1141,11 @@ body.dark .pdf-item {
     </div>
 
 </section>
+
+</div>
+
+
+<div id="pagina-limba" class="pagina">
 
 
 <section id="limba">
@@ -1176,6 +1190,11 @@ body.dark .pdf-item {
     </div>
 
 </section>
+
+</div>
+
+
+<div id="pagina-literatura" class="pagina">
 
 
 <section id="literatura">
@@ -1239,7 +1258,6 @@ body.dark .pdf-item {
 
 </section>
 
-
 <section id="poezie">
 
     <h2 class="titlu">
@@ -1293,49 +1311,10 @@ body.dark .pdf-item {
 
 </section>
 
+</div>
 
-<section id="materiale">
 
-    <h2 class="titlu">
-        Materiale 📚
-    </h2>
-
-    <p class="subtitlu">
-        Materiale pentru studiul limbii și literaturii române.
-    </p>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="icon">📖</div>
-            <h3>Mihai Eminescu</h3>
-            <p>
-                Informații despre viața și opera
-                marelui poet român.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">✍️</div>
-            <h3>Gramatică</h3>
-            <p>
-                Noțiuni despre părțile de vorbire,
-                propoziție și frază.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="icon">📚</div>
-            <h3>Genuri literare</h3>
-            <p>
-                Genul epic, liric și dramatic.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
+<div id="pagina-quiz" class="pagina">
 
 <section id="quiz">
 
@@ -1452,6 +1431,33 @@ body.dark .pdf-item {
     </div>
 
 </section>
+
+</div>
+
+
+<div id="pagina-revista" class="pagina">
+
+<section id="revista">
+
+    <h2 class="titlu">Revista</h2>
+
+    <p class="subtitlu">
+        O secțiune nouă pentru articole și conținut editorial.
+    </p>
+
+    <div class="card" style="text-align:center;">
+        <div class="icon">📰</div>
+        <h3>În curând</h3>
+        <p>
+            Revista este în pregătire. Aici va fi adăugată o funcționalitate nouă.
+        </p>
+    </div>
+
+</section>
+
+</div>
+
+</main>
 
 
 <section
@@ -4326,6 +4332,46 @@ document.addEventListener(
 // ======================================================
 // INITIALIZARE
 // ======================================================
+
+function afiseazaPagina(hash = window.location.hash) {
+
+    const ancora = hash.replace("#", "") || "acasa";
+    const pagini = {
+        acasa: "pagina-acasa",
+        "despre-noi": "pagina-acasa",
+        functionalitati: "pagina-acasa",
+        "how-to": "pagina-acasa",
+        limba: "pagina-limba",
+        literatura: "pagina-literatura",
+        poezie: "pagina-literatura",
+        proza: "pagina-literatura",
+        teatru: "pagina-literatura",
+        quiz: "pagina-quiz",
+        revista: "pagina-revista"
+    };
+
+    const paginaId = pagini[ancora] || "pagina-acasa";
+
+    document.querySelectorAll(".pagina").forEach(
+        pagina => pagina.classList.toggle(
+            "activ",
+            pagina.id === paginaId
+        )
+    );
+
+    const element = document.getElementById(ancora);
+
+    if (element && ancora !== "acasa") {
+        window.requestAnimationFrame(
+            () => element.scrollIntoView({ behavior: "smooth" })
+        );
+    } else {
+        window.scrollTo(0, 0);
+    }
+}
+
+window.addEventListener("hashchange", () => afiseazaPagina());
+afiseazaPagina();
 
 incarcaAutori();
 
