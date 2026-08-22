@@ -28,6 +28,9 @@ const supabaseClient =
 const site =
     document.getElementById("site");
 
+const estePaginaAdmin =
+    window.location.pathname.endsWith("admin.html");
+
 
 // ======================================================
 // HTML + CSS   
@@ -644,6 +647,34 @@ body.dark .status-cont {
     color: white;
 }
 
+.opera-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #d9f0f1;
+    color: #006b72;
+    border: 2px solid #008c95;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.opera-link:hover {
+    background: #008c95;
+    color: white;
+}
+
+.personaje-instagram {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.personaje-instagram img {
+    max-width: 100%;
+    max-height: 420px;
+    border-radius: 10px;
+    object-fit: contain;
+}
+
 
 /* ======================================================
    CITAT
@@ -1232,6 +1263,7 @@ body.dark .pdf-item {
         <a href="#literatura">Literatura română</a>
         <a href="#quiz">Quiz-uri</a>
         <a href="#revista">Revista</a>
+        <a id="adminLink" class="ascuns" href="admin.html">Panou admin</a>
     </div>
     
  <button id="searchToggle" class="search-toggle">
@@ -1912,6 +1944,51 @@ body.dark .pdf-item {
             id="operaCaracterizare"
             accept="application/pdf">
 
+        <label>
+            📄 Rezumat Word pentru descărcare
+        </label>
+
+        <input
+            type="file"
+            id="operaRezumatWord"
+            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+        <label>
+            🎬 Link extern film
+        </label>
+
+        <input
+            type="url"
+            id="operaLinkFilm"
+            placeholder="https://...">
+
+        <label>
+            🎧 Link extern audiobook
+        </label>
+
+        <input
+            type="url"
+            id="operaLinkAudiobook"
+            placeholder="https://...">
+
+        <label>
+            📝 Link extern test de lectură
+        </label>
+
+        <input
+            type="url"
+            id="operaLinkTestLectura"
+            placeholder="https://...">
+
+        <label>
+            📸 Imagine personaje pentru Instagram
+        </label>
+
+        <input
+            type="file"
+            id="operaPersonajeInstagram"
+            accept="image/*">
+
         <button
             class="admin-btn"
             onclick="adaugaOpera()">
@@ -2233,14 +2310,14 @@ function cautaSite(text) {
                     <small>
                         ${escapeHTML(item.tip)}
                         ${item.categorie
-                            ? " • " +
-                              escapeHTML(item.categorie)
-                            : ""}
+                    ? " • " +
+                    escapeHTML(item.categorie)
+                    : ""}
                         ${item.tip === "Operă" &&
-                          item.descriere
-                            ? " • " +
-                              escapeHTML(item.descriere)
-                            : ""}
+                    item.descriere
+                    ? " • " +
+                    escapeHTML(item.descriere)
+                    : ""}
                     </small>
 
                 </div>
@@ -2523,11 +2600,11 @@ async function incarcaAutori() {
             return;
         }
 
-pregatesteDateCautare(
-    autori,
-    opere
-);
-        
+        pregatesteDateCautare(
+            autori,
+            opere
+        );
+
         const carduri = {
             poezie: [],
             proza: [],
@@ -2563,11 +2640,31 @@ pregatesteDateCautare(
                 const areCaracterizare =
                     !!opera.pdf_caracterizare;
 
+                const areRezumatWord =
+                    !!opera.rezumat_word;
+
+                const areLinkFilm =
+                    !!opera.link_film;
+
+                const areLinkAudiobook =
+                    !!opera.link_audiobook;
+
+                const areLinkTestLectura =
+                    !!opera.link_test_lectura;
+
+                const areImaginePersonaje =
+                    !!opera.personaje_instagram;
+
 
                 if (
                     !areRezumat &&
                     !areValori &&
-                    !areCaracterizare
+                    !areCaracterizare &&
+                    !areRezumatWord &&
+                    !areLinkFilm &&
+                    !areLinkAudiobook &&
+                    !areLinkTestLectura &&
+                    !areImaginePersonaje
                 ) {
 
                     continue;
@@ -2631,10 +2728,55 @@ pregatesteDateCautare(
 
                 }
 
+                if (areRezumatWord) {
+
+                    butoane += `
+
+                        <button
+                            class="opera-btn"
+                            type="button"
+                            onclick='descarcaRezumatWord(${JSON.stringify(opera.rezumat_word)})'>
+
+                            📄 Descarcă rezumat Word
+
+                        </button>
+
+                    `;
+
+                }
+
+                if (areLinkFilm) {
+                    butoane += `
+                        <a class="opera-link" href="${escapeHTML(opera.link_film)}" target="_blank" rel="noopener noreferrer">🎬 Film</a>
+                    `;
+                }
+
+                if (areLinkAudiobook) {
+                    butoane += `
+                        <a class="opera-link" href="${escapeHTML(opera.link_audiobook)}" target="_blank" rel="noopener noreferrer">🎧 Audiobook</a>
+                    `;
+                }
+
+                if (areLinkTestLectura) {
+                    butoane += `
+                        <a class="opera-link" href="${escapeHTML(opera.link_test_lectura)}" target="_blank" rel="noopener noreferrer">📝 Test de lectură</a>
+                    `;
+                }
+
+                const personajeInstagramHTML = areImaginePersonaje
+                    ? `
+                        <div class="personaje-instagram">
+                            <img src="${escapeHTML(opera.personaje_instagram)}" alt="Personajele din ${escapeHTML(opera.titlu)}" loading="lazy">
+                        </div>
+                    `
+                    : "";
+
 
                 opereHTML.push(`
 
                     <div class="opera">
+
+                        ${personajeInstagramHTML}
 
                         <h4>
                             📖 ${escapeHTML(opera.titlu)}
@@ -2862,6 +3004,44 @@ async function deschidePDF(pdfUrl) {
 
     }
 
+}
+
+async function descarcaRezumatWord(wordUrl) {
+
+    const cale = obtineCalePDF(wordUrl);
+
+    if (!cale) {
+        alert("Rezumatul Word nu există.");
+        return;
+    }
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .createSignedUrl(
+                    cale,
+                    60 * 60,
+                    { download: true }
+                );
+
+        if (error || !data || !data.signedUrl) {
+            throw error || new Error("Nu s-a putut genera linkul de descărcare.");
+        }
+
+        const link = document.createElement("a");
+        link.href = data.signedUrl;
+        link.download = "rezumat.docx";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+    } catch (error) {
+        console.error("Eroare descărcare rezumat Word:", error);
+        alert("Nu am putut descărca rezumatul Word.");
+    }
 }
 
 
@@ -3288,6 +3468,34 @@ async function adaugaOpera() {
             .getElementById("operaCaracterizare")
             .files[0];
 
+    const rezumatWord =
+        document
+            .getElementById("operaRezumatWord")
+            .files[0];
+
+    const linkFilm =
+        document
+            .getElementById("operaLinkFilm")
+            .value
+            .trim();
+
+    const linkAudiobook =
+        document
+            .getElementById("operaLinkAudiobook")
+            .value
+            .trim();
+
+    const linkTestLectura =
+        document
+            .getElementById("operaLinkTestLectura")
+            .value
+            .trim();
+
+    const personajeInstagram =
+        document
+            .getElementById("operaPersonajeInstagram")
+            .files[0];
+
 
     const status =
         document.getElementById(
@@ -3321,20 +3529,43 @@ async function adaugaOpera() {
     }
 
 
-    if (
-        !rezumat &&
-        !valoriMorale &&
-        !caracterizare
-    ) {
+    const areResursa = [
+        rezumat,
+        valoriMorale,
+        caracterizare,
+        rezumatWord,
+        linkFilm,
+        linkAudiobook,
+        linkTestLectura,
+        personajeInstagram
+    ].some(Boolean);
+
+    if (!areResursa) {
 
         status.textContent =
-            "Selectează cel puțin un PDF.";
+            "Adaugă cel puțin o resursă pentru operă.";
 
         status.style.color =
             "#c62828";
 
         return;
 
+    }
+
+    const linkuriExterne = [
+        linkFilm,
+        linkAudiobook,
+        linkTestLectura
+    ];
+
+    if (linkuriExterne.some(link => link && !/^https?:\/\//i.test(link))) {
+        status.textContent =
+            "Linkurile trebuie să înceapă cu http:// sau https://.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
     }
 
 
@@ -3356,6 +3587,7 @@ async function adaugaOpera() {
 
 
     const fisiereIncarcate = [];
+    const imaginiIncarcate = [];
 
 
     try {
@@ -3467,6 +3699,97 @@ async function adaugaOpera() {
                 "caracterizare"
             );
 
+        let caleRezumatWord = null;
+
+        if (rezumatWord) {
+
+            if (
+                !rezumatWord.name
+                    .toLowerCase()
+                    .endsWith(".docx") &&
+                !rezumatWord.name
+                    .toLowerCase()
+                    .endsWith(".doc")
+            ) {
+                throw new Error("Rezumatul Word trebuie să fie .doc sau .docx.");
+            }
+
+            const numeWord =
+                rezumatWord.name
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+            caleRezumatWord =
+                `${autorId}/${Date.now()}_rezumat_word_${numeWord}`;
+
+            const { error: wordError } =
+                await supabaseClient
+                    .storage
+                    .from(BUCKET)
+                    .upload(
+                        caleRezumatWord,
+                        rezumatWord,
+                        {
+                            contentType:
+                                rezumatWord.type ||
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                            upsert: false
+                        }
+                    );
+
+            if (wordError) {
+                throw wordError;
+            }
+
+            fisiereIncarcate.push(caleRezumatWord);
+        }
+
+        let pozaPersonajeUrl = null;
+
+        if (personajeInstagram) {
+
+            if (!personajeInstagram.type.startsWith("image/")) {
+                throw new Error("Imaginea personajelor nu este validă.");
+            }
+
+            const extensieImagine =
+                personajeInstagram.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+            const caleImaginePersonaje =
+                `personaje/${Date.now()}_${autorId}.${extensieImagine}`;
+
+            const { error: imagineError } =
+                await supabaseClient
+                    .storage
+                    .from(IMAGINI_BUCKET)
+                    .upload(
+                        caleImaginePersonaje,
+                        personajeInstagram,
+                        {
+                            contentType: personajeInstagram.type,
+                            upsert: false
+                        }
+                    );
+
+            if (imagineError) {
+                throw imagineError;
+            }
+
+            imaginiIncarcate.push(caleImaginePersonaje);
+
+            const { data: imagineData } =
+                supabaseClient
+                    .storage
+                    .from(IMAGINI_BUCKET)
+                    .getPublicUrl(caleImaginePersonaje);
+
+            pozaPersonajeUrl = imagineData.publicUrl;
+        }
+
 
         // Salvăm URL-uri interne compatibile cu
         // deschiderea prin URL semnat.
@@ -3508,7 +3831,24 @@ async function adaugaOpera() {
                             pdfValoriMorale,
 
                         pdf_caracterizare:
-                            pdfCaracterizare
+                            pdfCaracterizare,
+
+                        rezumat_word:
+                            caleRezumatWord
+                                ? `storage://${BUCKET}/${caleRezumatWord}`
+                                : null,
+
+                        link_film:
+                            linkFilm || null,
+
+                        link_audiobook:
+                            linkAudiobook || null,
+
+                        link_test_lectura:
+                            linkTestLectura || null,
+
+                        personaje_instagram:
+                            pozaPersonajeUrl
                     }
                 ]);
 
@@ -3561,6 +3901,36 @@ async function adaugaOpera() {
             )
             .value = "";
 
+        document
+            .getElementById(
+                "operaRezumatWord"
+            )
+            .value = "";
+
+        document
+            .getElementById(
+                "operaLinkFilm"
+            )
+            .value = "";
+
+        document
+            .getElementById(
+                "operaLinkAudiobook"
+            )
+            .value = "";
+
+        document
+            .getElementById(
+                "operaLinkTestLectura"
+            )
+            .value = "";
+
+        document
+            .getElementById(
+                "operaPersonajeInstagram"
+            )
+            .value = "";
+
 
         await incarcaOpereAdmin();
         await incarcaListaPDF();
@@ -3585,6 +3955,15 @@ async function adaugaOpera() {
                 .remove(
                     fisiereIncarcate
                 );
+
+        }
+
+        if (imaginiIncarcate.length > 0) {
+
+            await supabaseClient
+                .storage
+                .from(IMAGINI_BUCKET)
+                .remove(imaginiIncarcate);
 
         }
 
@@ -3692,15 +4071,15 @@ async function incarcaAutoriAdmin() {
     }
 
 
-   const {
-    data: autori,
-    error
-} = await supabaseClient
-    .from("autori")
-    .select("*")
-    .order("nume", {
-        ascending: true
-    });
+    const {
+        data: autori,
+        error
+    } = await supabaseClient
+        .from("autori")
+        .select("*")
+        .order("nume", {
+            ascending: true
+        });
 
     if (error) {
 
@@ -3957,10 +4336,10 @@ async function incarcaOpereAdmin() {
                             Autor:
                             <b>
                                 ${escapeHTML(
-                                    autor
-                                        ? autor.nume
-                                        : "Necunoscut"
-                                )}
+                    autor
+                        ? autor.nume
+                        : "Necunoscut"
+                )}
                             </b>
                         </p>
 
@@ -3972,9 +4351,9 @@ async function incarcaOpereAdmin() {
                         <p>
                             Rezumat:
                             ${opera.pdf
-                                ? "✔ Există"
-                                : "✖ Lipsește"
-                            }
+                        ? "✔ Există"
+                        : "✖ Lipsește"
+                    }
                         </p>
 
                         <input
@@ -4003,9 +4382,9 @@ async function incarcaOpereAdmin() {
                         <p>
                             Valori morale:
                             ${opera.pdf_valori_morale
-                                ? "✔ Există"
-                                : "✖ Lipsește"
-                            }
+                        ? "✔ Există"
+                        : "✖ Lipsește"
+                    }
                         </p>
 
                         <input
@@ -4034,9 +4413,9 @@ async function incarcaOpereAdmin() {
                         <p>
                             Caracterizare:
                             ${opera.pdf_caracterizare
-                                ? "✔ Există"
-                                : "✖ Lipsește"
-                            }
+                        ? "✔ Există"
+                        : "✖ Lipsește"
+                    }
                         </p>
 
                         <input
@@ -4056,6 +4435,34 @@ async function incarcaOpereAdmin() {
                             👤 Înlocuiește caracterizarea
 
                         </button>
+
+                        <p>
+                            Rezumat Word:
+                            ${opera.rezumat_word
+                        ? "✔ Există"
+                        : "✖ Lipsește"
+                    }
+                        </p>
+
+                        <p>
+                            Film:
+                            ${opera.link_film ? "✔ Există" : "✖ Lipsește"}
+                        </p>
+
+                        <p>
+                            Audiobook:
+                            ${opera.link_audiobook ? "✔ Există" : "✖ Lipsește"}
+                        </p>
+
+                        <p>
+                            Test de lectură:
+                            ${opera.link_test_lectura ? "✔ Există" : "✖ Lipsește"}
+                        </p>
+
+                        <p>
+                            Imagine Instagram personaje:
+                            ${opera.personaje_instagram ? "✔ Există" : "✖ Lipsește"}
+                        </p>
 
 
                         <div
@@ -5124,6 +5531,9 @@ async function afiseazaAdmin(user) {
             "adminUser"
         );
 
+    const adminLink =
+        document.getElementById("adminLink");
+
 
     if (
         !panel ||
@@ -5139,10 +5549,23 @@ async function afiseazaAdmin(user) {
 
     if (role !== "admin") {
         panel.classList.add("ascuns");
+
+        if (adminLink) {
+            adminLink.classList.add("ascuns");
+        }
+
+        if (estePaginaAdmin) {
+            window.location.replace("index.html");
+        }
+
         return;
     }
 
-    panel.classList.remove("ascuns");
+    panel.classList.toggle("ascuns", !estePaginaAdmin);
+
+    if (adminLink) {
+        adminLink.classList.remove("ascuns");
+    }
 
 
     adminUser.textContent =
@@ -5182,6 +5605,10 @@ async function logoutUtilizator() {
 
         document.getElementById("adminPanel").classList.add("ascuns");
         actualizeazaStareDelogata();
+
+        if (estePaginaAdmin) {
+            window.location.replace("index.html");
+        }
 
 
     } catch (error) {
@@ -5286,6 +5713,10 @@ async function verificaSesiunea() {
 
             actualizeazaStareDelogata();
 
+            if (estePaginaAdmin) {
+                window.location.replace("index.html");
+            }
+
         }
 
 
@@ -5337,6 +5768,17 @@ supabaseClient.auth.onAuthStateChange(
                     "ascuns"
                 );
 
+            }
+
+            const adminLink =
+                document.getElementById("adminLink");
+
+            if (adminLink) {
+                adminLink.classList.add("ascuns");
+            }
+
+            if (estePaginaAdmin) {
+                window.location.replace("index.html");
             }
 
         }
