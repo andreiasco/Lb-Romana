@@ -74,6 +74,56 @@ nav {
 
     gap: 15px;
     flex-wrap: wrap;
+    position: relative;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.account-menu {
+    position: absolute;
+    top: 9px;
+    right: 15px;
+    z-index: 2;
+}
+
+.account-menu summary {
+    list-style: none;
+    padding: 8px 11px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 16px;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.account-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.account-menu summary:hover,
+.account-menu[open] summary {
+    background: #7b2450;
+}
+
+.account-actions {
+    display: flex;
+    min-width: 190px;
+    margin-top: 8px;
+    padding: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    background: #35152a;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.25);
 }
 
 nav a {
@@ -101,6 +151,31 @@ nav button {
 
 nav button:hover {
     background: #a8446c;
+}
+
+.auth-status {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.auth-status.signed-in {
+    color: #b9f2c3;
+}
+
+.account-actions .auth-status {
+    padding: 3px 2px 7px;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.theme-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.45);
+}
+
+.theme-btn:hover {
+    background: rgba(255,255,255,.12);
 }
 
 
@@ -676,6 +751,41 @@ body.dark .status-cont {
     font-weight: bold;
 }
 
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #7b2450;
+    border-radius: 8px;
+    background: white;
+    color: #7b2450;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.auth-tab.activ {
+    background: #7b2450;
+    color: white;
+}
+
+.auth-form.ascuns {
+    display: none;
+}
+
+.auth-form select {
+    width: 100%;
+    padding: 13px;
+    margin: 7px 0;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
 
 /* ======================================================
    ADMIN
@@ -913,6 +1023,22 @@ body.dark .pdf-item {
 
 @media(max-width:700px) {
 
+    nav {
+        padding: 12px 10px 58px;
+    }
+
+    .account-menu {
+        top: auto;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .account-actions {
+        position: absolute;
+        right: 0;
+        bottom: 38px;
+    }
+
     .quizuri {
         grid-template-columns: 1fr;
     }
@@ -944,19 +1070,33 @@ body.dark .pdf-item {
 
 <nav>
 
-    <a href="#acasa">Acasă</a>
-    <a href="#limba">Limba română</a>
-    <a href="#literatura">Literatura română</a>
-    <a href="#quiz">Quiz-uri</a>
-    <a href="#revista">Revista</a>
+    <div class="nav-links">
+        <a href="#acasa">Acasă</a>
+        <a href="#limba">Limba română</a>
+        <a href="#literatura">Literatura română</a>
+        <a href="#quiz">Quiz-uri</a>
+        <a href="#revista">Revista</a>
+    </div>
 
-    <button onclick="schimbaTema()">
-        🌙 Mod întunecat
-    </button>
+    <details class="account-menu">
+        <summary>⚙️ Cont</summary>
 
-    <button onclick="afiseazaLogin()">
-        🔐 Logare admin
-    </button>
+        <div class="account-actions">
+        <span id="authStatus" class="auth-status">Signed out</span>
+
+        <button onclick="afiseazaLogin()">
+            🔐 Logare / Register
+        </button>
+
+        <button id="logoutButton" class="ascuns" onclick="logoutUtilizator()">
+            🚪 Deconectare
+        </button>
+
+        <button class="theme-btn" onclick="schimbaTema()">
+            🌙 Mod întunecat
+        </button>
+        </div>
+    </details>
 
 </nav>
 
@@ -1697,40 +1837,31 @@ body.dark .pdf-item {
 
         </button>
 
-        <h2>
-            🔐 Logare administrator
-        </h2>
+        <h2>🔐 Contul tău</h2>
 
-        <p>
-            Introdu datele contului de administrator.
-        </p>
+        <div class="auth-tabs">
+            <button id="loginTab" class="auth-tab activ" onclick="schimbaAuthForm('login')">Logare</button>
+            <button id="registerTab" class="auth-tab" onclick="schimbaAuthForm('register')">Register</button>
+        </div>
 
-        <input
-            type="email"
-            id="loginEmail"
-            placeholder="Email">
+        <div id="loginForm" class="auth-form">
+            <p>Intră în contul tău.</p>
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Parolă">
+            <button class="login-btn" onclick="loginUtilizator()">🔐 Logare</button>
+            <button class="login-btn reset-btn" type="button" onclick="reseteazaParola()">🔑 Am uitat parola</button>
+        </div>
 
-        <input
-            type="password"
-            id="loginPassword"
-            placeholder="Parolă">
-
-        <button
-            class="login-btn"
-            onclick="loginAdmin()">
-
-            🔐 Intră în panou
-
-        </button>
-
-        <button
-            class="login-btn reset-btn"
-            type="button"
-            onclick="reseteazaParola()">
-
-            🔑 Am uitat parola
-
-        </button>
+        <div id="registerForm" class="auth-form ascuns">
+            <p>Creează un cont de profesor sau elev.</p>
+            <input type="email" id="registerEmail" placeholder="Email">
+            <input type="password" id="registerPassword" placeholder="Parolă (minimum 6 caractere)">
+            <select id="registerRole">
+                <option value="elev">Elev</option>
+                <option value="profesor">Profesor</option>
+            </select>
+            <button class="login-btn" onclick="inregistreazaUtilizator()">📝 Creează cont</button>
+        </div>
 
         <p id="loginMesaj"></p>
 
@@ -3870,10 +4001,22 @@ function inchideLogin() {
 
 
 // ======================================================
-// LOGIN ADMIN
+// LOGIN ȘI REGISTER
 // ======================================================
 
-async function loginAdmin() {
+function schimbaAuthForm(formular) {
+
+    const esteRegister = formular === "register";
+
+    document.getElementById("loginForm").classList.toggle("ascuns", esteRegister);
+    document.getElementById("registerForm").classList.toggle("ascuns", !esteRegister);
+    document.getElementById("loginTab").classList.toggle("activ", !esteRegister);
+    document.getElementById("registerTab").classList.toggle("activ", esteRegister);
+    document.getElementById("loginMesaj").textContent = "";
+
+}
+
+async function loginUtilizator() {
 
     const email =
         document
@@ -3958,9 +4101,7 @@ async function loginAdmin() {
 
         inchideLogin();
 
-        afiseazaAdmin(
-            data.user
-        );
+        actualizeazaStareAutentificare(data.user);
 
 
     } catch (error) {
@@ -3977,6 +4118,61 @@ async function loginAdmin() {
             "#c62828";
 
     }
+}
+
+async function inregistreazaUtilizator() {
+
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const role = document.getElementById("registerRole").value;
+    const mesaj = document.getElementById("loginMesaj");
+
+    if (!email || !password || !["elev", "profesor"].includes(role)) {
+        mesaj.textContent = "Completează toate câmpurile și alege un rol valid.";
+        mesaj.style.color = "#c62828";
+        return;
+    }
+
+    if (password.length < 6) {
+        mesaj.textContent = "Parola trebuie să aibă minimum 6 caractere.";
+        mesaj.style.color = "#c62828";
+        return;
+    }
+
+    mesaj.textContent = "Se creează contul...";
+    mesaj.style.color = "#7b2450";
+
+    try {
+        const { data, error } = await supabaseClient.auth.signUp({
+            email,
+            password,
+            options: {
+                data: {
+                    role
+                }
+            }
+        });
+
+        if (error) {
+            throw error;
+        }
+
+        if (data.session && data.user) {
+            inchideLogin();
+            actualizeazaStareAutentificare(data.user);
+        } else {
+            mesaj.textContent = "Cont creat. Verifică emailul pentru confirmare, apoi conectează-te.";
+            mesaj.style.color = "#2e7d32";
+        }
+    } catch (error) {
+        console.error("Register error:", error);
+        mesaj.textContent = "Nu am putut crea contul: " + error.message;
+        mesaj.style.color = "#c62828";
+    }
+}
+
+function loginAdmin() {
+    return loginUtilizator();
 }
 
 
@@ -4073,7 +4269,53 @@ async function reseteazaParola() {
 // AFIȘEAZĂ ADMIN
 // ======================================================
 
-function afiseazaAdmin(user) {
+async function obtineRolUtilizator(user) {
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .maybeSingle();
+
+    if (error) {
+        console.error("Profile error:", error);
+        return null;
+    }
+
+    return data ? data.role : null;
+}
+
+function actualizeazaStareAutentificare(user) {
+
+    const status = document.getElementById("authStatus");
+    const logoutButton = document.getElementById("logoutButton");
+
+    if (!status || !logoutButton) {
+        return;
+    }
+
+    status.textContent = "Signed in: " + (user.email || "utilizator");
+    status.classList.add("signed-in");
+    logoutButton.classList.remove("ascuns");
+
+}
+
+function actualizeazaStareDelogata() {
+
+    const status = document.getElementById("authStatus");
+    const logoutButton = document.getElementById("logoutButton");
+
+    if (!status || !logoutButton) {
+        return;
+    }
+
+    status.textContent = "Signed out";
+    status.classList.remove("signed-in");
+    logoutButton.classList.add("ascuns");
+
+}
+
+async function afiseazaAdmin(user) {
 
     const panel =
         document.getElementById(
@@ -4097,9 +4339,14 @@ function afiseazaAdmin(user) {
     }
 
 
-    panel.classList.remove(
-        "ascuns"
-    );
+    const role = await obtineRolUtilizator(user);
+
+    if (role !== "admin") {
+        panel.classList.add("ascuns");
+        return;
+    }
+
+    panel.classList.remove("ascuns");
 
 
     adminUser.textContent =
@@ -4119,7 +4366,7 @@ function afiseazaAdmin(user) {
 // LOGOUT
 // ======================================================
 
-async function logoutAdmin() {
+async function logoutUtilizator() {
 
     try {
 
@@ -4137,13 +4384,8 @@ async function logoutAdmin() {
         }
 
 
-        document
-            .getElementById(
-                "adminPanel"
-            )
-            .classList.add(
-                "ascuns"
-            );
+        document.getElementById("adminPanel").classList.add("ascuns");
+        actualizeazaStareDelogata();
 
 
     } catch (error) {
@@ -4157,6 +4399,10 @@ async function logoutAdmin() {
         );
 
     }
+}
+
+function logoutAdmin() {
+    return logoutUtilizator();
 }
 
 
@@ -4195,7 +4441,14 @@ async function utilizatorAutentificat() {
     }
 
 
-    return data.session.user;
+    const user = data.session.user;
+    const role = await obtineRolUtilizator(user);
+
+    if (role !== "admin") {
+        return null;
+    }
+
+    return user;
 }
 
 
@@ -4227,9 +4480,15 @@ async function verificaSesiunea() {
             data.session
         ) {
 
+            actualizeazaStareAutentificare(data.session.user);
+
             afiseazaAdmin(
                 data.session.user
             );
+
+        } else {
+
+            actualizeazaStareDelogata();
 
         }
 
@@ -4260,11 +4519,15 @@ supabaseClient.auth.onAuthStateChange(
 
         if (session) {
 
+            actualizeazaStareAutentificare(session.user);
+
             afiseazaAdmin(
                 session.user
             );
 
         } else {
+
+            actualizeazaStareDelogata();
 
             const panel =
                 document.getElementById(
@@ -4351,6 +4614,13 @@ function afiseazaPagina(hash = window.location.hash) {
     };
 
     const paginaId = pagini[ancora] || "pagina-acasa";
+    const esteRutaPrincipala = [
+        "acasa",
+        "limba",
+        "literatura",
+        "quiz",
+        "revista"
+    ].includes(ancora);
 
     document.querySelectorAll(".pagina").forEach(
         pagina => pagina.classList.toggle(
@@ -4361,7 +4631,7 @@ function afiseazaPagina(hash = window.location.hash) {
 
     const element = document.getElementById(ancora);
 
-    if (element && ancora !== "acasa") {
+    if (element && !esteRutaPrincipala) {
         window.requestAnimationFrame(
             () => element.scrollIntoView({ behavior: "smooth" })
         );
