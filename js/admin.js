@@ -1345,25 +1345,107 @@ async function incarcaOpereAdmin() {
                     }
                         </p>
 
+                        <input
+                            type="file"
+                            id="rezumatWord-${opera.id}"
+                            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiesteFisierOpera(
+                                ${opera.id},
+                                'rezumat_word',
+                                'rezumatWord-${opera.id}',
+                                'Pdf',
+                                'word'
+                            )">
+
+                            📄 Înlocuiește rezumatul Word
+
+                        </button>
+
                         <p>
                             Film:
                             ${opera.link_film ? "✔ Există" : "✖ Lipsește"}
                         </p>
+
+                        <input
+                            type="url"
+                            id="linkFilm-${opera.id}"
+                            placeholder="https://...">
+
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiesteLinkOpera(${opera.id}, 'link_film', 'linkFilm-${opera.id}')">
+
+                            🎬 Înlocuiește linkul filmului
+
+                        </button>
 
                         <p>
                             Audiobook:
                             ${opera.link_audiobook ? "✔ Există" : "✖ Lipsește"}
                         </p>
 
+                        <input
+                            type="url"
+                            id="linkAudiobook-${opera.id}"
+                            placeholder="https://...">
+
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiesteLinkOpera(${opera.id}, 'link_audiobook', 'linkAudiobook-${opera.id}')">
+
+                            🎧 Înlocuiește linkul audiobookului
+
+                        </button>
+
                         <p>
                             Test de lectură:
                             ${opera.link_test_lectura ? "✔ Există" : "✖ Lipsește"}
                         </p>
 
+                        <input
+                            type="url"
+                            id="linkTestLectura-${opera.id}"
+                            placeholder="https://...">
+
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiesteLinkOpera(${opera.id}, 'link_test_lectura', 'linkTestLectura-${opera.id}')">
+
+                            📝 Înlocuiește linkul testului
+
+                        </button>
+
                         <p>
                             Imagine Instagram personaje:
                             ${opera.personaje_instagram ? "✔ Există" : "✖ Lipsește"}
                         </p>
+
+                        <input
+                            type="file"
+                            id="personajeInstagram-${opera.id}"
+                            accept="image/*">
+
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiesteFisierOpera(
+                                ${opera.id},
+                                'personaje_instagram',
+                                'personajeInstagram-${opera.id}',
+                                'Imagini',
+                                'personaje'
+                            )">
+
+                            📸 Înlocuiește imaginea Instagram
+
+                        </button>
 
 
                         <div
@@ -1681,6 +1763,237 @@ async function inlocuiestePDF(
                 "#c62828";
         }
 
+    }
+}
+
+function obtineCaleResursa(valoare, bucket) {
+
+    if (!valoare) {
+        return null;
+    }
+
+    const referintaStorage = `storage://${bucket}/`;
+
+    if (valoare.startsWith(referintaStorage)) {
+        return decodeURIComponent(
+            valoare.substring(referintaStorage.length)
+        );
+    }
+
+    const markerPublic = `/storage/v1/object/public/${bucket}/`;
+    const indexPublic = valoare.indexOf(markerPublic);
+
+    if (indexPublic !== -1) {
+        return decodeURIComponent(
+            valoare.substring(indexPublic + markerPublic.length)
+        );
+    }
+
+    return null;
+}
+
+async function inlocuiesteFisierOpera(
+    operaId,
+    coloana,
+    inputId,
+    bucket,
+    tipFisier
+) {
+
+    const coloanePermise = [
+        "rezumat_word",
+        "personaje_instagram"
+    ];
+
+    if (!coloanePermise.includes(coloana)) {
+        alert("Resursa nu este permisă.");
+        return;
+    }
+
+    const input = document.getElementById(inputId);
+    const status = document.getElementById(`inlocuireStatus-${operaId}`);
+    const fisier = input && input.files[0];
+
+    if (!fisier) {
+        status.textContent = "Selectează un fișier.";
+        status.style.color = "#c62828";
+        return;
+    }
+
+    const esteWord = tipFisier === "word";
+    const extensieValida = esteWord
+        ? /\.(doc|docx)$/i.test(fisier.name)
+        : fisier.type.startsWith("image/");
+
+    if (!extensieValida) {
+        status.textContent = esteWord
+            ? "Fișierul trebuie să fie .doc sau .docx."
+            : "Fișierul selectat nu este o imagine validă.";
+        status.style.color = "#c62828";
+        return;
+    }
+
+    const user = await utilizatorAutentificat();
+
+    if (!user) {
+        status.textContent = "Trebuie să fii administrator.";
+        status.style.color = "#c62828";
+        return;
+    }
+
+    let caleNoua = null;
+
+    try {
+
+        status.textContent = "Se încarcă noul fișier...";
+        status.style.color = "#7b2450";
+
+        const { data: opera, error: operaError } =
+            await supabaseClient
+                .from("opere")
+                .select(coloana + ", autor_id")
+                .eq("id", operaId)
+                .single();
+
+        if (operaError) {
+            throw operaError;
+        }
+
+        const numeCurat = fisier.name
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+        caleNoua = tipFisier === "word"
+            ? `${opera.autor_id}/${Date.now()}_rezumat_word_${numeCurat}`
+            : `personaje/${Date.now()}_${opera.autor_id}_${numeCurat}`;
+
+        const { error: uploadError } =
+            await supabaseClient
+                .storage
+                .from(bucket)
+                .upload(caleNoua, fisier, {
+                    contentType: fisier.type || (
+                        esteWord
+                            ? "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                            : "image/png"
+                    ),
+                    upsert: false
+                });
+
+        if (uploadError) {
+            throw uploadError;
+        }
+
+        const valoareNoua = tipFisier === "word"
+            ? `storage://${bucket}/${caleNoua}`
+            : supabaseClient
+                .storage
+                .from(bucket)
+                .getPublicUrl(caleNoua)
+                .data
+                .publicUrl;
+
+        const { error: updateError } =
+            await supabaseClient
+                .from("opere")
+                .update({ [coloana]: valoareNoua })
+                .eq("id", operaId);
+
+        if (updateError) {
+            await supabaseClient.storage.from(bucket).remove([caleNoua]);
+            throw updateError;
+        }
+
+        const caleVeche = obtineCaleResursa(opera[coloana], bucket);
+
+        if (caleVeche) {
+            const { error: deleteError } =
+                await supabaseClient
+                    .storage
+                    .from(bucket)
+                    .remove([caleVeche]);
+
+            if (deleteError) {
+                console.warn("Noua resursă a fost salvată, dar cea veche nu a putut fi ștearsă:", deleteError);
+            }
+        }
+
+        input.value = "";
+        status.textContent = "Resursa a fost înlocuită cu succes!";
+        status.style.color = "#2e7d32";
+
+        await incarcaOpereAdmin();
+        await incarcaAutori();
+
+    } catch (error) {
+
+        if (caleNoua) {
+            await supabaseClient.storage.from(bucket).remove([caleNoua]);
+        }
+
+        console.error("Eroare înlocuire resursă:", error);
+        status.textContent = "Nu am putut înlocui resursa: " + error.message;
+        status.style.color = "#c62828";
+    }
+}
+
+async function inlocuiesteLinkOpera(operaId, coloana, inputId) {
+
+    const coloanePermise = [
+        "link_film",
+        "link_audiobook",
+        "link_test_lectura"
+    ];
+
+    if (!coloanePermise.includes(coloana)) {
+        alert("Linkul nu este permis.");
+        return;
+    }
+
+    const input = document.getElementById(inputId);
+    const status = document.getElementById(`inlocuireStatus-${operaId}`);
+    const valoare = input && input.value.trim();
+
+    if (!valoare || !/^https?:\/\//i.test(valoare)) {
+        status.textContent = "Introdu un link care începe cu http:// sau https://.";
+        status.style.color = "#c62828";
+        return;
+    }
+
+    const user = await utilizatorAutentificat();
+
+    if (!user) {
+        status.textContent = "Trebuie să fii administrator.";
+        status.style.color = "#c62828";
+        return;
+    }
+
+    try {
+
+        status.textContent = "Se salvează noul link...";
+        status.style.color = "#7b2450";
+
+        const { error } = await supabaseClient
+            .from("opere")
+            .update({ [coloana]: valoare })
+            .eq("id", operaId);
+
+        if (error) {
+            throw error;
+        }
+
+        input.value = "";
+        status.textContent = "Linkul a fost înlocuit cu succes!";
+        status.style.color = "#2e7d32";
+
+        await incarcaOpereAdmin();
+        await incarcaAutori();
+
+    } catch (error) {
+        console.error("Eroare înlocuire link:", error);
+        status.textContent = "Nu am putut înlocui linkul: " + error.message;
+        status.style.color = "#c62828";
     }
 }
 
