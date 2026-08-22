@@ -1251,8 +1251,6 @@ body.dark .pdf-item {
 
     </div>
 
-
-</div>
     <details class="account-menu">
         <summary>⚙️ Cont</summary>
 
