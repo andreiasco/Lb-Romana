@@ -822,9 +822,6 @@ body.dark .pdf-item {
     <a href="#acasa">Acasă</a>
     <a href="#limba">Limba română</a>
     <a href="#literatura">Literatura</a>
-    <a href="#poezie">Poezie</a>
-    <a href="#proza">Proză</a>
-    <a href="#teatru">Teatru</a>
     <a href="#materiale">Materiale</a>
     <a href="#quiz">Quiz-uri</a>
 
@@ -1312,7 +1309,7 @@ body.dark .pdf-item {
             accept="application/pdf">
 
         <label>
-            👤 Caracterizarea personajelor PDF
+            👤 Personaje si semnificatii PDF
         </label>
 
         <input
@@ -1736,7 +1733,7 @@ async function incarcaAutori() {
                             type="button"
                             onclick='deschidePDF(${JSON.stringify(opera.pdf_caracterizare)})'>
 
-                            👤 Caracterizarea personajelor
+                            👤 Personaje si semnificatii
 
                         </button>
 
