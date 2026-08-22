@@ -3420,166 +3420,488 @@ async function actualizeazaDescriereAutor(autorId) {
 async function incarcaOpereAdmin() {
 
     const container =
-        document.getElementById(
-            "listaOpereAdmin"
-        );
-
+        document.getElementById("listaOpereAdmin");
 
     if (!container) {
         return;
     }
-
 
     try {
 
         const {
             data: opere,
             error: eroareOpere
-        } =
-            await supabaseClient
-                .from("opere")
-                .select("*")
-                .order(
-                    "titlu",
-                    {
-                        ascending: true
-                    }
-                );
-
+        } = await supabaseClient
+            .from("opere")
+            .select("*")
+            .order("titlu", {
+                ascending: true
+            });
 
         if (eroareOpere) {
-
             throw eroareOpere;
-
         }
-
 
         const {
             data: autori,
             error: eroareAutori
-        } =
-            await supabaseClient
-                .from("autori")
-                .select(
-                    "id, initiale, nume"
-                );
-
+        } = await supabaseClient
+            .from("autori")
+            .select("id, initiale, nume");
 
         if (eroareAutori) {
-
             throw eroareAutori;
-
         }
 
-
-        if (
-            !opere ||
-            opere.length === 0
-        ) {
+        if (!opere || opere.length === 0) {
 
             container.innerHTML =
                 "<p>Nu există opere.</p>";
 
             return;
-
         }
 
-
         container.innerHTML =
-            opere.map(
-                opera => {
+            opere.map(opera => {
 
-                    const autor =
-                        (autori || []).find(
-                            a =>
-                                String(a.id) ===
-                                String(
-                                    opera.autor_id
-                                )
-                        );
+                const autor =
+                    (autori || []).find(
+                        a =>
+                            String(a.id) ===
+                            String(opera.autor_id)
+                    );
+
+                return `
+
+                    <div class="admin-opera">
+
+                        <strong>
+                            📖 ${escapeHTML(opera.titlu)}
+                        </strong>
+
+                        <p>
+                            Autor:
+                            <b>
+                                ${escapeHTML(
+                                    autor
+                                        ? autor.nume
+                                        : "Necunoscut"
+                                )}
+                            </b>
+                        </p>
 
 
-                    return `
+                        <!-- =========================
+                             REZUMAT
+                        ========================== -->
 
-                        <div class="admin-opera">
+                        <p>
+                            Rezumat:
+                            ${opera.pdf
+                                ? "✔ Există"
+                                : "✖ Lipsește"
+                            }
+                        </p>
 
-                            <strong>
-                                📖 ${escapeHTML(
-                        opera.titlu
-                    )}
-                            </strong>
+                        <input
+                            type="file"
+                            id="pdfRezumat-${opera.id}"
+                            accept="application/pdf">
 
-                            <p>
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiestePDF(
+                                ${opera.id},
+                                'pdf',
+                                'pdfRezumat-${opera.id}'
+                            )">
 
-                                Autor:
+                            📕 Înlocuiește rezumatul
 
-                                <b>
-                                    ${escapeHTML(
-                        autor
-                            ? autor.nume
-                            : "Necunoscut"
-                    )}
-                                </b>
+                        </button>
 
-                            </p>
 
-                            <p>
+                        <!-- =========================
+                             VALORI MORALE
+                        ========================== -->
 
-                                Rezumat:
-                                ${opera.pdf
-                            ? "✔ Există"
-                            : "✖ Lipsește"
-                        }
+                        <p>
+                            Valori morale:
+                            ${opera.pdf_valori_morale
+                                ? "✔ Există"
+                                : "✖ Lipsește"
+                            }
+                        </p>
 
-                                <br>
+                        <input
+                            type="file"
+                            id="pdfValori-${opera.id}"
+                            accept="application/pdf">
 
-                                Valori morale:
-                                ${opera.pdf_valori_morale
-                            ? "✔ Există"
-                            : "✖ Lipsește"
-                        }
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiestePDF(
+                                ${opera.id},
+                                'pdf_valori_morale',
+                                'pdfValori-${opera.id}'
+                            )">
 
-                                <br>
+                            ❤️ Înlocuiește valorile morale
 
-                                Caracterizare:
-                                ${opera.pdf_caracterizare
-                            ? "✔ Există"
-                            : "✖ Lipsește"
-                        }
+                        </button>
 
-                            </p>
 
-                            <button
-                                class="admin-btn sterge-opera-btn"
-                                type="button"
-                                onclick="stergeOpera(${opera.id})">
+                        <!-- =========================
+                             CARACTERIZARE
+                        ========================== -->
 
-                                🗑️ Șterge opera
+                        <p>
+                            Caracterizare:
+                            ${opera.pdf_caracterizare
+                                ? "✔ Există"
+                                : "✖ Lipsește"
+                            }
+                        </p>
 
-                            </button>
+                        <input
+                            type="file"
+                            id="pdfCaracterizare-${opera.id}"
+                            accept="application/pdf">
 
+                        <button
+                            class="admin-btn"
+                            type="button"
+                            onclick="inlocuiestePDF(
+                                ${opera.id},
+                                'pdf_caracterizare',
+                                'pdfCaracterizare-${opera.id}'
+                            )">
+
+                            👤 Înlocuiește caracterizarea
+
+                        </button>
+
+
+                        <div
+                            id="inlocuireStatus-${opera.id}"
+                            class="admin-status">
                         </div>
 
-                    `;
 
-                }
-            )
-                .join("");
+                        <hr>
+
+
+                        <button
+                            class="admin-btn sterge-opera-btn"
+                            type="button"
+                            onclick="stergeOpera(${opera.id})">
+
+                            🗑️ Șterge opera
+
+                        </button>
+
+                    </div>
+
+                `;
+
+            }).join("");
 
 
     } catch (error) {
 
-        console.error(
-            error
-        );
+        console.error(error);
 
         container.innerHTML =
             `<p style="color:#c62828">
                 ${escapeHTML(error.message)}
             </p>`;
+    }
+}
+
+// ======================================================
+// ÎNLOCUIEȘTE UN PDF EXISTENT
+// ======================================================
+
+async function inlocuiestePDF(
+    operaId,
+    coloana,
+    inputId
+) {
+
+    const coloanePermise = [
+        "pdf",
+        "pdf_valori_morale",
+        "pdf_caracterizare"
+    ];
+
+    if (!coloanePermise.includes(coloana)) {
+
+        alert("Coloana PDF nu este permisă.");
+
+        return;
+    }
+
+
+    const input =
+        document.getElementById(inputId);
+
+    const status =
+        document.getElementById(
+            `inlocuireStatus-${operaId}`
+        );
+
+
+    if (!input || !input.files[0]) {
+
+        if (status) {
+            status.textContent =
+                "Selectează un fișier PDF.";
+            status.style.color =
+                "#c62828";
+        }
+
+        return;
+    }
+
+
+    const fisier =
+        input.files[0];
+
+
+    if (
+        fisier.type !== "application/pdf" &&
+        !fisier.name
+            .toLowerCase()
+            .endsWith(".pdf")
+    ) {
+
+        if (status) {
+            status.textContent =
+                "Fișierul selectat nu este PDF.";
+            status.style.color =
+                "#c62828";
+        }
+
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        if (status) {
+            status.textContent =
+                "Trebuie să fii administrator.";
+            status.style.color =
+                "#c62828";
+        }
+
+        return;
+    }
+
+
+    try {
+
+        if (status) {
+            status.textContent =
+                "Se încarcă noul PDF...";
+            status.style.color =
+                "#7b2450";
+        }
+
+
+        // ==================================================
+        // 1. OBȚINEM OPERA EXISTENTĂ
+        // ==================================================
+
+        const {
+            data: opera,
+            error: eroareOpera
+        } = await supabaseClient
+            .from("opere")
+            .select("*")
+            .eq("id", operaId)
+            .single();
+
+
+        if (eroareOpera) {
+            throw eroareOpera;
+        }
+
+
+        // ==================================================
+        // 2. PĂSTRĂM CALEA VECHIULUI PDF
+        // ==================================================
+
+        const valoareVeche =
+            opera[coloana];
+
+        const caleVeche =
+            obtineCalePDF(
+                valoareVeche
+            );
+
+
+        // ==================================================
+        // 3. NUME NOU PDF
+        // ==================================================
+
+        const numeCurat =
+            fisier.name
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                )
+                .replace(
+                    /[^a-zA-Z0-9._-]/g,
+                    "_"
+                );
+
+
+        const caleNoua =
+            `${opera.autor_id}/${Date.now()}_${coloana}_${numeCurat}`;
+
+
+        // ==================================================
+        // 4. UPLOAD NOUL PDF
+        // ==================================================
+
+        const {
+            error: uploadError
+        } = await supabaseClient
+            .storage
+            .from(BUCKET)
+            .upload(
+                caleNoua,
+                fisier,
+                {
+                    contentType:
+                        "application/pdf",
+
+                    upsert:
+                        false
+                }
+            );
+
+
+        if (uploadError) {
+            throw uploadError;
+        }
+
+
+        const valoareNoua =
+            `storage://${BUCKET}/${caleNoua}`;
+
+
+        // ==================================================
+        // 5. ACTUALIZĂM BAZA DE DATE
+        // ==================================================
+
+        const {
+            error: updateError
+        } = await supabaseClient
+            .from("opere")
+            .update({
+                [coloana]:
+                    valoareNoua
+            })
+            .eq(
+                "id",
+                operaId
+            );
+
+
+        // Dacă UPDATE-ul eșuează,
+        // ștergem noul fișier.
+        if (updateError) {
+
+            await supabaseClient
+                .storage
+                .from(BUCKET)
+                .remove([
+                    caleNoua
+                ]);
+
+            throw updateError;
+        }
+
+
+        // ==================================================
+        // 6. ȘTERGEM VECHIUL PDF
+        // ==================================================
+
+        if (caleVeche) {
+
+            const {
+                error: deleteOldError
+            } = await supabaseClient
+                .storage
+                .from(BUCKET)
+                .remove([
+                    caleVeche
+                ]);
+
+
+            if (deleteOldError) {
+
+                console.warn(
+                    "Noul PDF a fost salvat, dar vechiul PDF nu a putut fi șters:",
+                    deleteOldError
+                );
+
+            }
+        }
+
+
+        // ==================================================
+        // 7. SUCCES
+        // ==================================================
+
+        if (status) {
+
+            status.textContent =
+                "PDF-ul a fost înlocuit cu succes!";
+
+            status.style.color =
+                "#2e7d32";
+        }
+
+
+        input.value = "";
+
+
+        await incarcaOpereAdmin();
+        await incarcaListaPDF();
+        await incarcaAutori();
+
+
+    } catch (error) {
+
+        console.error(
+            "Eroare înlocuire PDF:",
+            error
+        );
+
+
+        if (status) {
+
+            status.textContent =
+                "Nu am putut înlocui PDF-ul: " +
+                error.message;
+
+            status.style.color =
+                "#c62828";
+        }
 
     }
 }
+
 
 
 // ======================================================
