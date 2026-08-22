@@ -1,0 +1,123 @@
+// INITIALIZARE
+// ======================================================
+
+function afiseazaPagina(hash = window.location.hash) {
+
+    const ancora = hash.replace("#", "") || "acasa";
+    const pagini = {
+        acasa: "pagina-acasa",
+        "despre-noi": "pagina-acasa",
+        functionalitati: "pagina-acasa",
+        "how-to": "pagina-acasa",
+        limba: "pagina-limba",
+        literatura: "pagina-literatura",
+        poezie: "pagina-literatura",
+        proza: "pagina-literatura",
+        teatru: "pagina-literatura",
+        quiz: "pagina-quiz",
+        revista: "pagina-revista"
+    };
+
+    const paginaId = pagini[ancora] || "pagina-acasa";
+    const esteRutaPrincipala = [
+        "acasa",
+        "limba",
+        "literatura",
+        "quiz",
+        "revista"
+    ].includes(ancora);
+
+    document.querySelectorAll(".pagina").forEach(
+        pagina => pagina.classList.toggle(
+            "activ",
+            pagina.id === paginaId
+        )
+    );
+
+    const element = document.getElementById(ancora);
+
+    if (element && !esteRutaPrincipala) {
+        window.requestAnimationFrame(
+            () => element.scrollIntoView({ behavior: "smooth" })
+        );
+    } else {
+        window.scrollTo(0, 0);
+    }
+}
+
+window.addEventListener("hashchange", () => afiseazaPagina());
+afiseazaPagina();
+
+incarcaAutori();
+
+verificaSesiunea();
+
+// ======================================================
+// INITIALIZARE CĂUTARE
+// ======================================================
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            cautaSite(
+                this.value
+            );
+
+        }
+    );
+
+}
+
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        const container =
+            document.querySelector(
+                ".search-container"
+            );
+
+        const results =
+            document.getElementById(
+                "searchResults"
+            );
+
+
+        if (
+            container &&
+            results &&
+            !container.contains(event.target)
+        ) {
+
+            results.classList.remove(
+                "activ"
+            );
+
+        }
+
+    }
+);
+
+console.log(
+    "Site inițializat."
+);
+
+console.log(
+    "Bucket PDF privat:",
+    BUCKET
+);
+
+console.log(
+    "Bucket imagini public:",
+    IMAGINI_BUCKET
+);
