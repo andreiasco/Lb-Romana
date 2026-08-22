@@ -182,6 +182,123 @@ section {
     margin-bottom: 40px;
 }
 
+.intro-grid,
+.roluri-grid,
+.howto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.intro-box,
+.rol-card,
+.howto-card {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 7px 25px rgba(0,0,0,.08);
+}
+
+.intro-box {
+    border-left: 5px solid #008c95;
+}
+
+.intro-box h3,
+.rol-card h3,
+.howto-card h3 {
+    margin-top: 0;
+    color: #7b2450;
+}
+
+.intro-box p,
+.rol-card p,
+.howto-card p {
+    line-height: 1.7;
+    color: #555;
+}
+
+.rol-card {
+    border-top: 5px solid #7b2450;
+}
+
+.rol-card.elev {
+    border-top-color: #008c95;
+}
+
+.rol-card.profesor {
+    border-top-color: #d17a00;
+}
+
+.rol-eticheta {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 6px 10px;
+    border-radius: 15px;
+    background: #f4dce7;
+    color: #7b2450;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.rol-card.elev .rol-eticheta {
+    background: #d9f0f1;
+    color: #006b72;
+}
+
+.rol-card.profesor .rol-eticheta {
+    background: #fff0d2;
+    color: #9a5b00;
+}
+
+.rol-card details,
+.howto-card details {
+    margin-top: 18px;
+    border-top: 1px solid #eee;
+    padding-top: 14px;
+}
+
+.rol-card summary,
+.howto-card summary {
+    color: #7b2450;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.rol-card details p,
+.howto-card details p {
+    margin-bottom: 0;
+}
+
+.status-cont {
+    margin: 0 auto 30px;
+    width: fit-content;
+    max-width: 100%;
+    padding: 10px 16px;
+    border: 1px solid #e0bfd0;
+    border-radius: 20px;
+    background: #fff8fb;
+    color: #7b2450;
+    font-weight: bold;
+    text-align: center;
+}
+
+body.dark .intro-box,
+body.dark .rol-card,
+body.dark .howto-card {
+    background: #271f27;
+}
+
+body.dark .intro-box p,
+body.dark .rol-card p,
+body.dark .howto-card p {
+    color: #ddd;
+}
+
+body.dark .status-cont {
+    background: #35152a;
+    border-color: #7b2450;
+}
+
 
 /* ======================================================
    CARDURI
@@ -820,6 +937,9 @@ body.dark .pdf-item {
 <nav>
 
     <a href="#acasa">Acasă</a>
+    <a href="#despre-noi">Despre noi</a>
+    <a href="#functionalitati">Funcționalități</a>
+    <a href="#how-to">How to</a>
     <a href="#limba">Limba română</a>
     <a href="#literatura">Literatura</a>
     <a href="#materiale">Materiale</a>
@@ -856,6 +976,162 @@ body.dark .pdf-item {
     </div>
 
 </header>
+
+
+<section id="despre-noi">
+
+    <h2 class="titlu">Cine suntem noi?</h2>
+
+    <p class="subtitlu">
+        Un spațiu de învățare pentru limba și literatura română.
+    </p>
+
+    <div class="intro-grid">
+
+        <div class="intro-box">
+            <h3>Învățare într-un singur loc</h3>
+            <p>
+                Adunăm explicații, autori, opere, materiale și activități
+                interactive pentru ca învățarea să fie mai clară și mai ușor de urmărit.
+            </p>
+        </div>
+
+        <div class="intro-box">
+            <h3>Conținut pentru fiecare ritm</h3>
+            <p>
+                Poți reveni oricând la noțiunile de bază, poți explora literatura
+                română și îți poți verifica cunoștințele prin quiz-uri.
+            </p>
+        </div>
+
+        <div class="intro-box">
+            <h3>Construim împreună</h3>
+            <p>
+                Site-ul este pregătit să crească odată cu nevoile comunității,
+                prin funcționalități dedicate elevilor și profesorilor.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="functionalitati">
+
+    <h2 class="titlu">Ce poți face pe site?</h2>
+
+    <p class="subtitlu">
+        Conținutul se va adapta tipului de cont cu care te conectezi.
+    </p>
+
+    <div class="status-cont">Momentan navighezi ca vizitator nelogat</div>
+
+    <div class="roluri-grid">
+
+        <div class="rol-card profesor">
+            <span class="rol-eticheta">Cont profesor</span>
+            <h3>Predai și organizezi</h3>
+            <p>
+                Aici va fi locul pentru instrumentele dedicate profesorilor.
+            </p>
+            <details>
+                <summary>Vezi funcționalitățile pregătite</summary>
+                <p>
+                    Spațiu rezervat pentru adăugarea și gestionarea materialelor,
+                    activități pentru clasă și alte instrumente didactice.
+                </p>
+            </details>
+        </div>
+
+        <div class="rol-card elev">
+            <span class="rol-eticheta">Cont elev</span>
+            <h3>Înveți și exersezi</h3>
+            <p>
+                Aici va fi locul pentru instrumentele care te ajută să progresezi.
+            </p>
+            <details>
+                <summary>Vezi funcționalitățile pregătite</summary>
+                <p>
+                    Spațiu rezervat pentru exerciții, progres personal,
+                    teme și activități recomandate de profesor.
+                </p>
+            </details>
+        </div>
+
+        <div class="rol-card">
+            <span class="rol-eticheta">Fără cont</span>
+            <h3>Descoperi liber</h3>
+            <p>
+                Poți explora resursele publice și poți începe să înveți imediat.
+            </p>
+            <details>
+                <summary>Vezi ce este disponibil</summary>
+                <p>
+                    Ai acces la secțiunile publice despre limbă, literatură,
+                    autori, opere, materiale și quiz-uri.
+                </p>
+            </details>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="how-to">
+
+    <h2 class="titlu">How to</h2>
+
+    <p class="subtitlu">
+        Pași simpli pentru a folosi resursele disponibile.
+    </p>
+
+    <div class="howto-grid">
+
+        <div class="howto-card">
+            <h3>1. Explorează</h3>
+            <p>
+                Folosește meniul pentru a ajunge rapid la domeniul care te interesează.
+            </p>
+            <details>
+                <summary>Cum încep?</summary>
+                <p>
+                    Apasă „Începe călătoria” sau alege direct o secțiune din meniul de sus.
+                </p>
+            </details>
+        </div>
+
+        <div class="howto-card">
+            <h3>2. Citește și învață</h3>
+            <p>
+                Consultă explicațiile, autorii și operele din fiecare categorie.
+            </p>
+            <details>
+                <summary>Unde găsesc materialele?</summary>
+                <p>
+                    Intră în „Materiale” pentru documente sau alege „Literatura”
+                    pentru poezie, proză și teatru.
+                </p>
+            </details>
+        </div>
+
+        <div class="howto-card">
+            <h3>3. Verifică-ți cunoștințele</h3>
+            <p>
+                Folosește activitățile interactive pentru recapitulare și exersare.
+            </p>
+            <details>
+                <summary>Cum accesez quiz-urile?</summary>
+                <p>
+                    Deschide secțiunea „Quiz-uri” și alege activitatea potrivită.
+                </p>
+            </details>
+        </div>
+
+    </div>
+
+</section>
 
 
 <section id="limba">
@@ -1832,8 +2108,8 @@ async function incarcaAutori() {
                 carduri[categorie].length > 0
                     ? carduri[categorie].join("")
                     : "<p style='text-align:center'>" +
-                      "Momentan nu există materiale disponibile." +
-                      "</p>";
+                    "Momentan nu există materiale disponibile." +
+                    "</p>";
         });
 
 
