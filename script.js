@@ -182,12 +182,32 @@ nav button:hover {
 /* ======================================================
    BARA DE CĂUTARE
 ====================================================== */
+.search-toggle {
+    border: 1px solid rgba(255,255,255,.4);
+    background: #7b2450;
+    color: white;
+    padding: 9px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.search-toggle:hover {
+    background: #a8446c;
+}
+
 
 .search-container {
-    width: 250px;
-    margin: 8px auto 0;
+    width: 100%;
+    margin: 10px auto 0;
     position: relative;
+    text-align: center;
 }
+
+.search-container.ascuns {
+    display: none !important;
+}
+
 
 .search-input {
     width: 100%;
@@ -222,7 +242,7 @@ nav button:hover {
     transform: translateY(-50%);
 
     color: white;
-    font-size: 13px
+    font-size: 13px;
     pointer-events: none;
 }
 
@@ -1158,7 +1178,9 @@ body.dark .pdf-item {
 @media(max-width:700px) {
 
     nav {
-        padding: 12px 10px 58px;
+        display: flex;
+    flex-direction: column;
+    align-items: center;
     }
 
     .account-menu {
@@ -1212,23 +1234,23 @@ body.dark .pdf-item {
         <a href="#revista">Revista</a>
     </div>
     
-<div class="search-container">
+ <button id="searchToggle" class="search-toggle">
+        🔍 Search
+    </button>
 
-    <input
-        type="search"
-        id="searchInput"
-        class="search-input"
-        placeholder="Caută autori, opere, poezii..."
-        autocomplete="off">
+    <div class="search-container ascuns">
 
-    <span class="search-icon">
-        🔍
-    </span>
+        <input
+            type="search"
+            id="searchInput"
+            class="search-input"
+            placeholder="Caută autori, opere, poezii..."
+            autocomplete="off">
 
-    <div
-        id="searchResults"
-        class="search-results">
+        <div id="searchResults" class="search-results"></div>
+
     </div>
+
 
 </div>
     <details class="account-menu">
@@ -2041,6 +2063,31 @@ body.dark .pdf-item {
 
 `;
 
+/ ======================================================
+// BUTON SEARCH
+// ======================================================
+
+const searchToggle =
+    document.getElementById("searchToggle");
+
+const searchContainer =
+    document.querySelector(".search-container");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+
+searchToggle.addEventListener("click", function () {
+
+    searchContainer.classList.toggle("ascuns");
+
+    if (!searchContainer.classList.contains("ascuns")) {
+
+        searchInput.focus();
+
+    }
+
+});
 
 // ======================================================
 // ESCAPE HTML
