@@ -2071,9 +2071,6 @@ const searchToggle =
 const searchContainer =
     document.querySelector(".search-container");
 
-const searchInput =
-    document.getElementById("searchInput");
-
 
 searchToggle.addEventListener("click", function () {
 
@@ -2086,6 +2083,7 @@ searchToggle.addEventListener("click", function () {
     }
 
 });
+
 
 // ======================================================
 // ESCAPE HTML
