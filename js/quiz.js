@@ -180,166 +180,163 @@ function arataEcran(idEcran) {
 async function incarcaQuizuriSite() {
 
     const container =
-        element("listaQuizuri");
-
+        document.getElementById("listaQuizuri");
 
     if (!container) {
-
-        console.error(
-            "Elementul #listaQuizuri nu există."
-        );
-
+        console.error("NU EXISTĂ #listaQuizuri");
         return;
-
     }
-
 
     container.innerHTML = `
         <div class="quiz-loading">
-            Se încarcă quizurile...
+            ⏳ Se verifică baza de date...
         </div>
     `;
 
+    console.log("1. quiz.js a pornit");
+
+    console.log(
+        "2. supabaseClient =",
+        typeof supabaseClient
+    );
+
+    if (
+        typeof supabaseClient === "undefined" ||
+        !supabaseClient
+    ) {
+
+        container.innerHTML = `
+            <div class="quiz-loading" style="color:#c62828;">
+                ❌ Supabase nu este încărcat.
+                <br>
+                Verifică init.js.
+            </div>
+        `;
+
+        console.error(
+            "supabaseClient NU EXISTĂ"
+        );
+
+        return;
+    }
 
     try {
+
+        console.log(
+            "3. Se caută quizurile în tabelul quizuri..."
+        );
 
         const {
             data,
             error
-        } =
-            await supabaseClient
+        } = await supabaseClient
+            .from("quizuri")
+            .select("*")
+            .eq("activ", true)
+            .order("created_at", {
+                ascending: false
+            });
 
-                .from("quizuri")
-
-                .select("*")
-
-                .eq(
-                    "activ",
-                    true
-                )
-
-                .order(
-                    "created_at",
-                    {
-                        ascending: false
-                    }
-                );
-
+        console.log(
+            "4. Rezultat Supabase:",
+            data,
+            error
+        );
 
         if (error) {
-
             throw error;
-
         }
 
-
-        quizuri =
-            data || [];
-
-
-        if (quizuri.length === 0) {
+        if (!data || data.length === 0) {
 
             container.innerHTML = `
                 <div class="quiz-loading">
-                    Nu există încă quizuri active.
+                    📚 Nu există quizuri active în baza de date.
+                    <br><br>
+                    Intră în panoul Admin și creează un quiz.
                 </div>
             `;
 
             return;
-
         }
 
+        quizuri = data;
 
         container.innerHTML =
-            quizuri.map(
-                quiz => {
+            data.map(quiz => `
 
-                    return `
+                <div class="quiz-card">
 
-                        <div
-                            class="quiz-card"
-                            data-quiz-id="${escapeHTML(
-                                quiz.id
-                            )}"
-                        >
+                    <div class="quiz-card-icon">
+                        🎮
+                    </div>
 
-                            <div class="quiz-card-icon">
-                                🎮
-                            </div>
+                    <h2>
+                        ${escapeHTML(quiz.titlu)}
+                    </h2>
 
-                            <h2>
-                                ${escapeHTML(
-                                    quiz.titlu
-                                )}
-                            </h2>
+                    ${
+                        quiz.categorie
+                            ? `
+                                <div class="quiz-category">
+                                    ${escapeHTML(
+                                        quiz.categorie
+                                    )}
+                                </div>
+                            `
+                            : ""
+                    }
 
-                            ${
-                                quiz.categorie
-                                    ? `
-                                        <div class="quiz-category">
-                                            ${escapeHTML(
-                                                quiz.categorie
-                                            )}
-                                        </div>
-                                    `
-                                    : ""
-                            }
+                    ${
+                        quiz.descriere
+                            ? `
+                                <p>
+                                    ${escapeHTML(
+                                        quiz.descriere
+                                    )}
+                                </p>
+                            `
+                            : ""
+                    }
 
-                            ${
-                                quiz.descriere
-                                    ? `
-                                        <p>
-                                            ${escapeHTML(
-                                                quiz.descriere
-                                            )}
-                                        </p>
-                                    `
-                                    : ""
-                            }
+                    <button
+                        type="button"
+                        class="game-button primary"
+                        onclick="pornesteQuiz(${quiz.id})"
+                    >
+                        🌲 Pornește aventura
+                    </button>
 
-                            <button
-                                type="button"
-                                class="game-button primary"
-                                onclick="pornesteQuiz(${Number(
-                                    quiz.id
-                                )})"
-                            >
-                                🌲 Pornește aventura
-                            </button>
+                </div>
 
-                        </div>
+            `).join("");
 
-                    `;
-
-                }
-            ).join("");
-
+        console.log(
+            "5. Quizurile au fost afișate!"
+        );
 
     } catch (error) {
 
         console.error(
-            "Eroare încărcare quizuri:",
+            "EROARE QUIZURI:",
             error
         );
 
-
         container.innerHTML = `
-
             <div
                 class="quiz-loading"
                 style="color:#c62828;"
             >
-                Nu am putut încărca quizurile.
-                <br>
-                ${escapeHTML(
-                    error.message
-                )}
+                ❌ Nu pot încărca quizurile.
+                <br><br>
+                <strong>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </strong>
             </div>
-
         `;
-
     }
-
 }
 
 
