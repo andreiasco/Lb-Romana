@@ -1,31 +1,51 @@
-/* =====================================================
-   🎬 QUIZ - AVENTURA DIN PĂDURE
-   Stil 2D Cartoon / Cinematic Game
-===================================================== */
+/* =========================================================
+   QUIZ.CSS
+   AVENTURA DIN PĂDURE — 2D CARTOON GAME
+   ========================================================= */
 
-* {
+"use strict";
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.quiz-page,
+.quiz-page *,
+.quiz-screen,
+.quiz-screen * {
     box-sizing: border-box;
 }
 
 .quiz-page {
     width: 100%;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
+
+    font-family:
+        "Trebuchet MS",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
     background: #dff5ff;
 }
 
 .quiz-screen {
     width: 100%;
+    min-height: 100vh;
 }
 
-.quiz-screen.ascuns {
+.ascuns {
     display: none !important;
 }
 
 
-/* =====================================================
-   🎮 TOP BAR
-===================================================== */
+/* =========================================================
+   TOPBAR
+   ========================================================= */
 
 .quiz-topbar {
     position: relative;
@@ -35,18 +55,20 @@
     align-items: center;
     justify-content: space-between;
 
-    gap: 18px;
+    min-height: 70px;
+    padding: 12px 24px;
 
-    width: 100%;
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff 0%,
+            #f7fbff 100%
+        );
 
-    padding: 14px 24px;
-
-    background: rgba(255, 255, 255, 0.97);
-
-    border-bottom: 2px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 3px solid #d7e6ed;
 
     box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.08);
+        0 5px 20px rgba(30, 70, 90, .12);
 }
 
 .quiz-title {
@@ -54,26 +76,29 @@
     align-items: center;
     gap: 8px;
 
-    color: #29452f;
+    color: #263b46;
 
     font-size: 20px;
     font-weight: 900;
 }
 
 .quiz-progress {
-    color: #68746b;
+    color: #687981;
+
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .quiz-progress strong {
     color: #7b2450;
+
     font-size: 18px;
 }
 
 .quiz-score {
-    color: #efa800;
-    font-size: 19px;
+    color: #e39a00;
+
+    font-size: 20px;
     font-weight: 900;
 }
 
@@ -81,21 +106,23 @@
     color: #e53935;
 
     font-size: 21px;
-
     letter-spacing: 3px;
 
     white-space: nowrap;
+
+    text-shadow:
+        0 2px 0 rgba(0,0,0,.08);
 }
 
 
-/* =====================================================
-   🌲 SCENA PRINCIPALĂ
-===================================================== */
+/* =========================================================
+   SCENA PRINCIPALĂ
+   ========================================================= */
 
 .forest-game {
-
     position: relative;
 
+    width: 100%;
     min-height: 760px;
 
     overflow: hidden;
@@ -105,46 +132,59 @@
     background:
         linear-gradient(
             180deg,
-            #69c8f2 0%,
-            #aee8fa 30%,
-            #dff7ff 45%,
-            #9dce76 46%,
-            #72ad58 65%,
-            #477f43 100%
+            #79d8ff 0%,
+            #b9edff 32%,
+            #dff8ff 48%,
+            #8acb68 49%,
+            #4f984c 100%
         );
-
-    box-shadow:
-        inset 0 -100px 120px rgba(25, 75, 30, 0.18);
-
 }
 
 
-/* =====================================================
-   ☀️ SOARE
-===================================================== */
+/* =========================================================
+   CER
+   ========================================================= */
 
-.forest-game::before {
-
-    content: "☀️";
-
+.forest-background {
     position: absolute;
 
-    top: 28px;
-    right: 8%;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
 
     z-index: 1;
+}
 
-    font-size: 72px;
+
+/* =========================================================
+   SOARE
+   ========================================================= */
+
+.sun {
+    position: absolute;
+
+    top: 35px;
+    right: 8%;
+
+    width: 90px;
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 62px;
 
     filter:
         drop-shadow(
-            0 0 22px
-            rgba(255, 218, 70, 0.65)
+            0 8px 15px
+            rgba(255, 193, 7, .35)
         );
 
     animation:
         sunFloat 5s ease-in-out infinite;
-
 }
 
 @keyframes sunFloat {
@@ -153,358 +193,442 @@
     100% {
         transform:
             translateY(0)
-            scale(1);
+            rotate(-3deg);
     }
 
     50% {
         transform:
-            translateY(-8px)
-            scale(1.07);
+            translateY(-10px)
+            rotate(3deg);
     }
-
 }
 
 
-/* =====================================================
-   🌤️ FUNDAL
-===================================================== */
+/* =========================================================
+   NORI
+   ========================================================= */
 
-.forest-background {
-
+.cloud {
     position: absolute;
-
-    inset: 0;
 
     z-index: 2;
 
-    overflow: hidden;
-
-    pointer-events: none;
-
-}
-
-
-/* =====================================================
-   ☁️ NORI
-===================================================== */
-
-.cloud {
-
-    position: absolute;
-
     font-size: 65px;
 
-    opacity: .78;
-
-    pointer-events: none;
-
-}
-
-.cloud-1 {
-
-    top: 45px;
-
-    left: -120px;
-
-    animation:
-        cloudMove1 32s linear infinite;
-
-}
-
-.cloud-2 {
-
-    top: 120px;
-
-    left: 30%;
-
-    animation:
-        cloudMove2 42s linear infinite;
-
-}
-
-@keyframes cloudMove1 {
-
-    from {
-        transform:
-            translateX(0);
-    }
-
-    to {
-        transform:
-            translateX(125vw);
-    }
-
-}
-
-@keyframes cloudMove2 {
-
-    from {
-        transform:
-            translateX(0);
-    }
-
-    to {
-        transform:
-            translateX(80vw);
-    }
-
-}
-
-
-/* =====================================================
-   🏔️ MUNȚI
-===================================================== */
-
-.mountain {
-
-    position: absolute;
-
-    top: 115px;
-
-    left: 50%;
-
-    z-index: 3;
-
-    transform:
-        translateX(-50%);
-
-    font-size: 170px;
-
-    opacity: .52;
-
-    filter:
-        saturate(.75);
-
-    animation:
-        mountainMove 18s ease-in-out infinite alternate;
-
-}
-
-@keyframes mountainMove {
-
-    from {
-        transform:
-            translateX(-53%)
-            translateY(0);
-    }
-
-    to {
-        transform:
-            translateX(-47%)
-            translateY(6px);
-    }
-
-}
-
-
-/* =====================================================
-   🌲 COPACI
-===================================================== */
-
-.trees {
-
-    position: absolute;
-
-    left: -5%;
-
-    right: -5%;
-
-    bottom: 220px;
-
-    z-index: 4;
-
-    width: 110%;
-
-    white-space: nowrap;
-
-    text-align: center;
-
-    font-size: 78px;
-
-    letter-spacing: 16px;
-
     opacity: .82;
-
-    transform-origin: bottom center;
-
-    animation:
-        treesWind 5s ease-in-out infinite alternate;
-
-}
-
-@keyframes treesWind {
-
-    from {
-        transform:
-            skewX(-1deg);
-    }
-
-    to {
-        transform:
-            skewX(1deg);
-    }
-
-}
-
-
-/* =====================================================
-   🌿 STRAT DE IARBĂ
-===================================================== */
-
-.forest-game::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: -10%;
-
-    right: -10%;
-
-    bottom: -150px;
-
-    z-index: 5;
-
-    height: 360px;
-
-    background:
-        radial-gradient(
-            ellipse at center,
-            #7abd5e 0%,
-            #57964d 60%,
-            #3e7542 100%
-        );
-
-    border-radius:
-        50% 50% 0 0 / 25% 25% 0 0;
-
-}
-
-
-/* =====================================================
-   🛤️ POTECĂ
-===================================================== */
-
-.forest-game .path {
-
-    position: absolute;
-
-    left: 35%;
-
-    bottom: -100px;
-
-    z-index: 6;
-
-    width: 30%;
-
-    height: 440px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #b9804c,
-            #d4a36b,
-            #bd884f
-        );
-
-    clip-path:
-        polygon(
-            43% 0%,
-            57% 0%,
-            100% 100%,
-            0% 100%
-        );
-
-    opacity: .95;
 
     filter:
         drop-shadow(
             0 5px 4px
-            rgba(70, 45, 20, .18)
+            rgba(80,130,150,.08)
         );
+}
 
+.cloud-1 {
+    top: 55px;
+    left: 8%;
+
+    animation:
+        cloudFloat1 7s ease-in-out infinite;
+}
+
+.cloud-2 {
+    top: 130px;
+    right: 22%;
+
+    font-size: 52px;
+
+    animation:
+        cloudFloat2 9s ease-in-out infinite;
+}
+
+.cloud-3 {
+    top: 85px;
+    left: 45%;
+
+    font-size: 42px;
+
+    opacity: .55;
+
+    animation:
+        cloudFloat3 11s ease-in-out infinite;
+}
+
+@keyframes cloudFloat1 {
+
+    0%,
+    100% {
+        transform:
+            translateX(0)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateX(35px)
+            translateY(-8px);
+    }
+}
+
+@keyframes cloudFloat2 {
+
+    0%,
+    100% {
+        transform:
+            translateX(0);
+    }
+
+    50% {
+        transform:
+            translateX(-30px)
+            translateY(7px);
+    }
+}
+
+@keyframes cloudFloat3 {
+
+    0%,
+    100% {
+        transform:
+            translateX(0);
+    }
+
+    50% {
+        transform:
+            translateX(25px)
+            translateY(-5px);
+    }
 }
 
 
-/* =====================================================
-   🪨 PIETRE
-===================================================== */
+/* =========================================================
+   MUNȚI
+   ========================================================= */
 
-.rock,
-.grass {
+.mountain {
+    position: absolute;
+
+    z-index: 3;
+
+    user-select: none;
+
+    opacity: .55;
+
+    filter:
+        saturate(.85);
+}
+
+.mountain-1 {
+    left: 25%;
+    top: 130px;
+
+    font-size: 150px;
+
+    transform:
+        translateX(-50%);
+}
+
+.mountain-2 {
+    right: 15%;
+    top: 170px;
+
+    font-size: 110px;
+
+    opacity: .35;
+
+    transform:
+        scaleX(-1);
+}
+
+
+/* =========================================================
+   COPACI
+   ========================================================= */
+
+.trees {
+    position: absolute;
+
+    z-index: 6;
+
+    left: -5%;
+    right: -5%;
+    bottom: 285px;
+
+    width: 110%;
+
+    text-align: center;
+
+    font-size: 82px;
+
+    line-height: 1;
+
+    letter-spacing: 16px;
+
+    white-space: nowrap;
+
+    opacity: .72;
+
+    filter:
+        saturate(.82);
+
+    animation:
+        treesSway 5s ease-in-out infinite;
+}
+
+@keyframes treesSway {
+
+    0%,
+    100% {
+        transform:
+            translateX(0);
+    }
+
+    50% {
+        transform:
+            translateX(-7px);
+    }
+}
+
+
+/* =========================================================
+   STRATURI DE PĂDURE
+   ========================================================= */
+
+.forest-game::before {
+    content: "";
 
     position: absolute;
 
-    z-index: 9;
+    z-index: 5;
+
+    left: -5%;
+    right: -5%;
+
+    bottom: 240px;
+
+    height: 150px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(64,126,64,.15),
+            rgba(42,105,49,.4)
+        );
+
+    border-radius:
+        50% 50% 0 0;
 
     pointer-events: none;
-
 }
 
-.rock-1 {
+.forest-game::after {
+    content: "";
 
-    left: 28%;
+    position: absolute;
 
-    bottom: 170px;
+    z-index: 7;
 
-    font-size: 28px;
+    left: -10%;
+    right: -10%;
 
+    bottom: 210px;
+
+    height: 100px;
+
+    background:
+        #4e984d;
+
+    border-radius:
+        50% 50% 0 0;
+
+    pointer-events: none;
 }
 
-.rock-2 {
 
-    right: 28%;
+/* =========================================================
+   PĂMÂNT / IARBĂ
+   ========================================================= */
 
-    bottom: 150px;
+.ground {
+    position: absolute;
 
-    font-size: 24px;
+    z-index: 8;
 
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 300px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #79bd5e 0%,
+            #5ca44f 45%,
+            #438943 100%
+        );
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   POTECĂ
+   ========================================================= */
+
+.path {
+    position: absolute;
+
+    z-index: 10;
+
+    left: -15%;
+    bottom: -160px;
+
+    width: 130%;
+    height: 430px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #c58d55,
+            #d5a76d 45%,
+            #bd8650
+        );
+
+    border-radius:
+        50% 50% 0 0 / 35% 35% 0 0;
+
+    transform:
+        rotate(-2deg);
+
+    box-shadow:
+        inset 0 15px 25px
+        rgba(100,60,25,.15);
+}
+
+.path::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 55px;
+
+    height: 10px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.12);
+}
+
+.path::after {
+    content: "";
+
+    position: absolute;
+
+    width: 25px;
+    height: 12px;
+
+    left: 35%;
+    top: 115px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(105,65,35,.16);
+
+    box-shadow:
+        140px 70px 0 rgba(105,65,35,.12),
+        -180px 130px 0 rgba(105,65,35,.13),
+        260px 155px 0 rgba(105,65,35,.10);
+}
+
+
+/* =========================================================
+   VEGETAȚIE DECORATIVĂ
+   ========================================================= */
+
+.grass,
+.rock {
+    position: absolute;
+
+    z-index: 18;
+
+    pointer-events: none;
 }
 
 .grass-1 {
-
     left: 10%;
+    bottom: 180px;
 
-    bottom: 160px;
+    font-size: 32px;
 
-    font-size: 34px;
-
+    animation:
+        grassMove 2.5s ease-in-out infinite;
 }
 
 .grass-2 {
+    left: 38%;
+    bottom: 155px;
 
-    left: 42%;
+    font-size: 26px;
 
-    bottom: 130px;
-
-    font-size: 30px;
-
+    animation:
+        grassMove 3s ease-in-out infinite;
 }
 
 .grass-3 {
-
-    right: 13%;
-
-    bottom: 180px;
+    right: 12%;
+    bottom: 190px;
 
     font-size: 35px;
 
+    animation:
+        grassMove 2.7s ease-in-out infinite;
+}
+
+.rock-1 {
+    left: 27%;
+    bottom: 125px;
+
+    font-size: 25px;
+}
+
+.rock-2 {
+    right: 29%;
+    bottom: 145px;
+
+    font-size: 22px;
+}
+
+@keyframes grassMove {
+
+    0%,
+    100% {
+        transform:
+            rotate(-3deg);
+    }
+
+    50% {
+        transform:
+            rotate(5deg);
+    }
 }
 
 
-/* =====================================================
-   🧑‍🌾 PERSONAJ
-===================================================== */
+/* =========================================================
+   PERSONAJ
+   ========================================================= */
 
 .forest-character {
-
     position: absolute;
 
-    left: 12%;
+    z-index: 40;
 
-    bottom: 310px;
-
-    z-index: 25;
+    left: 15%;
+    bottom: 275px;
 
     width: 100px;
 
@@ -517,48 +641,45 @@
 
     filter:
         drop-shadow(
-            0 12px 7px
-            rgba(0, 0, 0, .24)
+            0 10px 5px
+            rgba(0,0,0,.25)
         );
 
     animation:
-        playerIdle 1.35s ease-in-out infinite;
-
-    transition:
-        left 1.2s cubic-bezier(.2, .8, .2, 1),
-        bottom .5s ease;
-
+        characterIdle 1.5s
+        ease-in-out infinite;
 }
 
 
-/* umbra */
+/* umbră */
 
 .forest-character::after {
-
     content: "";
 
     position: absolute;
 
-    left: 17px;
+    z-index: -1;
 
-    bottom: -4px;
+    left: 15px;
+    bottom: -3px;
 
-    width: 65px;
-
-    height: 14px;
-
-    background:
-        rgba(0, 0, 0, .22);
+    width: 70px;
+    height: 16px;
 
     border-radius: 50%;
 
-    filter: blur(4px);
+    background:
+        rgba(0,0,0,.22);
 
-    z-index: -1;
+    filter:
+        blur(4px);
 
+    animation:
+        shadowMove 1.5s
+        ease-in-out infinite;
 }
 
-@keyframes playerIdle {
+@keyframes characterIdle {
 
     0%,
     100% {
@@ -569,60 +690,37 @@
 
     50% {
         transform:
-            translateY(-7px)
+            translateY(-9px)
             rotate(2deg);
     }
-
 }
 
+@keyframes shadowMove {
 
-/* =====================================================
-   🚶 PERSONAJ MERGE
-===================================================== */
-
-.forest-character.walking {
-
-    animation:
-        playerWalk .34s
-        ease-in-out infinite;
-
-}
-
-@keyframes playerWalk {
-
-    0% {
+    0%,
+    100% {
         transform:
-            translateY(0)
-            rotate(-8deg);
+            scaleX(1);
     }
 
     50% {
         transform:
-            translateY(-14px)
-            rotate(8deg);
+            scaleX(.82);
     }
-
-    100% {
-        transform:
-            translateY(0)
-            rotate(-8deg);
-    }
-
 }
 
 
-/* =====================================================
-   😵 PERSONAJ LOVIT
-===================================================== */
+/* =========================================================
+   PERSONAJ LOVIT
+   ========================================================= */
 
 .forest-character.hit {
-
     animation:
-        playerHit .7s ease-in-out;
-
+        characterHit .7s
+        ease-in-out;
 }
 
-@keyframes playerHit {
+@keyframes characterHit {
 
     0% {
         transform:
@@ -632,25 +730,25 @@
 
     15% {
         transform:
-            translateX(-15px)
+            translateX(-18px)
             rotate(-12deg);
     }
 
     30% {
         transform:
-            translateX(15px)
+            translateX(18px)
             rotate(12deg);
     }
 
     45% {
         transform:
-            translateX(-12px)
+            translateX(-15px)
             rotate(-10deg);
     }
 
     60% {
         transform:
-            translateX(12px)
+            translateX(15px)
             rotate(10deg);
     }
 
@@ -659,38 +757,61 @@
             translateX(0)
             rotate(0);
     }
-
 }
 
 
-/* =====================================================
-   🐺 ANIMAL
-===================================================== */
+/* =========================================================
+   ANIMAL
+   ========================================================= */
 
 .forest-animal {
-
     position: absolute;
 
-    right: 14%;
+    z-index: 45;
 
-    bottom: 305px;
+    right: 17%;
+    bottom: 270px;
 
-    z-index: 26;
+    width: 110px;
 
-    font-size: 94px;
+    font-size: 90px;
+
+    text-align: center;
 
     transform-origin:
         center bottom;
 
     filter:
         drop-shadow(
-            0 13px 7px
-            rgba(0, 0, 0, .25)
+            0 10px 6px
+            rgba(0,0,0,.25)
         );
 
     animation:
-        animalIdle 1.8s ease-in-out infinite;
+        animalIdle 1.8s
+        ease-in-out infinite;
+}
 
+.forest-animal::after {
+    content: "";
+
+    position: absolute;
+
+    z-index: -1;
+
+    left: 18px;
+    bottom: -5px;
+
+    width: 75px;
+    height: 17px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,0,0,.2);
+
+    filter:
+        blur(4px);
 }
 
 @keyframes animalIdle {
@@ -699,28 +820,25 @@
     100% {
         transform:
             translateY(0)
-            scale(1);
+            rotate(-2deg);
     }
 
     50% {
         transform:
-            translateY(-7px)
-            scale(1.025);
+            translateY(-10px)
+            rotate(2deg);
     }
-
 }
 
 
-/* =====================================================
-   🐺 ANIMAL ATAC
-===================================================== */
+/* =========================================================
+   ANIMAL ATACĂ
+   ========================================================= */
 
 .forest-animal.attack {
-
     animation:
-        animalAttack .85s
-        cubic-bezier(.2, .8, .2, 1);
-
+        animalAttack .8s
+        cubic-bezier(.2,.8,.2,1);
 }
 
 @keyframes animalAttack {
@@ -731,180 +849,693 @@
             scale(1);
     }
 
-    15% {
+    25% {
         transform:
-            translateX(20px)
-            scale(1.04);
+            translateX(-45px)
+            scale(1.12)
+            rotate(-5deg);
     }
 
-    35% {
+    45% {
         transform:
-            translateX(-80px)
-            scale(1.18)
-            rotate(-7deg);
+            translateX(-120px)
+            scale(1.2)
+            rotate(-10deg);
     }
 
-    55% {
+    65% {
         transform:
-            translateX(-150px)
-            scale(1.35)
+            translateX(-85px)
+            scale(1.15)
             rotate(8deg);
-    }
-
-    70% {
-        transform:
-            translateX(-100px)
-            scale(1.22);
     }
 
     100% {
         transform:
             translateX(0)
-            scale(1);
+            scale(1)
+            rotate(0);
     }
-
 }
 
 
-/* =====================================================
-   💬 BULA ANIMAL
-===================================================== */
+/* =========================================================
+   BULA ANIMAL
+   ========================================================= */
 
 .animal-bubble {
-
     position: absolute;
 
-    right: 7%;
+    z-index: 60;
 
-    bottom: 440px;
-
-    z-index: 40;
+    right: 10%;
+    bottom: 415px;
 
     width: max-content;
-
     max-width: 280px;
 
-    padding: 15px 20px;
+    padding: 14px 19px;
 
-    background: #fff;
+    background:
+        #ffffff;
 
-    border: 3px solid #34463a;
+    border: 3px solid #dce7eb;
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
-    color: #26342a;
+    color:
+        #304047;
 
-    font-size: 15px;
+    font-size:
+        15px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    line-height: 1.35;
+    line-height:
+        1.3;
 
     box-shadow:
-        0 10px 30px
-        rgba(0, 0, 0, .18);
+        0 10px 25px
+        rgba(0,0,0,.16);
 
     animation:
-        bubbleAppear .45s ease;
-
+        bubbleFloat 2.5s
+        ease-in-out infinite;
 }
 
 .animal-bubble::after {
-
     content: "";
 
     position: absolute;
 
-    right: 28px;
+    left: 38px;
+    bottom: -15px;
 
-    bottom: -17px;
+    width: 0;
+    height: 0;
 
     border-left:
-        15px solid transparent;
+        13px solid transparent;
 
     border-right:
-        15px solid transparent;
+        13px solid transparent;
 
     border-top:
-        17px solid #34463a;
-
+        17px solid #ffffff;
 }
 
 .animal-bubble::before {
-
     content: "";
 
     position: absolute;
 
-    right: 30px;
-
-    bottom: -11px;
-
-    z-index: 2;
+    left: 35px;
+    bottom: -19px;
 
     border-left:
-        13px solid transparent;
+        16px solid transparent;
 
     border-right:
-        13px solid transparent;
+        16px solid transparent;
 
     border-top:
-        15px solid white;
+        20px solid #dce7eb;
 
+    z-index: -1;
 }
 
-@keyframes bubbleAppear {
+@keyframes bubbleFloat {
 
-    from {
-        opacity: 0;
-
+    0%,
+    100% {
         transform:
-            translateY(12px)
-            scale(.8);
+            translateY(0);
     }
 
-    to {
-        opacity: 1;
-
+    50% {
         transform:
-            translateY(0)
-            scale(1);
+            translateY(-5px);
     }
-
 }
 
 
-/* =====================================================
-   💥 EFECT ATAC
-===================================================== */
+/* =========================================================
+   PANOU ÎNTREBARE
+   ========================================================= */
 
-.game-effect {
-
+.question-panel {
     position: absolute;
-
-    left: 50%;
-
-    top: 40%;
 
     z-index: 100;
 
-    font-size: 100px;
+    left: 50%;
+    bottom: 22px;
 
-    opacity: 0;
+    transform:
+        translateX(-50%);
 
-    pointer-events: none;
+    width:
+        min(920px, calc(100% - 30px));
 
+    padding:
+        25px 28px 23px;
+
+    background:
+        rgba(255,255,255,.98);
+
+    border:
+        3px solid rgba(255,255,255,.9);
+
+    border-radius:
+        28px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(25,65,75,.25);
+
+    backdrop-filter:
+        blur(12px);
+}
+
+
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.question-number-badge {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    width: fit-content;
+
+    margin:
+        0 auto;
+
+    padding:
+        7px 15px;
+
+    border-radius:
+        999px;
+
+    background:
+        #f3e6ef;
+
+    color:
+        #7b2450;
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        1px;
+}
+
+.question-number-badge span {
+    font-size:
+        13px;
+}
+
+
+/* =========================================================
+   ÎNTREBARE
+   ========================================================= */
+
+.question-text {
+    margin:
+        14px auto 22px;
+
+    max-width:
+        850px;
+
+    color:
+        #26343a;
+
+    font-size:
+        clamp(20px, 3vw, 30px);
+
+    font-weight:
+        900;
+
+    line-height:
+        1.25;
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   RĂSPUNSURI
+   ========================================================= */
+
+.answers-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        13px;
+
+    width:
+        100%;
+}
+
+
+/* =========================================================
+   BUTOANE RĂSPUNS
+   ========================================================= */
+
+.answer-button {
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    width:
+        100%;
+
+    min-height:
+        68px;
+
+    padding:
+        11px 16px;
+
+    border:
+        3px solid transparent;
+
+    border-radius:
+        17px;
+
+    color:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    font-family:
+        inherit;
+
+    font-size:
+        16px;
+
+    font-weight:
+        900;
+
+    line-height:
+        1.25;
+
+    text-align:
+        left;
+
+    overflow:
+        hidden;
+
+    box-shadow:
+        0 5px 0
+        rgba(0,0,0,.14);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        filter .15s ease;
+}
+
+.answer-button::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 70%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.22),
+            transparent
+        );
+
+    transform:
+        skewX(-20deg);
+
+    transition:
+        left .45s ease;
+}
+
+.answer-button:hover:not(:disabled)::after {
+    left: 140%;
+}
+
+.answer-button:hover:not(:disabled) {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 9px 0
+        rgba(0,0,0,.14);
+
+    filter:
+        brightness(1.05);
+}
+
+.answer-button:active:not(:disabled) {
+    transform:
+        translateY(2px);
+
+    box-shadow:
+        0 3px 0
+        rgba(0,0,0,.14);
+}
+
+.answer-button:disabled {
+    cursor:
+        default;
+}
+
+
+/* =========================================================
+   CULORI KAHOOT
+   ========================================================= */
+
+.answer-a {
+    background:
+        linear-gradient(
+            135deg,
+            #ef3f3f,
+            #d92e2e
+        );
+}
+
+.answer-b {
+    background:
+        linear-gradient(
+            135deg,
+            #2384dc,
+            #1269bd
+        );
+}
+
+.answer-c {
+    background:
+        linear-gradient(
+            135deg,
+            #f5ae18,
+            #df8e00
+        );
+}
+
+.answer-d {
+    background:
+        linear-gradient(
+            135deg,
+            #48ad55,
+            #318e3f
+        );
+}
+
+
+/* =========================================================
+   LITERA
+   ========================================================= */
+
+.answer-letter {
+    flex:
+        0 0 40px;
+
+    width:
+        40px;
+
+    height:
+        40px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.23);
+
+    border:
+        2px solid
+        rgba(255,255,255,.2);
+
+    font-size:
+        18px;
+
+    font-weight:
+        1000;
+}
+
+
+/* =========================================================
+   CORECT
+   ========================================================= */
+
+.answer-button.correct {
+    background:
+        linear-gradient(
+            135deg,
+            #24c965,
+            #119b47
+        ) !important;
+
+    border-color:
+        #087d37 !important;
+
+    animation:
+        correctAnswer .55s
+        ease;
+}
+
+@keyframes correctAnswer {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    35% {
+        transform:
+            scale(1.06)
+            rotate(-1deg);
+    }
+
+    70% {
+        transform:
+            scale(1.03)
+            rotate(1deg);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   GREȘIT
+   ========================================================= */
+
+.answer-button.wrong {
+    background:
+        linear-gradient(
+            135deg,
+            #ef3535,
+            #b91f1f
+        ) !important;
+
+    border-color:
+        #8f1616 !important;
+
+    animation:
+        wrongAnswer .55s
+        ease;
+}
+
+@keyframes wrongAnswer {
+
+    0%,
+    100% {
+        transform:
+            translateX(0);
+    }
+
+    20% {
+        transform:
+            translateX(-10px)
+            rotate(-1deg);
+    }
+
+    40% {
+        transform:
+            translateX(10px)
+            rotate(1deg);
+    }
+
+    60% {
+        transform:
+            translateX(-8px);
+    }
+
+    80% {
+        transform:
+            translateX(8px);
+    }
+}
+
+
+/* =========================================================
+   MESAJ
+   ========================================================= */
+
+.question-message {
+    min-height:
+        25px;
+
+    margin-top:
+        12px;
+
+    color:
+        #56656c;
+
+    font-size:
+        16px;
+
+    font-weight:
+        900;
+
+    text-align:
+        center;
+}
+
+.question-message.success {
+    color:
+        #119447;
+}
+
+.question-message.error {
+    color:
+        #c62828;
+}
+
+
+/* =========================================================
+   EFECTE
+   ========================================================= */
+
+.game-effect {
+    position: absolute;
+
+    left: 50%;
+    top: 43%;
+
+    z-index: 150;
+
+    font-size:
+        95px;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+}
+
+.game-effect.active {
+    animation:
+        gameEffect .75s
+        ease-out
+        forwards;
+}
+
+@keyframes gameEffect {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(.25)
+            rotate(-20deg);
+    }
+
+    35% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.3)
+            rotate(10deg);
+    }
+
+    65% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.05)
+            rotate(-5deg);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.7)
+            rotate(15deg);
+    }
+}
+
+
+/* =========================================================
+   EFECT ATAC
+   ========================================================= */
+
+.attack-effect {
+    font-size:
+        110px;
 }
 
 .attack-effect.active {
-
     animation:
-        attackExplosion .8s
-        ease-out forwards;
-
+        attackEffect .75s
+        ease-out
+        forwards;
 }
 
-@keyframes attackExplosion {
+@keyframes attackEffect {
 
     0% {
         opacity: 0;
@@ -920,17 +1551,26 @@
 
         transform:
             translate(-50%, -50%)
-            scale(1.45)
+            scale(1.3)
             rotate(12deg);
     }
 
-    50% {
+    45% {
         opacity: 1;
 
         transform:
             translate(-50%, -50%)
-            scale(1.05)
-            rotate(-10deg);
+            scale(1)
+            rotate(-12deg);
+    }
+
+    70% {
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.25)
+            rotate(8deg);
     }
 
     100% {
@@ -941,413 +1581,20 @@
             scale(1.8)
             rotate(20deg);
     }
-
 }
 
 
-/* =====================================================
-   🎉 SUCCES
-===================================================== */
+/* =========================================================
+   EFECT SCENĂ CÂND GREȘEȘTE
+   ========================================================= */
 
-.success-effect.active {
-
+.forest-game:has(.attack-effect.active) {
     animation:
-        successAnimation .9s
-        ease-out forwards;
-
+        sceneShake .45s
+        ease-in-out;
 }
 
-@keyframes successAnimation {
-
-    0% {
-        opacity: 0;
-
-        transform:
-            translate(-50%, -50%)
-            scale(.2);
-    }
-
-    30% {
-        opacity: 1;
-
-        transform:
-            translate(-50%, -50%)
-            scale(1.35)
-            rotate(8deg);
-    }
-
-    100% {
-        opacity: 0;
-
-        transform:
-            translate(-50%, -50%)
-            scale(1.8)
-            translateY(-80px);
-    }
-
-}
-
-
-/* =====================================================
-   🎥 CAMERA SHAKE
-===================================================== */
-
-.forest-game.camera-shake {
-
-    animation:
-        cameraShake .55s ease;
-
-}
-
-@keyframes cameraShake {
-
-    0%,
-    100% {
-        transform:
-            translate(0, 0);
-    }
-
-    15% {
-        transform:
-            translate(-8px, 3px);
-    }
-
-    30% {
-        transform:
-            translate(8px, -3px);
-    }
-
-    45% {
-        transform:
-            translate(-6px, 2px);
-    }
-
-    60% {
-        transform:
-            translate(6px, -2px);
-    }
-
-    75% {
-        transform:
-            translate(-3px, 1px);
-    }
-
-}
-
-
-/* =====================================================
-   ❓ PANOU ÎNTREBARE
-===================================================== */
-
-.question-panel {
-
-    position: absolute;
-
-    left: 50%;
-
-    bottom: 18px;
-
-    z-index: 150;
-
-    width:
-        min(920px, calc(100% - 30px));
-
-    transform:
-        translateX(-50%);
-
-    padding:
-        24px 28px;
-
-    background:
-        rgba(255, 255, 255, .98);
-
-    border:
-        4px solid rgba(255, 255, 255, .95);
-
-    border-radius:
-        28px;
-
-    box-shadow:
-        0 20px 55px
-        rgba(0, 0, 0, .23);
-
-}
-
-
-/* =====================================================
-   🏷️ NUMĂR ÎNTREBARE
-===================================================== */
-
-.question-number-badge {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding:
-        7px 14px;
-
-    border-radius:
-        999px;
-
-    background:
-        #f1e4eb;
-
-    color:
-        #7b2450;
-
-    font-size:
-        11px;
-
-    font-weight:
-        900;
-
-    letter-spacing:
-        .8px;
-
-}
-
-
-/* =====================================================
-   📝 ÎNTREBARE
-===================================================== */
-
-.question-text {
-
-    margin:
-        13px auto 22px;
-
-    max-width:
-        850px;
-
-    color:
-        #26352a;
-
-    text-align:
-        center;
-
-    font-size:
-        clamp(20px, 3vw, 29px);
-
-    line-height:
-        1.3;
-
-    font-weight:
-        900;
-
-}
-
-
-/* =====================================================
-   🎯 RĂSPUNSURI
-===================================================== */
-
-.answers-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
-
-    gap:
-        13px;
-
-}
-
-
-/* =====================================================
-   🔴🔵🟡🟢 BUTOANE
-===================================================== */
-
-.answer-button {
-
-    position: relative;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    width: 100%;
-
-    min-height: 68px;
-
-    padding:
-        12px 18px;
-
-    border: 0;
-
-    border-radius: 15px;
-
-    color: white;
-
-    cursor: pointer;
-
-    font-family: inherit;
-
-    font-size: 16px;
-
-    font-weight: 800;
-
-    text-align: left;
-
-    box-shadow:
-        0 6px 0 rgba(0, 0, 0, .16);
-
-    transition:
-        transform .15s ease,
-        filter .15s ease,
-        box-shadow .15s ease;
-
-}
-
-.answer-button:hover:not(:disabled) {
-
-    transform:
-        translateY(-4px);
-
-    filter:
-        brightness(1.08);
-
-    box-shadow:
-        0 10px 0 rgba(0, 0, 0, .13);
-
-}
-
-.answer-button:active:not(:disabled) {
-
-    transform:
-        translateY(3px);
-
-    box-shadow:
-        0 2px 0 rgba(0, 0, 0, .15);
-
-}
-
-.answer-button:disabled {
-
-    cursor:
-        default;
-
-}
-
-
-/* culori Kahoot */
-
-.answer-a {
-    background:
-        #e53935;
-}
-
-.answer-b {
-    background:
-        #1976d2;
-}
-
-.answer-c {
-    background:
-        #f2a900;
-}
-
-.answer-d {
-    background:
-        #43a047;
-}
-
-
-/* =====================================================
-   🔤 LITERA
-===================================================== */
-
-.answer-letter {
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    flex:
-        0 0 38px;
-
-    width:
-        38px;
-
-    height:
-        38px;
-
-    border-radius:
-        10px;
-
-    background:
-        rgba(255, 255, 255, .25);
-
-    font-size:
-        18px;
-
-    font-weight:
-        900;
-
-}
-
-
-/* =====================================================
-   ✅ RĂSPUNS CORECT
-===================================================== */
-
-.answer-button.correct {
-
-    background:
-        #16b957 !important;
-
-    border:
-        3px solid #087c38;
-
-    animation:
-        answerCorrect .55s ease;
-
-}
-
-@keyframes answerCorrect {
-
-    0% {
-        transform:
-            scale(1);
-    }
-
-    45% {
-        transform:
-            scale(1.07);
-    }
-
-    100% {
-        transform:
-            scale(1);
-    }
-
-}
-
-
-/* =====================================================
-   ❌ RĂSPUNS GREȘIT
-===================================================== */
-
-.answer-button.wrong {
-
-    background:
-        #d62828 !important;
-
-    border:
-        3px solid #991c1c;
-
-    animation:
-        answerWrong .55s ease;
-
-}
-
-@keyframes answerWrong {
+@keyframes sceneShake {
 
     0%,
     100% {
@@ -1357,73 +1604,33 @@
 
     20% {
         transform:
-            translateX(-10px);
+            translateX(-5px);
     }
 
     40% {
         transform:
-            translateX(10px);
+            translateX(5px);
     }
 
     60% {
         transform:
-            translateX(-8px);
+            translateX(-4px);
     }
 
     80% {
         transform:
-            translateX(8px);
+            translateX(4px);
     }
-
 }
 
 
-/* =====================================================
-   💬 MESAJ
-===================================================== */
-
-.question-message {
-
-    min-height:
-        26px;
-
-    margin-top:
-        12px;
-
-    text-align:
-        center;
-
-    font-size:
-        16px;
-
-    font-weight:
-        900;
-
-}
-
-.question-message.success {
-
-    color:
-        #159447;
-
-}
-
-.question-message.error {
-
-    color:
-        #c62828;
-
-}
-
-
-/* =====================================================
-   🏆 REZULTAT
-===================================================== */
+/* =========================================================
+   ECRAN REZULTAT
+   ========================================================= */
 
 .result-screen {
-
     min-height:
-        80vh;
+        100vh;
 
     display:
         flex;
@@ -1437,39 +1644,47 @@
     padding:
         30px 15px;
 
+    background:
+        linear-gradient(
+            180deg,
+            #bdeeff,
+            #dff7ff 45%,
+            #8acb68
+        );
 }
 
 .result-card {
-
     width:
         min(650px, 100%);
 
     padding:
         45px 25px;
 
-    text-align:
-        center;
-
     background:
-        rgba(255, 255, 255, .97);
+        rgba(255,255,255,.97);
+
+    border:
+        3px solid white;
 
     border-radius:
         30px;
 
+    text-align:
+        center;
+
     box-shadow:
         0 25px 70px
-        rgba(30, 80, 40, .2);
-
+        rgba(30,80,40,.22);
 }
 
 .result-icon {
-
     font-size:
         90px;
 
     animation:
-        resultFloat 2s ease-in-out infinite;
-
+        resultFloat 2s
+        ease-in-out
+        infinite;
 }
 
 @keyframes resultFloat {
@@ -1484,47 +1699,38 @@
         transform:
             translateY(-12px);
     }
-
 }
 
 .result-card h1 {
+    margin:
+        10px 0;
 
     color:
         #315d3b;
 
     font-size:
         38px;
-
-    margin:
-        10px 0;
-
 }
 
 .result-card p {
-
     color:
         #607060;
 
     font-size:
         18px;
-
 }
 
 
-/* =====================================================
-   ⭐ SCOR FINAL
-===================================================== */
+/* =========================================================
+   SCOR FINAL
+   ========================================================= */
 
 .final-score {
-
     width:
         180px;
 
     height:
         180px;
-
-    margin:
-        30px auto;
 
     display:
         flex;
@@ -1538,50 +1744,77 @@
     justify-content:
         center;
 
+    margin:
+        30px auto;
+
     border-radius:
         50%;
 
     background:
         linear-gradient(
             135deg,
-            #ffe27a,
-            #f3ad4c
+            #ffe276,
+            #f3a943
         );
 
     color:
         #654713;
 
     box-shadow:
-        0 12px 30px
-        rgba(200, 140, 40, .25);
+        0 15px 35px
+        rgba(200,140,40,.25);
 
+    animation:
+        scorePop .6s
+        ease-out;
+}
+
+@keyframes scorePop {
+
+    0% {
+        transform:
+            scale(.5);
+        opacity:
+            0;
+    }
+
+    70% {
+        transform:
+            scale(1.08);
+        opacity:
+            1;
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+}
+
+.final-score span {
+    font-size:
+        15px;
 }
 
 .final-score strong {
-
     font-size:
         48px;
 
     line-height:
         1;
-
 }
 
-.final-score span,
 .final-score small {
-
     font-size:
         14px;
-
 }
 
 
-/* =====================================================
-   📊 DETALII REZULTAT
-===================================================== */
+/* =========================================================
+   DETALII REZULTAT
+   ========================================================= */
 
 .result-details {
-
     display:
         grid;
 
@@ -1593,11 +1826,9 @@
 
     margin:
         25px 0;
-
 }
 
 .result-details div {
-
     padding:
         15px;
 
@@ -1606,11 +1837,9 @@
 
     border-radius:
         15px;
-
 }
 
 .result-details span {
-
     display:
         block;
 
@@ -1619,11 +1848,9 @@
 
     font-size:
         13px;
-
 }
 
 .result-details strong {
-
     display:
         block;
 
@@ -1635,32 +1862,42 @@
 
     font-size:
         25px;
+}
 
+.result-message {
+    margin:
+        20px;
+
+    color:
+        #52705a;
+
+    font-size:
+        18px;
+
+    font-weight:
+        700;
 }
 
 
-/* =====================================================
-   🎮 BUTOANE REZULTAT
-===================================================== */
+/* =========================================================
+   BUTOANE REZULTAT
+   ========================================================= */
 
 .result-buttons {
-
     display:
         flex;
 
     justify-content:
         center;
 
-    flex-wrap:
-        wrap;
-
     gap:
         12px;
 
+    flex-wrap:
+        wrap;
 }
 
 .game-button {
-
     border:
         0;
 
@@ -1668,7 +1905,13 @@
         14px;
 
     padding:
-        14px 23px;
+        14px 24px;
+
+    cursor:
+        pointer;
+
+    font-family:
+        inherit;
 
     font-size:
         16px;
@@ -1676,332 +1919,331 @@
     font-weight:
         900;
 
-    cursor:
-        pointer;
-
     transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-
+        transform .18s ease,
+        box-shadow .18s ease;
 }
 
 .game-button:hover {
-
     transform:
         translateY(-3px);
-
 }
 
 .game-button.primary {
-
-    background:
-        #4c9552;
-
     color:
         white;
 
-    box-shadow:
-        0 5px 0 #34733a;
+    background:
+        linear-gradient(
+            135deg,
+            #55a95c,
+            #378c43
+        );
 
+    box-shadow:
+        0 5px 0
+        #286d31;
 }
 
 .game-button.secondary {
-
-    background:
-        #e7efe6;
-
     color:
         #315d3b;
 
+    background:
+        #e8efe7;
 }
 
 
-/* =====================================================
-   📱 TABLETĂ
-===================================================== */
+/* =========================================================
+   RESPONSIVE TABLET
+   ========================================================= */
 
 @media (max-width: 850px) {
 
-    .forest-game {
-
-        min-height:
-            750px;
-
-    }
-
-    .forest-character {
-
-        left:
-            8%;
-
-    }
-
-    .forest-animal {
-
-        right:
-            8%;
-
-    }
-
-    .question-panel {
-
-        width:
-            calc(100% - 20px);
-
-    }
-
-}
-
-
-/* =====================================================
-   📱 TELEFON
-===================================================== */
-
-@media (max-width: 700px) {
-
     .quiz-topbar {
-
-        flex-wrap:
-            wrap;
-
-        justify-content:
-            center;
+        gap:
+            10px;
 
         padding:
-            11px 12px;
-
-        gap:
-            8px;
-
+            12px 15px;
     }
 
     .quiz-title {
-
-        width:
-            100%;
-
-        justify-content:
-            center;
-
         font-size:
-            18px;
-
-    }
-
-    .quiz-progress {
-
-        font-size:
-            13px;
-
+            17px;
     }
 
     .quiz-score {
-
         font-size:
             17px;
-
     }
-
-    .quiz-lives {
-
-        font-size:
-            18px;
-
-    }
-
-
-    /* scenă */
 
     .forest-game {
-
         min-height:
             780px;
-
     }
-
-
-    /* soare */
-
-    .forest-game::before {
-
-        top:
-            20px;
-
-        right:
-            5%;
-
-        font-size:
-            50px;
-
-    }
-
-
-    /* nori */
-
-    .cloud {
-
-        font-size:
-            45px;
-
-    }
-
-
-    /* munți */
-
-    .mountain {
-
-        top:
-            110px;
-
-        font-size:
-            95px;
-
-    }
-
-
-    /* copaci */
-
-    .trees {
-
-        bottom:
-            235px;
-
-        font-size:
-            52px;
-
-        letter-spacing:
-            3px;
-
-    }
-
-
-    /* potecă */
-
-    .forest-game .path {
-
-        left:
-            25%;
-
-        width:
-            50%;
-
-    }
-
-
-    /* personaj */
 
     .forest-character {
-
         left:
-            6%;
+            8%;
 
         bottom:
-            410px;
+            320px;
 
         font-size:
-            58px;
-
+            65px;
     }
-
-
-    /* animal */
 
     .forest-animal {
-
         right:
-            5%;
+            8%;
 
         bottom:
-            400px;
+            315px;
 
         font-size:
-            66px;
-
+            75px;
     }
 
-
-    /* bula */
-
     .animal-bubble {
-
         right:
             4%;
 
         bottom:
-            480px;
+            425px;
+    }
+
+    .trees {
+        bottom:
+            285px;
+
+        font-size:
+            65px;
+
+        letter-spacing:
+            8px;
+    }
+
+    .question-panel {
+        width:
+            calc(100% - 24px);
+
+        padding:
+            20px;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE TELEFON
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .quiz-topbar {
+        display:
+            grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        padding:
+            10px;
+    }
+
+    .quiz-title {
+        grid-column:
+            1 / -1;
+
+        justify-content:
+            center;
+
+        font-size:
+            17px;
+    }
+
+    .quiz-progress {
+        text-align:
+            left;
+    }
+
+    .quiz-score {
+        text-align:
+            right;
+    }
+
+    .quiz-lives {
+        grid-column:
+            1 / -1;
+
+        text-align:
+            center;
+    }
+
+    .forest-game {
+        min-height:
+            850px;
+    }
+
+    .sun {
+        top:
+            25px;
+
+        right:
+            5%;
+
+        font-size:
+            48px;
+    }
+
+    .cloud {
+        font-size:
+            42px;
+    }
+
+    .mountain-1 {
+        top:
+            135px;
+
+        left:
+            25%;
+
+        font-size:
+            90px;
+    }
+
+    .mountain-2 {
+        top:
+            155px;
+
+        right:
+            5%;
+
+        font-size:
+            75px;
+    }
+
+    .trees {
+        bottom:
+            335px;
+
+        font-size:
+            47px;
+
+        letter-spacing:
+            2px;
+    }
+
+    .forest-character {
+        left:
+            5%;
+
+        bottom:
+            365px;
+
+        width:
+            70px;
+
+        font-size:
+            52px;
+    }
+
+    .forest-character::after {
+        left:
+            10px;
+
+        width:
+            50px;
+    }
+
+    .forest-animal {
+        right:
+            5%;
+
+        bottom:
+            360px;
+
+        width:
+            75px;
+
+        font-size:
+            62px;
+    }
+
+    .forest-animal::after {
+        left:
+            12px;
+
+        width:
+            52px;
+    }
+
+    .animal-bubble {
+        right:
+            4%;
+
+        bottom:
+            455px;
 
         max-width:
-            180px;
+            190px;
 
         padding:
             10px 13px;
 
         font-size:
             12px;
-
     }
 
-
-    /* panou */
-
     .question-panel {
+        left:
+            50%;
 
         bottom:
-            8px;
+            10px;
 
         width:
-            calc(100% - 14px);
+            calc(100% - 16px);
 
         padding:
-            17px 12px;
+            16px 12px;
 
         border-radius:
             22px;
-
     }
 
-
     .question-text {
-
         margin:
-            12px auto 17px;
+            12px 5px 17px;
 
         font-size:
             20px;
-
     }
 
-
-    /* răspunsuri */
-
     .answers-grid {
-
         grid-template-columns:
             1fr;
 
         gap:
             9px;
-
     }
 
     .answer-button {
-
         min-height:
-            58px;
+            59px;
 
         padding:
-            10px 13px;
+            9px 12px;
+
+        border-radius:
+            14px;
 
         font-size:
             15px;
-
-        border-radius:
-            13px;
-
     }
 
     .answer-letter {
-
         flex-basis:
             34px;
 
@@ -2011,89 +2253,66 @@
         height:
             34px;
 
+        border-radius:
+            9px;
+
+        font-size:
+            16px;
     }
 
+    .game-effect {
+        font-size:
+            75px;
+    }
 
-    /* rezultat */
+    .attack-effect {
+        font-size:
+            80px;
+    }
 
-    .result-details {
+    .result-card {
+        padding:
+            35px 18px;
+    }
 
-        grid-template-columns:
-            1fr;
-
+    .result-icon {
+        font-size:
+            70px;
     }
 
     .result-card h1 {
-
         font-size:
-            31px;
+            30px;
+    }
 
+    .result-details {
+        grid-template-columns:
+            1fr;
     }
 
 }
 
 
-/* =====================================================
-   📱 TELEFOANE FOARTE MICI
-===================================================== */
+/* =========================================================
+   REDUCERE ANIMAȚII — ACCESIBILITATE
+   ========================================================= */
 
-@media (max-width: 420px) {
+@media (prefers-reduced-motion: reduce) {
 
-    .forest-game {
+    *,
+    *::before,
+    *::after {
+        animation-duration:
+            .01ms !important;
 
-        min-height:
-            800px;
+        animation-iteration-count:
+            1 !important;
 
-    }
+        scroll-behavior:
+            auto !important;
 
-    .forest-character {
-
-        left:
-            4%;
-
-        bottom:
-            425px;
-
-        font-size:
-            50px;
-
-    }
-
-    .forest-animal {
-
-        right:
-            3%;
-
-        bottom:
-            415px;
-
-        font-size:
-            58px;
-
-    }
-
-    .animal-bubble {
-
-        bottom:
-            485px;
-
-        max-width:
-            160px;
-
-    }
-
-    .question-panel {
-
-        padding:
-            14px 10px;
-
-    }
-
-    .question-text {
-
-        font-size:
-            18px;
-
+        transition-duration:
+            .01ms !important;
     }
 
 }
