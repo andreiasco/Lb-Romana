@@ -1470,6 +1470,5 @@ if (
 
 } else {
 
-    initializeazaQuiz();
-
+       incarcaQuizuriSite();
 }
