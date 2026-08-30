@@ -445,123 +445,18 @@ site.innerHTML = `
 </div>
 
 
-<div id="pagina-quiz" class="pagina">
 
-<section id="quiz">
+<div class="quizuri-create">
 
-    <h2 class="titlu">
-        Quiz-uri 🎮
-    </h2>
+    <h3>🌲 Quizuri interactive</h3>
 
-    <p class="subtitlu">
-        Alege platforma pe care vrei să exersezi.
+    <p>
+        Alege un quiz și pornește aventura prin pădure.
     </p>
 
-    <div class="quiz-selectie">
-
-        <button
-            class="quiz-tab kahoot activ"
-            onclick="arataQuiz('kahoot')">
-
-            🎯 Kahoot
-
-        </button>
-
-        <button
-            class="quiz-tab wordwall"
-            onclick="arataQuiz('wordwall')">
-
-            🧩 Wordwall
-
-        </button>
-
+    <div id="listaQuizuriSite">
+        <p>Se încarcă quizurile...</p>
     </div>
-
-
-    <div id="kahoot" class="quizuri">
-
-        <div class="kahoot-card">
-
-            <h3>
-                📝 Aplicarea regulilor în contexte noi
-            </h3>
-
-            <p>
-                Exersează aplicarea regulilor de limbă română.
-            </p>
-
-            <a
-                class="kahoot-link"
-                href="https://play.kahoot.it/v2/?quizId=071aa0d4-21d3-426f-a7a3-4c8ab375d61b&hostId=abe4ceb9-8934-4647-a7f8-ee81f1f1ac7c"
-                target="_blank"
-                rel="noopener noreferrer">
-
-                🎯 Deschide Kahoot
-
-            </a>
-
-        </div>
-
-
-        <div class="kahoot-card">
-
-            <h3>
-                📚 Romanian Vocabulary in Context
-            </h3>
-
-            <p>
-                Exersează vocabularul românesc.
-            </p>
-
-            <a
-                class="kahoot-link"
-                href="https://play.kahoot.it/v2/?quizId=bf406337-3185-409c-92c7-22471cf41e38&hostId=abe4ceb9-8934-4647-a7f8-ee81f1f1ac7c"
-                target="_blank"
-                rel="noopener noreferrer">
-
-                🎯 Deschide Kahoot
-
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <div
-        id="wordwall"
-        class="quizuri ascuns">
-
-        <div class="quiz-card">
-
-            <h3>
-                🔤 Conjuncții de coordonare
-            </h3>
-
-            <iframe
-                src="https://www.wordwall.net/resource/71605201/limba-rom%C3%A2n%C4%83/conjunc%C8%9Bii-coordonare"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-
-        <div class="quiz-card">
-
-            <h3>
-                ✍️ Recapitulare – Verbul
-            </h3>
-
-            <iframe
-                src="https://www.wordwall.net/resource/71415598/limba-rom%C3%A2n%C4%83/recapitulare-vi-viii-verbul"
-                allowfullscreen>
-            </iframe>
-
-        </div>
-
-    </div>
-
-</section>
 
 </div>
 
@@ -1857,3 +1752,781 @@ async function descarcaRezumatWord(wordUrl) {
 
 
 // ======================================================
+
+// ======================================================
+// QUIZURI CREATE DE ADMIN
+// ======================================================
+
+async function incarcaQuizuriSite() {
+
+    const container =
+        document.getElementById("listaQuizuriSite");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML =
+        "<p>🌲 Se încarcă aventurile...</p>";
+
+    try {
+
+        const {
+            data: quizuri,
+            error
+        } =
+            await supabaseClient
+                .from("quizuri")
+                .select("*")
+                .eq("activ", true)
+                .order("created_at", {
+                    ascending: false
+                });
+
+        if (error) {
+            console.error(
+                "Eroare încărcare quizuri:",
+                error
+            );
+
+            container.innerHTML =
+                "<p class='quiz-eroare'>" +
+                "Nu am putut încărca quizurile." +
+                "</p>";
+
+            return;
+        }
+
+        if (!quizuri || quizuri.length === 0) {
+
+            container.innerHTML = `
+                <div class="quiz-fara-rezultate">
+                    🌲
+                    <h3>Nu există încă quizuri</h3>
+                    <p>
+                        Administratorul nu a publicat încă niciun quiz.
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            quizuri.map(quiz => `
+
+                <div class="quiz-aventura-card">
+
+                    <div class="quiz-aventura-icon">
+                        🌲🐺
+                    </div>
+
+                    <div class="quiz-aventura-info">
+
+                        <h3>
+                            ${escapeHTML(quiz.titlu)}
+                        </h3>
+
+                        ${
+                            quiz.categorie
+                                ? `<span class="quiz-categorie">
+                                    ${escapeHTML(quiz.categorie)}
+                                   </span>`
+                                : ""
+                        }
+
+                        ${
+                            quiz.descriere
+                                ? `<p>
+                                    ${escapeHTML(quiz.descriere)}
+                                   </p>`
+                                : ""
+                        }
+
+                    </div>
+
+                    <button
+                        class="quiz-start-btn"
+                        onclick="pornesteQuiz(${quiz.id})">
+
+                        🌲 Începe aventura
+
+                    </button>
+
+                </div>
+
+            `).join("");
+
+    } catch (error) {
+
+        console.error(
+            "Eroare quizuri:",
+            error
+        );
+
+        container.innerHTML =
+            "<p class='quiz-eroare'>" +
+            "A apărut o eroare la încărcarea quizurilor." +
+            "</p>";
+    }
+}
+// ======================================================
+// PORNIRE QUIZ
+// ======================================================
+
+async function pornesteQuiz(quizId) {
+
+    try {
+
+        const {
+            data: quiz,
+            error: eroareQuiz
+        } =
+            await supabaseClient
+                .from("quizuri")
+                .select("*")
+                .eq("id", quizId)
+                .eq("activ", true)
+                .single();
+
+        if (eroareQuiz || !quiz) {
+
+            alert(
+                "Nu am putut încărca acest quiz."
+            );
+
+            return;
+        }
+
+
+        const {
+            data: intrebari,
+            error: eroareIntrebari
+        } =
+            await supabaseClient
+                .from("intrebari_quiz")
+                .select("*")
+                .eq("quiz_id", quizId)
+                .order("ordine", {
+                    ascending: true
+                });
+
+
+        if (eroareIntrebari) {
+
+            console.error(
+                eroareIntrebari
+            );
+
+            alert(
+                "Nu am putut încărca întrebările."
+            );
+
+            return;
+        }
+
+
+        if (!intrebari || intrebari.length === 0) {
+
+            alert(
+                "Acest quiz nu are încă întrebări."
+            );
+
+            return;
+        }
+
+
+        pornesteJocQuiz(
+            quiz,
+            intrebari
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Eroare pornire quiz:",
+            error
+        );
+
+        alert(
+            "A apărut o eroare."
+        );
+    }
+}
+// ======================================================
+// JOC QUIZ - PĂDURE
+// ======================================================
+
+let jocQuiz = {
+    quiz: null,
+    intrebari: [],
+    index: 0,
+    vieti: 3,
+    scor: 0
+};
+
+
+function pornesteJocQuiz(
+    quiz,
+    intrebari
+) {
+
+    jocQuiz = {
+        quiz: quiz,
+        intrebari: intrebari,
+        index: 0,
+        vieti: 3,
+        scor: 0
+    };
+
+
+    const quizSection =
+        document.getElementById("quiz");
+
+    if (!quizSection) {
+        return;
+    }
+
+
+    quizSection.innerHTML = `
+
+        <div class="quiz-joc">
+
+            <div class="quiz-joc-header">
+
+                <button
+                    class="quiz-back-btn"
+                    onclick="opresteQuiz()">
+
+                    ← Înapoi la quizuri
+
+                </button>
+
+                <div class="quiz-joc-title">
+
+                    🌲
+                    ${escapeHTML(quiz.titlu)}
+                    🌲
+
+                </div>
+
+            </div>
+
+
+            <div class="padure-joc">
+
+                <div class="copac copac-1">🌲</div>
+                <div class="copac copac-2">🌲</div>
+                <div class="copac copac-3">🌲</div>
+                <div class="copac copac-4">🌲</div>
+                <div class="copac copac-5">🌲</div>
+
+                <div id="animalJoc"
+                     class="animal-joc">
+                    🐺
+                </div>
+
+                <div id="omJoc"
+                     class="om-joc">
+                    🧍
+                </div>
+
+                <div class="drum-joc"></div>
+
+            </div>
+
+
+            <div class="quiz-info">
+
+                <div id="vietiJoc">
+                    ❤️ ❤️ ❤️
+                </div>
+
+                <div id="progresJoc">
+                    Întrebarea 1 / ${intrebari.length}
+                </div>
+
+                <div id="scorJoc">
+                    ⭐ Scor: 0
+                </div>
+
+            </div>
+
+
+            <div id="intrebareJoc"></div>
+
+        </div>
+
+    `;
+
+
+    afiseazaIntrebareaQuiz();
+}
+function afiseazaIntrebareaQuiz() {
+
+    const intrebare =
+        jocQuiz.intrebari[jocQuiz.index];
+
+    if (!intrebare) {
+        finalizeazaQuiz();
+        return;
+    }
+
+
+    const container =
+        document.getElementById(
+            "intrebareJoc"
+        );
+
+    if (!container) {
+        return;
+    }
+
+
+    actualizeazaInformatiiJoc();
+
+
+    const variante = [
+        {
+            litera: "A",
+            text: intrebare.raspuns_a
+        },
+        {
+            litera: "B",
+            text: intrebare.raspuns_b
+        },
+        {
+            litera: "C",
+            text: intrebare.raspuns_c
+        },
+        {
+            litera: "D",
+            text: intrebare.raspuns_d
+        }
+    ];
+
+
+    container.innerHTML = `
+
+        <div class="intrebare-card">
+
+            <div class="animal-intrebare">
+                ${escapeHTML(
+                    emojiAnimal(
+                        intrebare.animal
+                    )
+                )}
+            </div>
+
+            <h2>
+                ${escapeHTML(
+                    intrebare.intrebare
+                )}
+            </h2>
+
+
+            <div class="raspunsuri-joc">
+
+                ${variante.map(v => `
+
+                    <button
+                        class="raspuns-joc raspuns-${v.litera}"
+                        onclick="verificaRaspuns('${v.litera}')">
+
+                        <span class="litera">
+                            ${v.litera}
+                        </span>
+
+                        <span>
+                            ${escapeHTML(v.text)}
+                        </span>
+
+                    </button>
+
+                `).join("")}
+
+            </div>
+
+        </div>
+
+    `;
+}
+function verificaRaspuns(raspuns) {
+
+    const intrebare =
+        jocQuiz.intrebari[jocQuiz.index];
+
+    const butoane =
+        document.querySelectorAll(
+            ".raspuns-joc"
+        );
+
+
+    butoane.forEach(buton => {
+        buton.disabled = true;
+    });
+
+
+    const corect =
+        String(
+            intrebare.raspuns_corect
+        ).toUpperCase();
+
+
+    const butonAles =
+        document.querySelector(
+            `.raspuns-${raspuns}`
+        );
+
+
+    if (raspuns === corect) {
+
+        if (butonAles) {
+            butonAles.classList.add(
+                "raspuns-corect"
+            );
+        }
+
+
+        jocQuiz.scor += 10;
+
+
+        animeazaCorect();
+
+
+        setTimeout(() => {
+
+            jocQuiz.index++;
+
+            afiseazaIntrebareaQuiz();
+
+        }, 1200);
+
+
+    } else {
+
+        if (butonAles) {
+            butonAles.classList.add(
+                "raspuns-gresit"
+            );
+        }
+
+
+        jocQuiz.vieti--;
+
+
+        animeazaLovitura();
+
+
+        setTimeout(() => {
+
+            if (jocQuiz.vieti <= 0) {
+
+                finalizeazaQuiz();
+
+                return;
+            }
+
+
+            jocQuiz.index++;
+
+            afiseazaIntrebareaQuiz();
+
+        }, 1500);
+
+    }
+
+}
+function actualizeazaInformatiiJoc() {
+
+    const vieti =
+        document.getElementById(
+            "vietiJoc"
+        );
+
+    const progres =
+        document.getElementById(
+            "progresJoc"
+        );
+
+    const scor =
+        document.getElementById(
+            "scorJoc"
+        );
+
+
+    if (vieti) {
+
+        vieti.innerHTML =
+            "❤️".repeat(jocQuiz.vieti) +
+            " 🖤".repeat(
+                3 - jocQuiz.vieti
+            );
+
+    }
+
+
+    if (progres) {
+
+        progres.textContent =
+            `Întrebarea ${jocQuiz.index + 1} / ${jocQuiz.intrebari.length}`;
+
+    }
+
+
+    if (scor) {
+
+        scor.textContent =
+            `⭐ Scor: ${jocQuiz.scor}`;
+
+    }
+
+}
+function animeazaCorect() {
+
+    const om =
+        document.getElementById(
+            "omJoc"
+        );
+
+    if (!om) {
+        return;
+    }
+
+
+    om.classList.remove(
+        "om-corect"
+    );
+
+
+    void om.offsetWidth;
+
+
+    om.classList.add(
+        "om-corect"
+    );
+
+}
+function animeazaLovitura() {
+
+    const om =
+        document.getElementById(
+            "omJoc"
+        );
+
+    const animal =
+        document.getElementById(
+            "animalJoc"
+        );
+
+
+    if (om) {
+
+        om.classList.remove(
+            "om-lovit"
+        );
+
+        void om.offsetWidth;
+
+        om.classList.add(
+            "om-lovit"
+        );
+
+    }
+
+
+    if (animal) {
+
+        animal.classList.remove(
+            "animal-atac"
+        );
+
+        void animal.offsetWidth;
+
+        animal.classList.add(
+            "animal-atac"
+        );
+
+    }
+
+}
+function finalizeazaQuiz() {
+
+    const quizSection =
+        document.getElementById(
+            "quiz"
+        );
+
+
+    if (!quizSection) {
+        return;
+    }
+
+
+    const total =
+        jocQuiz.intrebari.length;
+
+    const raspunse =
+        Math.min(
+            jocQuiz.index + 1,
+            total
+        );
+
+
+    let mesaj = "";
+
+    if (jocQuiz.vieti <= 0) {
+
+        mesaj =
+            "Ai rămas fără vieți. Mai încearcă o dată!";
+
+    } else {
+
+        mesaj =
+            "Felicitări! Ai terminat aventura!";
+
+    }
+
+
+    const procent =
+        total > 0
+            ? Math.round(
+                (jocQuiz.scor /
+                    (total * 10)) * 100
+            )
+            : 0;
+
+
+    quizSection.innerHTML = `
+
+        <div class="quiz-final">
+
+            <div class="final-padure">
+                🌲 🌲 🧍 🌲 🌲
+            </div>
+
+            <h2>
+                ${jocQuiz.vieti > 0
+                    ? "🎉 Felicitări!"
+                    : "💔 Joc terminat"}
+            </h2>
+
+            <p>
+                ${mesaj}
+            </p>
+
+
+            <div class="scor-final">
+
+                <div>
+                    ⭐
+                </div>
+
+                <strong>
+                    ${jocQuiz.scor}
+                </strong>
+
+                <span>
+                    puncte
+                </span>
+
+            </div>
+
+
+            <div class="rezultat-final">
+
+                ❤️ Vieți rămase:
+                ${jocQuiz.vieti}
+
+                <br>
+
+                📊 Rezultat:
+                ${procent}%
+
+            </div>
+
+
+            <div class="final-butoane">
+
+                <button
+                    class="quiz-start-btn"
+                    onclick="repornesteQuiz()">
+
+                    🔄 Joacă din nou
+
+                </button>
+
+                <button
+                    class="quiz-back-btn"
+                    onclick="opresteQuiz()">
+
+                    🌲 Alte quizuri
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+}
+function repornesteQuiz() {
+
+    if (!jocQuiz.quiz) {
+        return;
+    }
+
+    pornesteJocQuiz(
+        jocQuiz.quiz,
+        jocQuiz.intrebari
+    );
+
+}
+
+
+function opresteQuiz() {
+
+    const quizSection =
+        document.getElementById(
+            "quiz"
+        );
+
+    if (!quizSection) {
+        return;
+    }
+
+
+    window.location.hash =
+        "quiz";
+
+
+    quizSection.innerHTML = `
+
+        <h2 class="titlu">
+            Quiz-uri 🎮
+        </h2>
+
+        <p class="subtitlu">
+            Alege aventura pe care vrei să o începi.
+        </p>
+
+        <div class="quizuri-create">
+
+            <h3>
+                🌲 Quizuri interactive
+            </h3>
+
+            <div id="listaQuizuriSite">
+                Se încarcă...
+            </div>
+
+        </div>
+
+    `;
+
+
+    incarcaQuizuriSite();
+}
+
+
+
