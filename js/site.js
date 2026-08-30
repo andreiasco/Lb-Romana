@@ -26,7 +26,7 @@ site.innerHTML = `
         <a href="${estePaginaAdmin ? "index.html" : ""}#acasa">Acasă</a>
         <a href="${estePaginaAdmin ? "index.html" : ""}#limba">Limba română</a>
         <a href="${estePaginaAdmin ? "index.html" : ""}#literatura">Literatura română</a>
-        <a href="${estePaginaAdmin ? "index.html" : ""}#quiz">Quiz-uri</a>
+       <a href="${estePaginaAdmin ? "index.html" : ""}#pagina-quizuri">Quiz-uri</a>
         <a href="${estePaginaAdmin ? "index.html" : ""}#revista">Revista</a>
         <a id="adminLink" class="ascuns" href="admin.html">Panou admin</a>
     </div>
@@ -422,24 +422,6 @@ site.innerHTML = `
 </section>
 
 </div>
-
-
-
-<section id="quiz" class="quizuri-create">
-
-    <h3>🌲 Quizuri interactive</h3>
-
-    <p>
-        Alege un quiz și pornește aventura prin pădure.
-    </p>
-
-    <div id="listaQuizuri">
-    <p>Se încarcă quizurile...</p>
-</div>
-
-</section>
-
-
 
 <div id="pagina-revista" class="pagina">
 
