@@ -24,8 +24,9 @@ window.supabaseClient =
 
 
 // Alias pentru toate fișierele JS
-const supabaseClient =
+var supabaseClient =
     window.supabaseClient;
+
 
 
 // ======================================================
