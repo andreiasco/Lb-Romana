@@ -1879,6 +1879,7 @@ incarcaQuizuriSite();
 // ======================================================
 
 async function pornesteQuiz(quizId) {
+
     console.log("AM APĂSAT ÎNCEPE AVENTURA");
     console.log("quizId:", quizId);
 
@@ -1898,19 +1899,13 @@ async function pornesteQuiz(quizId) {
         console.log("QUIZ GĂSIT:", quiz);
         console.log("EROARE QUIZ:", eroareQuiz);
 
-    try {
-
-        const {
-            data: quiz,
-            error: eroareQuiz
-        } =
-            await supabaseClient
-                .from("quizuri")
-                .select("*")
-                .eq("id", quizId)
-                 .single();
 
         if (eroareQuiz || !quiz) {
+
+            console.error(
+                "Nu am găsit quizul:",
+                eroareQuiz
+            );
 
             alert(
                 "Nu am putut încărca acest quiz."
@@ -1933,9 +1928,21 @@ async function pornesteQuiz(quizId) {
                 });
 
 
+        console.log(
+            "ÎNTREBĂRI GĂSITE:",
+            intrebari
+        );
+
+        console.log(
+            "EROARE ÎNTREBĂRI:",
+            eroareIntrebari
+        );
+
+
         if (eroareIntrebari) {
 
             console.error(
+                "Eroare încărcare întrebări:",
                 eroareIntrebari
             );
 
@@ -1947,7 +1954,10 @@ async function pornesteQuiz(quizId) {
         }
 
 
-        if (!intrebari || intrebari.length === 0) {
+        if (
+            !intrebari ||
+            intrebari.length === 0
+        ) {
 
             alert(
                 "Acest quiz nu are încă întrebări."
@@ -1957,23 +1967,33 @@ async function pornesteQuiz(quizId) {
         }
 
 
+        console.log(
+            "PORNESC JOCUL:",
+            quiz.titlu
+        );
+
+
         pornesteJocQuiz(
             quiz,
             intrebari
         );
 
+
     } catch (error) {
 
         console.error(
-            "Eroare pornire quiz:",
+            "EROARE PORNIRE QUIZ:",
             error
         );
 
         alert(
-            "A apărut o eroare."
+            "A apărut o eroare la pornirea quizului."
         );
+
     }
+
 }
+
 // ======================================================
 // JOC QUIZ - PĂDURE
 // ======================================================
