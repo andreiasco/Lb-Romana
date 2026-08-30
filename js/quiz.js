@@ -312,6 +312,35 @@ async function incarcaQuizuriSite() {
 
             `).join("");
 
+        const butoaneQuiz =
+            container.querySelectorAll(
+                ".quiz-start-button"
+            );
+
+        butoaneQuiz.forEach(buton => {
+
+            buton.addEventListener(
+                "click",
+                () => {
+
+                    const quizId =
+                        Number(
+                            buton.dataset.quizId
+                        );
+
+                    console.log(
+                        "Pornește quiz:",
+                        quizId
+                    );
+
+                    pornesteQuiz(quizId);
+
+                }
+            );
+
+        });
+
+       
         console.log(
             "5. Quizurile au fost afișate!"
         );
