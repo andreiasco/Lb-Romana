@@ -1868,6 +1868,110 @@ RESPONSIVE
 }
 
 }
+/* =====================================================
+   FIX QUIZ - RĂSPUNSURI VIZIBILE + CLICK
+===================================================== */
+
+.question-panel {
+    position: relative !important;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+}
+
+.answers {
+    position: relative !important;
+    z-index: 1100 !important;
+
+    display: grid !important;
+
+    pointer-events: auto !important;
+}
+
+.answer-button {
+    position: relative !important;
+    z-index: 1200 !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    width: 100% !important;
+    min-height: 60px !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    pointer-events: auto !important;
+
+    cursor: pointer !important;
+}
+
+.answer-letter {
+    position: relative !important;
+    z-index: 1201 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    flex-shrink: 0 !important;
+}
+
+.answer-text {
+    position: relative !important;
+    z-index: 1201 !important;
+
+    display: block !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    color: #222 !important;
+
+    font-size: 18px !important;
+    font-weight: 600 !important;
+
+    line-height: 1.4 !important;
+
+    white-space: normal !important;
+
+    overflow: visible !important;
+
+    pointer-events: none !important;
+}
+
+/*
+   Foarte important:
+   elementele din scena să nu poată
+   intercepta clickurile panoului.
+*/
+
+.forest {
+    z-index: 1 !important;
+}
+
+.question-panel {
+    z-index: 1000 !important;
+}
+
+/*
+   Dacă există pseudo-elemente peste scenă,
+   nu le lăsăm să intercepteze clickuri.
+*/
+
+.forest::before,
+.forest::after {
+    pointer-events: none !important;
+}
+
+/*
+   Efectele vizuale nu trebuie să blocheze butoanele.
+*/
+
+.cinematic-flash,
+.attack-effect,
+.success-effect {
+    pointer-events: none !important;
+}
 
 /* =========================================================
 REDUCERE ANIMAȚII PENTRU UTILIZATORI CARE O CER
