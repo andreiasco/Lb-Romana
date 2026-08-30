@@ -1489,8 +1489,7 @@ function initializeazaQuiz() {
 ===================================================== */
 
 if (
-    document.readyState ===
-    "loading"
+    document.readyState === "loading"
 ) {
 
     document.addEventListener(
@@ -1500,5 +1499,6 @@ if (
 
 } else {
 
-       incarcaQuizuriSite();
+    initializeazaQuiz();
+
 }
