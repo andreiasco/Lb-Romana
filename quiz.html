@@ -11,7 +11,7 @@
     >
 
     <title>
-        Aventura din pădure
+        Quiz - Aventura din pădure
     </title>
 
     <link
@@ -30,9 +30,9 @@
 
 <main class="quiz-page">
 
-    <!-- =====================================================
+    <!-- =================================================
          SELECTARE QUIZ
-    ====================================================== -->
+    ================================================== -->
 
     <section
         id="quizSelectScreen"
@@ -50,8 +50,8 @@
             </h1>
 
             <p>
-                Pornește într-o aventură prin pădure,
-                mergi pe potecă și întâlnește animalele.
+                Intră în pădure, mergi pe potecă
+                și întâlnește animalele.
             </p>
 
             <div
@@ -70,9 +70,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          JOC
-    ====================================================== -->
+    ================================================== -->
 
     <section
         id="quizGameScreen"
@@ -81,21 +81,12 @@
 
         <header class="game-header">
 
-            <div class="game-title-area">
-
-                <div class="game-mini-icon">
-                    🌲
-                </div>
-
-                <div
-                    id="gameQuizTitle"
-                    class="game-title"
-                >
-                    Aventura
-                </div>
-
+            <div
+                id="gameQuizTitle"
+                class="game-title"
+            >
+                Aventura
             </div>
-
 
             <div class="game-stats">
 
@@ -121,7 +112,6 @@
 
                 </div>
 
-
                 <div class="stat-item">
 
                     <span class="stat-label">
@@ -136,7 +126,6 @@
                     </strong>
 
                 </div>
-
 
                 <div class="stat-item">
 
@@ -159,82 +148,69 @@
 
 
         <!-- =================================================
-             SCENĂ
+             SCENA PĂDURII
         ================================================== -->
 
         <div class="forest">
 
-            <div class="forest-light"></div>
+            <div class="forest-overlay"></div>
 
-            <div class="distance-fog"></div>
+            <!-- cer -->
 
+            <div class="sky">
 
-            <!-- SOARE -->
+                <div class="sun">
+                    ☀️
+                </div>
 
-            <div class="sun">
-                ☀️
+                <div class="cloud cloud-1">
+                    ☁️
+                </div>
+
+                <div class="cloud cloud-2">
+                    ☁️
+                </div>
+
             </div>
 
 
-            <!-- NORI -->
+            <!-- munți -->
 
-            <div class="cloud cloud-1">
-                ☁️
-            </div>
-
-            <div class="cloud cloud-2">
-                ☁️
+            <div class="mountains">
+                🏔️
             </div>
 
 
-            <!-- COPACI DECORATIVI -->
+            <!-- copaci depărtați -->
 
             <div class="background-trees">
 
-                <span class="tree tree-1">
-                    🌲
-                </span>
-
-                <span class="tree tree-2">
-                    🌳
-                </span>
-
-                <span class="tree tree-3">
-                    🌲
-                </span>
-
-                <span class="tree tree-4">
-                    🌳
-                </span>
-
-                <span class="tree tree-5">
-                    🌲
-                </span>
-
-                <span class="tree tree-6">
-                    🌳
-                </span>
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
 
             </div>
 
 
-            <!-- PĂMÂNT -->
+            <!-- sol -->
 
             <div class="ground"></div>
 
 
-            <!-- POTECĂ -->
+            <!-- potecă -->
 
             <div class="path">
-
-                <div class="path-texture"></div>
 
                 <div class="path-line"></div>
 
             </div>
 
 
-            <!-- IARBĂ -->
+            <!-- vegetație -->
 
             <div class="grass grass-1">
                 🌿
@@ -253,7 +229,7 @@
             </div>
 
 
-            <!-- PIETRE -->
+            <!-- pietre -->
 
             <div class="rock rock-1">
                 🪨
@@ -265,7 +241,7 @@
 
 
             <!-- =================================================
-                 PERSONAJ COMPLET
+                 PERSONAJ UMAN
             ================================================== -->
 
             <div
@@ -275,10 +251,7 @@
 
                 <div class="player-shadow"></div>
 
-
                 <div class="person">
-
-                    <!-- CAP -->
 
                     <div class="person-head">
 
@@ -289,61 +262,42 @@
                             <span class="eye eye-left"></span>
                             <span class="eye eye-right"></span>
 
-                            <span class="person-nose"></span>
-
-                            <span class="person-mouth"></span>
+                            <span class="mouth"></span>
 
                         </div>
 
                     </div>
 
 
-                    <!-- GÂT -->
-
                     <div class="person-neck"></div>
 
 
-                    <!-- TRUNCHI -->
-
                     <div class="person-body">
 
-                        <div class="shirt-detail"></div>
+                        <div class="person-arm person-arm-left"></div>
+
+                        <div class="person-shirt">
+                            🎒
+                        </div>
+
+                        <div class="person-arm person-arm-right"></div>
 
                     </div>
 
 
-                    <!-- BRAȚ STÂNGA -->
+                    <div class="person-legs">
 
-                    <div class="person-arm arm-left">
+                        <div class="person-leg person-leg-left">
 
-                        <div class="person-hand"></div>
+                            <div class="person-shoe"></div>
 
-                    </div>
+                        </div>
 
+                        <div class="person-leg person-leg-right">
 
-                    <!-- BRAȚ DREAPTA -->
+                            <div class="person-shoe"></div>
 
-                    <div class="person-arm arm-right">
-
-                        <div class="person-hand"></div>
-
-                    </div>
-
-
-                    <!-- PICIOR STÂNGA -->
-
-                    <div class="person-leg leg-left">
-
-                        <div class="person-shoe"></div>
-
-                    </div>
-
-
-                    <!-- PICIOR DREAPTA -->
-
-                    <div class="person-leg leg-right">
-
-                        <div class="person-shoe"></div>
+                        </div>
 
                     </div>
 
@@ -353,18 +307,18 @@
 
 
             <!-- =================================================
-                 ANIMAL
+                 ANIMAL EMOJI
             ================================================== -->
 
             <div
                 id="animal"
                 class="animal"
             >
-
+                🐺
             </div>
 
 
-            <!-- BULĂ ANIMAL -->
+            <!-- bulă animal -->
 
             <div
                 id="animalBubble"
@@ -374,7 +328,7 @@
             </div>
 
 
-            <!-- EFECT GREȘIT -->
+            <!-- efect atac -->
 
             <div
                 id="attackEffect"
@@ -384,23 +338,13 @@
             </div>
 
 
-            <!-- EFECT CORECT -->
+            <!-- efect succes -->
 
             <div
                 id="successEffect"
                 class="success-effect"
             >
                 🎉
-            </div>
-
-
-            <!-- INDICATOR DE DISTANȚĂ -->
-
-            <div
-                id="walkingMessage"
-                class="walking-message"
-            >
-                Mergi prin pădure...
             </div>
 
         </div>
@@ -416,19 +360,7 @@
                 id="questionAnimal"
                 class="question-animal"
             >
-            </div>
-
-
-            <div class="question-location">
-
-                <span>
-                    🐾
-                </span>
-
-                <span id="questionLocationText">
-                    O întâlnire în pădure
-                </span>
-
+                🐺
             </div>
 
 
@@ -436,8 +368,6 @@
                 Întrebarea va apărea aici
             </h2>
 
-
-            <!-- RĂSPUNSURI -->
 
             <div class="answers">
 
@@ -452,7 +382,8 @@
                         A
                     </span>
 
-                    <span class="answer-text"></span>
+                    <span class="answer-text">
+                    </span>
 
                 </button>
 
@@ -468,7 +399,8 @@
                         B
                     </span>
 
-                    <span class="answer-text"></span>
+                    <span class="answer-text">
+                    </span>
 
                 </button>
 
@@ -484,7 +416,8 @@
                         C
                     </span>
 
-                    <span class="answer-text"></span>
+                    <span class="answer-text">
+                    </span>
 
                 </button>
 
@@ -500,7 +433,8 @@
                         D
                     </span>
 
-                    <span class="answer-text"></span>
+                    <span class="answer-text">
+                    </span>
 
                 </button>
 
@@ -517,9 +451,9 @@
     </section>
 
 
-    <!-- =====================================================
+    <!-- =================================================
          REZULTAT
-    ====================================================== -->
+    ================================================== -->
 
     <section
         id="quizResultScreen"
