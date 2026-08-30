@@ -1209,3 +1209,449 @@ body.dark .pdf-item {
         align-items: stretch;
     }
 }
+/* ======================================================
+   QUIZ AVENTURA
+====================================================== */
+
+.quizuri-create {
+    margin-top: 30px;
+    padding: 25px;
+    background: linear-gradient(
+        135deg,
+        #f1f8e9,
+        #fff
+    );
+    border-radius: 20px;
+    border: 2px solid #c5e1a5;
+}
+
+.quizuri-create h3 {
+    color: #33691e;
+    margin-top: 0;
+}
+
+
+.quiz-aventura-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin: 15px 0;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+
+.quiz-aventura-icon {
+    font-size: 45px;
+}
+
+
+.quiz-aventura-info {
+    flex: 1;
+}
+
+
+.quiz-aventura-info h3 {
+    margin: 0 0 8px;
+    color: #7b2450;
+}
+
+
+.quiz-categorie {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #f3e5f5;
+    color: #7b2450;
+    font-size: 13px;
+}
+
+
+.quiz-start-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 12px 18px;
+    background: #4caf50;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+
+.quiz-start-btn:hover {
+    background: #388e3c;
+    transform: translateY(-2px);
+}
+
+
+/* ======================================================
+   JOC
+====================================================== */
+
+.quiz-joc {
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+.quiz-joc-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+
+.quiz-joc-title {
+    font-size: 25px;
+    font-weight: 800;
+    color: #33691e;
+}
+
+
+.quiz-back-btn {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: #eeeeee;
+    cursor: pointer;
+}
+
+
+/* PADURE */
+
+.padure-joc {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    border-radius: 25px;
+    background:
+        linear-gradient(
+            #81d4fa 0%,
+            #b3e5fc 45%,
+            #81c784 46%,
+            #388e3c 100%
+        );
+    box-shadow:
+        inset 0 -60px 0 rgba(0,0,0,.08),
+        0 12px 30px rgba(0,0,0,.15);
+}
+
+
+.drum-joc {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    height: 80px;
+    background: #c8a77a;
+    transform: perspective(200px) rotateX(12deg);
+}
+
+
+.copac {
+    position: absolute;
+    font-size: 65px;
+    z-index: 2;
+}
+
+
+.copac-1 {
+    left: 3%;
+    top: 35px;
+}
+
+.copac-2 {
+    left: 25%;
+    top: 15px;
+}
+
+.copac-3 {
+    left: 55%;
+    top: 30px;
+}
+
+.copac-4 {
+    right: 20%;
+    top: 5px;
+}
+
+.copac-5 {
+    right: 3%;
+    top: 40px;
+}
+
+
+.om-joc,
+.animal-joc {
+    position: absolute;
+    z-index: 5;
+    font-size: 55px;
+    transition: transform .8s ease;
+}
+
+
+.om-joc {
+    left: 15%;
+    bottom: 55px;
+}
+
+
+.animal-joc {
+    right: 18%;
+    bottom: 55px;
+}
+
+
+.om-corect {
+    animation: mergeOm 1s ease forwards;
+}
+
+
+@keyframes mergeOm {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(120px);
+    }
+
+}
+
+
+.om-lovit {
+    animation: lovitura .7s ease;
+}
+
+
+@keyframes lovitura {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(25px) rotate(15deg);
+    }
+
+    50% {
+        transform: translateX(-20px) rotate(-15deg);
+    }
+
+    75% {
+        transform: translateX(15px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+}
+
+
+.animal-atac {
+    animation: atacAnimal .7s ease;
+}
+
+
+@keyframes atacAnimal {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-100px) scale(1.2);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+}
+
+
+/* INFO */
+
+.quiz-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    font-weight: 700;
+}
+
+
+/* INTREBARE */
+
+.intrebare-card {
+    padding: 25px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+
+.animal-intrebare {
+    font-size: 55px;
+    text-align: center;
+}
+
+
+.intrebare-card h2 {
+    text-align: center;
+    color: #4a1f36;
+}
+
+
+.raspunsuri-joc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+
+.raspuns-joc {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+    padding: 18px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: .2s;
+}
+
+
+.raspuns-joc:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,.1);
+}
+
+
+.litera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #7b2450;
+    color: white;
+    font-weight: 800;
+}
+
+
+.raspuns-corect {
+    background: #c8e6c9 !important;
+    border-color: #4caf50 !important;
+}
+
+
+.raspuns-gresit {
+    background: #ffcdd2 !important;
+    border-color: #e53935 !important;
+}
+
+
+/* FINAL */
+
+.quiz-final {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 40px;
+    text-align: center;
+    border-radius: 25px;
+    background: linear-gradient(
+        135deg,
+        #e8f5e9,
+        #fff
+    );
+    box-shadow: 0 15px 40px rgba(0,0,0,.12);
+}
+
+
+.final-padure {
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+
+.quiz-final h2 {
+    color: #33691e;
+    font-size: 32px;
+}
+
+
+.scor-final {
+    margin: 30px auto;
+    padding: 20px;
+    width: 180px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,.1);
+}
+
+
+.scor-final div {
+    font-size: 35px;
+}
+
+
+.scor-final strong {
+    display: block;
+    font-size: 45px;
+    color: #7b2450;
+}
+
+
+.scor-final span {
+    color: #666;
+}
+
+
+.rezultat-final {
+    font-size: 18px;
+    line-height: 2;
+}
+
+
+.final-butoane {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+
+@media (max-width: 700px) {
+
+    .quiz-aventura-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .quiz-info {
+        flex-direction: column;
+    }
+
+    .raspunsuri-joc {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-joc-header {
+        flex-direction: column;
+    }
+
+}
