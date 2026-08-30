@@ -13,12 +13,12 @@ const SUPABASE_KEY =
 const BUCKET = "Pdf";
 const IMAGINI_BUCKET = "Imagini";
 
-
-const supabaseClient =
+window.supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
+
 
 
 // ======================================================
