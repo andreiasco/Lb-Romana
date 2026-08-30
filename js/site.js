@@ -433,9 +433,9 @@ site.innerHTML = `
         Alege un quiz și pornește aventura prin pădure.
     </p>
 
-    <div id="listaQuizuriSite">
-        <p>Se încarcă quizurile...</p>
-    </div>
+    <div id="listaQuizuri">
+    <p>Se încarcă quizurile...</p>
+</div>
 
 </section>
 
