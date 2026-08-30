@@ -182,14 +182,14 @@ async function incarcaQuizuriSite() {
     const container =
         document.getElementById("listaQuizuri");
 
+    // quiz.js poate fi încărcat și pe alte pagini
     if (!container) {
-        console.error("NU EXISTĂ #listaQuizuri");
         return;
     }
 
     container.innerHTML = `
         <div class="quiz-loading">
-            ⏳ Se verifică baza de date...
+            Se încarcă quizurile...
         </div>
     `;
 
