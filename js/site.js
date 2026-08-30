@@ -1,27 +1,6 @@
 console.log("SITE.JS SE ÎNCARCĂ");
 
 // ======================================================
-// SUPABASE
-// ======================================================
-
-const SUPABASE_URL =
-    "https://eagjavifluwolqeuctzk.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_QSG9OFrCANpRxA-moQCQgQ_mtkx-hWX";
-
-const BUCKET = "Pdf";
-const IMAGINI_BUCKET = "Imagini";
-
-window.supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-
-// ======================================================
 // CONTAINER
 // ======================================================
 
