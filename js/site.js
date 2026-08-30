@@ -2041,60 +2041,7 @@ async function pornesteQuiz(quizId) {
 }
 
  
-        // ================================
-        // 2. ÎNCĂRCĂM ÎNTREBĂRILE
-        // ================================
-
        
-
-
-        // ================================
-        // 3. VERIFICĂM DACĂ EXISTĂ ÎNTREBĂRI
-        // ================================
-
-        if (
-            !intrebari ||
-            intrebari.length === 0
-        ) {
-
-            alert(
-                "Acest quiz nu are încă întrebări."
-            );
-
-            return;
-        }
-
-
-        // ================================
-        // 4. PORNIM JOCUL
-        // ================================
-
-        console.log(
-            "PORNESC JOCUL:",
-            quiz.titlu
-        );
-
-        pornesteJocQuiz(
-            quiz,
-            intrebari
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "EROARE PORNIRE QUIZ:",
-            error
-        );
-
-        alert(
-            "A apărut o eroare la pornirea quizului."
-        );
-
-    }
-
-}
-
 
 // ======================================================
 // JOC QUIZ - PĂDURE
