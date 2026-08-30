@@ -425,7 +425,7 @@ site.innerHTML = `
 
 
 
-<div class="quizuri-create">
+<section id="quiz" class="quizuri-create">
 
     <h3>🌲 Quizuri interactive</h3>
 
@@ -437,7 +437,8 @@ site.innerHTML = `
         <p>Se încarcă quizurile...</p>
     </div>
 
-</div>
+</section>
+
 
 
 <div id="pagina-revista" class="pagina">
