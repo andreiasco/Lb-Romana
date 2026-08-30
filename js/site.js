@@ -1771,22 +1771,23 @@ async function incarcaQuizuriSite() {
         typeof supabaseClient
     );
 
-    console.log("=== INCARC QUIZURILE ===");
-
-    const container = document.getElementById("listaQuizuriSite");
-
     if (!container) {
         console.warn("Nu există #listaQuizuriSite");
         return;
     }
 
     if (typeof supabaseClient === "undefined") {
-        console.error("supabaseClient NU este definit!");
+
+        console.error(
+            "supabaseClient NU este definit!"
+        );
+
         container.innerHTML = `
             <p class="quiz-eroare">
                 Conexiunea cu baza de date nu este disponibilă.
             </p>
         `;
+
         return;
     }
 
@@ -1796,7 +1797,10 @@ async function incarcaQuizuriSite() {
 
     try {
 
-        const { data: quizuri, error } = await supabaseClient
+        const {
+            data: quizuri,
+            error
+        } = await supabaseClient
             .from("quizuri")
             .select("*")
             .eq("activ", true)
@@ -1804,8 +1808,15 @@ async function incarcaQuizuriSite() {
                 ascending: false
             });
 
-        console.log("QUIZURI GĂSITE:", quizuri);
-        console.log("EROARE QUIZURI:", error);
+        console.log(
+            "QUIZURI GĂSITE:",
+            quizuri
+        );
+
+        console.log(
+            "EROARE QUIZURI:",
+            error
+        );
 
         if (error) {
 
@@ -1846,56 +1857,65 @@ async function incarcaQuizuriSite() {
             return;
         }
 
-        container.innerHTML = quizuri.map(quiz => {
+        container.innerHTML = quizuri.map(
+            quiz => {
 
-            return `
-                <div class="quiz-aventura-card">
+                return `
+                    <div class="quiz-aventura-card">
 
-                    <div class="quiz-aventura-icon">
-                        🌲🐺
+                        <div class="quiz-aventura-icon">
+                            🌲🐺
+                        </div>
+
+                        <div class="quiz-aventura-info">
+
+                            <h3>
+                                ${escapeHTML(
+                                    quiz.titlu ||
+                                    "Quiz fără titlu"
+                                )}
+                            </h3>
+
+                            ${
+                                quiz.categorie
+                                    ? `
+                                        <span class="quiz-categorie">
+                                            ${escapeHTML(
+                                                quiz.categorie
+                                            )}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                            ${
+                                quiz.descriere
+                                    ? `
+                                        <p>
+                                            ${escapeHTML(
+                                                quiz.descriere
+                                            )}
+                                        </p>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                        <button
+                            class="quiz-start-btn"
+                            type="button"
+                            onclick="pornesteQuiz(${quiz.id})">
+
+                            🌲 Începe aventura
+
+                        </button>
+
                     </div>
+                `;
 
-                    <div class="quiz-aventura-info">
-
-                        <h3>
-                            ${escapeHTML(quiz.titlu || "Quiz fără titlu")}
-                        </h3>
-
-                        ${
-                            quiz.categorie
-                                ? `
-                                    <span class="quiz-categorie">
-                                        ${escapeHTML(quiz.categorie)}
-                                    </span>
-                                  `
-                                : ""
-                        }
-
-                        ${
-                            quiz.descriere
-                                ? `
-                                    <p>
-                                        ${escapeHTML(quiz.descriere)}
-                                    </p>
-                                  `
-                                : ""
-                        }
-
-                    </div>
-
-                    <button
-                        class="quiz-start-btn"
-                        type="button"
-                        onclick="pornesteQuiz(${quiz.id})">
-
-                        🌲 Începe aventura
-
-                    </button>
-
-                </div>
-            `;
-
-        }).join("");
+            }
+        ).join("");
 
         console.log(
             "QUIZURILE AU FOST AFIȘATE:",
@@ -1916,7 +1936,6 @@ async function incarcaQuizuriSite() {
         `;
     }
 }
-
 
 // ======================================================
 // PORNIRE QUIZ
