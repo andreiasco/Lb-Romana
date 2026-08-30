@@ -4077,5 +4077,322 @@ document.addEventListener(
     }
 );
 
+// =====================================================
+// ÎNCARCĂ QUIZURILE ÎN PANoul ADMIN
+// =====================================================
+
+async function incarcaQuizuriAdmin() {
+
+    const container =
+        document.getElementById("listaQuizuriAdmin");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML =
+        "<p>Se încarcă quizurile...</p>";
+
+    try {
+
+        const user =
+            await utilizatorAutentificat();
+
+        if (!user) {
+
+            container.innerHTML =
+                "<p style='color:#c62828;'>" +
+                "Trebuie să fii administrator." +
+                "</p>";
+
+            return;
+        }
+
+
+        const {
+            data: quizuri,
+            error
+        } =
+            await window.supabaseClient
+                .from("quizuri")
+                .select("*")
+                .order("id", {
+                    ascending: false
+                });
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        if (!quizuri || quizuri.length === 0) {
+
+            container.innerHTML =
+                "<p>Nu există quizuri create.</p>";
+
+            return;
+        }
+
+
+        // =============================================
+        // CONSTRUIM LISTA
+        // =============================================
+
+        const elemente = [];
+
+
+        for (const quiz of quizuri) {
+
+            // Numărul de întrebări
+            const {
+                count,
+                error: eroareNumar
+            } =
+                await window.supabaseClient
+                    .from("intrebari_quiz")
+                    .select("*", {
+                        count: "exact",
+                        head: true
+                    })
+                    .eq("quiz_id", quiz.id);
+
+
+            if (eroareNumar) {
+                console.error(
+                    "Eroare număr întrebări:",
+                    eroareNumar
+                );
+            }
+
+
+            elemente.push(`
+
+                <div
+                    class="admin-item"
+                    style="
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:20px;
+                        padding:15px;
+                        margin-top:10px;
+                        border:1px solid #ddd;
+                        border-radius:12px;
+                    "
+                >
+
+                    <div>
+
+                        <strong>
+                            🎮 ${escapeHTML(quiz.titlu)}
+                        </strong>
+
+                        <div>
+                            <small>
+                                ${quiz.categorie
+                                    ? "Categorie: " +
+                                      escapeHTML(quiz.categorie)
+                                    : "Fără categorie"
+                                }
+                            </small>
+                        </div>
+
+                        <div>
+                            <small>
+                                ❓ ${count || 0} întrebări
+                            </small>
+                        </div>
+
+                        ${
+                            quiz.descriere
+                                ? `
+                                    <p style="margin:5px 0 0;">
+                                        ${escapeHTML(quiz.descriere)}
+                                    </p>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div
+                        style="
+                            display:flex;
+                            gap:8px;
+                            flex-wrap:wrap;
+                        "
+                    >
+
+                        <button
+                            type="button"
+                            class="admin-btn"
+                            onclick="selecteazaQuizAdmin('${quiz.id}')"
+                        >
+                            ✏️ Editează
+                        </button>
+
+                        <button
+                            type="button"
+                            class="admin-btn logout-btn"
+                            onclick="stergeQuiz('${quiz.id}')"
+                        >
+                            🗑️ Șterge
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `);
+        }
+
+
+        container.innerHTML =
+            elemente.join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Eroare încărcare quizuri admin:",
+            error
+        );
+
+        container.innerHTML = `
+
+            <p style="color:#c62828;">
+                Nu am putut încărca quizurile.
+            </p>
+
+        `;
+    }
+}
+// =====================================================
+// ȘTERGE QUIZ + ÎNTREBĂRILE LUI
+// =====================================================
+
+async function stergeQuiz(quizId) {
+
+    if (!quizId) {
+        return;
+    }
+
+
+    const confirmare =
+        confirm(
+            "Sigur vrei să ștergi acest quiz?\n\n" +
+            "Vor fi șterse și toate întrebările asociate."
+        );
+
+
+    if (!confirmare) {
+        return;
+    }
+
+
+    try {
+
+        const user =
+            await utilizatorAutentificat();
+
+
+        if (!user) {
+
+            alert(
+                "Trebuie să fii administrator."
+            );
+
+            return;
+        }
+
+
+        // =============================================
+        // 1. ȘTERGEM ÎNTREBĂRILE
+        // =============================================
+
+        const {
+            error: eroareIntrebari
+        } =
+            await window.supabaseClient
+                .from("intrebari_quiz")
+                .delete()
+                .eq("quiz_id", quizId);
+
+
+        if (eroareIntrebari) {
+            throw eroareIntrebari;
+        }
+
+
+        // =============================================
+        // 2. ȘTERGEM QUIZUL
+        // =============================================
+
+        const {
+            error: eroareQuiz
+        } =
+            await window.supabaseClient
+                .from("quizuri")
+                .delete()
+                .eq("id", quizId);
+
+
+        if (eroareQuiz) {
+            throw eroareQuiz;
+        }
+
+
+        // =============================================
+        // 3. RESETĂM QUIZUL SELECTAT
+        // =============================================
+
+        if (
+            typeof quizSelectatId !== "undefined" &&
+            String(quizSelectatId) === String(quizId)
+        ) {
+
+            quizSelectatId = null;
+
+
+            const editor =
+                document.getElementById(
+                    "quizEditor"
+                );
+
+
+            if (editor) {
+                editor.style.display = "none";
+            }
+        }
+
+
+        alert(
+            "Quizul a fost șters cu succes!"
+        );
+
+
+        // =============================================
+        // 4. REÎNCĂRCĂM LISTA
+        // =============================================
+
+        await incarcaQuizuriAdmin();
+
+
+    } catch (error) {
+
+        console.error(
+            "Eroare ștergere quiz:",
+            error
+        );
+
+
+        alert(
+            "Nu am putut șterge quizul:\n\n" +
+            error.message
+        );
+    }
+}
 
 // ======================================================
