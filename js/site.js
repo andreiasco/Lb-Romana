@@ -2624,7 +2624,5 @@ function opresteQuiz() {
 
     `;
 
-    incarcaQuizuriSite();
 
-}
 
