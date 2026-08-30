@@ -1823,3 +1823,733 @@
     }
 
 }
+
+/* =====================================================
+   QUIZ MODERN - AVENTURA DIN PĂDURE
+===================================================== */
+
+.quiz-page {
+    width: 100%;
+}
+
+.quiz-screen {
+    width: 100%;
+}
+
+.quiz-screen.ascuns {
+    display: none !important;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.quiz-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 16px 24px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e8e8e8;
+
+    box-shadow:
+        0 4px 20px rgba(0,0,0,.06);
+
+    position: relative;
+    z-index: 20;
+}
+
+.quiz-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #263238;
+}
+
+.quiz-progress {
+    color: #777;
+    font-size: 14px;
+}
+
+.quiz-progress strong {
+    color: #7b2450;
+    font-size: 17px;
+}
+
+.quiz-score {
+    font-size: 18px;
+    font-weight: 800;
+    color: #f4a300;
+}
+
+.quiz-lives {
+    font-size: 21px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+
+/* =====================================================
+   SCENA
+===================================================== */
+
+.forest-game {
+    position: relative;
+
+    min-height: 720px;
+
+    overflow: hidden;
+
+    padding-top: 30px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #bdeeff 0%,
+            #dff7ff 42%,
+            #b8df9b 43%,
+            #76ae5a 100%
+        );
+}
+
+
+/* =====================================================
+   FUNDAL
+===================================================== */
+
+.forest-background {
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+
+    font-size: 65px;
+
+    opacity: .75;
+
+    animation:
+        cloudMove 18s linear infinite;
+}
+
+.cloud-1 {
+    top: 50px;
+    left: 8%;
+}
+
+.cloud-2 {
+    top: 120px;
+    right: 15%;
+
+    animation-delay: -8s;
+}
+
+@keyframes cloudMove {
+
+    0% {
+        transform: translateX(-20px);
+    }
+
+    50% {
+        transform: translateX(30px);
+    }
+
+    100% {
+        transform: translateX(-20px);
+    }
+
+}
+
+.mountain {
+    position: absolute;
+
+    top: 135px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 150px;
+
+    opacity: .65;
+}
+
+.trees {
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 75px;
+
+    letter-spacing: 20px;
+
+    line-height: 1;
+
+    opacity: .8;
+}
+
+
+/* =====================================================
+   PERSONAJ
+===================================================== */
+
+.forest-character {
+    position: absolute;
+
+    left: 16%;
+    bottom: 325px;
+
+    font-size: 72px;
+
+    z-index: 8;
+
+    filter:
+        drop-shadow(
+            0 8px 5px rgba(0,0,0,.2)
+        );
+
+    animation:
+        characterWalk 1.8s ease-in-out infinite;
+}
+
+@keyframes characterWalk {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-9px)
+            rotate(2deg);
+    }
+
+}
+
+
+/* =====================================================
+   ANIMAL
+===================================================== */
+
+.forest-animal {
+    position: absolute;
+
+    right: 17%;
+    bottom: 315px;
+
+    font-size: 86px;
+
+    z-index: 9;
+
+    filter:
+        drop-shadow(
+            0 9px 6px rgba(0,0,0,.22)
+        );
+
+    animation:
+        animalIdle 2s ease-in-out infinite;
+}
+
+@keyframes animalIdle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+
+}
+
+
+/* =====================================================
+   BULA ANIMAL
+===================================================== */
+
+.animal-bubble {
+    position: absolute;
+
+    right: 10%;
+    bottom: 450px;
+
+    z-index: 12;
+
+    max-width: 250px;
+
+    padding: 13px 18px;
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    color: #333;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.15);
+
+    transition:
+        transform .2s ease;
+}
+
+.animal-bubble::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -12px;
+    right: 35px;
+
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 14px solid #fff;
+}
+
+
+/* =====================================================
+   PANOU ÎNTREBARE
+===================================================== */
+
+.question-panel {
+    position: absolute;
+
+    z-index: 15;
+
+    left: 50%;
+    bottom: 25px;
+
+    transform: translateX(-50%);
+
+    width: min(900px, calc(100% - 30px));
+
+    padding: 25px;
+
+    background: rgba(255,255,255,.97);
+
+    border-radius: 26px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.18);
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* =====================================================
+   BADGE
+===================================================== */
+
+.question-number-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 13px;
+
+    border-radius: 999px;
+
+    background: #f4e8ef;
+
+    color: #7b2450;
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.question-number-badge span {
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   ÎNTREBARE
+===================================================== */
+
+.question-text {
+    margin: 15px 0 22px;
+
+    color: #222;
+
+    font-size: clamp(20px, 3vw, 30px);
+
+    line-height: 1.25;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   RĂSPUNSURI
+===================================================== */
+
+.answers-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+.answer-button {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    width: 100%;
+
+    min-height: 64px;
+
+    padding: 12px 18px;
+
+    border: 2px solid transparent;
+
+    border-radius: 15px;
+
+    background: #f5f5f5;
+
+    color: #222;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        background .15s ease;
+}
+
+.answer-button:hover:not(:disabled) {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.12);
+}
+
+.answer-button:active:not(:disabled) {
+
+    transform:
+        scale(.98);
+}
+
+
+/* culori Kahoot */
+
+.answer-a {
+    background: #e53935;
+    color: white;
+}
+
+.answer-b {
+    background: #1976d2;
+    color: white;
+}
+
+.answer-c {
+    background: #f6a700;
+    color: white;
+}
+
+.answer-d {
+    background: #43a047;
+    color: white;
+}
+
+
+/* =====================================================
+   LITERA
+===================================================== */
+
+.answer-letter {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 36px;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.25);
+
+    font-weight: 900;
+}
+
+
+/* =====================================================
+   CORECT / GREȘIT
+===================================================== */
+
+.answer-button.correct {
+
+    background: #20b957 !important;
+
+    border-color: #0d8f3d;
+
+    animation:
+        correctAnswer .45s ease;
+}
+
+.answer-button.wrong {
+
+    background: #d32f2f !important;
+
+    border-color: #a51e1e;
+
+    animation:
+        wrongAnswer .45s ease;
+}
+
+@keyframes correctAnswer {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+@keyframes wrongAnswer {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px);
+    }
+
+    75% {
+        transform: translateX(8px);
+    }
+
+}
+
+
+/* =====================================================
+   MESAJ
+===================================================== */
+
+.question-message {
+
+    min-height: 25px;
+
+    margin-top: 12px;
+
+    text-align: center;
+
+    font-weight: 800;
+}
+
+.question-message.success {
+    color: #159447;
+}
+
+.question-message.error {
+    color: #c62828;
+}
+
+
+/* =====================================================
+   EFECTE
+===================================================== */
+
+.game-effect {
+
+    position: absolute;
+
+    left: 50%;
+    top: 42%;
+
+    z-index: 30;
+
+    font-size: 100px;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.game-effect.active {
+
+    animation:
+        gameEffect .7s ease forwards;
+}
+
+@keyframes gameEffect {
+
+    0% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(.3);
+    }
+
+    40% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.3);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(1.8);
+    }
+
+}
+
+
+/* =====================================================
+   ATAC ANIMAL
+===================================================== */
+
+.attack-effect.active {
+
+    animation:
+        attackEffect .7s ease forwards;
+}
+
+@keyframes attackEffect {
+
+    0% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(.3);
+    }
+
+    30% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.4)
+            rotate(-10deg);
+    }
+
+    60% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.1)
+            rotate(10deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(1.7);
+    }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .quiz-topbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .quiz-title {
+        width: 100%;
+        text-align: center;
+    }
+
+    .forest-game {
+        min-height: 760px;
+    }
+
+    .forest-character {
+        left: 8%;
+        bottom: 390px;
+        font-size: 55px;
+    }
+
+    .forest-animal {
+        right: 8%;
+        bottom: 385px;
+        font-size: 65px;
+    }
+
+    .animal-bubble {
+        right: 5%;
+        bottom: 475px;
+        max-width: 180px;
+        font-size: 12px;
+    }
+
+    .answers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .question-panel {
+        bottom: 12px;
+        padding: 18px;
+    }
+
+    .question-text {
+        font-size: 21px;
+    }
+
+}
