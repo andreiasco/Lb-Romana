@@ -1759,10 +1759,15 @@ async function descarcaRezumatWord(wordUrl) {
 
 async function incarcaQuizuriSite() {
 
+    console.log("=== INCARC QUIZURILE ===");
+
     const container =
         document.getElementById("listaQuizuriSite");
 
     if (!container) {
+        console.error(
+            "Nu există elementul #listaQuizuriSite"
+        );
         return;
     }
 
@@ -1771,6 +1776,10 @@ async function incarcaQuizuriSite() {
 
     try {
 
+        console.log(
+            "Cer quizurile din Supabase..."
+        );
+
         const {
             data: quizuri,
             error
@@ -1778,38 +1787,71 @@ async function incarcaQuizuriSite() {
             await supabaseClient
                 .from("quizuri")
                 .select("*")
+                .eq("activ", true)
                 .order("created_at", {
                     ascending: false
                 });
 
+        console.log(
+            "QUIZURI PRIMITE:",
+            quizuri
+        );
+
+        console.log(
+            "EROARE QUIZURI:",
+            error
+        );
+
         if (error) {
+
             console.error(
                 "Eroare încărcare quizuri:",
                 error
             );
 
-            container.innerHTML =
-                "<p class='quiz-eroare'>" +
-                "Nu am putut încărca quizurile." +
-                "</p>";
+            container.innerHTML = `
+                <div class="quiz-eroare">
+                    <p>❌ Nu am putut încărca quizurile.</p>
+                    <small>
+                        ${error.message || "Eroare Supabase"}
+                    </small>
+                </div>
+            `;
 
             return;
         }
 
         if (!quizuri || quizuri.length === 0) {
 
+            console.warn(
+                "Supabase a returnat 0 quizuri."
+            );
+
             container.innerHTML = `
                 <div class="quiz-fara-rezultate">
-                    🌲
-                    <h3>Nu există încă quizuri</h3>
+
+                    <div style="font-size: 50px;">
+                        🌲
+                    </div>
+
+                    <h3>
+                        Nu există încă quizuri
+                    </h3>
+
                     <p>
                         Administratorul nu a publicat încă niciun quiz.
                     </p>
+
                 </div>
             `;
 
             return;
         }
+
+        console.log(
+            "Număr quizuri:",
+            quizuri.length
+        );
 
         container.innerHTML =
             quizuri.map(quiz => `
@@ -1823,40 +1865,47 @@ async function incarcaQuizuriSite() {
                     <div class="quiz-aventura-info">
 
                         <h3>
-                            ${escapeHTML(quiz.titlu)}
+                            ${quiz.titlu || "Quiz fără titlu"}
                         </h3>
 
                         ${
                             quiz.categorie
-                                ? `<span class="quiz-categorie">
-                                    ${escapeHTML(quiz.categorie)}
-                                   </span>`
+                                ? `
+                                    <span class="quiz-categorie">
+                                        ${quiz.categorie}
+                                    </span>
+                                  `
                                 : ""
                         }
 
                         ${
                             quiz.descriere
-                                ? `<p>
-                                    ${escapeHTML(quiz.descriere)}
-                                   </p>`
+                                ? `
+                                    <p>
+                                        ${quiz.descriere}
+                                    </p>
+                                  `
                                 : ""
                         }
 
                     </div>
 
                     <button
-    class="quiz-start-btn"
-    type="button"
-    onclick="pornesteQuiz(${quiz.id})">
+                        class="quiz-start-btn"
+                        type="button"
+                        onclick="pornesteQuiz(${quiz.id})">
 
-    🌲 Începe aventura
+                        🌲 Începe aventura
 
-</button>
-
+                    </button>
 
                 </div>
 
             `).join("");
+
+        console.log(
+            "QUIZURILE AU FOST AFIȘATE."
+        );
 
     } catch (error) {
 
@@ -1865,14 +1914,21 @@ async function incarcaQuizuriSite() {
             error
         );
 
-        container.innerHTML =
-            "<p class='quiz-eroare'>" +
-            "A apărut o eroare la încărcarea quizurilor." +
-            "</p>";
+        container.innerHTML = `
+            <div class="quiz-eroare">
+
+                <p>
+                    ❌ A apărut o eroare la încărcarea quizurilor.
+                </p>
+
+                <small>
+                    ${error.message || error}
+                </small>
+
+            </div>
+        `;
     }
 }
-
-incarcaQuizuriSite();
 
 // ======================================================
 // PORNIRE QUIZ
