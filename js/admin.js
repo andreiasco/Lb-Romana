@@ -3821,10 +3821,12 @@ async function afiseazaAdmin(user) {
         user.email;
 
 
-    incarcaListaPDF();
-    incarcaAutoriAdmin();
-    incarcaOpereAdmin();
-    incarcaListaAutoriSelect();
+   incarcaListaPDF();
+incarcaAutoriAdmin();
+incarcaOpereAdmin();
+incarcaListaAutoriSelect();
+incarcaQuizuriAdmin();
+
 
 }
 
@@ -4081,6 +4083,10 @@ document.addEventListener(
 // ÎNCARCĂ QUIZURILE ÎN PANoul ADMIN
 // =====================================================
 
+// =====================================================
+// ÎNCARCĂ QUIZURILE ÎN PANoul ADMIN
+// =====================================================
+
 async function incarcaQuizuriAdmin() {
 
     const container =
@@ -4095,20 +4101,6 @@ async function incarcaQuizuriAdmin() {
 
     try {
 
-        const user =
-            await utilizatorAutentificat();
-
-        if (!user) {
-
-            container.innerHTML =
-                "<p style='color:#c62828;'>" +
-                "Trebuie să fii administrator." +
-                "</p>";
-
-            return;
-        }
-
-
         const {
             data: quizuri,
             error
@@ -4120,20 +4112,214 @@ async function incarcaQuizuriAdmin() {
                     ascending: false
                 });
 
-
         if (error) {
             throw error;
         }
 
-
         if (!quizuri || quizuri.length === 0) {
 
             container.innerHTML =
-                "<p>Nu există quizuri create.</p>";
+                "<p>Nu există încă quizuri create.</p>";
 
             return;
         }
 
+
+        container.innerHTML =
+            quizuri.map(quiz => {
+
+                return `
+
+                    <div class="admin-quiz-item">
+
+                        <div class="admin-quiz-info">
+
+                            <h4>
+                                🎮 ${escapeHTML(quiz.titlu)}
+                            </h4>
+
+                            <p>
+                                ${quiz.descriere
+                                    ? escapeHTML(quiz.descriere)
+                                    : "Fără descriere"}
+                            </p>
+
+                            <small>
+                                Categoria:
+                                ${quiz.categorie
+                                    ? escapeHTML(quiz.categorie)
+                                    : "Nespecificată"}
+                            </small>
+
+                            <br>
+
+                            <small>
+                                Status:
+                                ${quiz.activ
+                                    ? "🟢 Activ"
+                                    : "🔴 Inactiv"}
+                            </small>
+
+                        </div>
+
+
+                        <div class="admin-quiz-actions">
+
+                            <button
+                                class="admin-btn"
+                                onclick="selecteazaQuizAdmin('${quiz.id}')">
+
+                                ✏️ Editează
+
+                            </button>
+
+                            <button
+                                class="admin-btn"
+                                style="background:#c62828;"
+                                onclick="stergeQuiz('${quiz.id}', ${JSON.stringify(quiz.titlu)})">
+
+                                🗑️ Șterge
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Eroare încărcare quizuri admin:",
+            error
+        );
+
+        container.innerHTML =
+            `<p style="color:#c62828;">
+                Nu am putut încărca quizurile.
+                ${escapeHTML(error.message)}
+            </p>`;
+
+    }
+
+}
+
+// =====================================================
+// ȘTERGE QUIZ
+// =====================================================
+
+async function stergeQuiz(quizId, titlu) {
+
+    const confirmare =
+        confirm(
+            `Sigur vrei să ștergi quizul "${titlu}"?\n\n` +
+            `Vor fi șterse și întrebările asociate.`
+        );
+
+    if (!confirmare) {
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        alert(
+            "Trebuie să fii administrator."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        // ---------------------------------------------
+        // ȘTERGE ÎNTREBĂRILE QUIZULUI
+        // ---------------------------------------------
+
+        const {
+            error: errorIntrebari
+        } =
+            await window.supabaseClient
+                .from("intrebari_quiz")
+                .delete()
+                .eq("quiz_id", quizId);
+
+
+        if (errorIntrebari) {
+            throw errorIntrebari;
+        }
+
+
+        // ---------------------------------------------
+        // ȘTERGE QUIZUL
+        // ---------------------------------------------
+
+        const {
+            error: errorQuiz
+        } =
+            await window.supabaseClient
+                .from("quizuri")
+                .delete()
+                .eq("id", quizId);
+
+
+        if (errorQuiz) {
+            throw errorQuiz;
+        }
+
+
+        // Dacă era quizul selectat
+        if (
+            String(quizSelectatId) ===
+            String(quizId)
+        ) {
+
+            quizSelectatId = null;
+
+            const editor =
+                document.getElementById(
+                    "quizEditor"
+                );
+
+            if (editor) {
+                editor.style.display = "none";
+            }
+
+        }
+
+
+        alert(
+            "Quizul a fost șters cu succes."
+        );
+
+
+        await incarcaQuizuriAdmin();
+
+
+    } catch (error) {
+
+        console.error(
+            "Eroare ștergere quiz:",
+            error
+        );
+
+        alert(
+            "Nu am putut șterge quizul: " +
+            error.message
+        );
+
+    }
+
+}
 
         // =============================================
         // CONSTRUIM LISTA
