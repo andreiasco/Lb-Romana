@@ -1,3 +1,7 @@
+/* =====================================================
+   PAGINA ADMIN
+===================================================== */
+
 main,
 footer,
 #loginModal {
@@ -11,4 +15,71 @@ footer,
 
 #adminPanel.ascuns {
     display: none !important;
+}
+
+
+/* =====================================================
+   CONSTRUCTOR QUIZ ADMIN
+===================================================== */
+
+.quiz-admin-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 24px;
+    margin: 20px 0;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.quiz-admin-card h3 {
+    margin-top: 0;
+    color: #7b2450;
+}
+
+.quiz-admin-card label {
+    display: block;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.quiz-admin-card input,
+.quiz-admin-card textarea,
+.quiz-admin-card select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid #d8c8d0;
+    border-radius: 10px;
+    font-size: 15px;
+    background: #fff;
+}
+
+.quiz-admin-card textarea {
+    resize: vertical;
+}
+
+.admin-quiz-item,
+.admin-intrebare-item {
+    background: #faf6f8;
+    border: 1px solid #eadde3;
+    border-radius: 15px;
+    padding: 18px;
+    margin: 14px 0;
+}
+
+.admin-quiz-item h4,
+.admin-intrebare-item h4 {
+    color: #7b2450;
+    margin-top: 0;
+}
+
+.admin-intrebare-item img {
+    display: block;
+    margin: 12px 0;
+}
+
+#quizEditorTitlu {
+    font-size: 22px;
+    color: #7b2450;
+    margin-bottom: 20px;
 }
