@@ -1778,7 +1778,6 @@ async function incarcaQuizuriSite() {
             await supabaseClient
                 .from("quizuri")
                 .select("*")
-                .eq("activ", true)
                 .order("created_at", {
                     ascending: false
                 });
@@ -1889,8 +1888,7 @@ async function pornesteQuiz(quizId) {
                 .from("quizuri")
                 .select("*")
                 .eq("id", quizId)
-                .eq("activ", true)
-                .single();
+                 .single();
 
         if (eroareQuiz || !quiz) {
 
