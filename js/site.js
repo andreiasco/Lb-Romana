@@ -2040,39 +2040,7 @@ async function pornesteQuiz(quizId) {
     }
 }
 
-        // ================================
-        // 1. ÎNCĂRCĂM QUIZUL
-        // ================================
-
-        const {
-            data: quiz,
-            error: eroareQuiz
-        } = await supabaseClient
-            .from("quizuri")
-            .select("*")
-            .eq("id", quizId)
-            .eq("activ", true)
-            .single();
-
-        console.log("QUIZ GĂSIT:", quiz);
-        console.log("EROARE QUIZ:", eroareQuiz);
-
-
-        if (eroareQuiz || !quiz) {
-
-            console.error(
-                "Nu am găsit quizul:",
-                eroareQuiz
-            );
-
-            alert(
-                "Nu am găsit quizul."
-            );
-
-            return;
-        }
-
-
+ 
         // ================================
         // 2. ÎNCĂRCĂM ÎNTREBĂRILE
         // ================================
