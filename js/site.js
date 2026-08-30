@@ -2024,7 +2024,12 @@ function pornesteJocQuiz(
     quiz,
     intrebari
 ) {
+    
+console.log("AM INTRAT ÎN pornesteJocQuiz");
+console.log("quiz:", quiz);
+console.log("intrebari:", intrebari);
 
+    
     jocQuiz = {
         quiz: quiz,
         intrebari: intrebari,
@@ -2116,74 +2121,81 @@ function pornesteJocQuiz(
 
     afiseazaIntrebareaQuiz();
 }
+
 function afiseazaIntrebareaQuiz() {
 
-    const intrebare =
-        jocQuiz.intrebari[jocQuiz.index];
+    console.log("AFISEZ INTREBAREA:", jocQuiz.index);
+
+    const intrebare = jocQuiz.intrebari[jocQuiz.index];
 
     if (!intrebare) {
+        console.log("Nu mai sunt întrebări.");
         finalizeazaQuiz();
         return;
     }
 
-
-    const container =
-        document.getElementById(
-            "intrebareJoc"
-        );
+    const container = document.getElementById("intrebareJoc");
 
     if (!container) {
+        console.error("Nu există elementul #intrebareJoc");
         return;
     }
 
-
     actualizeazaInformatiiJoc();
-
 
     const variante = [
         {
             litera: "A",
-            text: intrebare.raspuns_a
+            text: intrebare.raspuns_a || ""
         },
         {
             litera: "B",
-            text: intrebare.raspuns_b
+            text: intrebare.raspuns_b || ""
         },
         {
             litera: "C",
-            text: intrebare.raspuns_c
+            text: intrebare.raspuns_c || ""
         },
         {
             litera: "D",
-            text: intrebare.raspuns_d
+            text: intrebare.raspuns_d || ""
         }
     ];
 
+    let animal = "🐺";
+
+    if (intrebare.animal === "vulpe") {
+        animal = "🦊";
+    } else if (intrebare.animal === "urs") {
+        animal = "🐻";
+    } else if (intrebare.animal === "cerb") {
+        animal = "🦌";
+    } else if (intrebare.animal === "iepure") {
+        animal = "🐰";
+    } else if (intrebare.animal === "mistret") {
+        animal = "🐗";
+    } else if (intrebare.animal === "bufnita") {
+        animal = "🦉";
+    }
 
     container.innerHTML = `
 
         <div class="intrebare-card">
 
             <div class="animal-intrebare">
-                ${escapeHTML(
-                    emojiAnimal(
-                        intrebare.animal
-                    )
-                )}
+                ${animal}
             </div>
 
             <h2>
-                ${escapeHTML(
-                    intrebare.intrebare
-                )}
+                ${intrebare.intrebare || "Întrebarea nu există"}
             </h2>
-
 
             <div class="raspunsuri-joc">
 
                 ${variante.map(v => `
 
                     <button
+                        type="button"
                         class="raspuns-joc raspuns-${v.litera}"
                         onclick="verificaRaspuns('${v.litera}')">
 
@@ -2192,7 +2204,7 @@ function afiseazaIntrebareaQuiz() {
                         </span>
 
                         <span>
-                            ${escapeHTML(v.text)}
+                            ${v.text}
                         </span>
 
                     </button>
@@ -2204,7 +2216,11 @@ function afiseazaIntrebareaQuiz() {
         </div>
 
     `;
+
+    console.log("ÎNTREBAREA A FOST AFIȘATĂ");
 }
+
+
 function verificaRaspuns(raspuns) {
 
     const intrebare =
