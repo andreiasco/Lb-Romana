@@ -1153,6 +1153,29 @@ site.innerHTML = `
 
     </div>
 
+<div
+    class="admin-box"
+    style="margin-top:20px;">
+
+    <h3>
+        🎮 Quizuri existente
+    </h3>
+
+    <button
+        class="admin-btn"
+        onclick="incarcaQuizuriAdmin()">
+
+        🔄 Reîmprospătează quizurile
+
+    </button>
+
+    <div id="listaQuizuriAdmin">
+        <p>
+            Apasă „Reîmprospătează quizurile”.
+        </p>
+    </div>
+
+</div>
 
     <div
         class="admin-box"
