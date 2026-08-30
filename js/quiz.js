@@ -92,12 +92,14 @@ function arataEcran(id) {
 
 async function incarcaQuizuriSite() {
 
-    const container = $("listaQuizuri");
+    const container =
+        document.getElementById("listaQuizuri");
 
+    /*
+     * Dacă suntem pe o pagină care nu este quiz.html,
+     * nu facem nimic.
+     */
     if (!container) {
-        console.error(
-            "Elementul #listaQuizuri nu există."
-        );
         return;
     }
 
@@ -110,7 +112,7 @@ async function incarcaQuizuriSite() {
     try {
 
         const {
-            data,
+            data: quizuri,
             error
         } = await supabaseClient
             .from("quizuri")
@@ -124,21 +126,19 @@ async function incarcaQuizuriSite() {
             throw error;
         }
 
-        quizuri = data || [];
-
-        if (quizuri.length === 0) {
+        if (!quizuri || quizuri.length === 0) {
 
             container.innerHTML = `
                 <div class="quiz-loading">
-                    Nu există încă quizuri active.
+                    Nu există quizuri active.
                 </div>
             `;
 
             return;
         }
 
-        container.innerHTML = quizuri
-            .map(quiz => {
+        container.innerHTML =
+            quizuri.map(quiz => {
 
                 return `
                     <button
@@ -190,8 +190,7 @@ async function incarcaQuizuriSite() {
                     </button>
                 `;
 
-            })
-            .join("");
+            }).join("");
 
     } catch (error) {
 
