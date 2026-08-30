@@ -561,7 +561,7 @@ site.innerHTML = `
             📚 Adaugă operă
         </h3>
 
-        <label>
+        <label for="operaAutor">
             Autor:
         </label>
 
