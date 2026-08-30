@@ -1,7 +1,7 @@
 /* =========================================================
    QUIZ.JS
    AVENTURA DIN PĂDURE
-   REAL FOREST / HUMAN CHARACTER / ANIMALS
+   PĂDURE REALĂ + OM MARE + ANIMALE EMOJI
 ========================================================= */
 
 "use strict";
@@ -21,129 +21,107 @@ const QUIZ_CONFIG = {
 
     delayAfterWrong: 1400,
 
-    walkDuration: 1300
+    walkDuration: 1400
 
 };
 
 
 /* =========================================================
-   IMAGINI REALE
+   IMAGINI PĂDURE
 ========================================================= */
 
-const IMAGINI = {
+const IMAGINI_PADURE = [
 
-    forest: [
+    "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=90",
 
-        "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2400&q=90",
+    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=90",
 
-        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=90",
+    "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=2200&q=90",
 
-        "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=2400&q=90",
+    "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=90"
 
-        "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2400&q=90"
-
-    ],
-
-    wolf:
-        "https://images.unsplash.com/photo-1564466809058-bf4114d55352?auto=format&fit=crop&w=1000&q=90",
-
-    fox:
-        "https://images.unsplash.com/photo-1516939884455-1445c8652f83?auto=format&fit=crop&w=1000&q=90",
-
-    bear:
-        "https://images.unsplash.com/photo-1568162603664-fcd658421851?auto=format&fit=crop&w=1000&q=90",
-
-    deer:
-        "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=1000&q=90",
-
-    rabbit:
-        "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=1000&q=90",
-
-    owl:
-        "https://images.unsplash.com/photo-1553264701-d138db4fd5d0?auto=format&fit=crop&w=1000&q=90"
-
-};
+];
 
 
 /* =========================================================
-   ANIMALE
+   ANIMALE EMOJI
 ========================================================= */
 
 const ANIMALE = {
 
     lup: {
         name: "Lup",
-        image: IMAGINI.wolf
+        emoji: "🐺"
     },
 
     vulpe: {
         name: "Vulpe",
-        image: IMAGINI.fox
+        emoji: "🦊"
     },
 
     urs: {
         name: "Urs",
-        image: IMAGINI.bear
+        emoji: "🐻"
     },
 
     iepure: {
         name: "Iepure",
-        image: IMAGINI.rabbit
+        emoji: "🐰"
     },
 
     caprioara: {
         name: "Căprioară",
-        image: IMAGINI.deer
+        emoji: "🦌"
     },
 
     "căprioară": {
         name: "Căprioară",
-        image: IMAGINI.deer
+        emoji: "🦌"
     },
 
     cerb: {
         name: "Cerb",
-        image: IMAGINI.deer
+        emoji: "🦌"
     },
 
     bufnita: {
         name: "Bufniță",
-        image: IMAGINI.owl
+        emoji: "🦉"
     },
 
     "bufniță": {
         name: "Bufniță",
-        image: IMAGINI.owl
+        emoji: "🦉"
     },
 
-    owl: {
-        name: "Bufniță",
-        image: IMAGINI.owl
+    mistret: {
+        name: "Mistreț",
+        emoji: "🐗"
     },
 
-    deer: {
-        name: "Căprioară",
-        image: IMAGINI.deer
+    "mistreț": {
+        name: "Mistreț",
+        emoji: "🐗"
     },
 
-    wolf: {
-        name: "Lup",
-        image: IMAGINI.wolf
+    veverita: {
+        name: "Veveriță",
+        emoji: "🐿️"
     },
 
-    fox: {
-        name: "Vulpe",
-        image: IMAGINI.fox
+    "veveriță": {
+        name: "Veveriță",
+        emoji: "🐿️"
     },
 
-    bear: {
-        name: "Urs",
-        image: IMAGINI.bear
+    ursulet: {
+        name: "Ursuleț",
+        emoji: "🐻"
     },
 
-    rabbit: {
-        name: "Iepure",
-        image: IMAGINI.rabbit
+    "ursuleț": {
+        name: "Ursuleț",
+        emoji: "🐻"
     }
 
 };
@@ -172,7 +150,7 @@ let raspunsuriGresite = 0;
 
 let raspunsBlocat = false;
 
-let scenaImagineIndex = -1;
+let scenaImagineIndex = 0;
 
 
 /* =========================================================
@@ -196,7 +174,9 @@ function escapeHTML(value) {
         value === null ||
         value === undefined
     ) {
+
         return "";
+
     }
 
     return String(value)
@@ -242,19 +222,13 @@ function obtineAnimal(animal) {
     }
 
     const cheie =
-
         String(animal)
-
             .trim()
-
             .toLowerCase();
 
     return (
-
         ANIMALE[cheie] ||
-
         ANIMALE.lup
-
     );
 
 }
@@ -267,13 +241,9 @@ function obtineAnimal(animal) {
 function arataEcran(idEcran) {
 
     [
-
         "quizSelectScreen",
-
         "quizGameScreen",
-
         "quizResultScreen"
-
     ].forEach(id => {
 
         const ecran =
@@ -288,7 +258,6 @@ function arataEcran(idEcran) {
         }
 
     });
-
 
     const activ =
         element(idEcran);
@@ -305,43 +274,25 @@ function arataEcran(idEcran) {
 
 
 /* =========================================================
-   PRELOAD
+   PRELOAD FUNDALURI
 ========================================================= */
 
 function preloadImages() {
 
-    Object.values(IMAGINI)
-        .forEach(src => {
+    IMAGINI_PADURE.forEach(url => {
 
-            if (Array.isArray(src)) {
+        const img =
+            new Image();
 
-                src.forEach(url => {
+        img.src = url;
 
-                    const img =
-                        new Image();
-
-                    img.src =
-                        url;
-
-                });
-
-            } else {
-
-                const img =
-                    new Image();
-
-                img.src =
-                    src;
-
-            }
-
-        });
+    });
 
 }
 
 
 /* =========================================================
-   FUNDAL
+   SCHIMBĂ FUNDALUL
 ========================================================= */
 
 function schimbaFundalPadure() {
@@ -352,31 +303,31 @@ function schimbaFundalPadure() {
         );
 
     if (!forest) {
+
         return;
+
     }
 
-    const imagini =
-        IMAGINI.forest;
-
     scenaImagineIndex =
+        scenaImagineIndex + 1;
 
-        (
-            scenaImagineIndex + 1
-        ) %
+    if (
+        scenaImagineIndex >=
+        IMAGINI_PADURE.length
+    ) {
 
-        imagini.length;
+        scenaImagineIndex = 0;
+
+    }
 
     const url =
-        imagini[
+        IMAGINI_PADURE[
             scenaImagineIndex
         ];
 
     forest.style.setProperty(
-
         "--forest-image",
-
         `url("${url}")`
-
     );
 
     forest.classList.remove(
@@ -393,12 +344,10 @@ function schimbaFundalPadure() {
 
 
 /* =========================================================
-   SETARE ANIMAL
+   SETEAZĂ ANIMALUL
 ========================================================= */
 
-function seteazaAnimalReal(
-    animalData
-) {
+function seteazaAnimalReal(animalData) {
 
     const animal =
         element("animal");
@@ -406,104 +355,31 @@ function seteazaAnimalReal(
     const questionAnimal =
         element("questionAnimal");
 
-    const animalName =
-        element("animalName");
-
-    const questionAnimalName =
-        element(
-            "questionAnimalName"
-        );
-
     if (!animal) {
+
         return;
+
     }
 
+    animal.textContent =
+        animalData.emoji;
 
-    const container =
-        animal.querySelector(
-            ".animal-image-container"
-        );
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    const img =
-        document.createElement(
-            "img"
-        );
-
-    img.src =
-        animalData.image;
-
-    img.alt =
-        animalData.name;
-
-
-    img.loading =
-        "eager";
-
-
-    img.onerror = () => {
-
-        container.innerHTML = `
-            <div style="
-                width:100%;
-                height:100%;
-                display:grid;
-                place-items:center;
-                font-size:60px;
-                background:#18251b;
-            ">
-                🐺
-            </div>
-        `;
-
-    };
-
-
-    container.appendChild(
-        img
+    animal.setAttribute(
+        "aria-label",
+        animalData.name
     );
-
 
     if (questionAnimal) {
 
-        questionAnimal.innerHTML = `
+        questionAnimal.textContent =
+            animalData.emoji;
 
-            <img
-                src="${escapeHTML(
-                    animalData.image
-                )}"
-                alt="${escapeHTML(
-                    animalData.name
-                )}"
-            >
-
-        `;
+        questionAnimal.setAttribute(
+            "aria-label",
+            animalData.name
+        );
 
     }
-
-
-    if (animalName) {
-
-        animalName.textContent =
-            animalData.name;
-
-    }
-
-
-    if (questionAnimalName) {
-
-        questionAnimalName.textContent =
-            animalData.name;
-
-    }
-
 
     const bubble =
         element("animalBubble");
@@ -511,10 +387,37 @@ function seteazaAnimalReal(
     if (bubble) {
 
         bubble.textContent =
-
-            `${animalData.name}: Alege răspunsul corect!`;
+            `${animalData.emoji} ${animalData.name}: Alege răspunsul corect!`;
 
     }
+
+}
+
+
+/* =========================================================
+   RESET ANIMAL
+========================================================= */
+
+function animeazaAnimal() {
+
+    const animal =
+        element("animal");
+
+    if (!animal) {
+
+        return;
+
+    }
+
+    animal.classList.remove(
+        "approach"
+    );
+
+    void animal.offsetWidth;
+
+    animal.classList.add(
+        "approach"
+    );
 
 }
 
@@ -529,218 +432,82 @@ function pregatestePersonaj() {
         element("player");
 
     if (!player) {
+
         return;
+
     }
 
     player.style.left =
         "10%";
 
-}
-
-
-/* =========================================================
-   ANIMAȚII CINEMATICE
-========================================================= */
-
-function activeazaAnimatiiCinematice() {
-
-    if (
-        element(
-            "quizCinematicStyles"
-        )
-    ) {
-        return;
-    }
-
-
-    const style =
-        document.createElement(
-            "style"
-        );
-
-    style.id =
-        "quizCinematicStyles";
-
-
-    style.textContent = `
-
-        .cinematic-change {
-
-            animation:
-                cinematicSceneChange
-                1.1s
-                ease;
-
-        }
-
-        @keyframes cinematicSceneChange {
-
-            0% {
-
-                opacity: .55;
-
-                filter:
-                    blur(4px)
-                    brightness(.7);
-
-                transform:
-                    scale(1.04);
-
-            }
-
-            55% {
-
-                opacity: .9;
-
-                filter:
-                    blur(1px)
-                    brightness(.9);
-
-                transform:
-                    scale(1.015);
-
-            }
-
-            100% {
-
-                opacity: 1;
-
-                filter:
-                    blur(0)
-                    brightness(1);
-
-                transform:
-                    scale(1);
-
-            }
-
-        }
-
-
-        .question-enter {
-
-            animation:
-                questionEnter
-                .6s
-                cubic-bezier(.2,.8,.2,1);
-
-        }
-
-        @keyframes questionEnter {
-
-            from {
-
-                opacity: 0;
-
-                transform:
-                    translateY(35px)
-                    scale(.96);
-
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform:
-                    translateY(0)
-                    scale(1);
-
-            }
-
-        }
-
-    `;
-
-
-    document.head.appendChild(
-        style
+    player.classList.remove(
+        "walking"
     );
 
 }
 
 
 /* =========================================================
-   PARALLAX
+   MIȘCĂ PERSONAJUL
 ========================================================= */
 
-function activeazaParallax() {
+function miscaPersonaj() {
 
-    const forest =
-        document.querySelector(
-            ".forest"
-        );
+    const player =
+        element("player");
 
-    if (
-        !forest ||
-        forest.dataset.parallaxActiv
-    ) {
+    if (!player) {
+
         return;
+
     }
 
+    const pozitii = [
 
-    forest.dataset.parallaxActiv =
-        "true";
+        "10%",
 
+        "24%",
 
-    forest.addEventListener(
-        "mousemove",
-        event => {
+        "38%",
 
-            if (
-                window.innerWidth < 800
-            ) {
-                return;
-            }
+        "52%",
 
+        "66%",
 
-            const rect =
-                forest.getBoundingClientRect();
+        "78%",
 
+        "88%"
 
-            const x =
-                (
-                    event.clientX -
-                    rect.left
-                ) /
-                rect.width;
+    ];
 
+    const index =
+        Math.min(
+            intrebareCurenta,
+            pozitii.length - 1
+        );
 
-            const y =
-                (
-                    event.clientY -
-                    rect.top
-                ) /
-                rect.height;
+    player.style.left =
+        pozitii[index];
 
-
-            const rotateY =
-                (x - .5) * 2.5;
-
-
-            const rotateX =
-                (.5 - y) * 1.5;
-
-
-            forest.style.transform =
-
-                `perspective(1200px)
-                 rotateX(${rotateX}deg)
-                 rotateY(${rotateY}deg)
-                 scale(1.01)`;
-
-        }
+    player.classList.remove(
+        "walking"
     );
 
+    void player.offsetWidth;
 
-    forest.addEventListener(
-        "mouseleave",
+    player.classList.add(
+        "walking"
+    );
+
+    setTimeout(
         () => {
 
-            forest.style.transform =
-                "";
+            player.classList.remove(
+                "walking"
+            );
 
-        }
+        },
+        QUIZ_CONFIG.walkDuration
     );
 
 }
@@ -756,16 +523,15 @@ async function incarcaQuizuriSite() {
         element("listaQuizuri");
 
     if (!container) {
+
         return;
+
     }
 
-
     container.innerHTML = `
-
         <div class="quiz-loading">
             Se încarcă aventurile...
         </div>
-
     `;
 
 
@@ -776,17 +542,11 @@ async function incarcaQuizuriSite() {
     ) {
 
         container.innerHTML = `
-
             <div class="quiz-loading error">
-
                 ❌ Supabase nu este încărcat.
-
                 <br><br>
-
                 Verifică init.js.
-
             </div>
-
         `;
 
         return;
@@ -800,7 +560,6 @@ async function incarcaQuizuriSite() {
             data,
             error
         } =
-
             await supabaseClient
 
                 .from("quizuri")
@@ -834,13 +593,9 @@ async function incarcaQuizuriSite() {
         ) {
 
             container.innerHTML = `
-
                 <div class="quiz-loading">
-
                     📚 Nu există quizuri active.
-
                 </div>
-
             `;
 
             return;
@@ -859,16 +614,11 @@ async function incarcaQuizuriSite() {
 
                     return `
 
-                        <div
-                            class="quiz-card"
-                        >
+                        <div class="quiz-card">
 
-                            <div
-                                class="quiz-card-icon"
-                            >
+                            <div class="quiz-card-icon">
                                 🌲
                             </div>
-
 
                             <h2>
                                 ${escapeHTML(
@@ -876,13 +626,10 @@ async function incarcaQuizuriSite() {
                                 )}
                             </h2>
 
-
                             ${
                                 quiz.categorie
                                     ? `
-                                        <div
-                                            class="quiz-category"
-                                        >
+                                        <div class="quiz-category">
                                             ${escapeHTML(
                                                 quiz.categorie
                                             )}
@@ -890,7 +637,6 @@ async function incarcaQuizuriSite() {
                                       `
                                     : ""
                             }
-
 
                             ${
                                 quiz.descriere
@@ -903,7 +649,6 @@ async function incarcaQuizuriSite() {
                                       `
                                     : ""
                             }
-
 
                             <button
                                 type="button"
@@ -922,6 +667,7 @@ async function incarcaQuizuriSite() {
                 }
             ).join("");
 
+
     } catch (error) {
 
         console.error(
@@ -929,23 +675,14 @@ async function incarcaQuizuriSite() {
             error
         );
 
-
         container.innerHTML = `
-
-            <div
-                class="quiz-loading error"
-            >
-
+            <div class="quiz-loading error">
                 ❌ Nu pot încărca quizurile.
-
                 <br><br>
-
                 ${escapeHTML(
                     error.message
                 )}
-
             </div>
-
         `;
 
     }
@@ -957,9 +694,7 @@ async function incarcaQuizuriSite() {
    PORNEȘTE QUIZ
 ========================================================= */
 
-async function pornesteQuiz(
-    quizId
-) {
+async function pornesteQuiz(quizId) {
 
     const id =
         Number(quizId);
@@ -968,8 +703,7 @@ async function pornesteQuiz(
     const quiz =
         quizuri.find(
             q =>
-                Number(q.id) ===
-                id
+                Number(q.id) === id
         );
 
 
@@ -1010,12 +744,9 @@ async function pornesteQuiz(
             data,
             error
         } =
-
             await supabaseClient
 
-                .from(
-                    "intrebari_quiz"
-                )
+                .from("intrebari_quiz")
 
                 .select("*")
 
@@ -1045,8 +776,7 @@ async function pornesteQuiz(
 
 
         if (
-            intrebari.length ===
-            0
+            intrebari.length === 0
         ) {
 
             alert(
@@ -1058,26 +788,20 @@ async function pornesteQuiz(
         }
 
 
-        intrebareCurenta =
-            0;
+        intrebareCurenta = 0;
 
         vieti =
             QUIZ_CONFIG.lives;
 
-        scor =
-            0;
+        scor = 0;
 
-        raspunsuriCorecte =
-            0;
+        raspunsuriCorecte = 0;
 
-        raspunsuriGresite =
-            0;
+        raspunsuriGresite = 0;
 
-        raspunsBlocat =
-            false;
+        raspunsBlocat = false;
 
-        scenaImagineIndex =
-            -1;
+        scenaImagineIndex = 0;
 
 
         arataEcran(
@@ -1090,7 +814,6 @@ async function pornesteQuiz(
                 "gameQuizTitle"
             );
 
-
         if (title) {
 
             title.textContent =
@@ -1101,8 +824,6 @@ async function pornesteQuiz(
 
 
         pregatestePersonaj();
-
-        activeazaAnimatiiCinematice();
 
         actualizeazaStatistici();
 
@@ -1115,7 +836,6 @@ async function pornesteQuiz(
             "Eroare pornire quiz:",
             error
         );
-
 
         alert(
             "Nu am putut porni quizul:\n\n" +
@@ -1186,7 +906,6 @@ function afiseazaIntrebarea() {
             "questionText"
         );
 
-
     if (questionText) {
 
         questionText.textContent =
@@ -1200,8 +919,6 @@ function afiseazaIntrebarea() {
     }
 
 
-    /* animal */
-
     const animalData =
         obtineAnimal(
             intrebare.animal
@@ -1212,8 +929,6 @@ function afiseazaIntrebarea() {
         animalData
     );
 
-
-    /* răspunsuri */
 
     seteazaRaspuns(
         "answerA",
@@ -1276,40 +991,19 @@ function afiseazaIntrebarea() {
     }
 
 
-    /* animal */
+    if (
+        intrebareCurenta > 0
+    ) {
 
-    const animal =
-        element(
-            "animal"
-        );
+        schimbaFundalPadure();
 
-
-    if (animal) {
-
-        animal.classList.remove(
-            "approach"
-        );
-
-        void animal.offsetWidth;
-
-        animal.classList.add(
-            "approach"
-        );
+        miscaPersonaj();
 
     }
 
 
-    /* schimbăm pădurea */
+    animeazaAnimal();
 
-    schimbaFundalPadure();
-
-
-    /* personaj */
-
-    miscaPersonaj();
-
-
-    /* panou */
 
     const panel =
         document.querySelector(
@@ -1335,7 +1029,7 @@ function afiseazaIntrebarea() {
 
 
 /* =========================================================
-   RĂSPUNS
+   SETEAZĂ RĂSPUNS
 ========================================================= */
 
 function seteazaRaspuns(
@@ -1347,7 +1041,9 @@ function seteazaRaspuns(
         element(id);
 
     if (!button) {
+
         return;
+
     }
 
 
@@ -1356,9 +1052,10 @@ function seteazaRaspuns(
             ".answer-text"
         );
 
-
     if (!textElement) {
+
         return;
+
     }
 
 
@@ -1372,6 +1069,10 @@ function seteazaRaspuns(
             : String(text);
 
 
+    /*
+     * FORȚĂM AFIȘAREA TEXTULUI.
+     */
+
     textElement.style.display =
         "block";
 
@@ -1381,6 +1082,11 @@ function seteazaRaspuns(
     textElement.style.opacity =
         "1";
 
+    textElement.style.color =
+        "#ffffff";
+
+    button.style.display =
+        "flex";
 
     button.style.visibility =
         "visible";
@@ -1392,85 +1098,7 @@ function seteazaRaspuns(
 
 
 /* =========================================================
-   PERSONAJUL MERGE PRIN PĂDURE
-========================================================= */
-
-function miscaPersonaj() {
-
-    const player =
-        element(
-            "player"
-        );
-
-
-    if (!player) {
-        return;
-    }
-
-
-    const pozitii = [
-
-        "10%",
-
-        "22%",
-
-        "36%",
-
-        "50%",
-
-        "64%",
-
-        "76%",
-
-        "88%"
-
-    ];
-
-
-    const index =
-        Math.min(
-            intrebareCurenta,
-            pozitii.length - 1
-        );
-
-
-    const pozitie =
-        pozitii[index];
-
-
-    player.classList.remove(
-        "walking"
-    );
-
-
-    void player.offsetWidth;
-
-
-    player.classList.add(
-        "walking"
-    );
-
-
-    player.style.left =
-        pozitie;
-
-
-    setTimeout(
-        () => {
-
-            player.classList.remove(
-                "walking"
-            );
-
-        },
-        QUIZ_CONFIG.walkDuration
-    );
-
-}
-
-
-/* =========================================================
-   RĂSPUNS UTILIZATOR
+   PROCESEAZĂ RĂSPUNS
 ========================================================= */
 
 async function proceseazaRaspuns(
@@ -1478,7 +1106,9 @@ async function proceseazaRaspuns(
 ) {
 
     if (raspunsBlocat) {
+
         return;
+
     }
 
 
@@ -1489,7 +1119,9 @@ async function proceseazaRaspuns(
 
 
     if (!intrebare) {
+
         return;
+
     }
 
 
@@ -1498,18 +1130,14 @@ async function proceseazaRaspuns(
 
 
     const raspunsDat =
-
         String(
             raspuns || ""
         )
-
             .trim()
-
             .toUpperCase();
 
 
     const raspunsCorect =
-
         String(
 
             intrebare.raspuns_corect ||
@@ -1519,9 +1147,7 @@ async function proceseazaRaspuns(
             ""
 
         )
-
             .trim()
-
             .toUpperCase();
 
 
@@ -1543,17 +1169,13 @@ async function proceseazaRaspuns(
 
     const butonAles =
         document.querySelector(
-
             `.answer-button[data-answer="${raspunsDat}"]`
-
         );
 
 
     const butonCorect =
         document.querySelector(
-
             `.answer-button[data-answer="${raspunsCorect}"]`
-
         );
 
 
@@ -1598,7 +1220,6 @@ async function proceseazaRaspuns(
         if (message) {
 
             message.textContent =
-
                 `🎉 Răspuns corect! +${QUIZ_CONFIG.pointsCorrect} puncte`;
 
             message.className =
@@ -1610,7 +1231,26 @@ async function proceseazaRaspuns(
         if (bubble) {
 
             bubble.textContent =
-                "🎉 Foarte bine!";
+                "🎉 Bravo! Continuăm aventura!";
+
+        }
+
+
+        const animal =
+            element("animal");
+
+
+        if (animal) {
+
+            animal.classList.remove(
+                "happy"
+            );
+
+            void animal.offsetWidth;
+
+            animal.classList.add(
+                "happy"
+            );
 
         }
 
@@ -1654,7 +1294,6 @@ async function proceseazaRaspuns(
 
     raspunsuriGresite++;
 
-
     vieti--;
 
 
@@ -1695,9 +1334,9 @@ async function proceseazaRaspuns(
 
             vieti > 0
 
-                ? "😯 Ai grijă! Încearcă să fii atent."
+                ? "😯 Ai grijă! Mai încearcă!"
 
-                : "💔 Aventura s-a încheiat!";
+                : "💔 Ai pierdut toate viețile!";
 
     }
 
@@ -1775,9 +1414,10 @@ function afiseazaSucces() {
             "successEffect"
         );
 
-
     if (!effect) {
+
         return;
+
     }
 
 
@@ -1785,9 +1425,7 @@ function afiseazaSucces() {
         "active"
     );
 
-
     void effect.offsetWidth;
-
 
     effect.classList.add(
         "active"
@@ -1819,9 +1457,10 @@ function afiseazaAtac() {
             "attackEffect"
         );
 
-
     if (!effect) {
+
         return;
+
     }
 
 
@@ -1829,9 +1468,7 @@ function afiseazaAtac() {
         "active"
     );
 
-
     void effect.offsetWidth;
-
 
     effect.classList.add(
         "active"
@@ -1859,9 +1496,7 @@ function afiseazaAtac() {
 function actualizeazaStatistici() {
 
     const score =
-        element(
-            "score"
-        );
+        element("score");
 
 
     if (score) {
@@ -1873,9 +1508,7 @@ function actualizeazaStatistici() {
 
 
     const lives =
-        element(
-            "lives"
-        );
+        element("lives");
 
 
     if (lives) {
@@ -1892,16 +1525,11 @@ function actualizeazaStatistici() {
             +
 
             "🖤".repeat(
-
                 Math.max(
-
                     0,
-
                     QUIZ_CONFIG.lives -
                     vieti
-
                 )
-
             );
 
     }
@@ -2023,17 +1651,10 @@ function afiseazaRezultat() {
         );
 
 
-    /* =====================================================
-       VICTORIE
-    ===================================================== */
-
     if (
-
         vieti > 0 &&
-
         intrebareCurenta >=
         intrebari.length
-
     ) {
 
         if (icon) {
@@ -2063,7 +1684,6 @@ function afiseazaRezultat() {
         if (message) {
 
             message.textContent =
-
                 `Ai răspuns corect la ${raspunsuriCorecte} întrebări și ai obținut ${scor} puncte.`;
 
         }
@@ -2073,10 +1693,6 @@ function afiseazaRezultat() {
 
     }
 
-
-    /* =====================================================
-       GAME OVER
-    ===================================================== */
 
     if (icon) {
 
@@ -2097,7 +1713,7 @@ function afiseazaRezultat() {
     if (subtitle) {
 
         subtitle.textContent =
-            "Ai rămas fără vieți.";
+            "Poți încerca din nou.";
 
     }
 
@@ -2105,8 +1721,7 @@ function afiseazaRezultat() {
     if (message) {
 
         message.textContent =
-
-            `Ai obținut ${scor} puncte și ai răspuns corect la ${raspunsuriCorecte} întrebări.`;
+            `Ai obținut ${scor} puncte.`;
 
     }
 
@@ -2143,29 +1758,22 @@ function restartQuiz() {
 
 function alegeAltQuiz() {
 
-    quizSelectat =
-        null;
+    quizSelectat = null;
 
-    intrebari =
-        [];
+    intrebari = [];
 
-    intrebareCurenta =
-        0;
+    intrebareCurenta = 0;
 
     vieti =
         QUIZ_CONFIG.lives;
 
-    scor =
-        0;
+    scor = 0;
 
-    raspunsuriCorecte =
-        0;
+    raspunsuriCorecte = 0;
 
-    raspunsuriGresite =
-        0;
+    raspunsuriGresite = 0;
 
-    raspunsBlocat =
-        false;
+    raspunsBlocat = false;
 
     arataEcran(
         "quizSelectScreen"
@@ -2182,10 +1790,6 @@ function alegeAltQuiz() {
 
 function initializeazaQuiz() {
 
-    activeazaAnimatiiCinematice();
-
-    activeazaParallax();
-
     preloadImages();
 
 
@@ -2194,7 +1798,9 @@ function initializeazaQuiz() {
         event => {
 
 
-            /* răspuns */
+            /* =============================================
+               RĂSPUNS
+            ============================================= */
 
             const answerButton =
                 event.target.closest(
@@ -2206,17 +1812,20 @@ function initializeazaQuiz() {
 
                 event.preventDefault();
 
+                event.stopPropagation();
+
+
                 if (
                     answerButton.disabled
                 ) {
+
                     return;
+
                 }
 
 
                 proceseazaRaspuns(
-
                     answerButton.dataset.answer
-
                 );
 
 
@@ -2225,7 +1834,9 @@ function initializeazaQuiz() {
             }
 
 
-            /* start quiz */
+            /* =============================================
+               START QUIZ
+            ============================================= */
 
             const startButton =
                 event.target.closest(
@@ -2239,9 +1850,7 @@ function initializeazaQuiz() {
 
 
                 pornesteQuiz(
-
                     startButton.dataset.quizId
-
                 );
 
 
@@ -2250,7 +1859,9 @@ function initializeazaQuiz() {
             }
 
 
-            /* restart */
+            /* =============================================
+               RESTART
+            ============================================= */
 
             const restartButton =
                 event.target.closest(
@@ -2269,7 +1880,9 @@ function initializeazaQuiz() {
             }
 
 
-            /* alt quiz */
+            /* =============================================
+               ALT QUIZ
+            ============================================= */
 
             const chooseButton =
                 event.target.closest(
