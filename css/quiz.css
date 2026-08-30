@@ -1,0 +1,1827 @@
+/* =====================================================
+   QUIZ - PAGINA JOC
+===================================================== */
+
+.quiz-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(
+            180deg,
+            #dff4ff 0%,
+            #f4fbff 45%,
+            #d8f0d0 100%
+        );
+
+    padding: 25px 15px 50px;
+    box-sizing: border-box;
+}
+
+.quiz-screen {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.ascuns {
+    display: none !important;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+.quiz-intro {
+    max-width: 850px;
+    margin: 50px auto;
+    padding: 40px 25px;
+
+    background: rgba(255,255,255,.94);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 20px 60px rgba(34, 80, 40, .15);
+
+    text-align: center;
+}
+
+.intro-icon {
+    font-size: 80px;
+
+    animation:
+        floatTree 3s ease-in-out infinite;
+}
+
+@keyframes floatTree {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.quiz-intro h1 {
+    margin: 10px 0;
+
+    color: #315d3b;
+
+    font-size: clamp(
+        32px,
+        6vw,
+        52px
+    );
+}
+
+.quiz-intro p {
+    color: #58715d;
+    font-size: 18px;
+}
+
+
+/* =====================================================
+   LISTĂ QUIZURI
+===================================================== */
+
+.lista-quizuri {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(240px, 1fr)
+        );
+
+    gap: 18px;
+
+    margin-top: 30px;
+}
+
+.quiz-loading {
+    padding: 25px;
+    color: #666;
+}
+
+.quiz-select-card {
+
+    border: 2px solid #dceadd;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f2faf2
+        );
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        border-color .2s ease;
+}
+
+.quiz-select-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        #6da875;
+
+    box-shadow:
+        0 15px 30px
+        rgba(50,100,50,.15);
+}
+
+.quiz-select-card .quiz-icon {
+    font-size: 50px;
+}
+
+.quiz-select-card h3 {
+    margin:
+        10px 0 8px;
+
+    color:
+        #315d3b;
+}
+
+.quiz-select-card p {
+    font-size: 14px;
+    margin: 0;
+}
+
+
+/* =====================================================
+   HEADER JOC
+===================================================== */
+
+.game-header {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap: 15px;
+
+    padding:
+        15px 20px;
+
+    margin-bottom:
+        15px;
+
+    background:
+        rgba(255,255,255,.95);
+
+    border-radius:
+        18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+}
+
+.game-title {
+
+    font-weight:
+        800;
+
+    font-size:
+        clamp(18px, 3vw, 25px);
+
+    color:
+        #315d3b;
+}
+
+.game-stats {
+
+    display: flex;
+
+    align-items:
+        center;
+
+    gap: 20px;
+}
+
+.stat-item {
+
+    display: flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    min-width:
+        70px;
+}
+
+.stat-label {
+
+    color:
+        #758276;
+
+    font-size:
+        12px;
+
+    margin-bottom:
+        3px;
+}
+
+.stat-item strong {
+
+    color:
+        #315d3b;
+
+    font-size:
+        18px;
+}
+
+.lives span {
+    white-space:
+        nowrap;
+}
+
+
+/* =====================================================
+   PĂDURE
+===================================================== */
+
+.forest {
+
+    position:
+        relative;
+
+    height:
+        470px;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        28px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #8ed6ff 0%,
+            #c8efff 48%,
+            #78bd66 49%,
+            #4d914d 100%
+        );
+
+    box-shadow:
+        inset 0 -20px 50px
+        rgba(20,80,20,.2),
+
+        0 20px 40px
+        rgba(30,80,40,.15);
+}
+
+
+/* =====================================================
+   CER
+===================================================== */
+
+.sky {
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    pointer-events:
+        none;
+}
+
+.sun {
+
+    position:
+        absolute;
+
+    top:
+        25px;
+
+    right:
+        60px;
+
+    font-size:
+        55px;
+
+    animation:
+        sunFloat 5s ease-in-out infinite;
+}
+
+@keyframes sunFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-7px);
+    }
+}
+
+.cloud {
+
+    position:
+        absolute;
+
+    font-size:
+        50px;
+
+    opacity:
+        .8;
+
+    animation:
+        cloudMove 18s linear infinite;
+}
+
+.cloud-1 {
+    top:
+        50px;
+
+    left:
+        -100px;
+}
+
+.cloud-2 {
+    top:
+        120px;
+
+    left:
+        -300px;
+
+    animation-delay:
+        8s;
+}
+
+@keyframes cloudMove {
+
+    from {
+        transform:
+            translateX(0);
+    }
+
+    to {
+        transform:
+            translateX(1300px);
+    }
+}
+
+
+/* =====================================================
+   COPACI FUNDAL
+===================================================== */
+
+.background-trees {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    top:
+        120px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-around;
+
+    align-items:
+        flex-end;
+
+    font-size:
+        80px;
+
+    opacity:
+        .75;
+
+    filter:
+        saturate(.8);
+}
+
+.background-trees span:nth-child(even) {
+    transform:
+        translateY(30px);
+}
+
+
+/* =====================================================
+   MUNȚI
+===================================================== */
+
+.mountains {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    bottom:
+        185px;
+
+    text-align:
+        center;
+
+    font-size:
+        130px;
+
+    opacity:
+        .35;
+
+    pointer-events:
+        none;
+}
+
+
+/* =====================================================
+   SOL
+===================================================== */
+
+.ground {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    bottom:
+        0;
+
+    height:
+        210px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #73b95c,
+            #397f42
+        );
+}
+
+
+/* =====================================================
+   POTECĂ
+===================================================== */
+
+.path {
+
+    position:
+        absolute;
+
+    left:
+        -5%;
+
+    right:
+        -5%;
+
+    bottom:
+        -100px;
+
+    height:
+        270px;
+
+    background:
+        #c99a62;
+
+    border-radius:
+        50% 50% 0 0 / 30% 30% 0 0;
+
+    transform:
+        rotate(-2deg);
+
+    box-shadow:
+        inset 0 20px 20px
+        rgba(120,70,30,.12);
+}
+
+.path-line {
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    top:
+        40px;
+
+    height:
+        5px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    border-radius:
+        50%;
+}
+
+
+/* =====================================================
+   VEGETAȚIE
+===================================================== */
+
+.grass,
+.rock {
+
+    position:
+        absolute;
+
+    z-index:
+        5;
+
+}
+
+.grass-1 {
+    left:
+        15%;
+
+    bottom:
+        60px;
+
+    font-size:
+        30px;
+}
+
+.grass-2 {
+    left:
+        48%;
+
+    bottom:
+        45px;
+
+    font-size:
+        25px;
+}
+
+.grass-3 {
+    right:
+        18%;
+
+    bottom:
+        75px;
+
+    font-size:
+        35px;
+}
+
+.rock-1 {
+    left:
+        32%;
+
+    bottom:
+        45px;
+}
+
+.rock-2 {
+    right:
+        35%;
+
+    bottom:
+        65px;
+}
+
+
+/* =====================================================
+   OMULEȚ
+===================================================== */
+
+.player {
+
+    position:
+        absolute;
+
+    left:
+        12%;
+
+    bottom:
+        120px;
+
+    width:
+        90px;
+
+    height:
+        130px;
+
+    z-index:
+        20;
+
+    transition:
+        left 1.1s cubic-bezier(.2,.8,.2,1);
+}
+
+.player-character {
+
+    position:
+        relative;
+
+    font-size:
+        72px;
+
+    text-align:
+        center;
+
+    transform-origin:
+        center bottom;
+
+    animation:
+        playerIdle 1.2s ease-in-out infinite;
+}
+
+.player-shadow {
+
+    position:
+        absolute;
+
+    left:
+        15px;
+
+    bottom:
+        5px;
+
+    width:
+        60px;
+
+    height:
+        15px;
+
+    background:
+        rgba(0,0,0,.2);
+
+    border-radius:
+        50%;
+
+    filter:
+        blur(3px);
+}
+
+@keyframes playerIdle {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-5px)
+            rotate(2deg);
+    }
+}
+
+.player.walking
+.player-character {
+
+    animation:
+        playerWalk .35s
+        ease-in-out
+        infinite;
+}
+
+@keyframes playerWalk {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(-8deg);
+    }
+
+    50% {
+        transform:
+            translateY(-12px)
+            rotate(8deg);
+    }
+
+    100% {
+        transform:
+            translateY(0)
+            rotate(-8deg);
+    }
+}
+
+
+/* =====================================================
+   ANIMAL
+===================================================== */
+
+.animal {
+
+    position:
+        absolute;
+
+    right:
+        16%;
+
+    bottom:
+        135px;
+
+    z-index:
+        21;
+
+    font-size:
+        100px;
+
+    transform-origin:
+        center bottom;
+
+    animation:
+        animalIdle 1.5s ease-in-out infinite;
+}
+
+@keyframes animalIdle {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-7px);
+    }
+}
+
+.animal.attack {
+
+    animation:
+        animalAttack .65s
+        ease-in-out;
+}
+
+@keyframes animalAttack {
+
+    0% {
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+    35% {
+        transform:
+            translateX(-80px)
+            scale(1.2);
+    }
+
+    60% {
+        transform:
+            translateX(-110px)
+            scale(1.25)
+            rotate(-8deg);
+    }
+
+    100% {
+        transform:
+            translateX(0)
+            scale(1);
+    }
+}
+
+
+/* =====================================================
+   BULA ANIMAL
+===================================================== */
+
+.animal-bubble {
+
+    position:
+        absolute;
+
+    right:
+        12%;
+
+    bottom:
+        255px;
+
+    z-index:
+        30;
+
+    background:
+        white;
+
+    padding:
+        10px 16px;
+
+    border-radius:
+        18px;
+
+    font-weight:
+        700;
+
+    color:
+        #405244;
+
+    box-shadow:
+        0 8px 20px
+        rgba(0,0,0,.12);
+
+    opacity:
+        .95;
+}
+
+.animal-bubble::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    bottom:
+        -10px;
+
+    right:
+        30px;
+
+    border:
+        10px solid transparent;
+
+    border-top-color:
+        white;
+
+    border-bottom:
+        0;
+}
+
+
+/* =====================================================
+   ATAC
+===================================================== */
+
+.attack-effect {
+
+    position:
+        absolute;
+
+    left:
+        28%;
+
+    bottom:
+        225px;
+
+    font-size:
+        65px;
+
+    z-index:
+        50;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+}
+
+.attack-effect.show {
+
+    animation:
+        attackEffect .7s
+        ease-out;
+}
+
+@keyframes attackEffect {
+
+    0% {
+        opacity:
+            0;
+
+        transform:
+            scale(.3)
+            rotate(-20deg);
+    }
+
+    35% {
+        opacity:
+            1;
+
+        transform:
+            scale(1.4)
+            rotate(10deg);
+    }
+
+    100% {
+        opacity:
+            0;
+
+        transform:
+            scale(.8)
+            rotate(0);
+    }
+}
+
+
+/* =====================================================
+   SUCCES
+===================================================== */
+
+.success-effect {
+
+    position:
+        absolute;
+
+    left:
+        42%;
+
+    bottom:
+        220px;
+
+    font-size:
+        70px;
+
+    z-index:
+        50;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+}
+
+.success-effect.show {
+
+    animation:
+        successEffect .9s
+        ease-out;
+}
+
+@keyframes successEffect {
+
+    0% {
+        opacity:
+            0;
+
+        transform:
+            scale(.2)
+            translateY(20px);
+    }
+
+    35% {
+        opacity:
+            1;
+
+        transform:
+            scale(1.3)
+            translateY(-20px);
+    }
+
+    100% {
+        opacity:
+            0;
+
+        transform:
+            scale(.8)
+            translateY(-80px);
+    }
+}
+
+
+/* =====================================================
+   PLAYER LOVIT
+===================================================== */
+
+.player.hit
+.player-character {
+
+    animation:
+        playerHit .7s
+        ease-in-out;
+}
+
+@keyframes playerHit {
+
+    0% {
+        transform:
+            translateX(0);
+    }
+
+    15% {
+        transform:
+            translateX(-12px)
+            rotate(-10deg);
+    }
+
+    30% {
+        transform:
+            translateX(12px)
+            rotate(10deg);
+    }
+
+    45% {
+        transform:
+            translateX(-10px)
+            rotate(-8deg);
+    }
+
+    60% {
+        transform:
+            translateX(10px)
+            rotate(8deg);
+    }
+
+    100% {
+        transform:
+            translateX(0)
+            rotate(0);
+    }
+}
+
+
+/* =====================================================
+   PANEL ÎNTREBARE
+===================================================== */
+
+.question-panel {
+
+    position:
+        relative;
+
+    margin-top:
+        -30px;
+
+    z-index:
+        100;
+
+    background:
+        rgba(255,255,255,.98);
+
+    border-radius:
+        28px;
+
+    padding:
+        28px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.12);
+}
+
+.question-animal {
+
+    position:
+        absolute;
+
+    top:
+        -35px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        70px;
+
+    height:
+        70px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        #f8e8b9;
+
+    border:
+        5px solid white;
+
+    font-size:
+        40px;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.15);
+}
+
+.question-panel h2 {
+
+    margin:
+        30px auto 25px;
+
+    max-width:
+        850px;
+
+    text-align:
+        center;
+
+    color:
+        #334b38;
+
+    line-height:
+        1.4;
+
+    font-size:
+        clamp(20px, 3vw, 28px);
+}
+
+
+/* =====================================================
+   RĂSPUNSURI
+===================================================== */
+
+.answers {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        15px;
+
+    max-width:
+        900px;
+
+    margin:
+        0 auto;
+}
+
+.answer-button {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    min-height:
+        75px;
+
+    padding:
+        12px 18px;
+
+    border:
+        3px solid transparent;
+
+    border-radius:
+        17px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        16px;
+
+    font-weight:
+        600;
+
+    color:
+        #26352a;
+
+    text-align:
+        left;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease;
+}
+
+.answer-button:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0,0,0,.12);
+}
+
+.answer-button:disabled {
+    cursor:
+        default;
+}
+
+.answer-letter {
+
+    flex:
+        0 0 42px;
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(255,255,255,.8);
+
+    font-weight:
+        900;
+
+    font-size:
+        18px;
+}
+
+.answer-text {
+    flex:
+        1;
+}
+
+.answer-a {
+    background:
+        #ffe2e0;
+    border-color:
+        #ffaaa4;
+}
+
+.answer-b {
+    background:
+        #dff0ff;
+    border-color:
+        #9bcdf2;
+}
+
+.answer-c {
+    background:
+        #e4f7dd;
+    border-color:
+        #a9d796;
+}
+
+.answer-d {
+    background:
+        #fff0cf;
+    border-color:
+        #e6c77b;
+}
+
+.answer-button.correct {
+
+    background:
+        #b9efad !important;
+
+    border-color:
+        #39952f !important;
+
+    animation:
+        correctAnswer .5s ease;
+}
+
+.answer-button.wrong {
+
+    background:
+        #ffaaa4 !important;
+
+    border-color:
+        #d63127 !important;
+
+    animation:
+        wrongAnswer .5s ease;
+}
+
+@keyframes correctAnswer {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    50% {
+        transform:
+            scale(1.04);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+}
+
+@keyframes wrongAnswer {
+
+    0%,
+    100% {
+        transform:
+            translateX(0);
+    }
+
+    25% {
+        transform:
+            translateX(-8px);
+    }
+
+    75% {
+        transform:
+            translateX(8px);
+    }
+}
+
+
+/* =====================================================
+   MESAJ
+===================================================== */
+
+.question-message {
+
+    min-height:
+        28px;
+
+    margin-top:
+        18px;
+
+    text-align:
+        center;
+
+    font-weight:
+        800;
+
+    font-size:
+        17px;
+}
+
+
+/* =====================================================
+   FINAL
+===================================================== */
+
+.result-screen {
+
+    min-height:
+        80vh;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+
+.result-card {
+
+    width:
+        min(650px, 100%);
+
+    background:
+        rgba(255,255,255,.97);
+
+    border-radius:
+        30px;
+
+    padding:
+        45px 25px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 25px 70px
+        rgba(30,80,40,.2);
+}
+
+.result-icon {
+
+    font-size:
+        90px;
+
+    animation:
+        resultFloat 2s ease-in-out infinite;
+}
+
+@keyframes resultFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-12px);
+    }
+}
+
+.result-card h1 {
+
+    color:
+        #315d3b;
+
+    font-size:
+        38px;
+
+    margin:
+        10px 0;
+}
+
+.result-card p {
+
+    color:
+        #607060;
+
+    font-size:
+        18px;
+}
+
+.final-score {
+
+    margin:
+        30px auto;
+
+    width:
+        180px;
+
+    height:
+        180px;
+
+    border-radius:
+        50%;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8df76,
+            #f3ad4c
+        );
+
+    color:
+        #654713;
+
+    box-shadow:
+        0 12px 30px
+        rgba(200,140,40,.25);
+}
+
+.final-score span {
+    font-size:
+        15px;
+}
+
+.final-score strong {
+
+    font-size:
+        48px;
+
+    line-height:
+        1;
+}
+
+.final-score small {
+    font-size:
+        14px;
+}
+
+.result-details {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:
+        12px;
+
+    margin:
+        25px 0;
+}
+
+.result-details div {
+
+    padding:
+        15px;
+
+    background:
+        #f1f7f0;
+
+    border-radius:
+        15px;
+}
+
+.result-details span {
+
+    display:
+        block;
+
+    font-size:
+        13px;
+
+    color:
+        #708070;
+}
+
+.result-details strong {
+
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    color:
+        #315d3b;
+
+    font-size:
+        25px;
+}
+
+.result-message {
+
+    font-size:
+        18px;
+
+    font-weight:
+        700;
+
+    color:
+        #52705a;
+
+    margin:
+        20px;
+}
+
+.result-buttons {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    gap:
+        12px;
+
+    flex-wrap:
+        wrap;
+}
+
+.game-button {
+
+    border:
+        0;
+
+    border-radius:
+        13px;
+
+    padding:
+        14px 22px;
+
+    font-size:
+        16px;
+
+    font-weight:
+        800;
+
+    cursor:
+        pointer;
+
+    transition:
+        transform .2s ease;
+}
+
+.game-button:hover {
+    transform:
+        translateY(-3px);
+}
+
+.game-button.primary {
+
+    background:
+        #4c9552;
+
+    color:
+        white;
+}
+
+.game-button.secondary {
+
+    background:
+        #e8efe7;
+
+    color:
+        #315d3b;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .quiz-page {
+        padding:
+            10px 8px 30px;
+    }
+
+    .game-header {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+    .game-title {
+        text-align:
+            center;
+    }
+
+    .game-stats {
+
+        justify-content:
+            space-around;
+
+        gap:
+            5px;
+
+    }
+
+    .forest {
+
+        height:
+            380px;
+
+        border-radius:
+            20px;
+
+    }
+
+    .background-trees {
+
+        font-size:
+            55px;
+
+        top:
+            100px;
+
+    }
+
+    .mountains {
+        font-size:
+            80px;
+
+        bottom:
+            150px;
+    }
+
+    .player {
+
+        left:
+            7%;
+
+        bottom:
+            100px;
+
+        transform:
+            scale(.75);
+
+        transform-origin:
+            bottom center;
+    }
+
+    .animal {
+
+        right:
+            8%;
+
+        bottom:
+            115px;
+
+        font-size:
+            70px;
+
+    }
+
+    .animal-bubble {
+
+        right:
+            5%;
+
+        bottom:
+            220px;
+
+        font-size:
+            12px;
+
+    }
+
+    .question-panel {
+
+        margin-top:
+            -20px;
+
+        padding:
+            22px 12px;
+
+        border-radius:
+            22px;
+
+    }
+
+    .answers {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            10px;
+
+    }
+
+    .answer-button {
+
+        min-height:
+            65px;
+
+    }
+
+    .result-details {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+    .quiz-intro {
+
+        margin:
+            20px auto;
+
+        padding:
+            30px 15px;
+
+    }
+
+}
