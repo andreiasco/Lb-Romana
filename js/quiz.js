@@ -299,13 +299,14 @@ async function incarcaQuizuriSite() {
                             : ""
                     }
 
-                    <button
-                        type="button"
-                        class="game-button primary"
-                        onclick="pornesteQuiz(${quiz.id})"
-                    >
-                        🌲 Pornește aventura
-                    </button>
+                   <button
+    type="button"
+    class="game-button primary quiz-start-button"
+    data-quiz-id="${escapeHTML(quiz.id)}"
+>
+    🌲 Pornește aventura
+</button>
+
 
                 </div>
 
