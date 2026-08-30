@@ -76,7 +76,7 @@ async function creeazaQuiz() {
             data,
             error
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("quizuri")
                 .insert([
                     {
@@ -365,7 +365,7 @@ async function adaugaIntrebareQuiz() {
             const {
                 error: uploadError
             } =
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(IMAGINI_BUCKET)
                     .upload(
@@ -399,7 +399,7 @@ async function adaugaIntrebareQuiz() {
             const {
                 data
             } =
-                supabaseClient
+                window.supabaseClient
                     .storage
                     .from(IMAGINI_BUCKET)
                     .getPublicUrl(
@@ -419,7 +419,7 @@ async function adaugaIntrebareQuiz() {
         const {
             error
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("intrebari_quiz")
                 .insert([
                     {
@@ -460,7 +460,7 @@ async function adaugaIntrebareQuiz() {
 
             if (caleImagine) {
 
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(IMAGINI_BUCKET)
                     .remove([
@@ -558,7 +558,7 @@ async function incarcaQuizuriAdmin() {
         data: quizuri,
         error
     } =
-        await supabaseClient
+        await window.supabaseClient
             .from("quizuri")
             .select("*")
             .order(
@@ -695,7 +695,7 @@ async function selecteazaQuiz(
         data: quiz,
         error
     } =
-        await supabaseClient
+        await window.supabaseClient
             .from("quizuri")
             .select("*")
             .eq(
@@ -773,7 +773,7 @@ async function incarcaIntrebariQuizAdmin() {
         data: intrebari,
         error
     } =
-        await supabaseClient
+        await window.supabaseClient
             .from("intrebari_quiz")
             .select("*")
             .eq(
@@ -936,7 +936,7 @@ async function schimbaActivQuiz(
     const {
         error
     } =
-        await supabaseClient
+        await window.supabaseClient
             .from("quizuri")
             .update({
                 activ:
@@ -1001,7 +1001,7 @@ async function stergeIntrebareQuiz(
         const {
             error
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("intrebari_quiz")
                 .delete()
                 .eq(
@@ -1189,7 +1189,7 @@ async function adaugaAutor() {
         const {
             error: uploadError
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(IMAGINI_BUCKET)
                 .upload(
@@ -1215,7 +1215,7 @@ async function adaugaAutor() {
         const {
             data: publicUrlData
         } =
-            supabaseClient
+            window.supabaseClient
                 .storage
                 .from(IMAGINI_BUCKET)
                 .getPublicUrl(
@@ -1234,7 +1234,7 @@ async function adaugaAutor() {
         const {
             error: autorError
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("autori")
                 .insert([
                     {
@@ -1258,7 +1258,7 @@ async function adaugaAutor() {
 
         if (autorError) {
 
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(IMAGINI_BUCKET)
                 .remove([
@@ -1357,7 +1357,7 @@ async function incarcaListaAutoriSelect() {
         data: autori,
         error
     } =
-        await supabaseClient
+        await window.supabaseClient
             .from("autori")
             .select(
                 "id, initiale, nume"
@@ -1624,7 +1624,7 @@ async function adaugaOpera() {
             const {
                 error
             } =
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(BUCKET)
                     .upload(
@@ -1709,7 +1709,7 @@ async function adaugaOpera() {
                 `${autorId}/${Date.now()}_rezumat_word_${numeWord}`;
 
             const { error: wordError } =
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(BUCKET)
                     .upload(
@@ -1748,7 +1748,7 @@ async function adaugaOpera() {
                 `personaje/${Date.now()}_${autorId}.${extensieImagine}`;
 
             const { error: imagineError } =
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(IMAGINI_BUCKET)
                     .upload(
@@ -1767,7 +1767,7 @@ async function adaugaOpera() {
             imaginiIncarcate.push(caleImaginePersonaje);
 
             const { data: imagineData } =
-                supabaseClient
+                window.supabaseClient
                     .storage
                     .from(IMAGINI_BUCKET)
                     .getPublicUrl(caleImaginePersonaje);
@@ -1799,7 +1799,7 @@ async function adaugaOpera() {
         const {
             error
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .insert([
                     {
@@ -1883,7 +1883,7 @@ async function adaugaOpera() {
             fisiereIncarcate.length > 0
         ) {
 
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(BUCKET)
                 .remove(
@@ -1894,7 +1894,7 @@ async function adaugaOpera() {
 
         if (imaginiIncarcate.length > 0) {
 
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(IMAGINI_BUCKET)
                 .remove(imaginiIncarcate);
@@ -2008,7 +2008,7 @@ async function incarcaAutoriAdmin() {
     const {
         data: autori,
         error
-    } = await supabaseClient
+    } = await window.supabaseClient
         .from("autori")
         .select("*")
         .order("nume", {
@@ -2156,7 +2156,7 @@ async function actualizeazaDescriereAutor(autorId) {
         const {
             error
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("autori")
                 .update({
                     descriere:
@@ -2218,7 +2218,7 @@ async function incarcaOpereAdmin() {
         const {
             data: opere,
             error: eroareOpere
-        } = await supabaseClient
+        } = await window.supabaseClient
             .from("opere")
             .select("*")
             .order("titlu", {
@@ -2232,7 +2232,7 @@ async function incarcaOpereAdmin() {
         const {
             data: autori,
             error: eroareAutori
-        } = await supabaseClient
+        } = await window.supabaseClient
             .from("autori")
             .select("id, initiale, nume");
 
@@ -2619,7 +2619,7 @@ async function inlocuiestePDF(
         const {
             data: opera,
             error: eroareOpera
-        } = await supabaseClient
+        } = await window.supabaseClient
             .from("opere")
             .select("*")
             .eq("id", operaId)
@@ -2671,7 +2671,7 @@ async function inlocuiestePDF(
 
         const {
             error: uploadError
-        } = await supabaseClient
+        } = await window.supabaseClient
             .storage
             .from(BUCKET)
             .upload(
@@ -2702,7 +2702,7 @@ async function inlocuiestePDF(
 
         const {
             error: updateError
-        } = await supabaseClient
+        } = await window.supabaseClient
             .from("opere")
             .update({
                 [coloana]:
@@ -2718,7 +2718,7 @@ async function inlocuiestePDF(
         // ștergem noul fișier.
         if (updateError) {
 
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(BUCKET)
                 .remove([
@@ -2737,7 +2737,7 @@ async function inlocuiestePDF(
 
             const {
                 error: deleteOldError
-            } = await supabaseClient
+            } = await window.supabaseClient
                 .storage
                 .from(BUCKET)
                 .remove([
@@ -2882,7 +2882,7 @@ async function inlocuiesteFisierOpera(
         status.style.color = "#7b2450";
 
         const { data: opera, error: operaError } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .select(coloana + ", autor_id")
                 .eq("id", operaId)
@@ -2902,7 +2902,7 @@ async function inlocuiesteFisierOpera(
             : `personaje/${Date.now()}_${opera.autor_id}_${numeCurat}`;
 
         const { error: uploadError } =
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(bucket)
                 .upload(caleNoua, fisier, {
@@ -2920,7 +2920,7 @@ async function inlocuiesteFisierOpera(
 
         const valoareNoua = tipFisier === "word"
             ? `storage://${bucket}/${caleNoua}`
-            : supabaseClient
+            : window.supabaseClient
                 .storage
                 .from(bucket)
                 .getPublicUrl(caleNoua)
@@ -2928,13 +2928,13 @@ async function inlocuiesteFisierOpera(
                 .publicUrl;
 
         const { error: updateError } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .update({ [coloana]: valoareNoua })
                 .eq("id", operaId);
 
         if (updateError) {
-            await supabaseClient.storage.from(bucket).remove([caleNoua]);
+            await window.supabaseClient.storage.from(bucket).remove([caleNoua]);
             throw updateError;
         }
 
@@ -2942,7 +2942,7 @@ async function inlocuiesteFisierOpera(
 
         if (caleVeche) {
             const { error: deleteError } =
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(bucket)
                     .remove([caleVeche]);
@@ -2962,7 +2962,7 @@ async function inlocuiesteFisierOpera(
     } catch (error) {
 
         if (caleNoua) {
-            await supabaseClient.storage.from(bucket).remove([caleNoua]);
+            await window.supabaseClient.storage.from(bucket).remove([caleNoua]);
         }
 
         console.error("Eroare înlocuire resursă:", error);
@@ -3007,7 +3007,7 @@ async function inlocuiesteLinkOpera(operaId, coloana, inputId) {
         status.textContent = "Se salvează noul link...";
         status.style.color = "#7b2450";
 
-        const { error } = await supabaseClient
+        const { error } = await window.supabaseClient
             .from("opere")
             .update({ [coloana]: valoare })
             .eq("id", operaId);
@@ -3070,7 +3070,7 @@ async function stergeOpera(operaId) {
             data: opera,
             error: eroareOpera
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .select("*")
                 .eq(
@@ -3104,7 +3104,7 @@ async function stergeOpera(operaId) {
         const {
             error: deleteDbError
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .delete()
                 .eq(
@@ -3127,7 +3127,7 @@ async function stergeOpera(operaId) {
             const {
                 error: deleteStorageError
             } =
-                await supabaseClient
+                await window.supabaseClient
                     .storage
                     .from(BUCKET)
                     .remove(
@@ -3260,7 +3260,7 @@ async function listeazaToatePDFurile(
         data,
         error
     } =
-        await supabaseClient
+        await window.supabaseClient
             .storage
             .from(BUCKET)
             .list(
@@ -3520,7 +3520,7 @@ async function loginUtilizator() {
             data,
             error
         } =
-            await supabaseClient.auth
+            await window.supabaseClient.auth
                 .signInWithPassword({
                     email:
                         email,
@@ -3593,7 +3593,7 @@ async function inregistreazaUtilizator() {
     mesaj.style.color = "#7b2450";
 
     try {
-        const { data, error } = await supabaseClient.auth.signUp({
+        const { data, error } = await window.supabaseClient.auth.signUp({
             email,
             password,
             options: {
@@ -3672,7 +3672,7 @@ async function reseteazaParola() {
         const {
             error
         } =
-            await supabaseClient.auth
+            await window.supabaseClient.auth
                 .resetPasswordForEmail(
                     email,
                     {
@@ -3721,7 +3721,7 @@ async function reseteazaParola() {
 
 async function obtineRolUtilizator(user) {
 
-    const { data, error } = await supabaseClient
+    const { data, error } = await window.supabaseClient
         .from("profiles")
         .select("role")
         .eq("id", user.id)
@@ -3839,7 +3839,7 @@ async function logoutUtilizator() {
         const {
             error
         } =
-            await supabaseClient.auth
+            await window.supabaseClient.auth
                 .signOut();
 
 
@@ -3886,7 +3886,7 @@ async function utilizatorAutentificat() {
         data,
         error
     } =
-        await supabaseClient.auth
+        await window.supabaseClient.auth
             .getSession();
 
 
@@ -3934,7 +3934,7 @@ async function verificaSesiunea() {
             data,
             error
         } =
-            await supabaseClient.auth
+            await window.supabaseClient.auth
                 .getSession();
 
 
@@ -3982,7 +3982,7 @@ async function verificaSesiunea() {
 // AUTH STATE
 // ======================================================
 
-supabaseClient.auth.onAuthStateChange(
+window.supabaseClient.auth.onAuthStateChange(
     (event, session) => {
 
         console.log(
