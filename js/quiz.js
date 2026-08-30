@@ -4,87 +4,174 @@
 
 "use strict";
 
+
 /* =====================================================
    CONFIGURARE
 ===================================================== */
 
 const QUIZ_CONFIG = {
+
     lives: 3,
+
     pointsCorrect: 100,
+
     delayAfterCorrect: 1100,
+
     delayAfterWrong: 1500
+
 };
+
 
 /* =====================================================
    ANIMALE
 ===================================================== */
 
 const ANIMALE = {
+
     lup: "🐺",
+
     vulpe: "🦊",
+
     urs: "🐻",
+
     iepure: "🐰",
+
     caprioara: "🦌",
+
     cerb: "🦌"
+
 };
 
+
 /* =====================================================
-   STARE JOC
+   VARIABILE JOC
 ===================================================== */
 
 let quizuri = [];
-let quizCurent = null;
+
+let quizSelectat = null;
+
 let intrebari = [];
 
-let intrebareaCurenta = 0;
+let intrebareCurenta = 0;
+
 let vieti = QUIZ_CONFIG.lives;
+
 let scor = 0;
+
 let raspunsuriCorecte = 0;
+
 let raspunsuriGresite = 0;
-let raspunsDat = false;
+
+let raspunsBlocat = false;
+
 
 /* =====================================================
-   ELEMENTE HTML
+   UTILITĂȚI DOM
 ===================================================== */
 
-const $ = (id) => document.getElementById(id);
+function element(id) {
+
+    return document.getElementById(id);
+
+}
+
 
 /* =====================================================
    ESCAPE HTML
 ===================================================== */
 
-function escapeHTML(text) {
+function escapeHTML(value) {
 
-    if (text === null || text === undefined) {
+    if (value === null || value === undefined) {
+
         return "";
+
     }
 
-    return String(text)
+    return String(value)
+
         .replace(/&/g, "&amp;")
+
         .replace(/</g, "&lt;")
+
         .replace(/>/g, "&gt;")
+
         .replace(/"/g, "&quot;")
+
         .replace(/'/g, "&#039;");
+
 }
+
 
 /* =====================================================
-   AFIȘARE ECRAN
+   ANIMAL
 ===================================================== */
 
-function arataEcran(id) {
+function obtineAnimal(animal) {
 
-    document
-        .querySelectorAll(".quiz-screen")
-        .forEach(screen => {
-            screen.classList.add("ascuns");
-        });
+    if (!animal) {
 
-    const screen = $(id);
+        return "🐺";
 
-    if (screen) {
-        screen.classList.remove("ascuns");
     }
+
+    const cheie =
+        String(animal)
+            .trim()
+            .toLowerCase();
+
+    return ANIMALE[cheie] || animal || "🐺";
+
 }
+
+
+/* =====================================================
+   ECRANE
+===================================================== */
+
+function arataEcran(idEcran) {
+
+    const selectScreen =
+        element("quizSelectScreen");
+
+    const gameScreen =
+        element("quizGameScreen");
+
+    const resultScreen =
+        element("quizResultScreen");
+
+
+    if (selectScreen) {
+
+        selectScreen.classList.add("ascuns");
+
+    }
+
+    if (gameScreen) {
+
+        gameScreen.classList.add("ascuns");
+
+    }
+
+    if (resultScreen) {
+
+        resultScreen.classList.add("ascuns");
+
+    }
+
+
+    const ecran =
+        element(idEcran);
+
+    if (ecran) {
+
+        ecran.classList.remove("ascuns");
+
+    }
+
+}
+
 
 /* =====================================================
    ÎNCARCĂ QUIZURILE
@@ -93,15 +180,19 @@ function arataEcran(id) {
 async function incarcaQuizuriSite() {
 
     const container =
-        document.getElementById("listaQuizuri");
+        element("listaQuizuri");
 
-    /*
-     * Dacă suntem pe o pagină care nu este quiz.html,
-     * nu facem nimic.
-     */
+
     if (!container) {
+
+        console.error(
+            "Elementul #listaQuizuri nu există."
+        );
+
         return;
+
     }
+
 
     container.innerHTML = `
         <div class="quiz-loading">
@@ -109,62 +200,87 @@ async function incarcaQuizuriSite() {
         </div>
     `;
 
+
     try {
 
         const {
-            data: quizuri,
+            data,
             error
-        } = await supabaseClient
-            .from("quizuri")
-            .select("*")
-            .eq("activ", true)
-            .order("created_at", {
-                ascending: false
-            });
+        } =
+            await supabaseClient
+
+                .from("quizuri")
+
+                .select("*")
+
+                .eq(
+                    "activ",
+                    true
+                )
+
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
 
         if (error) {
+
             throw error;
+
         }
 
-        if (!quizuri || quizuri.length === 0) {
+
+        quizuri =
+            data || [];
+
+
+        if (quizuri.length === 0) {
 
             container.innerHTML = `
                 <div class="quiz-loading">
-                    Nu există quizuri active.
+                    Nu există încă quizuri active.
                 </div>
             `;
 
             return;
+
         }
 
+
         container.innerHTML =
-            quizuri.map(quiz => {
+            quizuri.map(
+                quiz => {
 
-                return `
-                    <button
-                        type="button"
-                        class="quiz-card"
-                        onclick="pornesteQuiz(${quiz.id})"
-                    >
+                    return `
 
-                        <span class="quiz-card-icon">
-                            🎮
-                        </span>
+                        <div
+                            class="quiz-card"
+                            data-quiz-id="${escapeHTML(
+                                quiz.id
+                            )}"
+                        >
 
-                        <span class="quiz-card-content">
+                            <div class="quiz-card-icon">
+                                🎮
+                            </div>
 
-                            <strong>
-                                ${escapeHTML(quiz.titlu)}
-                            </strong>
+                            <h2>
+                                ${escapeHTML(
+                                    quiz.titlu
+                                )}
+                            </h2>
 
                             ${
                                 quiz.categorie
                                     ? `
-                                        <small>
+                                        <div class="quiz-category">
                                             ${escapeHTML(
                                                 quiz.categorie
                                             )}
-                                        </small>
+                                        </div>
                                     `
                                     : ""
                             }
@@ -172,25 +288,32 @@ async function incarcaQuizuriSite() {
                             ${
                                 quiz.descriere
                                     ? `
-                                        <span>
+                                        <p>
                                             ${escapeHTML(
                                                 quiz.descriere
                                             )}
-                                        </span>
+                                        </p>
                                     `
                                     : ""
                             }
 
-                        </span>
+                            <button
+                                type="button"
+                                class="game-button primary"
+                                onclick="pornesteQuiz(${Number(
+                                    quiz.id
+                                )})"
+                            >
+                                🌲 Pornește aventura
+                            </button>
 
-                        <span class="quiz-card-arrow">
-                            ➜
-                        </span>
+                        </div>
 
-                    </button>
-                `;
+                    `;
 
-            }).join("");
+                }
+            ).join("");
+
 
     } catch (error) {
 
@@ -199,22 +322,26 @@ async function incarcaQuizuriSite() {
             error
         );
 
+
         container.innerHTML = `
-            <div class="quiz-loading"
-                 style="color:#c62828">
 
+            <div
+                class="quiz-loading"
+                style="color:#c62828;"
+            >
                 Nu am putut încărca quizurile.
-
                 <br>
-
-                <small>
-                    ${escapeHTML(error.message)}
-                </small>
-
+                ${escapeHTML(
+                    error.message
+                )}
             </div>
+
         `;
+
     }
+
 }
+
 
 /* =====================================================
    PORNEȘTE QUIZ
@@ -222,46 +349,68 @@ async function incarcaQuizuriSite() {
 
 async function pornesteQuiz(quizId) {
 
-    try {
+    const id =
+        Number(quizId);
 
-        quizCurent = quizuri.find(
-            quiz => Number(quiz.id) === Number(quizId)
+
+    const quiz =
+        quizuri.find(
+            q =>
+                Number(q.id) === id
         );
 
-        if (!quizCurent) {
 
-            const {
-                data,
-                error
-            } = await supabaseClient
-                .from("quizuri")
-                .select("*")
-                .eq("id", quizId)
-                .single();
+    if (!quiz) {
 
-            if (error) {
-                throw error;
-            }
+        console.error(
+            "Quizul nu a fost găsit:",
+            quizId
+        );
 
-            quizCurent = data;
-        }
+        return;
+
+    }
+
+
+    quizSelectat =
+        quiz;
+
+
+    try {
 
         const {
             data,
             error
-        } = await supabaseClient
-            .from("intrebari_quiz")
-            .select("*")
-            .eq("quiz_id", quizCurent.id)
-            .order("ordine", {
-                ascending: true
-            });
+        } =
+            await supabaseClient
+
+                .from("intrebari_quiz")
+
+                .select("*")
+
+                .eq(
+                    "quiz_id",
+                    id
+                )
+
+                .order(
+                    "ordine",
+                    {
+                        ascending: true
+                    }
+                );
+
 
         if (error) {
+
             throw error;
+
         }
 
-        intrebari = data || [];
+
+        intrebari =
+            data || [];
+
 
         if (intrebari.length === 0) {
 
@@ -270,58 +419,62 @@ async function pornesteQuiz(quizId) {
             );
 
             return;
+
         }
 
-        /* RESET JOC */
 
-        intrebareaCurenta = 0;
-        vieti = QUIZ_CONFIG.lives;
+        intrebareCurenta = 0;
+
+        vieti =
+            QUIZ_CONFIG.lives;
+
         scor = 0;
+
         raspunsuriCorecte = 0;
+
         raspunsuriGresite = 0;
-        raspunsDat = false;
 
-        /* TITLU */
+        raspunsBlocat = false;
 
-        if ($("gameQuizTitle")) {
 
-            $("gameQuizTitle").textContent =
-                quizCurent.titlu;
+        arataEcran(
+            "quizGameScreen"
+        );
+
+
+        const title =
+            element("gameQuizTitle");
+
+        if (title) {
+
+            title.textContent =
+                quiz.titlu || "Aventura";
+
         }
 
-        /* SCOR */
 
-        actualizeazaScor();
-
-        /* VIEȚI */
-
-        actualizeazaVieti();
-
-        /* NUMĂR ÎNTREBĂRI */
-
-        if ($("questionTotal")) {
-
-            $("questionTotal").textContent =
-                intrebari.length;
-        }
-
-        arataEcran("quizGameScreen");
+        actualizeazaStatistici();
 
         afiseazaIntrebarea();
+
 
     } catch (error) {
 
         console.error(
-            "Eroare pornire quiz:",
+            "Eroare încărcare întrebări:",
             error
         );
 
+
         alert(
-            "Nu am putut porni quizul: " +
+            "Nu am putut încărca întrebările: " +
             error.message
         );
+
     }
+
 }
+
 
 /* =====================================================
    AFIȘEAZĂ ÎNTREBAREA
@@ -330,491 +483,495 @@ async function pornesteQuiz(quizId) {
 function afiseazaIntrebarea() {
 
     if (
-        intrebareaCurenta >= intrebari.length
+        intrebareCurenta >=
+        intrebari.length
     ) {
 
-        terminaQuiz();
+        afiseazaRezultat();
+
         return;
+
     }
+
+
+    raspunsBlocat = false;
+
 
     const intrebare =
-        intrebari[intrebareaCurenta];
+        intrebari[
+            intrebareCurenta
+        ];
 
-    raspunsDat = false;
 
-    /* NUMĂR */
+    const numar =
+        intrebareCurenta + 1;
 
-    if ($("questionNumber")) {
 
-        $("questionNumber").textContent =
-            intrebareaCurenta + 1;
+    const total =
+        intrebari.length;
+
+
+    /* ---------------------------------------------
+       NUMĂR ÎNTREBARE
+    --------------------------------------------- */
+
+    const questionNumber =
+        element("questionNumber");
+
+    if (questionNumber) {
+
+        questionNumber.textContent =
+            numar;
+
     }
 
-    /* TEXT */
 
-    if ($("questionText")) {
+    const questionTotal =
+        element("questionTotal");
 
-        $("questionText").textContent =
+    if (questionTotal) {
+
+        questionTotal.textContent =
+            total;
+
+    }
+
+
+    /* ---------------------------------------------
+       TEXT ÎNTREBARE
+    --------------------------------------------- */
+
+    const questionText =
+        element("questionText");
+
+    if (questionText) {
+
+        questionText.textContent =
             intrebare.intrebare || "";
+
     }
 
-    /* RĂSPUNSURI */
 
-    if ($("answerA")) {
-
-        $("answerA").textContent =
-            intrebare.raspuns_a || "";
-    }
-
-    if ($("answerB")) {
-
-        $("answerB").textContent =
-            intrebare.raspuns_b || "";
-    }
-
-    if ($("answerC")) {
-
-        $("answerC").textContent =
-            intrebare.raspuns_c || "";
-    }
-
-    if ($("answerD")) {
-
-        $("answerD").textContent =
-            intrebare.raspuns_d || "";
-    }
-
-    /* ANIMAL */
+    /* ---------------------------------------------
+       ANIMAL
+    --------------------------------------------- */
 
     const animal =
-        ANIMALE[intrebare.animal] ||
-        intrebare.animal ||
-        "🐺";
+        obtineAnimal(
+            intrebare.animal
+        );
 
-    if ($("animal")) {
 
-        $("animal").textContent =
+    const questionAnimal =
+        element("questionAnimal");
+
+    if (questionAnimal) {
+
+        questionAnimal.textContent =
             animal;
+
     }
 
-    if ($("questionAnimal")) {
-
-        $("questionAnimal").textContent =
-            animal;
-    }
-
-    /* BULA */
-
-    if ($("animalBubble")) {
-
-        $("animalBubble").textContent =
-            "Răspunde corect!";
-    }
-
-    /* IMAGINE ANIMAL */
-
-    actualizeazaImagineAnimal(
-        intrebare.imagine_animal,
-        animal
-    );
-
-    /* MESAJ */
-
-    if ($("questionMessage")) {
-
-        $("questionMessage").textContent = "";
-        $("questionMessage").className =
-            "question-message";
-    }
-
-    /* BUTOANE */
-
-    document
-        .querySelectorAll(".answer-button")
-        .forEach(button => {
-
-            button.disabled = false;
-
-            button.classList.remove(
-                "correct",
-                "wrong",
-                "selected"
-            );
-        });
-}
-
-/* =====================================================
-   IMAGINE ANIMAL
-===================================================== */
-
-function actualizeazaImagineAnimal(
-    url,
-    emoji
-) {
 
     const animalElement =
-        $("animal");
+        element("animal");
 
-    if (!animalElement) {
-        return;
-    }
-
-    if (url) {
-
-        animalElement.innerHTML = `
-            <img
-                src="${escapeHTML(url)}"
-                alt="Animal"
-                style="
-                    width:100%;
-                    height:100%;
-                    object-fit:contain;
-                    border-radius:20px;
-                "
-            >
-        `;
-
-    } else {
+    if (animalElement) {
 
         animalElement.textContent =
-            emoji;
-    }
-}
+            animal;
 
-/* =====================================================
-   RĂSPUNS
-===================================================== */
-
-async function verificaRaspuns(
-    raspuns
-) {
-
-    if (raspunsDat) {
-        return;
     }
 
-    if (
-        !intrebari[intrebareaCurenta]
-    ) {
-        return;
+
+    /* ---------------------------------------------
+       BULA ANIMAL
+    --------------------------------------------- */
+
+    const animalBubble =
+        element("animalBubble");
+
+    if (animalBubble) {
+
+        animalBubble.textContent =
+            "Alege răspunsul corect!";
+
     }
 
-    raspunsDat = true;
 
-    const intrebare =
-        intrebari[intrebareaCurenta];
+    /* ---------------------------------------------
+       RĂSPUNSURI
+    --------------------------------------------- */
 
-    const raspunsCorect =
-        String(
-            intrebare.raspuns_corect
-        )
-        .trim()
-        .toUpperCase();
+    const answerA =
+        element("answerA");
 
-    const raspunsUtilizator =
-        String(raspuns)
-            .trim()
-            .toUpperCase();
+    const answerB =
+        element("answerB");
+
+    const answerC =
+        element("answerC");
+
+    const answerD =
+        element("answerD");
+
+
+    if (answerA) {
+
+        answerA.textContent =
+            intrebare.raspuns_a || "";
+
+    }
+
+    if (answerB) {
+
+        answerB.textContent =
+            intrebare.raspuns_b || "";
+
+    }
+
+    if (answerC) {
+
+        answerC.textContent =
+            intrebare.raspuns_c || "";
+
+    }
+
+    if (answerD) {
+
+        answerD.textContent =
+            intrebare.raspuns_d || "";
+
+    }
+
+
+    /* ---------------------------------------------
+       RESET BUTOANE
+    --------------------------------------------- */
 
     const butoane =
         document.querySelectorAll(
             ".answer-button"
         );
 
-    butoane.forEach(button => {
-        button.disabled = true;
-    });
 
-    const butonSelectat =
-        document.querySelector(
-            `.answer-button[data-answer="${raspunsUtilizator}"]`
+    butoane.forEach(
+        buton => {
+
+            buton.disabled = false;
+
+            buton.classList.remove(
+                "correct",
+                "wrong",
+                "raspuns-corect",
+                "raspuns-gresit"
+            );
+
+        }
+    );
+
+
+    /* ---------------------------------------------
+       MESAJ
+    --------------------------------------------- */
+
+    const message =
+        element(
+            "questionMessage"
         );
 
+    if (message) {
+
+        message.textContent = "";
+
+        message.className =
+            "question-message";
+
+    }
+
+
+    /* ---------------------------------------------
+       SCROLL
+    --------------------------------------------- */
+
+    const questionPanel =
+        document.querySelector(
+            ".question-panel"
+        );
+
+
     if (
-        raspunsUtilizator === raspunsCorect
+        questionPanel &&
+        intrebareCurenta > 0
+    ) {
+
+        questionPanel.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   RĂSPUNS
+===================================================== */
+
+async function proceseazaRaspuns(
+    raspuns
+) {
+
+    if (raspunsBlocat) {
+
+        return;
+
+    }
+
+
+    raspunsBlocat = true;
+
+
+    const intrebare =
+        intrebari[
+            intrebareCurenta
+        ];
+
+
+    if (!intrebare) {
+
+        raspunsBlocat = false;
+
+        return;
+
+    }
+
+
+    const raspunsCorect =
+        String(
+            intrebare.raspuns_corect || ""
+        )
+        .trim()
+        .toUpperCase();
+
+
+    const raspunsDat =
+        String(raspuns)
+            .trim()
+            .toUpperCase();
+
+
+    const butoane =
+        document.querySelectorAll(
+            ".answer-button"
+        );
+
+
+    butoane.forEach(
+        buton => {
+
+            buton.disabled = true;
+
+        }
+    );
+
+
+    const butonAles =
+        document.querySelector(
+            `.answer-button[data-answer="${raspunsDat}"]`
+        );
+
+
+    const butonCorect =
+        document.querySelector(
+            `.answer-button[data-answer="${raspunsCorect}"]`
+        );
+
+
+    const message =
+        element(
+            "questionMessage"
+        );
+
+
+    const animalBubble =
+        element("animalBubble");
+
+
+    /* =================================================
+       RĂSPUNS CORECT
+    ================================================= */
+
+    if (
+        raspunsDat ===
+        raspunsCorect
     ) {
 
         raspunsuriCorecte++;
 
-        scor += QUIZ_CONFIG.pointsCorrect;
+        scor +=
+            QUIZ_CONFIG.pointsCorrect;
 
-        if (butonSelectat) {
 
-            butonSelectat.classList.add(
-                "correct"
+        if (butonAles) {
+
+            butonAles.classList.add(
+                "correct",
+                "raspuns-corect"
             );
+
         }
 
-        afiseazaMesaj(
-            "🎉 Corect! Bravo!",
-            "success"
-        );
+
+        if (message) {
+
+            message.textContent =
+                "🎉 Bravo! Răspuns corect! +" +
+                QUIZ_CONFIG.pointsCorrect +
+                " puncte";
+
+            message.className =
+                "question-message success";
+
+        }
+
+
+        if (animalBubble) {
+
+            animalBubble.textContent =
+                "🎉 Bravo! Ai răspuns corect!";
+
+        }
+
 
         afiseazaSucces();
 
-        actualizeazaScor();
+
+        actualizeazaStatistici();
+
 
         await asteapta(
             QUIZ_CONFIG.delayAfterCorrect
         );
 
-        intrebareaCurenta++;
 
-        afiseazaIntrebarea();
+        intrebareCurenta++;
 
-    } else {
 
-        raspunsuriGresite++;
+        if (
+            intrebareCurenta >=
+            intrebari.length
+        ) {
 
-        vieti--;
+            afiseazaRezultat();
 
-        if (butonSelectat) {
+        } else {
 
-            butonSelectat.classList.add(
-                "wrong"
-            );
+            afiseazaIntrebarea();
+
         }
 
-        const butonCorect =
-            document.querySelector(
-                `.answer-button[data-answer="${raspunsCorect}"]`
-            );
 
-        if (butonCorect) {
+        return;
 
-            butonCorect.classList.add(
-                "correct"
-            );
-        }
+    }
 
-        afiseazaMesaj(
-            `❌ Greșit! Răspunsul corect este ${raspunsCorect}.`,
-            "error"
+
+    /* =================================================
+       RĂSPUNS GREȘIT
+    ================================================= */
+
+    raspunsuriGresite++;
+
+    vieti--;
+
+
+    if (butonAles) {
+
+        butonAles.classList.add(
+            "wrong",
+            "raspuns-gresit"
         );
 
-        afiseazaAtac();
+    }
 
-        actualizeazaVieti();
+
+    if (butonCorect) {
+
+        butonCorect.classList.add(
+            "correct",
+            "raspuns-corect"
+        );
+
+    }
+
+
+    if (message) {
+
+        message.textContent =
+            "❌ Răspuns greșit!";
+
+        message.className =
+            "question-message error";
+
+    }
+
+
+    if (animalBubble) {
+
+        animalBubble.textContent =
+            "😯 Mai ai o șansă!";
+
+    }
+
+
+    afiseazaAtac();
+
+
+    actualizeazaStatistici();
+
+
+    /* ---------------------------------------------
+       GAME OVER
+    --------------------------------------------- */
+
+    if (vieti <= 0) {
 
         await asteapta(
             QUIZ_CONFIG.delayAfterWrong
         );
 
-        if (vieti <= 0) {
+        afiseazaRezultat();
 
-            terminaQuiz();
-
-        } else {
-
-            intrebareaCurenta++;
-
-            afiseazaIntrebarea();
-        }
-    }
-}
-
-/* =====================================================
-   MESAJ
-===================================================== */
-
-function afiseazaMesaj(
-    mesaj,
-    tip
-) {
-
-    const element =
-        $("questionMessage");
-
-    if (!element) {
         return;
+
     }
 
-    element.textContent =
-        mesaj;
 
-    element.className =
-        `question-message ${tip}`;
-}
+    await asteapta(
+        QUIZ_CONFIG.delayAfterWrong
+    );
 
-/* =====================================================
-   SCOR
-===================================================== */
 
-function actualizeazaScor() {
+    intrebareCurenta++;
 
-    if ($("score")) {
 
-        $("score").textContent =
-            scor;
-    }
-}
+    if (
+        intrebareCurenta >=
+        intrebari.length
+    ) {
 
-/* =====================================================
-   VIEȚI
-===================================================== */
-
-function actualizeazaVieti() {
-
-    if (!$("lives")) {
-        return;
-    }
-
-    const inimi =
-        "❤️".repeat(Math.max(0, vieti));
-
-    const goale =
-        "🖤".repeat(
-            Math.max(
-                0,
-                QUIZ_CONFIG.lives - vieti
-            )
-        );
-
-    $("lives").textContent =
-        inimi + goale;
-}
-
-/* =====================================================
-   EFECT CORECT
-===================================================== */
-
-function afiseazaSucces() {
-
-    const element =
-        $("successEffect");
-
-    if (!element) {
-        return;
-    }
-
-    element.classList.remove("show");
-
-    void element.offsetWidth;
-
-    element.classList.add("show");
-
-    setTimeout(() => {
-
-        element.classList.remove("show");
-
-    }, 1000);
-}
-
-/* =====================================================
-   EFECT GREȘIT
-===================================================== */
-
-function afiseazaAtac() {
-
-    const element =
-        $("attackEffect");
-
-    if (!element) {
-        return;
-    }
-
-    element.classList.remove("show");
-
-    void element.offsetWidth;
-
-    element.classList.add("show");
-
-    setTimeout(() => {
-
-        element.classList.remove("show");
-
-    }, 1000);
-}
-
-/* =====================================================
-   FINAL QUIZ
-===================================================== */
-
-function terminaQuiz() {
-
-    arataEcran("quizResultScreen");
-
-    if ($("finalScore")) {
-
-        $("finalScore").textContent =
-            scor;
-    }
-
-    if ($("correctAnswers")) {
-
-        $("correctAnswers").textContent =
-            raspunsuriCorecte;
-    }
-
-    if ($("wrongAnswers")) {
-
-        $("wrongAnswers").textContent =
-            raspunsuriGresite;
-    }
-
-    if ($("remainingLives")) {
-
-        $("remainingLives").textContent =
-            vieti;
-    }
-
-    const castigat =
-        vieti > 0 &&
-        intrebareaCurenta >= intrebari.length;
-
-    if (castigat) {
-
-        if ($("resultIcon")) {
-
-            $("resultIcon").textContent =
-                "🏆";
-        }
-
-        if ($("resultTitle")) {
-
-            $("resultTitle").textContent =
-                "Felicitări!";
-        }
-
-        if ($("resultSubtitle")) {
-
-            $("resultSubtitle").textContent =
-                "Ai terminat aventura din pădure!";
-        }
-
-        if ($("resultMessage")) {
-
-            $("resultMessage").textContent =
-                `Ai răspuns corect la ${raspunsuriCorecte} din ${intrebari.length} întrebări.`;
-        }
+        afiseazaRezultat();
 
     } else {
 
-        if ($("resultIcon")) {
+        afiseazaIntrebarea();
 
-            $("resultIcon").textContent =
-                "💔";
-        }
-
-        if ($("resultTitle")) {
-
-            $("resultTitle").textContent =
-                "Aventura s-a încheiat";
-        }
-
-        if ($("resultSubtitle")) {
-
-            $("resultSubtitle").textContent =
-                "Ai rămas fără vieți.";
-        }
-
-        if ($("resultMessage")) {
-
-            $("resultMessage").textContent =
-                `Ai obținut ${scor} puncte.`;
-        }
     }
+
 }
+
 
 /* =====================================================
    AȘTEAPTĂ
@@ -822,14 +979,304 @@ function terminaQuiz() {
 
 function asteapta(ms) {
 
-    return new Promise(resolve => {
+    return new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                ms
+            )
+    );
 
-        setTimeout(
-            resolve,
-            ms
-        );
-    });
 }
+
+
+/* =====================================================
+   STATISTICI
+===================================================== */
+
+function actualizeazaStatistici() {
+
+    const score =
+        element("score");
+
+    if (score) {
+
+        score.textContent =
+            scor;
+
+    }
+
+
+    const lives =
+        element("lives");
+
+    if (lives) {
+
+        const vietiValide =
+            Math.max(
+                0,
+                vieti
+            );
+
+        lives.textContent =
+            "❤️".repeat(
+                vietiValide
+            ) +
+            "🖤".repeat(
+                Math.max(
+                    0,
+                    QUIZ_CONFIG.lives -
+                    vietiValide
+                )
+            );
+
+    }
+
+}
+
+
+/* =====================================================
+   EFECT SUCCES
+===================================================== */
+
+function afiseazaSucces() {
+
+    const effect =
+        element("successEffect");
+
+
+    if (!effect) {
+
+        return;
+
+    }
+
+
+    effect.classList.remove(
+        "active"
+    );
+
+
+    void effect.offsetWidth;
+
+
+    effect.classList.add(
+        "active"
+    );
+
+
+    setTimeout(
+        () => {
+
+            effect.classList.remove(
+                "active"
+            );
+
+        },
+        700
+    );
+
+}
+
+
+/* =====================================================
+   EFECT ATAC
+===================================================== */
+
+function afiseazaAtac() {
+
+    const effect =
+        element("attackEffect");
+
+
+    if (!effect) {
+
+        return;
+
+    }
+
+
+    effect.classList.remove(
+        "active"
+    );
+
+
+    void effect.offsetWidth;
+
+
+    effect.classList.add(
+        "active"
+    );
+
+
+    setTimeout(
+        () => {
+
+            effect.classList.remove(
+                "active"
+            );
+
+        },
+        700
+    );
+
+}
+
+
+/* =====================================================
+   REZULTAT FINAL
+===================================================== */
+
+function afiseazaRezultat() {
+
+    arataEcran(
+        "quizResultScreen"
+    );
+
+
+    const finalScore =
+        element("finalScore");
+
+    if (finalScore) {
+
+        finalScore.textContent =
+            scor;
+
+    }
+
+
+    const correct =
+        element("correctAnswers");
+
+    if (correct) {
+
+        correct.textContent =
+            raspunsuriCorecte;
+
+    }
+
+
+    const wrong =
+        element("wrongAnswers");
+
+    if (wrong) {
+
+        wrong.textContent =
+            raspunsuriGresite;
+
+    }
+
+
+    const remaining =
+        element("remainingLives");
+
+    if (remaining) {
+
+        remaining.textContent =
+            Math.max(
+                0,
+                vieti
+            );
+
+    }
+
+
+    const title =
+        element("resultTitle");
+
+    const subtitle =
+        element("resultSubtitle");
+
+    const icon =
+        element("resultIcon");
+
+    const message =
+        element("resultMessage");
+
+
+    /* ---------------------------------------------
+       VICTORIE
+    --------------------------------------------- */
+
+    if (
+        vieti > 0 &&
+        intrebareCurenta >=
+        intrebari.length
+    ) {
+
+        if (icon) {
+
+            icon.textContent =
+                "🏆";
+
+        }
+
+        if (title) {
+
+            title.textContent =
+                "Felicitări!";
+
+        }
+
+        if (subtitle) {
+
+            subtitle.textContent =
+                "Ai terminat aventura prin pădure!";
+
+        }
+
+        if (message) {
+
+            message.textContent =
+                "🌲 Excelent! Ai răspuns corect la " +
+                raspunsuriCorecte +
+                " întrebări.";
+
+        }
+
+    }
+
+
+    /* ---------------------------------------------
+       GAME OVER
+    --------------------------------------------- */
+
+    else {
+
+        if (icon) {
+
+            icon.textContent =
+                "💔";
+
+        }
+
+        if (title) {
+
+            title.textContent =
+                "Ai rămas fără vieți!";
+
+        }
+
+        if (subtitle) {
+
+            subtitle.textContent =
+                "Nu-i nimic, poți încerca din nou.";
+
+        }
+
+        if (message) {
+
+            message.textContent =
+                "Ai obținut " +
+                scor +
+                " puncte.";
+
+        }
+
+    }
+
+}
+
 
 /* =====================================================
    RESTART
@@ -837,14 +1284,23 @@ function asteapta(ms) {
 
 function restartQuiz() {
 
-    if (!quizCurent) {
+    if (!quizSelectat) {
+
+        arataEcran(
+            "quizSelectScreen"
+        );
+
         return;
+
     }
 
+
     pornesteQuiz(
-        quizCurent.id
+        quizSelectat.id
     );
+
 }
+
 
 /* =====================================================
    ALEGE ALT QUIZ
@@ -852,80 +1308,171 @@ function restartQuiz() {
 
 function alegeAltQuiz() {
 
-    quizCurent = null;
+    quizSelectat = null;
+
     intrebari = [];
-    intrebareaCurenta = 0;
-    vieti = QUIZ_CONFIG.lives;
+
+    intrebareCurenta = 0;
+
+    vieti =
+        QUIZ_CONFIG.lives;
+
     scor = 0;
+
     raspunsuriCorecte = 0;
+
     raspunsuriGresite = 0;
+
+    raspunsBlocat = false;
+
 
     arataEcran(
         "quizSelectScreen"
     );
 
+
     incarcaQuizuriSite();
+
 }
 
+
 /* =====================================================
-   EVENIMENTE
+   EVENT LISTENERS
 ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+function initializeazaQuiz() {
 
-        /* BUTOANE RĂSPUNS */
+    /* ---------------------------------------------
+       BUTOANE RĂSPUNSURI
+    --------------------------------------------- */
 
-        document
-            .querySelectorAll(".answer-button")
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    () => {
-
-                        verificaRaspuns(
-                            button.dataset.answer
-                        );
-
-                    }
-                );
-
-            });
+    const butoane =
+        document.querySelectorAll(
+            ".answer-button"
+        );
 
 
-        /* RESTART */
+    butoane.forEach(
+        buton => {
 
-        const restartButton =
-            $("restartQuizButton");
-
-        if (restartButton) {
-
-            restartButton.addEventListener(
+            buton.addEventListener(
                 "click",
-                restartQuiz
+                () => {
+
+                    const raspuns =
+                        buton.dataset.answer;
+
+                    proceseazaRaspuns(
+                        raspuns
+                    );
+
+                }
             );
+
         }
+    );
 
 
-        /* ALEGE ALT QUIZ */
+    /* ---------------------------------------------
+       RESTART
+    --------------------------------------------- */
 
-        const chooseButton =
-            $("chooseQuizButton");
-
-        if (chooseButton) {
-
-            chooseButton.addEventListener(
-                "click",
-                alegeAltQuiz
-            );
-        }
+    const restartButton =
+        element(
+            "restartQuizButton"
+        );
 
 
-        /* ÎNCARCĂ QUIZURILE */
+    if (restartButton) {
 
-        incarcaQuizuriSite();
+        restartButton.addEventListener(
+            "click",
+            restartQuiz
+        );
 
     }
-);
+
+
+    /* ---------------------------------------------
+       ALEGERE ALT QUIZ
+    --------------------------------------------- */
+
+    const chooseButton =
+        element(
+            "chooseQuizButton"
+        );
+
+
+    if (chooseButton) {
+
+        chooseButton.addEventListener(
+            "click",
+            alegeAltQuiz
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       ÎNCARCĂ QUIZURILE
+    --------------------------------------------- */
+
+    if (
+        typeof supabaseClient ===
+        "undefined"
+    ) {
+
+        console.error(
+            "supabaseClient nu există. Verifică init.js."
+        );
+
+
+        const container =
+            element("listaQuizuri");
+
+
+        if (container) {
+
+            container.innerHTML = `
+
+                <div
+                    class="quiz-loading"
+                    style="color:#c62828;"
+                >
+                    Supabase nu este încărcat.
+                    Verifică init.js.
+                </div>
+
+            `;
+
+        }
+
+        return;
+
+    }
+
+
+    incarcaQuizuriSite();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeazaQuiz
+    );
+
+} else {
+
+    initializeazaQuiz();
+
+}
