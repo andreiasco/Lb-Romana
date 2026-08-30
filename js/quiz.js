@@ -376,79 +376,155 @@ async function incarcaQuizuriSite() {
 
 async function pornesteQuiz(quizId) {
 
-    const id =
-        Number(quizId);
+    console.log("=================================");
+    console.log("PORNEȘTE QUIZ");
+    console.log("quizId primit:", quizId);
+    console.log("tip:", typeof quizId);
+    console.log("=================================");
 
 
-    const quiz =
-        quizuri.find(
-            q =>
-                Number(q.id) === id
-        );
+    const id = Number(quizId);
+
+
+    console.log("ID numeric:", id);
+
+
+    const quiz = quizuri.find(
+        q => Number(q.id) === id
+    );
+
+
+    console.log("Quiz găsit:", quiz);
 
 
     if (!quiz) {
 
         console.error(
-            "Quizul nu a fost găsit:",
-            quizId
+            "❌ Quizul nu a fost găsit:",
+            id,
+            quizuri
         );
 
         return;
-
     }
 
 
-    quizSelectat =
-        quiz;
+    quizSelectat = quiz;
 
+
+    console.log(
+        "✅ Quiz selectat:",
+        quiz.titlu
+    );
+
+
+    /* =================================================
+       VERIFICĂ SUPABASE
+    ================================================= */
+
+    if (
+        typeof supabaseClient === "undefined" ||
+        !supabaseClient
+    ) {
+
+        console.error(
+            "❌ supabaseClient NU EXISTĂ!"
+        );
+
+        alert(
+            "Supabase nu este disponibil."
+        );
+
+        return;
+    }
+
+
+    console.log(
+        "✅ supabaseClient există"
+    );
+
+
+    /* =================================================
+       ÎNCARCĂ ÎNTREBĂRILE
+    ================================================= */
 
     try {
+
+        console.log(
+            "🔎 Caut întrebări pentru quiz_id:",
+            id
+        );
+
 
         const {
             data,
             error
-        } =
-            await supabaseClient
+        } = await supabaseClient
+            .from("intrebari_quiz")
+            .select("*")
+            .eq("quiz_id", id)
+            .order("ordine", {
+                ascending: true
+            });
 
-                .from("intrebari_quiz")
 
-                .select("*")
+        console.log(
+            "📦 Răspuns Supabase:"
+        );
 
-                .eq(
-                    "quiz_id",
-                    id
-                )
+        console.log(
+            "data =",
+            data
+        );
 
-                .order(
-                    "ordine",
-                    {
-                        ascending: true
-                    }
-                );
+        console.log(
+            "error =",
+            error
+        );
 
 
         if (error) {
 
-            throw error;
+            console.error(
+                "❌ EROARE SUPABASE:",
+                error
+            );
 
+            alert(
+                "Eroare la încărcarea întrebărilor:\n\n" +
+                error.message
+            );
+
+            return;
         }
 
 
-        intrebari =
-            data || [];
+        intrebari = data || [];
+
+
+        console.log(
+            "Număr întrebări:",
+            intrebari.length
+        );
 
 
         if (intrebari.length === 0) {
 
+            console.warn(
+                "⚠️ Quizul nu are întrebări."
+            );
+
             alert(
-                "Acest quiz nu are încă întrebări."
+                "Acest quiz nu are încă întrebări în tabelul intrebari_quiz."
             );
 
             return;
-
         }
 
+
+        /* =================================================
+           RESET JOC
+        ================================================= */
 
         intrebareCurenta = 0;
 
@@ -464,13 +540,28 @@ async function pornesteQuiz(quizId) {
         raspunsBlocat = false;
 
 
+        console.log(
+            "✅ Joc resetat"
+        );
+
+
+        /* =================================================
+           AFIȘEAZĂ ECRANUL DE JOC
+        ================================================= */
+
         arataEcran(
             "quizGameScreen"
         );
 
 
+        console.log(
+            "✅ quizGameScreen afișat"
+        );
+
+
         const title =
             element("gameQuizTitle");
+
 
         if (title) {
 
@@ -482,26 +573,34 @@ async function pornesteQuiz(quizId) {
 
         actualizeazaStatistici();
 
+
+        console.log(
+            "➡️ Afișez prima întrebare..."
+        );
+
+
         afiseazaIntrebarea();
 
+
+        console.log(
+            "🎉 QUIZ PORNIT!"
+        );
 
     } catch (error) {
 
         console.error(
-            "Eroare încărcare întrebări:",
+            "❌ EROARE neașteptată:",
             error
         );
 
-
         alert(
-            "Nu am putut încărca întrebările: " +
+            "Nu am putut porni quizul:\n\n" +
             error.message
         );
 
     }
 
 }
-
 
 /* =====================================================
    AFIȘEAZĂ ÎNTREBAREA
