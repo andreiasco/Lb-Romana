@@ -1034,7 +1034,7 @@ async function deschideRezultatCautare(
     if (tip === "Autor") {
 
         const { data: autor } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("autori")
                 .select("categorie")
                 .eq("id", autorId)
@@ -1080,7 +1080,7 @@ async function deschideRezultatCautare(
     if (tip === "Operă") {
 
         const { data: opera } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .select("autor_id")
                 .eq("id", operaId)
@@ -1093,7 +1093,7 @@ async function deschideRezultatCautare(
 
 
         const { data: autor } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("autori")
                 .select("categorie")
                 .eq("id", opera.autor_id)
@@ -1220,7 +1220,7 @@ async function incarcaAutori() {
             data: autori,
             error: eroareAutori
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("autori")
                 .select("*")
                 .order("nume", {
@@ -1249,7 +1249,7 @@ async function incarcaAutori() {
             data: opere,
             error: eroareOpere
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .from("opere")
                 .select("*")
                 .order("titlu", {
@@ -1608,7 +1608,7 @@ async function deschidePDF(pdfUrl) {
             data,
             error
         } =
-            await supabaseClient
+            await window.supabaseClient
                 .storage
                 .from(BUCKET)
                 .createSignedUrl(
@@ -1688,7 +1688,7 @@ async function obtineURLSemnat(valoare, optiuni = {}) {
     }
 
     const { data, error } =
-        await supabaseClient
+        await window.supabaseClient
             .storage
             .from(BUCKET)
             .createSignedUrl(cale, 60 * 60, optiuni);
