@@ -1,7 +1,7 @@
 /* =========================================================
    QUIZ.CSS
    AVENTURA DIN PĂDURE
-   CINEMATIC / REALISTIC
+   REALISTIC FOREST / WALKING CHARACTER
 ========================================================= */
 
 * {
@@ -22,11 +22,17 @@ body {
         Inter,
         Arial,
         sans-serif;
+
     overflow-x: hidden;
+}
+
+button {
+    font-family: inherit;
 }
 
 .quiz-page {
     min-height: 100vh;
+
     background:
         radial-gradient(
             circle at top,
@@ -44,6 +50,7 @@ body {
     display: none !important;
 }
 
+
 /* =========================================================
    SELECTARE QUIZ
 ========================================================= */
@@ -60,7 +67,9 @@ body {
 
 .intro-icon {
     font-size: 75px;
+
     margin-bottom: 10px;
+
     filter:
         drop-shadow(
             0 15px 20px
@@ -70,27 +79,43 @@ body {
 
 .quiz-intro h1 {
     margin: 0;
-    font-size: clamp(32px, 5vw, 58px);
+
+    font-size:
+        clamp(32px, 5vw, 58px);
+
+    text-shadow:
+        0 5px 25px
+        rgba(0,0,0,.4);
 }
 
 .quiz-intro > p {
     color: #c8d8ce;
+
     font-size: 18px;
-    margin-bottom: 40px;
+
+    line-height: 1.6;
+
+    margin:
+        10px auto 40px;
+
+    max-width: 700px;
 }
 
 .lista-quizuri {
     display: grid;
+
     grid-template-columns:
         repeat(
             auto-fit,
             minmax(270px, 1fr)
         );
+
     gap: 22px;
 }
 
 .quiz-card {
     padding: 28px;
+
     border-radius: 24px;
 
     background:
@@ -141,10 +166,12 @@ body {
 
 .quiz-category {
     display: inline-block;
+
     padding:
         6px 12px;
 
-    border-radius: 999px;
+    border-radius:
+        999px;
 
     background:
         rgba(76,175,80,.2);
@@ -152,18 +179,27 @@ body {
     color:
         #9be7a3;
 
-    margin-bottom: 10px;
+    margin-bottom:
+        10px;
 }
 
 .game-button {
     border: 0;
-    border-radius: 14px;
-    padding: 14px 20px;
 
-    font-size: 16px;
-    font-weight: 800;
+    border-radius:
+        14px;
 
-    cursor: pointer;
+    padding:
+        14px 20px;
+
+    font-size:
+        16px;
+
+    font-weight:
+        800;
+
+    cursor:
+        pointer;
 
     transition:
         transform .2s ease,
@@ -201,16 +237,22 @@ body {
         rgba(255,255,255,.2);
 }
 
+
 /* =========================================================
    JOC
 ========================================================= */
 
 #quizGameScreen {
     position: relative;
+
     min-height: 100vh;
+
     overflow: hidden;
-    background: #07150d;
+
+    background:
+        #07150d;
 }
+
 
 /* =========================================================
    HEADER
@@ -218,19 +260,24 @@ body {
 
 .game-header {
     position: relative;
+
     z-index: 500;
 
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
 
     gap: 20px;
 
     padding:
-        15px 25px;
+        13px 25px;
 
     background:
-        rgba(0,0,0,.58);
+        rgba(0,0,0,.68);
 
     backdrop-filter:
         blur(14px);
@@ -240,6 +287,31 @@ body {
         rgba(255,255,255,.12);
 }
 
+.game-title-area {
+    display: flex;
+
+    align-items:
+        center;
+
+    gap: 10px;
+}
+
+.game-mini-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(76,175,80,.2);
+
+    font-size: 22px;
+}
+
 .game-title {
     font-size: 21px;
     font-weight: 900;
@@ -247,19 +319,25 @@ body {
 
 .game-stats {
     display: flex;
-    gap: 18px;
+
+    gap: 12px;
+
     flex-wrap: wrap;
-    justify-content: flex-end;
+
+    justify-content:
+        flex-end;
 }
 
 .stat-item {
     min-width: 85px;
+
     text-align: center;
 
     padding:
         7px 12px;
 
-    border-radius: 12px;
+    border-radius:
+        12px;
 
     background:
         rgba(255,255,255,.08);
@@ -281,28 +359,40 @@ body {
     font-size: 17px;
 }
 
+
 /* =========================================================
-   PĂDURE
+   PĂDURE REALĂ
 ========================================================= */
 
 .forest {
+
     --forest-image:
         url(
-            "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=85"
+            "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=2200&q=90"
         );
 
     position: relative;
 
     min-height:
-        62vh;
+        650px;
+
+    height:
+        66vh;
+
+    max-height:
+        800px;
 
     overflow: hidden;
 
     background-image:
+
         linear-gradient(
-            rgba(5,18,10,.12),
-            rgba(0,0,0,.38)
+            to bottom,
+            rgba(20,50,65,.08),
+            rgba(0,0,0,.08) 45%,
+            rgba(0,0,0,.58) 100%
         ),
+
         var(--forest-image);
 
     background-size:
@@ -321,70 +411,86 @@ body {
         background-image .8s ease,
         transform .25s ease;
 
-    isolation: isolate;
+    isolation:
+        isolate;
 }
 
-.forest::before {
-    content: "";
 
+/* lumină atmosferică */
+
+.forest-light {
     position: absolute;
+
     inset: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(100,170,220,.15),
-            transparent 35%,
-            rgba(0,0,0,.25)
-        );
-
-    z-index: 1;
-
-    pointer-events: none;
-}
-
-.forest::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            transparent 45%,
-            rgba(0,0,0,.5)
-        );
 
     z-index: 2;
 
     pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 65% 18%,
+            rgba(255,220,130,.20),
+            transparent 20%
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.20),
+            transparent 35%,
+            rgba(0,0,0,.25)
+        );
+
+    mix-blend-mode:
+        screen;
 }
 
-/* elemente decorative */
 
-.sky,
-.mountains,
-.background-trees,
-.ground,
-.path,
-.grass,
-.rock {
+/* ceață în depărtare */
+
+.distance-fog {
     position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 25%;
+
+    height: 40%;
+
+    z-index: 8;
+
     pointer-events: none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(210,230,220,.10),
+            transparent
+        );
+
+    filter:
+        blur(12px);
+
+    opacity:
+        .65;
 }
 
-.sky {
-    inset: 0;
-    z-index: 3;
-}
+
+/* soare */
 
 .sun {
     position: absolute;
-    right: 10%;
-    top: 8%;
+
+    right: 9%;
+    top: 7%;
+
+    z-index: 5;
 
     font-size: 65px;
+
+    opacity: .7;
 
     filter:
         drop-shadow(
@@ -393,15 +499,22 @@ body {
         );
 }
 
+
+/* nori */
+
 .cloud {
     position: absolute;
-    opacity: .35;
+
+    z-index: 6;
+
+    opacity: .25;
+
     font-size: 45px;
 }
 
 .cloud-1 {
-    top: 12%;
-    left: 20%;
+    top: 10%;
+    left: 18%;
 }
 
 .cloud-2 {
@@ -409,119 +522,228 @@ body {
     left: 55%;
 }
 
-.mountains {
-    left: 0;
-    right: 0;
-    top: 15%;
 
-    font-size:
-        clamp(80px, 15vw, 200px);
-
-    opacity: .35;
-    text-align: center;
-
-    z-index: 4;
-}
+/* =========================================================
+   COPACI DE FUNDAL
+========================================================= */
 
 .background-trees {
+    position: absolute;
+
     left: 0;
     right: 0;
-    bottom: 28%;
+
+    bottom: 25%;
+
+    height: 45%;
 
     display: flex;
+
     justify-content:
         space-around;
 
-    font-size:
-        clamp(45px, 7vw, 100px);
+    align-items:
+        flex-end;
 
-    opacity: .35;
+    z-index: 12;
 
-    z-index: 5;
+    pointer-events: none;
+
+    opacity:
+        .30;
+
+    filter:
+        blur(1px);
+
+    transform:
+        translateZ(-100px)
+        scale(1.1);
 }
 
+.tree {
+    display: block;
+
+    font-size:
+        clamp(55px, 8vw, 115px);
+
+    filter:
+        drop-shadow(
+            0 10px 15px
+            rgba(0,0,0,.4)
+        );
+}
+
+.tree-2,
+.tree-4 {
+    transform:
+        translateY(25px);
+}
+
+.tree-3,
+.tree-5 {
+    transform:
+        translateY(5px);
+}
+
+
+/* =========================================================
+   TEREN
+========================================================= */
+
 .ground {
+    position: absolute;
+
     left: 0;
     right: 0;
     bottom: 0;
 
-    height: 30%;
+    height: 39%;
+
+    z-index: 20;
+
+    pointer-events: none;
 
     background:
         linear-gradient(
             to top,
-            #07180c,
-            rgba(15,50,25,.4)
+            #06150a 0%,
+            rgba(8,30,14,.88) 35%,
+            rgba(20,55,28,.35) 100%
         );
-
-    z-index: 6;
 }
 
-.path {
-    left: 10%;
-    right: 10%;
-    bottom: 0;
 
-    height: 34%;
+/* =========================================================
+   POTECĂ
+========================================================= */
+
+.path {
+    position: absolute;
+
+    left: 8%;
+    right: 8%;
+
+    bottom: -5px;
+
+    height: 48%;
+
+    z-index: 25;
+
+    pointer-events: none;
 
     background:
         linear-gradient(
             170deg,
-            transparent 0 15%,
-            rgba(121,83,46,.9) 16% 82%,
-            transparent 83%
+            transparent 0 8%,
+            rgba(111,76,43,.98) 9% 84%,
+            transparent 85%
         );
 
     clip-path:
         polygon(
-            35% 0,
-            65% 0,
+            42% 0,
+            58% 0,
             100% 100%,
             0 100%
         );
 
-    z-index: 7;
+    filter:
+        drop-shadow(
+            0 -5px 8px
+            rgba(0,0,0,.25)
+        );
+}
+
+.path-texture {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse at 20% 30%,
+            rgba(255,255,255,.12) 0 2px,
+            transparent 3px
+        );
+
+    background-size:
+        38px 30px;
+
+    opacity:
+        .25;
 }
 
 .path-line {
     position: absolute;
+
     inset: 0;
 
     background:
         repeating-linear-gradient(
             165deg,
-            transparent 0 40px,
-            rgba(255,255,255,.08) 41px 43px
+            transparent 0 38px,
+            rgba(255,255,255,.07) 39px 42px
         );
 }
 
+
+/* =========================================================
+   VEGETAȚIE
+========================================================= */
+
+.grass,
+.rock {
+    position: absolute;
+
+    pointer-events: none;
+
+    z-index: 80;
+}
+
 .grass {
-    z-index: 15;
-    font-size: 35px;
+    font-size:
+        35px;
+
+    filter:
+        drop-shadow(
+            0 7px 8px
+            rgba(0,0,0,.45)
+        );
 }
 
 .grass-1 {
-    left: 10%;
+    left: 9%;
     bottom: 20%;
 }
 
 .grass-2 {
     right: 18%;
-    bottom: 16%;
+    bottom: 17%;
 }
 
 .grass-3 {
-    left: 65%;
-    bottom: 22%;
+    left: 66%;
+    bottom: 24%;
+}
+
+.grass-4 {
+    right: 38%;
+    bottom: 14%;
 }
 
 .rock {
-    z-index: 14;
-    font-size: 30px;
+    font-size:
+        30px;
+
+    filter:
+        drop-shadow(
+            0 8px 8px
+            rgba(0,0,0,.55)
+        );
 }
 
 .rock-1 {
-    left: 38%;
+    left: 37%;
     bottom: 18%;
 }
 
@@ -530,30 +752,49 @@ body {
     bottom: 20%;
 }
 
+
 /* =========================================================
    PERSONAJ
 ========================================================= */
 
 .player {
+
     position: absolute;
 
-    left: 10%;
+    left: 9%;
+
     bottom: 16%;
 
-    z-index: 40;
+    width:
+        90px;
+
+    height:
+        190px;
+
+    z-index:
+        120;
 
     transform:
         translateX(-50%);
+
+    transition:
+        left 1.4s
+        cubic-bezier(.2,.8,.2,1);
 }
 
+
+/* umbră */
+
 .player-shadow {
+
     position: absolute;
 
     left: 50%;
-    bottom: -5px;
 
-    width: 80px;
-    height: 20px;
+    bottom: 0;
+
+    width: 75px;
+    height: 17px;
 
     transform:
         translateX(-50%);
@@ -561,94 +802,779 @@ body {
     border-radius: 50%;
 
     background:
-        rgba(0,0,0,.55);
+        rgba(0,0,0,.58);
 
     filter:
         blur(6px);
+
+    z-index: 0;
 }
 
-.real-player-image {
-    display: block;
 
-    width:
-        clamp(70px, 9vw, 125px);
+/* corpul */
 
-    height:
-        clamp(100px, 14vw, 175px);
+.person {
 
-    object-fit: cover;
+    position: absolute;
+
+    left: 50%;
+    bottom: 5px;
+
+    width: 72px;
+    height: 178px;
+
+    transform:
+        translateX(-50%);
+
+    transform-origin:
+        50% 100%;
+
+    z-index: 2;
+}
+
+
+/* cap */
+
+.person-head {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 0;
+
+    width: 48px;
+    height: 55px;
+
+    transform:
+        translateX(-50%);
 
     border-radius:
-        45% 45% 20% 20%;
+        48%
+        48%
+        45%
+        45%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffd1ae,
+            #d88d69
+        );
 
     box-shadow:
-        0 20px 35px
-        rgba(0,0,0,.55);
+        inset -5px -4px 8px
+        rgba(80,35,20,.18),
+
+        0 4px 8px
+        rgba(0,0,0,.3);
+
+    z-index: 10;
 }
+
+
+/* păr */
+
+.person-hair {
+
+    position: absolute;
+
+    left: -3px;
+    top: -5px;
+
+    width: 54px;
+    height: 31px;
+
+    border-radius:
+        50%
+        55%
+        35%
+        30%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #2c1a12,
+            #0e0907
+        );
+
+    box-shadow:
+        inset -4px -3px 6px
+        rgba(0,0,0,.35);
+}
+
+
+/* față */
+
+.person-face {
+
+    position: absolute;
+
+    inset: 14px 8px 5px;
+
+    border-radius: 40%;
+}
+
+
+/* ochi */
+
+.eye {
+
+    position: absolute;
+
+    top: 12px;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #17110d;
+}
+
+.eye-left {
+    left: 8px;
+}
+
+.eye-right {
+    right: 8px;
+}
+
+
+/* nas */
+
+.person-nose {
+
+    position: absolute;
+
+    left: 50%;
+    top: 20px;
+
+    width: 4px;
+    height: 7px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(150,80,60,.45);
+}
+
+
+/* gură */
+
+.person-mouth {
+
+    position: absolute;
+
+    left: 50%;
+    top: 31px;
+
+    width: 10px;
+    height: 4px;
+
+    transform:
+        translateX(-50%);
+
+    border-bottom:
+        2px solid
+        rgba(110,45,40,.65);
+
+    border-radius:
+        50%;
+}
+
+
+/* gât */
+
+.person-neck {
+
+    position: absolute;
+
+    left: 50%;
+    top: 48px;
+
+    width: 18px;
+    height: 18px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        #d99570;
+
+    z-index: 5;
+}
+
+
+/* trunchi */
+
+.person-body {
+
+    position: absolute;
+
+    left: 50%;
+    top: 59px;
+
+    width: 43px;
+    height: 67px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        15px 15px 10px 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #244f7a,
+            #397db1 50%,
+            #173b60
+        );
+
+    box-shadow:
+        inset -5px 0 7px
+        rgba(0,0,0,.25),
+
+        0 8px 12px
+        rgba(0,0,0,.25);
+
+    z-index: 6;
+}
+
+
+/* detaliu tricou */
+
+.shirt-detail {
+
+    position: absolute;
+
+    left: 50%;
+    top: 10px;
+
+    width: 3px;
+    height: 45px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        rgba(255,255,255,.18);
+}
+
+
+/* brațe */
+
+.person-arm {
+
+    position: absolute;
+
+    top: 64px;
+
+    width: 13px;
+    height: 61px;
+
+    border-radius:
+        10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #d38a68,
+            #f1b18b,
+            #b9694d
+        );
+
+    transform-origin:
+        50% 8px;
+
+    z-index: 4;
+}
+
+.arm-left {
+    left: 10px;
+
+    transform:
+        rotate(13deg);
+}
+
+.arm-right {
+    right: 10px;
+
+    transform:
+        rotate(-13deg);
+}
+
+
+/* mâini */
+
+.person-hand {
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -6px;
+
+    width: 15px;
+    height: 15px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        #d58b68;
+}
+
+
+/* picioare */
+
+.person-leg {
+
+    position: absolute;
+
+    top: 117px;
+
+    width: 15px;
+    height: 55px;
+
+    border-radius:
+        8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #263142,
+            #4a5870,
+            #1c2431
+        );
+
+    transform-origin:
+        50% 7px;
+
+    z-index: 3;
+}
+
+.leg-left {
+    left: 18px;
+}
+
+.leg-right {
+    right: 18px;
+}
+
+
+/* pantofi */
+
+.person-shoe {
+
+    position: absolute;
+
+    left: 50%;
+    bottom: -6px;
+
+    width: 25px;
+    height: 12px;
+
+    transform:
+        translateX(-45%);
+
+    border-radius:
+        8px 12px 5px 5px;
+
+    background:
+        #181715;
+
+    box-shadow:
+        0 4px 5px
+        rgba(0,0,0,.4);
+}
+
+
+/* =========================================================
+   ANIMAȚIA DE MERS
+========================================================= */
+
+.player.walking .person {
+    animation:
+        bodyWalking
+        .55s
+        infinite
+        ease-in-out;
+}
+
+.player.walking .leg-left {
+    animation:
+        legLeftWalk
+        .55s
+        infinite
+        ease-in-out;
+}
+
+.player.walking .leg-right {
+    animation:
+        legRightWalk
+        .55s
+        infinite
+        ease-in-out;
+}
+
+.player.walking .arm-left {
+    animation:
+        armLeftWalk
+        .55s
+        infinite
+        ease-in-out;
+}
+
+.player.walking .arm-right {
+    animation:
+        armRightWalk
+        .55s
+        infinite
+        ease-in-out;
+}
+
+@keyframes bodyWalking {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            translateY(-3px);
+    }
+}
+
+@keyframes legLeftWalk {
+
+    0%,
+    100% {
+        transform:
+            rotate(20deg);
+    }
+
+    50% {
+        transform:
+            rotate(-22deg);
+    }
+}
+
+@keyframes legRightWalk {
+
+    0%,
+    100% {
+        transform:
+            rotate(-22deg);
+    }
+
+    50% {
+        transform:
+            rotate(20deg);
+    }
+}
+
+@keyframes armLeftWalk {
+
+    0%,
+    100% {
+        transform:
+            rotate(-25deg);
+    }
+
+    50% {
+        transform:
+            rotate(28deg);
+    }
+}
+
+@keyframes armRightWalk {
+
+    0%,
+    100% {
+        transform:
+            rotate(28deg);
+    }
+
+    50% {
+        transform:
+            rotate(-25deg);
+    }
+}
+
 
 /* =========================================================
    ANIMAL
 ========================================================= */
 
 .animal {
+
     position: absolute;
 
     right: 9%;
-    bottom: 22%;
+    bottom: 20%;
 
     width:
-        clamp(95px, 13vw, 190px);
+        clamp(125px, 15vw, 210px);
 
     height:
-        clamp(95px, 13vw, 190px);
+        clamp(125px, 15vw, 210px);
 
-    z-index: 45;
+    z-index:
+        130;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 
     border:
-        4px solid
-        rgba(255,255,255,.8);
-
-    box-shadow:
-        0 25px 60px
-        rgba(0,0,0,.55);
+        5px solid
+        rgba(255,255,255,.85);
 
     background:
         #17231b;
+
+    box-shadow:
+        0 25px 60px
+        rgba(0,0,0,.65);
+
+    opacity:
+        1;
+
+    transform:
+        translateX(0)
+        scale(1);
 }
 
+
+/* imagine animal */
+
+.real-animal-image {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position:
+        center center;
+
+    border-radius:
+        50%;
+}
+
+
+/* apariția animalului */
+
+.animal.approach {
+
+    animation:
+        animalArrival
+        1.1s
+        cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes animalArrival {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateX(180px)
+            scale(.45);
+
+        filter:
+            blur(8px);
+    }
+
+    55% {
+
+        opacity: 1;
+
+        transform:
+            translateX(-15px)
+            scale(1.08);
+
+        filter:
+            blur(0);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1);
+    }
+}
+
+
+/* animal fericit */
+
+.animal.happy {
+
+    animation:
+        animalHappy
+        .8s
+        ease;
+}
+
+@keyframes animalHappy {
+
+    0%,
+    100% {
+        transform:
+            scale(1)
+            rotate(0);
+    }
+
+    35% {
+        transform:
+            scale(1.1)
+            rotate(-3deg);
+    }
+
+    65% {
+        transform:
+            scale(1.08)
+            rotate(3deg);
+    }
+}
+
+
+/* =========================================================
+   BULĂ ANIMAL
+========================================================= */
+
 .animal-bubble {
+
     position: absolute;
 
     right: 8%;
     bottom: 47%;
 
-    max-width: 260px;
+    max-width:
+        280px;
 
     padding:
-        12px 16px;
+        13px 17px;
 
-    z-index: 60;
+    z-index:
+        160;
 
     color: #fff;
 
     border-radius:
-        16px;
+        18px;
 
     background:
-        rgba(0,0,0,.65);
+        rgba(5,12,8,.78);
 
     border:
         1px solid
-        rgba(255,255,255,.18);
+        rgba(255,255,255,.2);
 
     box-shadow:
         0 15px 40px
-        rgba(0,0,0,.35);
+        rgba(0,0,0,.4);
+
+    backdrop-filter:
+        blur(10px);
+
+    font-weight:
+        700;
+
+    animation:
+        bubbleFloat
+        2.5s
+        ease-in-out
+        infinite;
 }
+
+@keyframes bubbleFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   MESAJ MERS
+========================================================= */
+
+.walking-message {
+
+    position: absolute;
+
+    left: 50%;
+    top: 25%;
+
+    transform:
+        translateX(-50%);
+
+    z-index:
+        170;
+
+    padding:
+        9px 15px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(0,0,0,.48);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    color:
+        rgba(255,255,255,.85);
+
+    font-size:
+        14px;
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    transition:
+        opacity .3s ease;
+}
+
+.walking-message.visible {
+    opacity:
+        1;
+}
+
 
 /* =========================================================
    EFECTE
@@ -656,6 +1582,7 @@ body {
 
 .attack-effect,
 .success-effect {
+
     position: absolute;
 
     left: 50%;
@@ -665,32 +1592,38 @@ body {
         translate(-50%, -50%)
         scale(.5);
 
-    opacity: 0;
+    opacity:
+        0;
 
-    z-index: 100;
+    z-index:
+        300;
 
     font-size:
         clamp(60px, 10vw, 130px);
 
-    pointer-events: none;
+    pointer-events:
+        none;
 }
 
 .attack-effect.active {
     animation:
         attackEffect
-        .8s ease;
+        .8s
+        ease;
 }
 
 .success-effect.active {
     animation:
         successEffect
-        .9s ease;
+        .9s
+        ease;
 }
 
 @keyframes attackEffect {
 
     0% {
         opacity: 0;
+
         transform:
             translate(-50%,-50%)
             scale(.4);
@@ -698,6 +1631,7 @@ body {
 
     30% {
         opacity: 1;
+
         transform:
             translate(-50%,-50%)
             scale(1.25)
@@ -706,6 +1640,7 @@ body {
 
     100% {
         opacity: 0;
+
         transform:
             translate(-50%,-50%)
             scale(1.8);
@@ -716,6 +1651,7 @@ body {
 
     0% {
         opacity: 0;
+
         transform:
             translate(-50%,-50%)
             scale(.3);
@@ -723,6 +1659,7 @@ body {
 
     35% {
         opacity: 1;
+
         transform:
             translate(-50%,-50%)
             scale(1.2);
@@ -730,120 +1667,217 @@ body {
 
     100% {
         opacity: 0;
+
         transform:
             translate(-50%,-50%)
             scale(1.8);
     }
 }
 
+
 /* =========================================================
-   ÎNTREBARE
+   PANOU ÎNTREBARE
 ========================================================= */
 
 .question-panel {
+
     position: relative;
 
-    z-index: 300;
+    z-index:
+        400;
 
     width:
-        min(1000px, calc(100% - 30px));
+        min(
+            1000px,
+            calc(100% - 30px)
+        );
 
     margin:
-        -55px auto 30px;
+        -65px auto 30px;
 
     padding:
         25px;
 
     border-radius:
-        26px;
+        28px;
 
     background:
-        rgba(10,20,15,.9);
+        rgba(8,18,12,.91);
 
     border:
         1px solid
-        rgba(255,255,255,.15);
+        rgba(255,255,255,.16);
 
     box-shadow:
         0 25px 80px
-        rgba(0,0,0,.55);
+        rgba(0,0,0,.65);
 
     backdrop-filter:
         blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    animation:
+        questionAppear
+        .6s
+        ease;
 }
 
+@keyframes questionAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(35px)
+            scale(.97);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* imagine mică animal */
+
 .question-animal {
-    width: 65px;
-    height: 65px;
+
+    width:
+        72px;
+
+    height:
+        72px;
 
     margin:
-        -55px auto 10px;
+        -58px auto 8px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
-    border-radius: 50%;
+    border-radius:
+        50%;
 
     border:
-        3px solid white;
+        4px solid white;
 
     background:
         #111;
 
     box-shadow:
         0 10px 30px
-        rgba(0,0,0,.5);
+        rgba(0,0,0,.6);
 }
 
 .question-animal img {
+
     width: 100%;
     height: 100%;
 
-    display: block;
+    object-fit:
+        cover;
 
-    object-fit: cover;
+    display:
+        block;
 }
 
+
+/* locație */
+
+.question-location {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    color:
+        #a8c8b1;
+
+    font-size:
+        13px;
+
+    margin-bottom:
+        8px;
+}
+
+
+/* întrebare */
+
 .question-panel h2 {
+
     margin:
-        12px auto 22px;
+        10px auto 23px;
 
-    max-width: 850px;
+    max-width:
+        850px;
 
-    text-align: center;
+    text-align:
+        center;
 
-    line-height: 1.35;
+    line-height:
+        1.4;
 
     font-size:
         clamp(20px, 3vw, 32px);
 }
+
 
 /* =========================================================
    RĂSPUNSURI
 ========================================================= */
 
 .answers {
-    display: grid;
+
+    display:
+        grid;
 
     grid-template-columns:
         repeat(2, 1fr);
 
-    gap: 13px;
+    gap:
+        13px;
 
-    position: relative;
+    position:
+        relative;
 
-    z-index: 100;
+    z-index:
+        500;
 }
 
 .answer-button {
-    display: flex;
 
-    align-items: center;
+    position:
+        relative;
 
-    gap: 14px;
+    display:
+        flex;
 
-    width: 100%;
+    align-items:
+        center;
 
-    min-height: 66px;
+    gap:
+        14px;
+
+    width:
+        100%;
+
+    min-height:
+        66px;
 
     padding:
         12px 18px;
@@ -855,19 +1889,26 @@ body {
     border-radius:
         16px;
 
-    color: white;
+    color:
+        white;
 
     background:
         rgba(255,255,255,.09);
 
-    font-size: 17px;
+    font-size:
+        17px;
 
-    text-align: left;
+    text-align:
+        left;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     touch-action:
         manipulation;
+
+    -webkit-tap-highlight-color:
+        transparent;
 
     transition:
         transform .2s ease,
@@ -888,62 +1929,210 @@ body {
         rgba(0,0,0,.3);
 }
 
+.answer-button::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    background:
+        linear-gradient(
+            110deg,
+            transparent 20%,
+            rgba(255,255,255,.20) 50%,
+            transparent 80%
+        );
+
+    transform:
+        translateX(-120%);
+
+    transition:
+        transform .55s ease;
+
+    pointer-events:
+        none;
+}
+
+.answer-button:hover::before {
+
+    transform:
+        translateX(120%);
+}
+
 .answer-letter {
+
     flex:
         0 0 40px;
 
-    width: 40px;
-    height: 40px;
+    width:
+        40px;
 
-    display: grid;
+    height:
+        40px;
 
-    place-items: center;
+    display:
+        grid;
 
-    border-radius: 50%;
+    place-items:
+        center;
 
-    font-weight: 900;
+    border-radius:
+        50%;
+
+    font-weight:
+        900;
 
     background:
         rgba(255,255,255,.13);
+
+    position:
+        relative;
+
+    z-index:
+        2;
 }
 
 .answer-text {
-    flex: 1;
 
-    color: white !important;
+    flex:
+        1;
 
-    opacity: 1 !important;
+    color:
+        white !important;
 
-    visibility: visible !important;
+    opacity:
+        1 !important;
 
-    display: block;
+    visibility:
+        visible !important;
 
-    line-height: 1.35;
+    display:
+        block;
+
+    line-height:
+        1.35;
 
     word-break:
         break-word;
+
+    position:
+        relative;
+
+    z-index:
+        2;
 }
 
 .answer-button:disabled {
-    opacity: .72;
 
-    cursor: default;
+    opacity:
+        .75;
+
+    cursor:
+        default;
+
+    pointer-events:
+        none;
 }
+
+
+/* corect */
+
+.answer-button.correct {
+
+    background:
+        linear-gradient(
+            135deg,
+            #16803c,
+            #2ecc71
+        ) !important;
+
+    color:
+        white !important;
+
+    animation:
+        correctAnswer
+        .5s
+        ease;
+}
+
+
+/* greșit */
+
+.answer-button.wrong {
+
+    background:
+        linear-gradient(
+            135deg,
+            #8e1e1e,
+            #e74c3c
+        ) !important;
+
+    color:
+        white !important;
+
+    animation:
+        wrongAnswer
+        .45s
+        ease;
+}
+
+@keyframes correctAnswer {
+
+    50% {
+        transform:
+            scale(1.04);
+    }
+}
+
+@keyframes wrongAnswer {
+
+    20% {
+        transform:
+            translateX(-8px);
+    }
+
+    40% {
+        transform:
+            translateX(8px);
+    }
+
+    60% {
+        transform:
+            translateX(-5px);
+    }
+
+    80% {
+        transform:
+            translateX(5px);
+    }
+}
+
 
 /* =========================================================
    MESAJ
 ========================================================= */
 
 .question-message {
-    min-height: 28px;
 
-    margin-top: 15px;
+    min-height:
+        28px;
 
-    text-align: center;
+    margin-top:
+        15px;
 
-    font-size: 17px;
+    text-align:
+        center;
 
-    font-weight: 800;
+    font-size:
+        17px;
+
+    font-weight:
+        800;
 }
 
 .question-message.success {
@@ -956,6 +2145,7 @@ body {
         #ff7777;
 }
 
+
 /* =========================================================
    SHAKE
 ========================================================= */
@@ -963,12 +2153,14 @@ body {
 .screen-shake {
     animation:
         screenShake
-        .4s ease;
+        .4s
+        ease;
 }
 
 @keyframes screenShake {
 
-    0%, 100% {
+    0%,
+    100% {
         transform:
             translateX(0);
     }
@@ -994,14 +2186,18 @@ body {
     }
 }
 
+
 /* =========================================================
    REZULTAT
 ========================================================= */
 
 .result-screen {
-    display: grid;
 
-    place-items: center;
+    display:
+        grid;
+
+    place-items:
+        center;
 
     padding:
         30px 20px;
@@ -1015,13 +2211,18 @@ body {
 }
 
 .result-card {
+
     width:
-        min(650px, 100%);
+        min(
+            650px,
+            100%
+        );
 
     padding:
         40px 30px;
 
-    text-align: center;
+    text-align:
+        center;
 
     border-radius:
         28px;
@@ -1042,10 +2243,12 @@ body {
 }
 
 .result-icon {
-    font-size: 75px;
+    font-size:
+        75px;
 }
 
 .result-card h1 {
+
     margin:
         10px 0;
 
@@ -1059,6 +2262,7 @@ body {
 }
 
 .final-score {
+
     margin:
         25px auto;
 
@@ -1074,34 +2278,44 @@ body {
 
 .final-score span,
 .final-score small {
-    display: block;
+    display:
+        block;
 }
 
 .final-score strong {
-    display: block;
+
+    display:
+        block;
 
     margin:
         5px 0;
 
-    font-size: 55px;
+    font-size:
+        55px;
 
     color:
         #ffd75a;
 }
 
 .result-details {
-    display: grid;
+
+    display:
+        grid;
 
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap: 10px;
+    gap:
+        10px;
 
-    margin-bottom: 25px;
+    margin-bottom:
+        25px;
 }
 
 .result-details div {
-    padding: 15px;
+
+    padding:
+        15px;
 
     border-radius:
         15px;
@@ -1112,37 +2326,50 @@ body {
 
 .result-details span,
 .result-details strong {
-    display: block;
+    display:
+        block;
 }
 
 .result-details strong {
-    margin-top: 5px;
 
-    font-size: 25px;
+    margin-top:
+        5px;
+
+    font-size:
+        25px;
 }
 
 .result-message {
+
     margin:
         20px 0;
 
-    font-size: 17px;
+    font-size:
+        17px;
 }
 
 .result-buttons {
-    display: flex;
 
-    justify-content: center;
+    display:
+        flex;
 
-    gap: 12px;
+    justify-content:
+        center;
 
-    flex-wrap: wrap;
+    gap:
+        12px;
+
+    flex-wrap:
+        wrap;
 }
+
 
 /* =========================================================
    LOADING
 ========================================================= */
 
 .quiz-loading {
+
     padding:
         40px;
 
@@ -1161,6 +2388,7 @@ body {
         #ff8b8b;
 }
 
+
 /* =========================================================
    MOBILE
 ========================================================= */
@@ -1168,11 +2396,20 @@ body {
 @media (max-width: 750px) {
 
     .game-header {
+
         flex-direction:
             column;
 
         align-items:
             stretch;
+
+        padding:
+            10px 15px;
+    }
+
+    .game-title-area {
+        justify-content:
+            center;
     }
 
     .game-title {
@@ -1186,78 +2423,161 @@ body {
     }
 
     .forest {
+
         min-height:
+            520px;
+
+        height:
             58vh;
     }
 
     .animal {
-        right: 4%;
-        bottom: 25%;
+
+        right:
+            4%;
+
+        bottom:
+            25%;
+
+        width:
+            125px;
+
+        height:
+            125px;
     }
 
     .animal-bubble {
-        right: 3%;
-        bottom: 51%;
 
-        max-width: 210px;
+        right:
+            3%;
 
-        font-size: 13px;
+        bottom:
+            51%;
+
+        max-width:
+            210px;
+
+        font-size:
+            13px;
+    }
+
+    .player {
+
+        transform:
+            translateX(-50%)
+            scale(.82);
+
+        transform-origin:
+            bottom center;
     }
 
     .question-panel {
+
         margin-top:
-            -30px;
+            -35px;
 
         padding:
             20px 14px;
     }
 
     .answers {
+
         grid-template-columns:
             1fr;
     }
 
     .answer-button {
+
         min-height:
             60px;
     }
 
     .result-details {
+
         grid-template-columns:
             1fr;
     }
-
 }
+
 
 @media (max-width: 480px) {
 
     #quizSelectScreen {
+
         padding:
             30px 14px;
     }
 
     .quiz-card {
+
         padding:
             22px;
     }
 
     .game-stats {
-        gap: 7px;
+
+        gap:
+            6px;
     }
 
     .stat-item {
+
         min-width:
             70px;
+
+        padding:
+            6px 8px;
     }
 
     .question-panel h2 {
+
         font-size:
             21px;
     }
 
     .answer-button {
+
         font-size:
             15px;
     }
 
+    .animal {
+
+        width:
+            105px;
+
+        height:
+            105px;
+    }
+
+    .animal-bubble {
+
+        max-width:
+            180px;
+
+        font-size:
+            12px;
+    }
+}
+
+
+/* =========================================================
+   REDUCERE ANIMAȚII
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .01ms !important;
+    }
 }
