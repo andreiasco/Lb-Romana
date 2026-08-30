@@ -1,7 +1,7 @@
 /* =========================================================
    QUIZ.CSS
    AVENTURA DIN PĂDURE
-   REALISTIC FOREST / WALKING CHARACTER
+   PĂDURE REALĂ + PERSONAJ MARE + ANIMALE EMOJI
 ========================================================= */
 
 * {
@@ -17,7 +17,8 @@ body {
 
 body {
     background: #06120b;
-    color: #fff;
+    color: #ffffff;
+
     font-family:
         Inter,
         Arial,
@@ -42,8 +43,8 @@ button {
 }
 
 .quiz-screen {
-    min-height: 100vh;
     width: 100%;
+    min-height: 100vh;
 }
 
 .ascuns {
@@ -62,11 +63,12 @@ button {
 .quiz-intro {
     width: min(1100px, 100%);
     margin: auto;
+
     text-align: center;
 }
 
 .intro-icon {
-    font-size: 75px;
+    font-size: 80px;
 
     margin-bottom: 10px;
 
@@ -83,22 +85,16 @@ button {
     font-size:
         clamp(32px, 5vw, 58px);
 
-    text-shadow:
-        0 5px 25px
-        rgba(0,0,0,.4);
+    color: #ffffff;
 }
 
 .quiz-intro > p {
+    margin:
+        10px 0 40px;
+
     color: #c8d8ce;
 
     font-size: 18px;
-
-    line-height: 1.6;
-
-    margin:
-        10px auto 40px;
-
-    max-width: 700px;
 }
 
 .lista-quizuri {
@@ -121,8 +117,8 @@ button {
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.13),
-            rgba(255,255,255,.04)
+            rgba(255,255,255,.14),
+            rgba(255,255,255,.05)
         );
 
     border:
@@ -151,7 +147,7 @@ button {
 }
 
 .quiz-card-icon {
-    font-size: 50px;
+    font-size: 55px;
 }
 
 .quiz-card h2 {
@@ -160,7 +156,7 @@ button {
 }
 
 .quiz-card p {
-    color: #cbd7ce;
+    color: #d1ddd5;
     line-height: 1.6;
 }
 
@@ -179,27 +175,21 @@ button {
     color:
         #9be7a3;
 
-    margin-bottom:
-        10px;
+    margin-bottom: 10px;
 }
 
 .game-button {
     border: 0;
 
-    border-radius:
-        14px;
+    border-radius: 14px;
 
     padding:
         14px 20px;
 
-    font-size:
-        16px;
+    font-size: 16px;
+    font-weight: 800;
 
-    font-weight:
-        800;
-
-    cursor:
-        pointer;
+    cursor: pointer;
 
     transition:
         transform .2s ease,
@@ -212,7 +202,7 @@ button {
 }
 
 .game-button.primary {
-    color: white;
+    color: #ffffff;
 
     background:
         linear-gradient(
@@ -227,7 +217,7 @@ button {
 }
 
 .game-button.secondary {
-    color: white;
+    color: #ffffff;
 
     background:
         rgba(255,255,255,.12);
@@ -249,8 +239,7 @@ button {
 
     overflow: hidden;
 
-    background:
-        #07150d;
+    background: #07150d;
 }
 
 
@@ -274,47 +263,25 @@ button {
     gap: 20px;
 
     padding:
-        13px 25px;
+        15px 25px;
 
     background:
-        rgba(0,0,0,.68);
+        rgba(0,0,0,.72);
 
     backdrop-filter:
-        blur(14px);
+        blur(15px);
 
     border-bottom:
         1px solid
-        rgba(255,255,255,.12);
-}
-
-.game-title-area {
-    display: flex;
-
-    align-items:
-        center;
-
-    gap: 10px;
-}
-
-.game-mini-icon {
-    width: 40px;
-    height: 40px;
-
-    display: grid;
-
-    place-items: center;
-
-    border-radius: 12px;
-
-    background:
-        rgba(76,175,80,.2);
-
-    font-size: 22px;
+        rgba(255,255,255,.15);
 }
 
 .game-title {
     font-size: 21px;
+
     font-weight: 900;
+
+    color: #ffffff;
 }
 
 .game-stats {
@@ -331,15 +298,18 @@ button {
 .stat-item {
     min-width: 85px;
 
-    text-align: center;
-
     padding:
         7px 12px;
 
-    border-radius:
-        12px;
+    text-align: center;
+
+    border-radius: 12px;
 
     background:
+        rgba(255,255,255,.10);
+
+    border:
+        1px solid
         rgba(255,255,255,.08);
 }
 
@@ -349,7 +319,7 @@ button {
     font-size: 11px;
 
     color:
-        #aebeb4;
+        #b9c7bf;
 
     text-transform:
         uppercase;
@@ -357,6 +327,8 @@ button {
 
 .stat-item strong {
     font-size: 17px;
+
+    color: #ffffff;
 }
 
 
@@ -374,25 +346,15 @@ button {
     position: relative;
 
     min-height:
-        650px;
-
-    height:
         66vh;
-
-    max-height:
-        800px;
 
     overflow: hidden;
 
     background-image:
-
         linear-gradient(
-            to bottom,
-            rgba(20,50,65,.08),
-            rgba(0,0,0,.08) 45%,
-            rgba(0,0,0,.58) 100%
+            rgba(4,16,9,.12),
+            rgba(0,0,0,.42)
         ),
-
         var(--forest-image);
 
     background-size:
@@ -404,93 +366,55 @@ button {
     background-repeat:
         no-repeat;
 
-    perspective:
-        1200px;
+    isolation:
+        isolate;
 
     transition:
         background-image .8s ease,
-        transform .25s ease;
-
-    isolation:
-        isolate;
+        transform .2s ease;
 }
 
-
-/* lumină atmosferică */
-
-.forest-light {
+.forest-overlay {
     position: absolute;
 
     inset: 0;
 
-    z-index: 2;
-
-    pointer-events: none;
-
-    background:
-        radial-gradient(
-            circle at 65% 18%,
-            rgba(255,220,130,.20),
-            transparent 20%
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(0,0,0,.20),
-            transparent 35%,
-            rgba(0,0,0,.25)
-        );
-
-    mix-blend-mode:
-        screen;
-}
-
-
-/* ceață în depărtare */
-
-.distance-fog {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-
-    top: 25%;
-
-    height: 40%;
-
-    z-index: 8;
+    z-index: 5;
 
     pointer-events: none;
 
     background:
         linear-gradient(
             to bottom,
-            transparent,
-            rgba(210,230,220,.10),
-            transparent
+            rgba(100,170,220,.08),
+            transparent 30%,
+            rgba(0,0,0,.20) 60%,
+            rgba(0,0,0,.50)
         );
-
-    filter:
-        blur(12px);
-
-    opacity:
-        .65;
 }
 
 
-/* soare */
+/* =========================================================
+   CER
+========================================================= */
+
+.sky {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 8;
+
+    pointer-events: none;
+}
 
 .sun {
     position: absolute;
 
     right: 9%;
-    top: 7%;
-
-    z-index: 5;
+    top: 8%;
 
     font-size: 65px;
-
-    opacity: .7;
 
     filter:
         drop-shadow(
@@ -499,22 +423,17 @@ button {
         );
 }
 
-
-/* nori */
-
 .cloud {
     position: absolute;
 
-    z-index: 6;
-
-    opacity: .25;
+    opacity: .30;
 
     font-size: 45px;
 }
 
 .cloud-1 {
-    top: 10%;
-    left: 18%;
+    top: 12%;
+    left: 20%;
 }
 
 .cloud-2 {
@@ -524,7 +443,32 @@ button {
 
 
 /* =========================================================
-   COPACI DE FUNDAL
+   MUNȚI
+========================================================= */
+
+.mountains {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 12%;
+
+    z-index: 9;
+
+    font-size:
+        clamp(80px, 15vw, 200px);
+
+    opacity: .25;
+
+    text-align: center;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   COPACI FUNDAL
 ========================================================= */
 
 .background-trees {
@@ -533,9 +477,9 @@ button {
     left: 0;
     right: 0;
 
-    bottom: 25%;
+    bottom: 28%;
 
-    height: 45%;
+    z-index: 10;
 
     display: flex;
 
@@ -545,49 +489,17 @@ button {
     align-items:
         flex-end;
 
-    z-index: 12;
+    font-size:
+        clamp(45px, 7vw, 100px);
+
+    opacity: .35;
 
     pointer-events: none;
-
-    opacity:
-        .30;
-
-    filter:
-        blur(1px);
-
-    transform:
-        translateZ(-100px)
-        scale(1.1);
-}
-
-.tree {
-    display: block;
-
-    font-size:
-        clamp(55px, 8vw, 115px);
-
-    filter:
-        drop-shadow(
-            0 10px 15px
-            rgba(0,0,0,.4)
-        );
-}
-
-.tree-2,
-.tree-4 {
-    transform:
-        translateY(25px);
-}
-
-.tree-3,
-.tree-5 {
-    transform:
-        translateY(5px);
 }
 
 
 /* =========================================================
-   TEREN
+   SOL
 ========================================================= */
 
 .ground {
@@ -595,21 +507,22 @@ button {
 
     left: 0;
     right: 0;
+
     bottom: 0;
 
-    height: 39%;
+    height: 35%;
 
-    z-index: 20;
-
-    pointer-events: none;
+    z-index: 12;
 
     background:
         linear-gradient(
             to top,
-            #06150a 0%,
-            rgba(8,30,14,.88) 35%,
-            rgba(20,55,28,.35) 100%
+            #06140a 0%,
+            rgba(12,50,24,.72) 55%,
+            rgba(10,30,16,.10) 100%
         );
+
+    pointer-events: none;
 }
 
 
@@ -620,57 +533,51 @@ button {
 .path {
     position: absolute;
 
-    left: 8%;
-    right: 8%;
+    left: 5%;
+    right: 5%;
 
-    bottom: -5px;
+    bottom: -2%;
 
     height: 48%;
 
-    z-index: 25;
-
-    pointer-events: none;
+    z-index: 15;
 
     background:
         linear-gradient(
-            170deg,
-            transparent 0 8%,
-            rgba(111,76,43,.98) 9% 84%,
-            transparent 85%
+            165deg,
+            transparent 0 9%,
+            #725032 10% 90%,
+            transparent 91%
         );
 
     clip-path:
         polygon(
-            42% 0,
-            58% 0,
+            43% 0,
+            57% 0,
             100% 100%,
             0 100%
         );
 
     filter:
         drop-shadow(
-            0 -5px 8px
-            rgba(0,0,0,.25)
+            0 -5px 10px
+            rgba(0,0,0,.20)
         );
 }
 
-.path-texture {
+.path::before {
+    content: "";
+
     position: absolute;
 
     inset: 0;
 
     background:
         radial-gradient(
-            ellipse at 20% 30%,
-            rgba(255,255,255,.12) 0 2px,
-            transparent 3px
+            ellipse at center,
+            rgba(255,255,255,.10),
+            transparent 60%
         );
-
-    background-size:
-        38px 30px;
-
-    opacity:
-        .25;
 }
 
 .path-line {
@@ -678,123 +585,102 @@ button {
 
     inset: 0;
 
+    opacity: .35;
+
     background:
         repeating-linear-gradient(
             165deg,
-            transparent 0 38px,
-            rgba(255,255,255,.07) 39px 42px
+            transparent 0 45px,
+            rgba(255,255,255,.10) 46px 48px
         );
 }
 
 
 /* =========================================================
-   VEGETAȚIE
+   IARBĂ / PIETRE
 ========================================================= */
 
 .grass,
 .rock {
     position: absolute;
 
-    pointer-events: none;
+    z-index: 25;
 
-    z-index: 80;
+    pointer-events: none;
 }
 
 .grass {
-    font-size:
-        35px;
-
-    filter:
-        drop-shadow(
-            0 7px 8px
-            rgba(0,0,0,.45)
-        );
+    font-size: 38px;
 }
 
 .grass-1 {
-    left: 9%;
+    left: 8%;
     bottom: 20%;
 }
 
 .grass-2 {
-    right: 18%;
+    right: 16%;
     bottom: 17%;
 }
 
 .grass-3 {
-    left: 66%;
-    bottom: 24%;
+    left: 65%;
+    bottom: 22%;
 }
 
 .grass-4 {
     right: 38%;
-    bottom: 14%;
+    bottom: 12%;
 }
 
 .rock {
-    font-size:
-        30px;
-
-    filter:
-        drop-shadow(
-            0 8px 8px
-            rgba(0,0,0,.55)
-        );
+    font-size: 32px;
 }
 
 .rock-1 {
-    left: 37%;
-    bottom: 18%;
+    left: 34%;
+    bottom: 15%;
 }
 
 .rock-2 {
-    right: 35%;
-    bottom: 20%;
+    right: 32%;
+    bottom: 19%;
 }
 
 
 /* =========================================================
-   PERSONAJ
+   PERSONAJ - OM MARE
 ========================================================= */
 
 .player {
-
     position: absolute;
 
-    left: 9%;
+    left: 10%;
+    bottom: 15%;
 
-    bottom: 16%;
+    z-index: 100;
 
-    width:
-        90px;
-
-    height:
-        190px;
-
-    z-index:
-        120;
+    width: 155px;
+    height: 280px;
 
     transform:
         translateX(-50%);
 
     transition:
         left 1.4s
-        cubic-bezier(.2,.8,.2,1);
+        cubic-bezier(.18,.78,.22,1);
+
+    pointer-events: none;
 }
 
-
-/* umbră */
-
 .player-shadow {
-
     position: absolute;
 
     left: 50%;
+    bottom: 2px;
 
-    bottom: 0;
-
-    width: 75px;
-    height: 17px;
+    width: 125px;
+    height: 27px;
 
     transform:
         translateX(-50%);
@@ -802,660 +688,579 @@ button {
     border-radius: 50%;
 
     background:
-        rgba(0,0,0,.58);
+        rgba(0,0,0,.55);
 
     filter:
-        blur(6px);
+        blur(7px);
 
     z-index: 0;
 }
 
 
-/* corpul */
+/* =========================================================
+   CORP OM
+========================================================= */
 
 .person {
-
     position: absolute;
 
     left: 50%;
-    bottom: 5px;
+    bottom: 18px;
 
-    width: 72px;
-    height: 178px;
+    width: 120px;
+    height: 250px;
 
     transform:
         translateX(-50%);
-
-    transform-origin:
-        50% 100%;
 
     z-index: 2;
 }
 
 
-/* cap */
+/* =========================================================
+   CAP
+========================================================= */
 
 .person-head {
-
     position: absolute;
 
     left: 50%;
-
     top: 0;
 
-    width: 48px;
-    height: 55px;
+    width: 82px;
+    height: 92px;
 
     transform:
         translateX(-50%);
 
     border-radius:
-        48%
-        48%
-        45%
-        45%;
+        48% 48% 45% 45%;
 
     background:
         linear-gradient(
             145deg,
-            #ffd1ae,
-            #d88d69
+            #ffd8b2,
+            #e9a875
         );
 
+    border:
+        3px solid
+        rgba(0,0,0,.25);
+
     box-shadow:
-        inset -5px -4px 8px
-        rgba(80,35,20,.18),
+        0 7px 14px
+        rgba(0,0,0,.35);
 
-        0 4px 8px
-        rgba(0,0,0,.3);
-
-    z-index: 10;
+    z-index: 5;
 }
-
-
-/* păr */
 
 .person-hair {
-
     position: absolute;
 
-    left: -3px;
-    top: -5px;
+    left: 3px;
+    right: 3px;
+    top: -4px;
 
-    width: 54px;
-    height: 31px;
+    height: 35px;
 
     border-radius:
-        50%
-        55%
-        35%
-        30%;
+        45px 45px 10px 10px;
 
     background:
-        linear-gradient(
-            145deg,
-            #2c1a12,
-            #0e0907
-        );
-
-    box-shadow:
-        inset -4px -3px 6px
-        rgba(0,0,0,.35);
+        #3a2418;
 }
-
-
-/* față */
 
 .person-face {
-
     position: absolute;
 
-    inset: 14px 8px 5px;
+    left: 0;
+    right: 0;
+    bottom: 5px;
 
-    border-radius: 40%;
+    height: 55px;
 }
 
-
-/* ochi */
-
 .eye {
-
     position: absolute;
 
-    top: 12px;
+    top: 18px;
 
-    width: 5px;
-    height: 5px;
+    width: 8px;
+    height: 8px;
 
     border-radius: 50%;
 
     background:
-        #17110d;
+        #151515;
 }
 
 .eye-left {
-    left: 8px;
+    left: 23px;
 }
 
 .eye-right {
-    right: 8px;
+    right: 23px;
 }
 
-
-/* nas */
-
-.person-nose {
-
+.mouth {
     position: absolute;
 
     left: 50%;
-    top: 20px;
+    bottom: 7px;
 
-    width: 4px;
-    height: 7px;
-
-    transform:
-        translateX(-50%);
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(150,80,60,.45);
-}
-
-
-/* gură */
-
-.person-mouth {
-
-    position: absolute;
-
-    left: 50%;
-    top: 31px;
-
-    width: 10px;
-    height: 4px;
+    width: 22px;
+    height: 9px;
 
     transform:
         translateX(-50%);
 
     border-bottom:
-        2px solid
-        rgba(110,45,40,.65);
+        3px solid
+        #8b3f35;
 
     border-radius:
-        50%;
-}
-
-
-/* gât */
-
-.person-neck {
-
-    position: absolute;
-
-    left: 50%;
-    top: 48px;
-
-    width: 18px;
-    height: 18px;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        #d99570;
-
-    z-index: 5;
-}
-
-
-/* trunchi */
-
-.person-body {
-
-    position: absolute;
-
-    left: 50%;
-    top: 59px;
-
-    width: 43px;
-    height: 67px;
-
-    transform:
-        translateX(-50%);
-
-    border-radius:
-        15px 15px 10px 10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #244f7a,
-            #397db1 50%,
-            #173b60
-        );
-
-    box-shadow:
-        inset -5px 0 7px
-        rgba(0,0,0,.25),
-
-        0 8px 12px
-        rgba(0,0,0,.25);
-
-    z-index: 6;
-}
-
-
-/* detaliu tricou */
-
-.shirt-detail {
-
-    position: absolute;
-
-    left: 50%;
-    top: 10px;
-
-    width: 3px;
-    height: 45px;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        rgba(255,255,255,.18);
-}
-
-
-/* brațe */
-
-.person-arm {
-
-    position: absolute;
-
-    top: 64px;
-
-    width: 13px;
-    height: 61px;
-
-    border-radius:
-        10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #d38a68,
-            #f1b18b,
-            #b9694d
-        );
-
-    transform-origin:
-        50% 8px;
-
-    z-index: 4;
-}
-
-.arm-left {
-    left: 10px;
-
-    transform:
-        rotate(13deg);
-}
-
-.arm-right {
-    right: 10px;
-
-    transform:
-        rotate(-13deg);
-}
-
-
-/* mâini */
-
-.person-hand {
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -6px;
-
-    width: 15px;
-    height: 15px;
-
-    transform:
-        translateX(-50%);
-
-    border-radius:
-        50%;
-
-    background:
-        #d58b68;
-}
-
-
-/* picioare */
-
-.person-leg {
-
-    position: absolute;
-
-    top: 117px;
-
-    width: 15px;
-    height: 55px;
-
-    border-radius:
-        8px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #263142,
-            #4a5870,
-            #1c2431
-        );
-
-    transform-origin:
-        50% 7px;
-
-    z-index: 3;
-}
-
-.leg-left {
-    left: 18px;
-}
-
-.leg-right {
-    right: 18px;
-}
-
-
-/* pantofi */
-
-.person-shoe {
-
-    position: absolute;
-
-    left: 50%;
-    bottom: -6px;
-
-    width: 25px;
-    height: 12px;
-
-    transform:
-        translateX(-45%);
-
-    border-radius:
-        8px 12px 5px 5px;
-
-    background:
-        #181715;
-
-    box-shadow:
-        0 4px 5px
-        rgba(0,0,0,.4);
+        0 0 20px 20px;
 }
 
 
 /* =========================================================
-   ANIMAȚIA DE MERS
+   GÂT
 ========================================================= */
+
+.person-neck {
+    position: absolute;
+
+    left: 50%;
+    top: 82px;
+
+    width: 28px;
+    height: 24px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        #e6a373;
+
+    z-index: 3;
+}
+
+
+/* =========================================================
+   TRUNCHI
+========================================================= */
+
+.person-body {
+    position: absolute;
+
+    left: 50%;
+    top: 97px;
+
+    width: 88px;
+    height: 100px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 4;
+}
+
+.person-shirt {
+    position: absolute;
+
+    left: 50%;
+    top: 0;
+
+    width: 68px;
+    height: 100px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        18px 18px 10px 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #2468a5,
+            #123d68
+        );
+
+    border:
+        3px solid
+        rgba(0,0,0,.25);
+
+    display: flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    font-size: 30px;
+
+    box-shadow:
+        0 8px 15px
+        rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   BRAȚE
+========================================================= */
+
+.person-arm {
+    position: absolute;
+
+    top: 8px;
+
+    width: 24px;
+    height: 95px;
+
+    border-radius:
+        15px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #2468a5 0 55%,
+            #e6a373 56%
+        );
+
+    transform-origin:
+        top center;
+
+    box-shadow:
+        0 5px 10px
+        rgba(0,0,0,.25);
+}
+
+.person-arm-left {
+    left: -5px;
+
+    transform:
+        rotate(12deg);
+}
+
+.person-arm-right {
+    right: -5px;
+
+    transform:
+        rotate(-12deg);
+}
+
+
+/* =========================================================
+   PICIOARE
+========================================================= */
+
+.person-legs {
+    position: absolute;
+
+    left: 50%;
+    top: 187px;
+
+    width: 72px;
+    height: 65px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 2;
+}
+
+.person-leg {
+    position: absolute;
+
+    top: 0;
+
+    width: 28px;
+    height: 62px;
+
+    border-radius:
+        8px 8px 5px 5px;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #26374c,
+            #111d2a
+        );
+
+    transform-origin:
+        top center;
+}
+
+.person-leg-left {
+    left: 5px;
+}
+
+.person-leg-right {
+    right: 5px;
+}
+
+.person-shoe {
+    position: absolute;
+
+    bottom: -8px;
+
+    width: 39px;
+    height: 18px;
+
+    border-radius:
+        15px 12px 8px 8px;
+
+    background:
+        #241c18;
+
+    box-shadow:
+        0 5px 8px
+        rgba(0,0,0,.35);
+}
+
+.person-leg-left .person-shoe {
+    left: -8px;
+}
+
+.person-leg-right .person-shoe {
+    right: -8px;
+}
+
+
+/* =========================================================
+   MERS
+========================================================= */
+
+.player.walking .person-leg-left {
+    animation:
+        legLeftWalk
+        .48s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+.player.walking .person-leg-right {
+    animation:
+        legRightWalk
+        .48s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+.player.walking .person-arm-left {
+    animation:
+        armLeftWalk
+        .48s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+.player.walking .person-arm-right {
+    animation:
+        armRightWalk
+        .48s
+        ease-in-out
+        infinite
+        alternate;
+}
 
 .player.walking .person {
     animation:
-        bodyWalking
-        .55s
+        bodyWalk
+        .48s
+        ease-in-out
         infinite
-        ease-in-out;
-}
-
-.player.walking .leg-left {
-    animation:
-        legLeftWalk
-        .55s
-        infinite
-        ease-in-out;
-}
-
-.player.walking .leg-right {
-    animation:
-        legRightWalk
-        .55s
-        infinite
-        ease-in-out;
-}
-
-.player.walking .arm-left {
-    animation:
-        armLeftWalk
-        .55s
-        infinite
-        ease-in-out;
-}
-
-.player.walking .arm-right {
-    animation:
-        armRightWalk
-        .55s
-        infinite
-        ease-in-out;
-}
-
-@keyframes bodyWalking {
-
-    0%,
-    100% {
-        transform:
-            translateX(-50%)
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateX(-50%)
-            translateY(-3px);
-    }
+        alternate;
 }
 
 @keyframes legLeftWalk {
 
-    0%,
-    100% {
+    from {
         transform:
-            rotate(20deg);
+            rotate(18deg);
     }
 
-    50% {
+    to {
         transform:
-            rotate(-22deg);
+            rotate(-18deg);
     }
 }
 
 @keyframes legRightWalk {
 
-    0%,
-    100% {
+    from {
         transform:
-            rotate(-22deg);
+            rotate(-18deg);
     }
 
-    50% {
+    to {
         transform:
-            rotate(20deg);
+            rotate(18deg);
     }
 }
 
 @keyframes armLeftWalk {
 
-    0%,
-    100% {
+    from {
         transform:
-            rotate(-25deg);
+            rotate(-18deg);
     }
 
-    50% {
+    to {
         transform:
-            rotate(28deg);
+            rotate(18deg);
     }
 }
 
 @keyframes armRightWalk {
 
-    0%,
-    100% {
+    from {
         transform:
-            rotate(28deg);
+            rotate(18deg);
     }
 
-    50% {
+    to {
         transform:
-            rotate(-25deg);
+            rotate(-18deg);
+    }
+}
+
+@keyframes bodyWalk {
+
+    from {
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    to {
+        transform:
+            translateX(-50%)
+            translateY(-7px);
     }
 }
 
 
 /* =========================================================
-   ANIMAL
+   ANIMAL EMOJI
 ========================================================= */
 
 .animal {
-
     position: absolute;
 
-    right: 9%;
-    bottom: 20%;
+    right: 10%;
+    bottom: 23%;
 
-    width:
-        clamp(125px, 15vw, 210px);
+    width: 145px;
+    height: 145px;
 
-    height:
-        clamp(125px, 15vw, 210px);
+    z-index: 110;
 
-    z-index:
-        130;
+    display: flex;
 
-    overflow:
-        hidden;
+    align-items:
+        center;
 
-    border-radius:
-        50%;
+    justify-content:
+        center;
 
-    border:
-        5px solid
-        rgba(255,255,255,.85);
+    font-size:
+        clamp(90px, 11vw, 150px);
+
+    line-height: 1;
 
     background:
-        #17231b;
+        rgba(0,0,0,.18);
+
+    border:
+        4px solid
+        rgba(255,255,255,.75);
+
+    border-radius: 50%;
 
     box-shadow:
-        0 25px 60px
-        rgba(0,0,0,.65);
+        0 20px 50px
+        rgba(0,0,0,.55);
 
-    opacity:
-        1;
+    backdrop-filter:
+        blur(3px);
 
-    transform:
-        translateX(0)
-        scale(1);
+    transition:
+        transform .3s ease;
 }
-
-
-/* imagine animal */
-
-.real-animal-image {
-
-    width: 100%;
-    height: 100%;
-
-    display: block;
-
-    object-fit: cover;
-
-    object-position:
-        center center;
-
-    border-radius:
-        50%;
-}
-
-
-/* apariția animalului */
 
 .animal.approach {
-
     animation:
-        animalArrival
-        1.1s
+        animalApproach
+        1s
         cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes animalArrival {
-
-    0% {
-
-        opacity: 0;
-
-        transform:
-            translateX(180px)
-            scale(.45);
-
-        filter:
-            blur(8px);
-    }
-
-    55% {
-
-        opacity: 1;
-
-        transform:
-            translateX(-15px)
-            scale(1.08);
-
-        filter:
-            blur(0);
-    }
-
-    100% {
-
-        opacity: 1;
-
-        transform:
-            translateX(0)
-            scale(1);
-    }
-}
-
-
-/* animal fericit */
-
 .animal.happy {
-
     animation:
         animalHappy
         .8s
         ease;
 }
 
+@keyframes animalApproach {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(130px)
+            scale(.45)
+            rotate(12deg);
+    }
+
+    60% {
+        opacity: 1;
+
+        transform:
+            translateX(-12px)
+            scale(1.08)
+            rotate(-4deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateX(0)
+            scale(1)
+            rotate(0);
+    }
+}
+
 @keyframes animalHappy {
 
-    0%,
+    0% {
+        transform:
+            scale(1);
+    }
+
+    30% {
+        transform:
+            scale(1.25)
+            rotate(-7deg);
+    }
+
+    60% {
+        transform:
+            scale(1.15)
+            rotate(7deg);
+    }
+
     100% {
         transform:
             scale(1)
             rotate(0);
-    }
-
-    35% {
-        transform:
-            scale(1.1)
-            rotate(-3deg);
-    }
-
-    65% {
-        transform:
-            scale(1.08)
-            rotate(3deg);
     }
 }
 
@@ -1465,114 +1270,67 @@ button {
 ========================================================= */
 
 .animal-bubble {
-
     position: absolute;
 
-    right: 8%;
+    right: 7%;
     bottom: 47%;
 
-    max-width:
-        280px;
+    max-width: 300px;
 
     padding:
-        13px 17px;
+        13px 18px;
 
-    z-index:
-        160;
+    z-index: 150;
 
-    color: #fff;
+    color: #ffffff;
 
-    border-radius:
-        18px;
+    font-size: 16px;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    border-radius: 18px;
 
     background:
-        rgba(5,12,8,.78);
+        rgba(0,0,0,.82);
 
     border:
-        1px solid
-        rgba(255,255,255,.2);
+        2px solid
+        rgba(255,255,255,.25);
 
     box-shadow:
         0 15px 40px
-        rgba(0,0,0,.4);
+        rgba(0,0,0,.45);
 
     backdrop-filter:
         blur(10px);
-
-    font-weight:
-        700;
-
-    animation:
-        bubbleFloat
-        2.5s
-        ease-in-out
-        infinite;
 }
 
-@keyframes bubbleFloat {
-
-    0%,
-    100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-5px);
-    }
-}
-
-
-/* =========================================================
-   MESAJ MERS
-========================================================= */
-
-.walking-message {
+.animal-bubble::after {
+    content: "";
 
     position: absolute;
 
-    left: 50%;
-    top: 25%;
+    bottom: -10px;
+    right: 35px;
 
-    transform:
-        translateX(-50%);
-
-    z-index:
-        170;
-
-    padding:
-        9px 15px;
-
-    border-radius:
-        999px;
+    width: 18px;
+    height: 18px;
 
     background:
-        rgba(0,0,0,.48);
+        rgba(0,0,0,.82);
 
-    border:
-        1px solid
-        rgba(255,255,255,.12);
+    transform:
+        rotate(45deg);
 
-    color:
-        rgba(255,255,255,.85);
+    border-right:
+        2px solid
+        rgba(255,255,255,.25);
 
-    font-size:
-        14px;
-
-    opacity:
-        0;
-
-    pointer-events:
-        none;
-
-    transition:
-        opacity .3s ease;
-}
-
-.walking-message.visible {
-    opacity:
-        1;
+    border-bottom:
+        2px solid
+        rgba(255,255,255,.25);
 }
 
 
@@ -1582,7 +1340,6 @@ button {
 
 .attack-effect,
 .success-effect {
-
     position: absolute;
 
     left: 50%;
@@ -1592,17 +1349,14 @@ button {
         translate(-50%, -50%)
         scale(.5);
 
-    opacity:
-        0;
+    opacity: 0;
 
-    z-index:
-        300;
+    z-index: 300;
 
     font-size:
-        clamp(60px, 10vw, 130px);
+        clamp(70px, 10vw, 140px);
 
-    pointer-events:
-        none;
+    pointer-events: none;
 }
 
 .attack-effect.active {
@@ -1680,32 +1434,27 @@ button {
 ========================================================= */
 
 .question-panel {
-
     position: relative;
 
-    z-index:
-        400;
+    z-index: 400;
 
     width:
-        min(
-            1000px,
-            calc(100% - 30px)
-        );
+        min(1000px, calc(100% - 30px));
 
     margin:
-        -65px auto 30px;
+        -65px auto 35px;
 
     padding:
-        25px;
+        30px 25px 25px;
 
     border-radius:
         28px;
 
     background:
-        rgba(8,18,12,.91);
+        rgba(8,18,12,.96);
 
     border:
-        1px solid
+        2px solid
         rgba(255,255,255,.16);
 
     box-shadow:
@@ -1714,345 +1463,241 @@ button {
 
     backdrop-filter:
         blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
-    animation:
-        questionAppear
-        .6s
-        ease;
-}
-
-@keyframes questionAppear {
-
-    from {
-
-        opacity: 0;
-
-        transform:
-            translateY(35px)
-            scale(.97);
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
 }
 
 
-/* imagine mică animal */
+/* =========================================================
+   ANIMAL ÎN ÎNTREBARE
+========================================================= */
 
 .question-animal {
-
-    width:
-        72px;
-
-    height:
-        72px;
+    width: 82px;
+    height: 82px;
 
     margin:
-        -58px auto 8px;
+        -65px auto 12px;
 
-    overflow:
-        hidden;
-
-    border-radius:
-        50%;
-
-    border:
-        4px solid white;
-
-    background:
-        #111;
-
-    box-shadow:
-        0 10px 30px
-        rgba(0,0,0,.6);
-}
-
-.question-animal img {
-
-    width: 100%;
-    height: 100%;
-
-    object-fit:
-        cover;
-
-    display:
-        block;
-}
-
-
-/* locație */
-
-.question-location {
-
-    display:
-        flex;
-
-    justify-content:
-        center;
+    display: flex;
 
     align-items:
         center;
 
-    gap:
-        6px;
+    justify-content:
+        center;
 
-    color:
-        #a8c8b1;
+    font-size: 52px;
 
-    font-size:
-        13px;
+    border-radius: 50%;
 
-    margin-bottom:
-        8px;
+    background:
+        #18251c;
+
+    border:
+        4px solid
+        #ffffff;
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.55);
 }
 
 
-/* întrebare */
+/* =========================================================
+   TEXT ÎNTREBARE
+========================================================= */
 
 .question-panel h2 {
-
     margin:
-        10px auto 23px;
+        12px auto 25px;
 
-    max-width:
-        850px;
+    max-width: 850px;
 
-    text-align:
-        center;
+    text-align: center;
 
-    line-height:
-        1.4;
+    line-height: 1.4;
 
     font-size:
-        clamp(20px, 3vw, 32px);
+        clamp(20px, 3vw, 31px);
+
+    color:
+        #ffffff;
 }
 
 
 /* =========================================================
    RĂSPUNSURI
+   REPARAT: TEXTUL ESTE MEREU VIZIBIL
 ========================================================= */
 
 .answers {
+    position: relative;
 
-    display:
-        grid;
+    z-index: 500;
+
+    display: grid;
 
     grid-template-columns:
         repeat(2, 1fr);
 
-    gap:
-        13px;
-
-    position:
-        relative;
-
-    z-index:
-        500;
+    gap: 14px;
 }
 
 .answer-button {
+    position: relative;
 
-    position:
-        relative;
+    z-index: 501;
 
-    display:
-        flex;
+    display: flex;
 
-    align-items:
-        center;
+    align-items: center;
 
-    gap:
-        14px;
+    gap: 14px;
 
-    width:
-        100%;
+    width: 100%;
 
-    min-height:
-        66px;
+    min-height: 72px;
 
     padding:
         12px 18px;
 
+    color: #ffffff !important;
+
+    background:
+        #183426 !important;
+
     border:
-        1px solid
-        rgba(255,255,255,.15);
+        2px solid
+        #3e6951;
 
     border-radius:
         16px;
 
-    color:
-        white;
+    font-size: 17px;
 
-    background:
-        rgba(255,255,255,.09);
+    font-weight: 700;
 
-    font-size:
-        17px;
+    text-align: left;
 
-    text-align:
-        left;
+    cursor: pointer;
 
-    cursor:
-        pointer;
+    opacity: 1 !important;
 
-    touch-action:
-        manipulation;
+    visibility: visible !important;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    pointer-events: auto;
+
+    overflow: hidden;
 
     transition:
         transform .2s ease,
         background .2s ease,
+        border-color .2s ease,
         box-shadow .2s ease;
 }
 
 .answer-button:hover:not(:disabled) {
-
     transform:
-        translateY(-4px);
+        translateY(-3px);
 
     background:
-        rgba(255,255,255,.16);
+        #235039 !important;
+
+    border-color:
+        #69c58b;
 
     box-shadow:
-        0 15px 35px
-        rgba(0,0,0,.3);
+        0 12px 30px
+        rgba(0,0,0,.35);
 }
 
-.answer-button::before {
+.answer-button:focus-visible {
+    outline:
+        3px solid
+        #ffd75a;
 
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    background:
-        linear-gradient(
-            110deg,
-            transparent 20%,
-            rgba(255,255,255,.20) 50%,
-            transparent 80%
-        );
-
-    transform:
-        translateX(-120%);
-
-    transition:
-        transform .55s ease;
-
-    pointer-events:
-        none;
-}
-
-.answer-button:hover::before {
-
-    transform:
-        translateX(120%);
+    outline-offset:
+        2px;
 }
 
 .answer-letter {
-
     flex:
-        0 0 40px;
+        0 0 42px;
 
-    width:
-        40px;
+    width: 42px;
+    height: 42px;
 
-    height:
-        40px;
+    display: grid;
 
-    display:
-        grid;
+    place-items: center;
 
-    place-items:
-        center;
-
-    border-radius:
-        50%;
-
-    font-weight:
-        900;
+    border-radius: 50%;
 
     background:
-        rgba(255,255,255,.13);
+        #2f6847;
 
-    position:
-        relative;
+    color:
+        #ffffff !important;
 
-    z-index:
-        2;
+    font-size: 18px;
+
+    font-weight: 900;
+
+    border:
+        2px solid
+        rgba(255,255,255,.25);
 }
 
 .answer-text {
+    position: relative;
 
-    flex:
-        1;
+    z-index: 10;
+
+    flex: 1;
+
+    display: block !important;
 
     color:
-        white !important;
+        #ffffff !important;
 
-    opacity:
-        1 !important;
+    background:
+        transparent !important;
 
-    visibility:
-        visible !important;
+    opacity: 1 !important;
 
-    display:
-        block;
+    visibility: visible !important;
 
-    line-height:
-        1.35;
+    font-size: 17px;
+
+    font-weight: 700;
+
+    line-height: 1.4;
 
     word-break:
         break-word;
-
-    position:
-        relative;
-
-    z-index:
-        2;
 }
 
 .answer-button:disabled {
+    cursor: default;
 
-    opacity:
-        .75;
-
-    cursor:
-        default;
-
-    pointer-events:
-        none;
+    pointer-events: none;
 }
 
 
-/* corect */
+/* CORECT */
 
 .answer-button.correct {
-
     background:
         linear-gradient(
             135deg,
-            #16803c,
-            #2ecc71
+            #08752f,
+            #20b95d
         ) !important;
 
+    border-color:
+        #76f0a2 !important;
+
     color:
-        white !important;
+        #ffffff !important;
 
     animation:
         correctAnswer
@@ -2061,10 +1706,9 @@ button {
 }
 
 
-/* greșit */
+/* GREȘIT */
 
 .answer-button.wrong {
-
     background:
         linear-gradient(
             135deg,
@@ -2072,8 +1716,11 @@ button {
             #e74c3c
         ) !important;
 
+    border-color:
+        #ff9a91 !important;
+
     color:
-        white !important;
+        #ffffff !important;
 
     animation:
         wrongAnswer
@@ -2085,7 +1732,7 @@ button {
 
     50% {
         transform:
-            scale(1.04);
+            scale(1.035);
     }
 }
 
@@ -2118,26 +1765,20 @@ button {
 ========================================================= */
 
 .question-message {
+    min-height: 30px;
 
-    min-height:
-        28px;
+    margin-top: 16px;
 
-    margin-top:
-        15px;
+    text-align: center;
 
-    text-align:
-        center;
+    font-size: 17px;
 
-    font-size:
-        17px;
-
-    font-weight:
-        800;
+    font-weight: 900;
 }
 
 .question-message.success {
     color:
-        #63e68a;
+        #65ee91;
 }
 
 .question-message.error {
@@ -2159,8 +1800,7 @@ button {
 
 @keyframes screenShake {
 
-    0%,
-    100% {
+    0%, 100% {
         transform:
             translateX(0);
     }
@@ -2192,12 +1832,9 @@ button {
 ========================================================= */
 
 .result-screen {
+    display: grid;
 
-    display:
-        grid;
-
-    place-items:
-        center;
+    place-items: center;
 
     padding:
         30px 20px;
@@ -2211,28 +1848,23 @@ button {
 }
 
 .result-card {
-
     width:
-        min(
-            650px,
-            100%
-        );
+        min(650px, 100%);
 
     padding:
         40px 30px;
 
-    text-align:
-        center;
+    text-align: center;
 
     border-radius:
         28px;
 
     background:
-        rgba(255,255,255,.08);
+        rgba(255,255,255,.09);
 
     border:
         1px solid
-        rgba(255,255,255,.15);
+        rgba(255,255,255,.18);
 
     backdrop-filter:
         blur(18px);
@@ -2243,12 +1875,10 @@ button {
 }
 
 .result-icon {
-    font-size:
-        75px;
+    font-size: 75px;
 }
 
 .result-card h1 {
-
     margin:
         10px 0;
 
@@ -2262,7 +1892,6 @@ button {
 }
 
 .final-score {
-
     margin:
         25px auto;
 
@@ -2273,49 +1902,39 @@ button {
         20px;
 
     background:
-        rgba(0,0,0,.22);
+        rgba(0,0,0,.25);
 }
 
 .final-score span,
 .final-score small {
-    display:
-        block;
+    display: block;
 }
 
 .final-score strong {
-
-    display:
-        block;
+    display: block;
 
     margin:
         5px 0;
 
-    font-size:
-        55px;
+    font-size: 55px;
 
     color:
         #ffd75a;
 }
 
 .result-details {
-
-    display:
-        grid;
+    display: grid;
 
     grid-template-columns:
         repeat(3, 1fr);
 
-    gap:
-        10px;
+    gap: 10px;
 
-    margin-bottom:
-        25px;
+    margin-bottom: 25px;
 }
 
 .result-details div {
-
-    padding:
-        15px;
+    padding: 15px;
 
     border-radius:
         15px;
@@ -2326,41 +1945,30 @@ button {
 
 .result-details span,
 .result-details strong {
-    display:
-        block;
+    display: block;
 }
 
 .result-details strong {
+    margin-top: 5px;
 
-    margin-top:
-        5px;
-
-    font-size:
-        25px;
+    font-size: 25px;
 }
 
 .result-message {
-
     margin:
         20px 0;
 
-    font-size:
-        17px;
+    font-size: 17px;
 }
 
 .result-buttons {
+    display: flex;
 
-    display:
-        flex;
+    justify-content: center;
 
-    justify-content:
-        center;
+    gap: 12px;
 
-    gap:
-        12px;
-
-    flex-wrap:
-        wrap;
+    flex-wrap: wrap;
 }
 
 
@@ -2369,7 +1977,6 @@ button {
 ========================================================= */
 
 .quiz-loading {
-
     padding:
         40px;
 
@@ -2396,20 +2003,11 @@ button {
 @media (max-width: 750px) {
 
     .game-header {
-
         flex-direction:
             column;
 
         align-items:
             stretch;
-
-        padding:
-            10px 15px;
-    }
-
-    .game-title-area {
-        justify-content:
-            center;
     }
 
     .game-title {
@@ -2423,77 +2021,76 @@ button {
     }
 
     .forest {
-
         min-height:
-            520px;
-
-        height:
-            58vh;
-    }
-
-    .animal {
-
-        right:
-            4%;
-
-        bottom:
-            25%;
-
-        width:
-            125px;
-
-        height:
-            125px;
-    }
-
-    .animal-bubble {
-
-        right:
-            3%;
-
-        bottom:
-            51%;
-
-        max-width:
-            210px;
-
-        font-size:
-            13px;
+            60vh;
     }
 
     .player {
+        width: 125px;
+        height: 235px;
+
+        left: 12%;
+
+        bottom: 17%;
 
         transform:
             translateX(-50%)
-            scale(.82);
+            scale(.85);
+    }
 
-        transform-origin:
-            bottom center;
+    .animal {
+        right: 3%;
+
+        bottom: 26%;
+
+        width: 115px;
+        height: 115px;
+
+        font-size: 78px;
+    }
+
+    .animal-bubble {
+        right: 2%;
+
+        bottom: 51%;
+
+        max-width: 220px;
+
+        font-size: 13px;
     }
 
     .question-panel {
-
         margin-top:
             -35px;
 
         padding:
-            20px 14px;
+            24px 14px 18px;
     }
 
     .answers {
-
         grid-template-columns:
             1fr;
     }
 
     .answer-button {
-
         min-height:
-            60px;
+            64px;
+
+        padding:
+            11px 14px;
+    }
+
+    .answer-text {
+        font-size:
+            16px;
+    }
+
+    .question-animal {
+        margin-top:
+            -58px;
     }
 
     .result-details {
-
         grid-template-columns:
             1fr;
     }
@@ -2503,66 +2100,99 @@ button {
 @media (max-width: 480px) {
 
     #quizSelectScreen {
-
         padding:
             30px 14px;
     }
 
     .quiz-card {
-
         padding:
             22px;
     }
 
     .game-stats {
-
-        gap:
-            6px;
+        gap: 7px;
     }
 
     .stat-item {
-
         min-width:
             70px;
+    }
+
+    .forest {
+        min-height:
+            57vh;
+    }
+
+    .player {
+        left: 14%;
+
+        bottom: 18%;
+
+        transform:
+            translateX(-50%)
+            scale(.68);
+    }
+
+    .animal {
+        right: 2%;
+
+        bottom: 28%;
+
+        width: 92px;
+        height: 92px;
+
+        font-size: 62px;
+
+        border-width: 3px;
+    }
+
+    .animal-bubble {
+        right: 2%;
+
+        bottom: 52%;
+
+        max-width: 180px;
 
         padding:
-            6px 8px;
+            9px 12px;
+
+        font-size:
+            12px;
     }
 
     .question-panel h2 {
-
         font-size:
-            21px;
+            20px;
     }
 
     .answer-button {
+        min-height:
+            62px;
 
         font-size:
             15px;
     }
 
-    .animal {
-
-        width:
-            105px;
-
-        height:
-            105px;
+    .answer-text {
+        font-size:
+            15px;
     }
 
-    .animal-bubble {
+    .answer-letter {
+        flex-basis:
+            38px;
 
-        max-width:
-            180px;
+        width:
+            38px;
 
-        font-size:
-            12px;
+        height:
+            38px;
     }
 }
 
 
 /* =========================================================
-   REDUCERE ANIMAȚII
+   REDUCERE MIȘCARE
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -2570,12 +2200,14 @@ button {
     *,
     *::before,
     *::after {
-
         animation-duration:
             .01ms !important;
 
         animation-iteration-count:
             1 !important;
+
+        scroll-behavior:
+            auto !important;
 
         transition-duration:
             .01ms !important;
