@@ -15,9 +15,9 @@
 
 <main class="quiz-page">
 
-    <!-- =====================================================
-         ECRAN ALEGERE QUIZ
-    ====================================================== -->
+    <!-- =========================
+         SELECTARE QUIZ
+    ========================== -->
 
     <section
         id="quizSelectScreen"
@@ -42,11 +42,9 @@
                 id="listaQuizuri"
                 class="lista-quizuri"
             >
-
                 <div class="quiz-loading">
                     Se încarcă quizurile...
                 </div>
-
             </div>
 
         </div>
@@ -54,9 +52,9 @@
     </section>
 
 
-    <!-- =====================================================
-         ECRAN JOC
-    ====================================================== -->
+    <!-- =========================
+         JOC
+    ========================== -->
 
     <section
         id="quizGameScreen"
@@ -73,6 +71,20 @@
             </div>
 
             <div class="game-stats">
+
+                <div class="stat-item">
+
+                    <span class="stat-label">
+                        Întrebarea
+                    </span>
+
+                    <strong>
+                        <span id="questionNumber">1</span>
+                        /
+                        <span id="questionTotal">1</span>
+                    </strong>
+
+                </div>
 
                 <div class="stat-item">
 
@@ -106,7 +118,9 @@
         </div>
 
 
-        <!-- PĂDURE -->
+        <!-- =========================
+             PĂDURE
+        ========================== -->
 
         <div class="forest">
 
@@ -169,15 +183,12 @@
             </div>
 
 
-            <!-- JUCĂTOR -->
+            <!-- Jucător -->
 
-            <div
-                id="player"
-                class="player"
-            >
+            <div class="player">
 
                 <div class="player-character">
-                    🧑‍🌾
+                    🧙
                 </div>
 
                 <div class="player-shadow"></div>
@@ -185,7 +196,7 @@
             </div>
 
 
-            <!-- ANIMAL -->
+            <!-- Animal -->
 
             <div
                 id="animal"
@@ -195,6 +206,8 @@
             </div>
 
 
+            <!-- Bulă animal -->
+
             <div
                 id="animalBubble"
                 class="animal-bubble"
@@ -202,6 +215,8 @@
                 Alege răspunsul corect!
             </div>
 
+
+            <!-- Efect atac -->
 
             <div
                 id="attackEffect"
@@ -211,19 +226,21 @@
             </div>
 
 
+            <!-- Efect succes -->
+
             <div
                 id="successEffect"
                 class="success-effect"
             >
-                ✨
+                🎉
             </div>
 
         </div>
 
 
-        <!-- =================================================
+        <!-- =========================
              ÎNTREBARE
-        ================================================== -->
+        ========================== -->
 
         <div class="question-panel">
 
@@ -235,16 +252,8 @@
             </div>
 
 
-            <div style="text-align:center; color:#708070; font-weight:700;">
-                Întrebarea
-                <span id="questionNumber">1</span>
-                /
-                <span id="questionTotal">1</span>
-            </div>
-
-
             <h2 id="questionText">
-                Se încarcă întrebarea...
+                Întrebarea va apărea aici
             </h2>
 
 
@@ -252,69 +261,61 @@
 
                 <button
                     type="button"
+                    id="answerA"
                     class="answer-button answer-a"
                     data-answer="A"
-                    id="answerButtonA"
                 >
                     <span class="answer-letter">
                         A
                     </span>
 
-                    <span
-                        id="answerA"
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text">
+                    </span>
                 </button>
 
 
                 <button
                     type="button"
+                    id="answerB"
                     class="answer-button answer-b"
                     data-answer="B"
-                    id="answerButtonB"
                 >
                     <span class="answer-letter">
                         B
                     </span>
 
-                    <span
-                        id="answerB"
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text">
+                    </span>
                 </button>
 
 
                 <button
                     type="button"
+                    id="answerC"
                     class="answer-button answer-c"
                     data-answer="C"
-                    id="answerButtonC"
                 >
                     <span class="answer-letter">
                         C
                     </span>
 
-                    <span
-                        id="answerC"
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text">
+                    </span>
                 </button>
 
 
                 <button
                     type="button"
+                    id="answerD"
                     class="answer-button answer-d"
                     data-answer="D"
-                    id="answerButtonD"
                 >
                     <span class="answer-letter">
                         D
                     </span>
 
-                    <span
-                        id="answerD"
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text">
+                    </span>
                 </button>
 
             </div>
@@ -330,9 +331,9 @@
     </section>
 
 
-    <!-- =====================================================
-         ECRAN REZULTAT
-    ====================================================== -->
+    <!-- =========================
+         REZULTAT
+    ========================== -->
 
     <section
         id="quizResultScreen"
@@ -377,6 +378,7 @@
             <div class="result-details">
 
                 <div>
+
                     <span>
                         Corecte
                     </span>
@@ -384,10 +386,12 @@
                     <strong id="correctAnswers">
                         0
                     </strong>
+
                 </div>
 
 
                 <div>
+
                     <span>
                         Greșite
                     </span>
@@ -395,10 +399,12 @@
                     <strong id="wrongAnswers">
                         0
                     </strong>
+
                 </div>
 
 
                 <div>
+
                     <span>
                         Vieți rămase
                     </span>
@@ -406,6 +412,7 @@
                     <strong id="remainingLives">
                         0
                     </strong>
+
                 </div>
 
             </div>
@@ -414,7 +421,9 @@
             <div
                 id="resultMessage"
                 class="result-message"
-            ></div>
+            >
+                Bravo!
+            </div>
 
 
             <div class="result-buttons">
@@ -427,13 +436,12 @@
                     🔄 Joacă din nou
                 </button>
 
-
                 <button
                     type="button"
                     id="chooseQuizButton"
                     class="game-button secondary"
                 >
-                    🌲 Alege alt quiz
+                    📚 Alege alt quiz
                 </button>
 
             </div>
@@ -443,6 +451,7 @@
     </section>
 
 </main>
+
 
 
 <!-- =====================================================
