@@ -2045,42 +2045,7 @@ async function pornesteQuiz(quizId) {
         // 2. ÎNCĂRCĂM ÎNTREBĂRILE
         // ================================
 
-        const {
-            data: intrebari,
-            error: eroareIntrebari
-        } = await supabaseClient
-            .from("intrebari_quiz")
-            .select("*")
-            .eq("quiz_id", quizId)
-            .order("ordine", {
-                ascending: true
-            });
-
-
-        console.log(
-            "ÎNTREBĂRI GĂSITE:",
-            intrebari
-        );
-
-        console.log(
-            "EROARE ÎNTREBĂRI:",
-            eroareIntrebari
-        );
-
-
-        if (eroareIntrebari) {
-
-            console.error(
-                "Eroare întrebări:",
-                eroareIntrebari
-            );
-
-            alert(
-                "Nu am putut încărca întrebările."
-            );
-
-            return;
-        }
+       
 
 
         // ================================
