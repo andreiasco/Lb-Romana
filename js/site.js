@@ -1893,7 +1893,7 @@ async function pornesteQuiz(quizId) {
                 .from("quizuri")
                 .select("*")
                 .eq("id", quizId)
-                .eq("activ", true)
+                
                 .single();
 
         console.log("QUIZ GĂSIT:", quiz);
