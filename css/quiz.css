@@ -1,6 +1,176 @@
 /* =====================================================
    QUIZ - PAGINA JOC
 ===================================================== */
+<div id="quizGameScreen" class="quiz-screen ascuns">
+
+    <header class="quiz-topbar">
+
+        <div class="quiz-title">
+            🌲 <span id="gameQuizTitle">Aventura din pădure</span>
+        </div>
+
+        <div class="quiz-progress">
+            Întrebarea
+            <strong>
+                <span id="questionNumber">1</span> /
+                <span id="questionTotal">4</span>
+            </strong>
+        </div>
+
+        <div class="quiz-score">
+            ⭐ <span id="score">0</span>
+        </div>
+
+        <div id="lives" class="quiz-lives">
+            ❤️❤️❤️
+        </div>
+
+    </header>
+
+
+    <main class="forest-game">
+
+        <!-- CER -->
+        <div class="forest-background">
+
+            <div class="sun">☀️</div>
+
+            <div class="cloud cloud-1">☁️</div>
+            <div class="cloud cloud-2">☁️</div>
+
+            <div class="mountain mountain-1">⛰️</div>
+            <div class="mountain mountain-2">🏔️</div>
+
+            <div class="forest-horizon">
+                🌲 🌳 🌲 🌲 🌳 🌲 🌲 🌳
+            </div>
+
+        </div>
+
+
+        <!-- TEREN -->
+        <div class="game-ground"></div>
+
+        <!-- POTECĂ -->
+        <div class="game-path"></div>
+
+
+        <!-- DECORAȚIUNI -->
+        <div class="decoration tree-left">🌲</div>
+        <div class="decoration tree-right">🌳</div>
+
+        <div class="decoration grass-left">🌿</div>
+        <div class="decoration grass-right">🌱</div>
+
+        <div class="decoration rock-left">🪨</div>
+        <div class="decoration rock-right">🪨</div>
+
+
+        <!-- PERSONAJ -->
+        <div id="player" class="forest-character">
+
+            <div class="character-shadow"></div>
+
+            <div class="character-body">
+                🧑‍🌾
+            </div>
+
+        </div>
+
+
+        <!-- ANIMAL -->
+        <div id="animal" class="forest-animal">
+
+            🐺
+
+        </div>
+
+
+        <!-- BULA ANIMAL -->
+        <div id="animalBubble" class="animal-bubble">
+            Alege răspunsul corect!
+        </div>
+
+
+        <!-- EFECT ATAC -->
+        <div id="attackEffect" class="game-effect attack-effect">
+            💥
+        </div>
+
+
+        <!-- EFECT SUCCES -->
+        <div id="successEffect" class="game-effect success-effect">
+            🎉
+        </div>
+
+
+        <!-- ÎNTREBARE -->
+        <section class="question-panel">
+
+            <div class="question-number-badge">
+                🌿 ÎNTREBAREA
+                <span id="questionNumberPanel">1</span>
+            </div>
+
+            <h2 id="questionText" class="question-text">
+                Întrebarea apare aici
+            </h2>
+
+
+            <div class="answers-grid">
+
+                <button
+                    type="button"
+                    class="answer-button answer-a"
+                    data-answer="A"
+                >
+                    <span class="answer-letter">A</span>
+                    <span id="answerA">Răspuns A</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="answer-button answer-b"
+                    data-answer="B"
+                >
+                    <span class="answer-letter">B</span>
+                    <span id="answerB">Răspuns B</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="answer-button answer-c"
+                    data-answer="C"
+                >
+                    <span class="answer-letter">C</span>
+                    <span id="answerC">Răspuns C</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="answer-button answer-d"
+                    data-answer="D"
+                >
+                    <span class="answer-letter">D</span>
+                    <span id="answerD">Răspuns D</span>
+                </button>
+
+            </div>
+
+
+            <div
+                id="questionMessage"
+                class="question-message"
+            ></div>
+
+        </section>
+
+    </main>
+
+</div>
 
 .quiz-page {
     min-height: 100vh;
