@@ -1,59 +1,163 @@
-// INITIALIZARE
+// ======================================================
+// SUPABASE
 // ======================================================
 
-function afiseazaPagina(hash = window.location.hash) {
+const SUPABASE_URL =
+    "https://eagjavifluwolqeuctzk.supabase.co";
 
-    const ancora = hash.replace("#", "") || "acasa";
-    const pagini = {
-        acasa: "pagina-acasa",
-        "despre-noi": "pagina-acasa",
-        functionalitati: "pagina-acasa",
-        "how-to": "pagina-acasa",
-        limba: "pagina-limba",
-        literatura: "pagina-literatura",
-        poezie: "pagina-literatura",
-        proza: "pagina-literatura",
-        teatru: "pagina-literatura",
-        quiz: "pagina-quiz",
-        revista: "pagina-revista"
-    };
+const SUPABASE_KEY =
+    "sb_publishable_QSG9OFrCANpRxA-moQCQgQ_mtkx-hWX";
 
-    const paginaId = pagini[ancora] || "pagina-acasa";
-    const esteRutaPrincipala = [
-        "acasa",
-        "limba",
-        "literatura",
-        "quiz",
-        "revista"
-    ].includes(ancora);
+const BUCKET = "Pdf";
+const IMAGINI_BUCKET = "Imagini";
 
-    document.querySelectorAll(".pagina").forEach(
-        pagina => pagina.classList.toggle(
-            "activ",
-            pagina.id === paginaId
-        )
+
+// ======================================================
+// CLIENT SUPABASE
+// ======================================================
+
+window.supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
     );
 
-    const element = document.getElementById(ancora);
 
-    if (element && !esteRutaPrincipala) {
-        window.requestAnimationFrame(
-            () => element.scrollIntoView({ behavior: "smooth" })
+// Alias pentru toate fișierele JS
+const supabaseClient =
+    window.supabaseClient;
+
+
+// ======================================================
+// PAGINI
+// ======================================================
+
+function afiseazaPagina(
+    hash = window.location.hash
+) {
+
+    const ancora =
+        hash.replace("#", "") || "acasa";
+
+    const pagini = {
+
+        acasa: "pagina-acasa",
+
+        "despre-noi":
+            "pagina-acasa",
+
+        functionalitati:
+            "pagina-acasa",
+
+        "how-to":
+            "pagina-acasa",
+
+        limba:
+            "pagina-limba",
+
+        literatura:
+            "pagina-literatura",
+
+        poezie:
+            "pagina-literatura",
+
+        proza:
+            "pagina-literatura",
+
+        teatru:
+            "pagina-literatura",
+
+        quiz:
+            "pagina-quiz",
+
+        revista:
+            "pagina-revista"
+
+    };
+
+
+    const paginaId =
+        pagini[ancora] ||
+        "pagina-acasa";
+
+
+    const esteRutaPrincipala =
+        [
+            "acasa",
+            "limba",
+            "literatura",
+            "quiz",
+            "revista"
+        ].includes(ancora);
+
+
+    document
+        .querySelectorAll(".pagina")
+        .forEach(
+            pagina =>
+                pagina.classList.toggle(
+                    "activ",
+                    pagina.id === paginaId
+                )
         );
+
+
+    const element =
+        document.getElementById(
+            ancora
+        );
+
+
+    if (
+        element &&
+        !esteRutaPrincipala
+    ) {
+
+        window.requestAnimationFrame(
+            () =>
+                element.scrollIntoView({
+                    behavior:
+                        "smooth"
+                })
+        );
+
     } else {
-        window.scrollTo(0, 0);
+
+        window.scrollTo(
+            0,
+            0
+        );
+
     }
+
 }
 
-window.addEventListener("hashchange", () => afiseazaPagina());
+
+// ======================================================
+// EVENIMENTE
+// ======================================================
+
+window.addEventListener(
+    "hashchange",
+    () =>
+        afiseazaPagina()
+);
+
+
 afiseazaPagina();
+
+
+// ======================================================
+// FUNCȚII SITE
+// ======================================================
 
 incarcaAutori();
 
 verificaSesiunea();
 
+
 // ======================================================
-// INITIALIZARE CĂUTARE
+// CĂUTARE
 // ======================================================
 
 const searchInput =
@@ -96,7 +200,9 @@ document.addEventListener(
         if (
             container &&
             results &&
-            !container.contains(event.target)
+            !container.contains(
+                event.target
+            )
         ) {
 
             results.classList.remove(
@@ -108,8 +214,18 @@ document.addEventListener(
     }
 );
 
+
+// ======================================================
+// DEBUG
+// ======================================================
+
 console.log(
     "Site inițializat."
+);
+
+console.log(
+    "Supabase inițializat:",
+    !!window.supabaseClient
 );
 
 console.log(
