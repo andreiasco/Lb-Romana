@@ -1,500 +1,533 @@
-<!DOCTYPE html> <html lang="ro"> <head>
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="ro">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<head>
 
-<title>Quiz - Aventura din pădure</title>
+    <meta charset="UTF-8">
 
-<!-- CSS -->
-<link rel="stylesheet" href="css/site.css">
-<link rel="stylesheet" href="css/quiz.css">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-</head> <body> <main class="quiz-page">
-<!-- =====================================================
-     SELECTARE QUIZ
-====================================================== -->
+    <title>
+        Quiz - Aventura din pădure
+    </title>
 
-<section
-    id="quizSelectScreen"
-    class="quiz-screen"
->
+    <link
+        rel="stylesheet"
+        href="css/site.css"
+    >
 
-    <div class="quiz-intro">
+    <link
+        rel="stylesheet"
+        href="css/quiz.css"
+    >
 
-        <div class="intro-icon">
-            🌲
-        </div>
+</head>
 
-        <h1>
-            Quizuri interactive
-        </h1>
+<body>
 
-        <p>
-            Alege un quiz și pornește aventura prin pădure.
-        </p>
-
-        <div
-            id="listaQuizuri"
-            class="lista-quizuri"
-        >
-
-            <div class="quiz-loading">
-                Se încarcă quizurile...
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     JOC
-====================================================== -->
-
-<section
-    id="quizGameScreen"
-    class="quiz-screen ascuns"
->
-
-    <!-- HEADER -->
-
-    <header class="game-header">
-
-        <div
-            id="gameQuizTitle"
-            class="game-title"
-        >
-            🎮 Aventura
-        </div>
-
-        <div class="game-stats">
-
-            <div class="stat-item">
-
-                <span class="stat-label">
-                    Întrebarea
-                </span>
-
-                <strong>
-                    <span id="questionNumber">1</span>
-                    /
-                    <span id="questionTotal">1</span>
-                </strong>
-
-            </div>
-
-            <div class="stat-item">
-
-                <span class="stat-label">
-                    Scor
-                </span>
-
-                <strong>
-                    ⭐ <span id="score">0</span>
-                </strong>
-
-            </div>
-
-            <div class="stat-item">
-
-                <span class="stat-label">
-                    Vieți
-                </span>
-
-                <strong
-                    id="lives"
-                    class="lives"
-                >
-                    ❤️❤️❤️
-                </strong>
-
-            </div>
-
-        </div>
-
-    </header>
-
+<main class="quiz-page">
 
     <!-- =================================================
-         SCENA
+         SELECTARE QUIZ
     ================================================== -->
 
-    <div class="forest">
+    <section
+        id="quizSelectScreen"
+        class="quiz-screen"
+    >
 
-        <!-- CER -->
+        <div class="quiz-intro">
 
-        <div class="sky">
-
-            <div class="sun">
-                ☀️
+            <div class="intro-icon">
+                🌲
             </div>
 
-            <div class="cloud cloud-1">
-                ☁️
+            <h1>
+                Aventura din pădure
+            </h1>
+
+            <p>
+                Intră în pădure, mergi prin natură
+                și întâlnește animalele.
+            </p>
+
+            <div
+                id="listaQuizuri"
+                class="lista-quizuri"
+            >
+
+                <div class="quiz-loading">
+                    Se încarcă aventurile...
+                </div>
+
             </div>
 
-            <div class="cloud cloud-2">
-                ☁️
-            </div>
-
         </div>
-
-
-        <!-- MUNȚI -->
-
-        <div class="mountains">
-            🏔️
-        </div>
-
-
-        <!-- COPACI -->
-
-        <div class="background-trees">
-
-            <span>🌲</span>
-            <span>🌳</span>
-            <span>🌲</span>
-            <span>🌳</span>
-            <span>🌲</span>
-
-        </div>
-
-
-        <!-- SOL -->
-
-        <div class="ground"></div>
-
-
-        <!-- POTECĂ -->
-
-        <div class="path">
-
-            <div class="path-line"></div>
-
-        </div>
-
-
-        <!-- VEGETAȚIE -->
-
-        <div class="grass grass-1">
-            🌿
-        </div>
-
-        <div class="grass grass-2">
-            🌱
-        </div>
-
-        <div class="grass grass-3">
-            🌿
-        </div>
-
-
-        <!-- PIETRE -->
-
-        <div class="rock rock-1">
-            🪨
-        </div>
-
-        <div class="rock rock-2">
-            🪨
-        </div>
-
-
-        <!-- =================================================
-             PERSONAJ
-        ================================================== -->
-
-        <div class="player">
-
-            <div class="player-character">
-                🧙
-            </div>
-
-            <div class="player-shadow"></div>
-
-        </div>
-
-
-        <!-- =================================================
-             ANIMAL
-        ================================================== -->
-
-        <div
-            id="animal"
-            class="animal"
-        >
-            🐺
-        </div>
-
-
-        <!-- BULĂ ANIMAL -->
-
-        <div
-            id="animalBubble"
-            class="animal-bubble"
-        >
-            Alege răspunsul corect!
-        </div>
-
-
-        <!-- EFECT ATAC -->
-
-        <div
-            id="attackEffect"
-            class="attack-effect"
-        >
-            💥
-        </div>
-
-
-        <!-- EFECT SUCCES -->
-
-        <div
-            id="successEffect"
-            class="success-effect"
-        >
-            🎉
-        </div>
-
-    </div>
-
-
-    <!-- =================================================
-         PANOU ÎNTREBARE
-    ================================================== -->
-
-    <section class="question-panel">
-
-        <!-- ANIMAL -->
-
-        <div
-            id="questionAnimal"
-            class="question-animal"
-        >
-            🐺
-        </div>
-
-
-        <!-- ÎNTREBARE -->
-
-        <h2 id="questionText">
-            Întrebarea va apărea aici
-        </h2>
-
-
-        <!-- RĂSPUNSURI -->
-
-        <div class="answers">
-
-            <button
-                type="button"
-                id="answerA"
-                class="answer-button answer-a"
-                data-answer="A"
-            >
-
-                <span class="answer-letter">
-                    A
-                </span>
-
-                <span class="answer-text"></span>
-
-            </button>
-
-
-            <button
-                type="button"
-                id="answerB"
-                class="answer-button answer-b"
-                data-answer="B"
-            >
-
-                <span class="answer-letter">
-                    B
-                </span>
-
-                <span class="answer-text"></span>
-
-            </button>
-
-
-            <button
-                type="button"
-                id="answerC"
-                class="answer-button answer-c"
-                data-answer="C"
-            >
-
-                <span class="answer-letter">
-                    C
-                </span>
-
-                <span class="answer-text"></span>
-
-            </button>
-
-
-            <button
-                type="button"
-                id="answerD"
-                class="answer-button answer-d"
-                data-answer="D"
-            >
-
-                <span class="answer-letter">
-                    D
-                </span>
-
-                <span class="answer-text"></span>
-
-            </button>
-
-        </div>
-
-
-        <!-- MESAJ -->
-
-        <div
-            id="questionMessage"
-            class="question-message"
-        ></div>
 
     </section>
 
-</section>
+
+    <!-- =================================================
+         JOC
+    ================================================== -->
+
+    <section
+        id="quizGameScreen"
+        class="quiz-screen ascuns"
+    >
+
+        <header class="game-header">
+
+            <div
+                id="gameQuizTitle"
+                class="game-title"
+            >
+                Aventura
+            </div>
+
+            <div class="game-stats">
+
+                <div class="stat-item">
+
+                    <span class="stat-label">
+                        Întrebarea
+                    </span>
+
+                    <strong>
+
+                        <span
+                            id="questionNumber"
+                        >
+                            1
+                        </span>
+
+                        /
+
+                        <span
+                            id="questionTotal"
+                        >
+                            1
+                        </span>
+
+                    </strong>
+
+                </div>
+
+                <div class="stat-item">
+
+                    <span class="stat-label">
+                        Scor
+                    </span>
+
+                    <strong>
+                        ⭐
+                        <span id="score">
+                            0
+                        </span>
+                    </strong>
+
+                </div>
+
+                <div class="stat-item">
+
+                    <span class="stat-label">
+                        Vieți
+                    </span>
+
+                    <strong
+                        id="lives"
+                        class="lives"
+                    >
+                        ❤️❤️❤️
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             SCENĂ
+        ================================================== -->
+
+        <div class="forest">
+
+            <div class="sky">
+
+                <div class="sun">
+                    ☀️
+                </div>
+
+                <div class="cloud cloud-1">
+                    ☁️
+                </div>
+
+                <div class="cloud cloud-2">
+                    ☁️
+                </div>
+
+            </div>
+
+
+            <div class="mountains">
+                🏔️
+            </div>
+
+
+            <div class="background-trees">
+
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
+
+            </div>
+
+
+            <div class="ground"></div>
+
+
+            <div class="path">
+
+                <div class="path-line"></div>
+
+            </div>
+
+
+            <div class="grass grass-1">
+                🌿
+            </div>
+
+            <div class="grass grass-2">
+                🌱
+            </div>
+
+            <div class="grass grass-3">
+                🌿
+            </div>
+
+
+            <div class="rock rock-1">
+                🪨
+            </div>
+
+            <div class="rock rock-2">
+                🪨
+            </div>
+
+
+            <!-- PERSONAJ -->
+
+            <div class="player">
+
+                <div class="player-shadow"></div>
+
+            </div>
+
+
+            <!-- ANIMAL REAL -->
+
+            <div
+                id="animal"
+                class="animal"
+            >
+            </div>
+
+
+            <!-- BULĂ -->
+
+            <div
+                id="animalBubble"
+                class="animal-bubble"
+            >
+                Alege răspunsul corect!
+            </div>
+
+
+            <!-- EFECT ATAC -->
+
+            <div
+                id="attackEffect"
+                class="attack-effect"
+            >
+                💥
+            </div>
+
+
+            <!-- EFECT SUCCES -->
+
+            <div
+                id="successEffect"
+                class="success-effect"
+            >
+                🎉
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             PANOU ÎNTREBARE
+        ================================================== -->
+
+        <section
+            class="question-panel"
+        >
+
+            <div
+                id="questionAnimal"
+                class="question-animal"
+            >
+            </div>
+
+
+            <h2 id="questionText">
+                Întrebarea va apărea aici
+            </h2>
+
+
+            <!-- RĂSPUNSURI -->
+
+            <div class="answers">
+
+                <button
+                    type="button"
+                    id="answerA"
+                    class="answer-button answer-a"
+                    data-answer="A"
+                >
+
+                    <span
+                        class="answer-letter"
+                    >
+                        A
+                    </span>
+
+                    <span
+                        class="answer-text"
+                    ></span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="answerB"
+                    class="answer-button answer-b"
+                    data-answer="B"
+                >
+
+                    <span
+                        class="answer-letter"
+                    >
+                        B
+                    </span>
+
+                    <span
+                        class="answer-text"
+                    ></span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="answerC"
+                    class="answer-button answer-c"
+                    data-answer="C"
+                >
+
+                    <span
+                        class="answer-letter"
+                    >
+                        C
+                    </span>
+
+                    <span
+                        class="answer-text"
+                    ></span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="answerD"
+                    class="answer-button answer-d"
+                    data-answer="D"
+                >
+
+                    <span
+                        class="answer-letter"
+                    >
+                        D
+                    </span>
+
+                    <span
+                        class="answer-text"
+                    ></span>
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="questionMessage"
+                class="question-message"
+            ></div>
+
+        </section>
+
+    </section>
+
+
+    <!-- =================================================
+         REZULTAT
+    ================================================== -->
+
+    <section
+        id="quizResultScreen"
+        class="quiz-screen result-screen ascuns"
+    >
+
+        <div class="result-card">
+
+            <div
+                id="resultIcon"
+                class="result-icon"
+            >
+                🏆
+            </div>
+
+
+            <h1 id="resultTitle">
+                Felicitări!
+            </h1>
+
+
+            <p id="resultSubtitle">
+                Ai terminat aventura prin pădure!
+            </p>
+
+
+            <div class="final-score">
+
+                <span>
+                    Scor
+                </span>
+
+                <strong id="finalScore">
+                    0
+                </strong>
+
+                <small>
+                    puncte
+                </small>
+
+            </div>
+
+
+            <div class="result-details">
+
+                <div>
+
+                    <span>
+                        Corecte
+                    </span>
+
+                    <strong
+                        id="correctAnswers"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Greșite
+                    </span>
+
+                    <strong
+                        id="wrongAnswers"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Vieți rămase
+                    </span>
+
+                    <strong
+                        id="remainingLives"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="resultMessage"
+                class="result-message"
+            >
+                Bravo!
+            </div>
+
+
+            <div class="result-buttons">
+
+                <button
+                    type="button"
+                    id="restartQuizButton"
+                    class="game-button primary"
+                >
+                    🔄 Joacă din nou
+                </button>
+
+
+                <button
+                    type="button"
+                    id="chooseQuizButton"
+                    class="game-button secondary"
+                >
+                    📚 Alege alt quiz
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
 
 
 <!-- =====================================================
-     REZULTAT
+     SUPABASE / INIT
+     PĂSTREAZĂ AICI SCRIPTURILE TALE EXISTENTE
 ====================================================== -->
 
-<section
-    id="quizResultScreen"
-    class="quiz-screen result-screen ascuns"
->
+<script src="js/init.js"></script>
 
-    <div class="result-card">
+<script src="js/quiz.js"></script>
 
-        <div
-            id="resultIcon"
-            class="result-icon"
-        >
-            🏆
-        </div>
+</body>
 
-
-        <h1 id="resultTitle">
-            Felicitări!
-        </h1>
-
-
-        <p id="resultSubtitle">
-            Ai terminat aventura prin pădure!
-        </p>
-
-
-        <!-- SCOR FINAL -->
-
-        <div class="final-score">
-
-            <span>
-                Scor
-            </span>
-
-            <strong id="finalScore">
-                0
-            </strong>
-
-            <small>
-                puncte
-            </small>
-
-        </div>
-
-
-        <!-- DETALII -->
-
-        <div class="result-details">
-
-            <div>
-
-                <span>
-                    Corecte
-                </span>
-
-                <strong id="correctAnswers">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Greșite
-                </span>
-
-                <strong id="wrongAnswers">
-                    0
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    Vieți rămase
-                </span>
-
-                <strong id="remainingLives">
-                    0
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- MESAJ -->
-
-        <div
-            id="resultMessage"
-            class="result-message"
-        >
-            Bravo!
-        </div>
-
-
-        <!-- BUTOANE -->
-
-        <div class="result-buttons">
-
-            <button
-                type="button"
-                id="restartQuizButton"
-                class="game-button primary"
-            >
-                🔄 Joacă din nou
-            </button>
-
-
-            <button
-                type="button"
-                id="chooseQuizButton"
-                class="game-button secondary"
-            >
-                📚 Alege alt quiz
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+</html>
