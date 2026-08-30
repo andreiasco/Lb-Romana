@@ -16,16 +16,26 @@ const IMAGINI_BUCKET = "Imagini";
 // CLIENT SUPABASE
 // ======================================================
 
-window.supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+if (!window.supabase) {
+
+    console.error(
+        "Supabase CDN nu a fost încărcat."
     );
 
+} else {
 
-// Alias pentru toate fișierele JS
-var supabaseClient =
-    window.supabaseClient;
+    window.supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+    console.log(
+        "Supabase inițializat:",
+        !!window.supabaseClient
+    );
+}
+
 
 
 
