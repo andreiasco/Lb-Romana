@@ -706,8 +706,7 @@
     }
 }
 
-.player.walking
-.player-character {
+.player.walking .player-character {
 
     animation:
         playerWalk .35s
@@ -909,7 +908,7 @@
         none;
 }
 
-.attack-effect.show {
+.attack-effect.active {
 
     animation:
         attackEffect .7s
@@ -975,7 +974,7 @@
         none;
 }
 
-.success-effect.show {
+.success-effect.active {
 
     animation:
         successEffect .9s
@@ -1017,8 +1016,7 @@
    PLAYER LOVIT
 ===================================================== */
 
-.player.hit
-.player-character {
+.player.hit .player-character {
 
     animation:
         playerHit .7s
