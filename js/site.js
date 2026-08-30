@@ -523,7 +523,7 @@ site.innerHTML = `
             <option value="teatru">Teatru</option>
         </select>
 
-        <label>
+        <label for="autorPoza">
             🖼️ Imagine autor
         </label>
 
@@ -578,7 +578,7 @@ site.innerHTML = `
             id="operaTitlu"
             placeholder="Titlul operei">
 
-        <label>
+        <label for="operaRezumat">
             📖 Rezumat PDF
         </label>
 
@@ -587,7 +587,7 @@ site.innerHTML = `
             id="operaRezumat"
             accept="application/pdf">
 
-        <label>
+        <label for="operaValoriMorale">
             💡 Valori morale PDF
         </label>
 
@@ -596,7 +596,7 @@ site.innerHTML = `
             id="operaValoriMorale"
             accept="application/pdf">
 
-        <label>
+        <label for="operaCaracterizare">
             👤 Personaje si semnificatii PDF
         </label>
 
@@ -605,7 +605,7 @@ site.innerHTML = `
             id="operaCaracterizare"
             accept="application/pdf">
 
-        <label>
+        <label for="operaRezumatWord">
             📄 Rezumat Word pentru descărcare
         </label>
 
@@ -614,7 +614,7 @@ site.innerHTML = `
             id="operaRezumatWord"
             accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
 
-        <label>
+        <label for="operaLinkFilm">
             🎬 Link extern film
         </label>
 
@@ -623,7 +623,7 @@ site.innerHTML = `
             id="operaLinkFilm"
             placeholder="https://...">
 
-        <label>
+        <label for="operaLinkAudiobook">
             🎧 Link extern audiobook
         </label>
 
@@ -632,7 +632,7 @@ site.innerHTML = `
             id="operaLinkAudiobook"
             placeholder="https://...">
 
-        <label>
+        <label for="operaLinkTestLectura">
             📝 Link extern test de lectură
         </label>
 
@@ -641,7 +641,7 @@ site.innerHTML = `
             id="operaLinkTestLectura"
             placeholder="https://...">
 
-        <label>
+        <label for="operaPersonajeInstagram">
             📸 Imagine personaje pentru Instagram
         </label>
 
