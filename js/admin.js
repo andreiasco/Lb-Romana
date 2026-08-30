@@ -2069,7 +2069,8 @@ async function incarcaAutoriAdmin() {
             )}
                     </p>
 
-                    <label>
+                    <label for="autorDescriereEdit-${autor.id}">>
+                    
                         Descriere autor:
                     </label>
 
