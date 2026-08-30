@@ -2537,54 +2537,45 @@ function repornesteQuiz() {
 
 }
 
-
 function opresteQuiz() {
 
     const quizSection =
-        document.getElementById(
-            "quiz"
-        );
+        document.getElementById("quiz");
 
     if (!quizSection) {
         return;
     }
 
-
-    window.location.hash =
-        "quiz";
-
+    window.location.hash = "quiz";
 
     quizSection.innerHTML = `
 
-        <h2 class="titlu">
-            Quiz-uri 🎮
-        </h2>
+        <div class="quizuri-create">
 
-        <p class="subtitlu">
-            Alege aventura pe care vrei să o începi.
-        </p>
+            <h2 class="titlu">
+                Quiz-uri 🎮
+            </h2>
 
-       <section id="quiz">
+            <p class="subtitlu">
+                Alege aventura pe care vrei să o începi.
+            </p>
 
-    <div class="quizuri-create">
+            <h3>
+                🌲 Quizuri interactive
+            </h3>
 
-        <h3>🌲 Quizuri interactive</h3>
+            <p>
+                Alege un quiz și pornește aventura prin pădure.
+            </p>
 
-        <p>
-            Alege un quiz și pornește aventura prin pădure.
-        </p>
+            <div id="listaQuizuriSite">
+                <p>Se încarcă quizurile...</p>
+            </div>
 
-        <div id="listaQuizuriSite">
-            <p>Se încarcă quizurile...</p>
         </div>
 
-    </div>
-
-</section>
-
+    `;
 
     incarcaQuizuriSite();
 }
-
-
 
