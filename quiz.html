@@ -2,22 +2,37 @@
 <html lang="ro">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Quiz - Aventura din pădure</title>
 
-    <link rel="stylesheet" href="css/site.css">
-    <link rel="stylesheet" href="css/quiz.css">
+    <link
+        rel="stylesheet"
+        href="css/site.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/quiz.css"
+    >
+
 </head>
+
 
 <body>
 
 <main class="quiz-page">
 
-    <!-- =========================
-         SELECTARE QUIZ
-    ========================== -->
+
+    <!-- =====================================================
+         ECRAN SELECTARE QUIZ
+    ====================================================== -->
 
     <section
         id="quizSelectScreen"
@@ -38,13 +53,16 @@
                 Alege un quiz și pornește aventura prin pădure.
             </p>
 
+
             <div
                 id="listaQuizuri"
                 class="lista-quizuri"
             >
+
                 <div class="quiz-loading">
                     Se încarcă quizurile...
                 </div>
+
             </div>
 
         </div>
@@ -52,14 +70,18 @@
     </section>
 
 
-    <!-- =========================
-         JOC
-    ========================== -->
+
+    <!-- =====================================================
+         ECRAN JOC
+    ====================================================== -->
 
     <section
         id="quizGameScreen"
         class="quiz-screen ascuns"
     >
+
+
+        <!-- HEADER -->
 
         <div class="game-header">
 
@@ -70,7 +92,9 @@
                 Aventura
             </div>
 
+
             <div class="game-stats">
+
 
                 <div class="stat-item">
 
@@ -79,12 +103,22 @@
                     </span>
 
                     <strong>
-                        <span id="questionNumber">1</span>
+
+                        <span id="questionNumber">
+                            1
+                        </span>
+
                         /
-                        <span id="questionTotal">1</span>
+
+                        <span id="questionTotal">
+                            1
+                        </span>
+
                     </strong>
 
                 </div>
+
+
 
                 <div class="stat-item">
 
@@ -97,6 +131,8 @@
                     </strong>
 
                 </div>
+
+
 
                 <div class="stat-item">
 
@@ -113,16 +149,21 @@
 
                 </div>
 
+
             </div>
 
         </div>
 
 
-        <!-- =========================
+
+        <!-- =================================================
              PĂDURE
-        ========================== -->
+        ================================================== -->
 
         <div class="forest">
+
+
+            <!-- CER -->
 
             <div class="sky">
 
@@ -141,26 +182,46 @@
             </div>
 
 
+
+            <!-- COPACI -->
+
             <div class="background-trees">
+
                 <span>🌲</span>
                 <span>🌳</span>
                 <span>🌲</span>
                 <span>🌳</span>
                 <span>🌲</span>
+
             </div>
 
+
+
+            <!-- MUNȚI -->
 
             <div class="mountains">
                 🏔️
             </div>
 
 
+
+            <!-- SOL -->
+
             <div class="ground"></div>
 
+
+
+            <!-- POTECĂ -->
+
             <div class="path">
+
                 <div class="path-line"></div>
+
             </div>
 
+
+
+            <!-- VEGETAȚIE -->
 
             <div class="grass grass-1">
                 🌿
@@ -174,6 +235,7 @@
                 🌿
             </div>
 
+
             <div class="rock rock-1">
                 🪨
             </div>
@@ -183,7 +245,10 @@
             </div>
 
 
-            <!-- Jucător -->
+
+            <!-- =================================================
+                 JUCĂTOR
+            ================================================== -->
 
             <div class="player">
 
@@ -196,7 +261,10 @@
             </div>
 
 
-            <!-- Animal -->
+
+            <!-- =================================================
+                 ANIMAL
+            ================================================== -->
 
             <div
                 id="animal"
@@ -206,7 +274,8 @@
             </div>
 
 
-            <!-- Bulă animal -->
+
+            <!-- BULĂ ANIMAL -->
 
             <div
                 id="animalBubble"
@@ -216,7 +285,8 @@
             </div>
 
 
-            <!-- Efect atac -->
+
+            <!-- EFECT ATAC -->
 
             <div
                 id="attackEffect"
@@ -226,7 +296,8 @@
             </div>
 
 
-            <!-- Efect succes -->
+
+            <!-- EFECT SUCCES -->
 
             <div
                 id="successEffect"
@@ -235,14 +306,19 @@
                 🎉
             </div>
 
+
         </div>
 
 
-        <!-- =========================
-             ÎNTREBARE
-        ========================== -->
+
+        <!-- =================================================
+             PANEL ÎNTREBARE
+        ================================================== -->
 
         <div class="question-panel">
+
+
+            <!-- ANIMAL ÎN BULĂ -->
 
             <div
                 id="questionAnimal"
@@ -252,12 +328,21 @@
             </div>
 
 
+
+            <!-- ÎNTREBARE -->
+
             <h2 id="questionText">
                 Întrebarea va apărea aici
             </h2>
 
 
+
+            <!-- =================================================
+                 RĂSPUNSURI
+            ================================================== -->
+
             <div class="answers">
+
 
                 <button
                     type="button"
@@ -265,13 +350,15 @@
                     class="answer-button answer-a"
                     data-answer="A"
                 >
+
                     <span class="answer-letter">
                         A
                     </span>
 
-                    <span class="answer-text">
-                    </span>
+                    <span class="answer-text"></span>
+
                 </button>
+
 
 
                 <button
@@ -280,13 +367,15 @@
                     class="answer-button answer-b"
                     data-answer="B"
                 >
+
                     <span class="answer-letter">
                         B
                     </span>
 
-                    <span class="answer-text">
-                    </span>
+                    <span class="answer-text"></span>
+
                 </button>
+
 
 
                 <button
@@ -295,13 +384,15 @@
                     class="answer-button answer-c"
                     data-answer="C"
                 >
+
                     <span class="answer-letter">
                         C
                     </span>
 
-                    <span class="answer-text">
-                    </span>
+                    <span class="answer-text"></span>
+
                 </button>
+
 
 
                 <button
@@ -310,37 +401,49 @@
                     class="answer-button answer-d"
                     data-answer="D"
                 >
+
                     <span class="answer-letter">
                         D
                     </span>
 
-                    <span class="answer-text">
-                    </span>
+                    <span class="answer-text"></span>
+
                 </button>
+
 
             </div>
 
+
+
+            <!-- MESAJ -->
 
             <div
                 id="questionMessage"
                 class="question-message"
             ></div>
 
+
         </div>
+
 
     </section>
 
 
-    <!-- =========================
-         REZULTAT
-    ========================== -->
+
+    <!-- =====================================================
+         ECRAN REZULTAT
+    ====================================================== -->
 
     <section
         id="quizResultScreen"
         class="quiz-screen result-screen ascuns"
     >
 
+
         <div class="result-card">
+
+
+            <!-- ICON -->
 
             <div
                 id="resultIcon"
@@ -349,14 +452,25 @@
                 🏆
             </div>
 
+
+
+            <!-- TITLU -->
+
             <h1 id="resultTitle">
                 Felicitări!
             </h1>
+
+
+
+            <!-- SUBTITLU -->
 
             <p id="resultSubtitle">
                 Ai terminat aventura prin pădure!
             </p>
 
+
+
+            <!-- SCOR -->
 
             <div class="final-score">
 
@@ -375,7 +489,11 @@
             </div>
 
 
+
+            <!-- DETALII -->
+
             <div class="result-details">
+
 
                 <div>
 
@@ -388,6 +506,7 @@
                     </strong>
 
                 </div>
+
 
 
                 <div>
@@ -403,6 +522,7 @@
                 </div>
 
 
+
                 <div>
 
                     <span>
@@ -415,8 +535,12 @@
 
                 </div>
 
+
             </div>
 
+
+
+            <!-- MESAJ FINAL -->
 
             <div
                 id="resultMessage"
@@ -426,7 +550,11 @@
             </div>
 
 
+
+            <!-- BUTOANE -->
+
             <div class="result-buttons">
+
 
                 <button
                     type="button"
@@ -436,6 +564,8 @@
                     🔄 Joacă din nou
                 </button>
 
+
+
                 <button
                     type="button"
                     id="chooseQuizButton"
@@ -444,25 +574,32 @@
                     📚 Alege alt quiz
                 </button>
 
+
             </div>
+
 
         </div>
 
+
     </section>
+
 
 </main>
 
 
 
 <!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
+     SCRIPTURI
+====================================================== -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
 
 <script src="js/init.js"></script>
 
 <script src="js/quiz.js"></script>
+
 
 </body>
 
