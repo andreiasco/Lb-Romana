@@ -1928,6 +1928,99 @@ async function pornesteQuiz(quizId) {
 
     try {
 
+        const {
+            data: quiz,
+            error: eroareQuiz
+        } = await supabaseClient
+            .from("quizuri")
+            .select("*")
+            .eq("id", quizId)
+            .eq("activ", true)
+            .single();
+
+        console.log("QUIZ GĂSIT:", quiz);
+        console.log("EROARE QUIZ:", eroareQuiz);
+
+        if (eroareQuiz || !quiz) {
+
+            console.error(
+                "Nu am găsit quizul:",
+                eroareQuiz
+            );
+
+            alert(
+                "Nu am putut încărca acest quiz."
+            );
+
+            return;
+        }
+
+        const {
+            data: intrebari,
+            error: eroareIntrebari
+        } = await supabaseClient
+            .from("intrebari_quiz")
+            .select("*")
+            .eq("quiz_id", quizId)
+            .order("ordine", {
+                ascending: true
+            });
+
+        console.log(
+            "ÎNTREBĂRI GĂSITE:",
+            intrebari
+        );
+
+        console.log(
+            "EROARE ÎNTREBĂRI:",
+            eroareIntrebari
+        );
+
+        if (eroareIntrebari) {
+
+            console.error(
+                eroareIntrebari
+            );
+
+            alert(
+                "Nu am putut încărca întrebările."
+            );
+
+            return;
+        }
+
+        if (!intrebari || intrebari.length === 0) {
+
+            alert(
+                "Acest quiz nu are încă întrebări."
+            );
+
+            return;
+        }
+
+        console.log(
+            "PORNESC JOCUL:",
+            quiz.titlu
+        );
+
+        pornesteJocQuiz(
+            quiz,
+            intrebari
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Eroare pornire quiz:",
+            error
+        );
+
+        alert(
+            "A apărut o eroare la pornirea quizului."
+        );
+    }
+}
+
         // ================================
         // 1. ÎNCĂRCĂM QUIZUL
         // ================================
