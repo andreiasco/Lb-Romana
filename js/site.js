@@ -1845,12 +1845,14 @@ async function incarcaQuizuriSite() {
                     </div>
 
                     <button
-                        class="quiz-start-btn"
-                        onclick="pornesteQuiz(${quiz.id})">
+    class="quiz-start-btn"
+    type="button"
+    onclick="pornesteQuiz(${quiz.id})">
 
-                        🌲 Începe aventura
+    🌲 Începe aventura
 
-                    </button>
+</button>
+
 
                 </div>
 
@@ -1877,6 +1879,24 @@ incarcaQuizuriSite();
 // ======================================================
 
 async function pornesteQuiz(quizId) {
+    console.log("AM APĂSAT ÎNCEPE AVENTURA");
+    console.log("quizId:", quizId);
+
+    try {
+
+        const {
+            data: quiz,
+            error: eroareQuiz
+        } =
+            await supabaseClient
+                .from("quizuri")
+                .select("*")
+                .eq("id", quizId)
+                .eq("activ", true)
+                .single();
+
+        console.log("QUIZ GĂSIT:", quiz);
+        console.log("EROARE QUIZ:", eroareQuiz);
 
     try {
 
