@@ -2176,4 +2176,58 @@ async function descarcaRezumatWord(wordUrl) {
     }
 }
 
+// ======================================================
+// NAVIGARE PAGINI
+// ======================================================
+
+function afiseazaPaginaDinHash() {
+
+    const hash = window.location.hash.replace("#", "");
+
+    const pagini = document.querySelectorAll(".pagina");
+
+    pagini.forEach(pagina => {
+        pagina.classList.remove("activ");
+    });
+
+    let paginaId = "pagina-acasa";
+
+    if (hash === "limba") {
+        paginaId = "pagina-limba";
+    }
+
+    if (
+        hash === "literatura" ||
+        hash === "poezie" ||
+        hash === "proza" ||
+        hash === "teatru"
+    ) {
+        paginaId = "pagina-literatura";
+    }
+
+    if (hash === "pagina-quizuri") {
+        paginaId = "pagina-quizuri";
+    }
+
+    if (hash === "revista") {
+        paginaId = "pagina-revista";
+    }
+
+    const pagina = document.getElementById(paginaId);
+
+    if (pagina) {
+        pagina.classList.add("activ");
+    }
+}
+
+
+// La încărcarea paginii
+afiseazaPaginaDinHash();
+
+
+// Când se schimbă #hash
+window.addEventListener(
+    "hashchange",
+    afiseazaPaginaDinHash
+);
 
