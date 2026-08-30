@@ -10,9 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>
-        Quiz - Aventura din pădure
-    </title>
+    <title>Aventura din pădure</title>
 
     <link
         rel="stylesheet"
@@ -30,9 +28,9 @@
 
 <main class="quiz-page">
 
-    <!-- =================================================
+    <!-- =====================================================
          SELECTARE QUIZ
-    ================================================== -->
+    ====================================================== -->
 
     <section
         id="quizSelectScreen"
@@ -50,8 +48,8 @@
             </h1>
 
             <p>
-                Intră în pădure, mergi prin natură
-                și întâlnește animalele.
+                Intră în pădure, mergi pe potecă și
+                întâlnește animalele.
             </p>
 
             <div
@@ -70,18 +68,14 @@
     </section>
 
 
-    <!-- =================================================
+    <!-- =====================================================
          JOC
-    ================================================== -->
+    ====================================================== -->
 
     <section
         id="quizGameScreen"
         class="quiz-screen ascuns"
     >
-
-        <!-- =================================================
-             HEADER
-        ================================================== -->
 
         <header class="game-header">
 
@@ -101,25 +95,12 @@
                     </span>
 
                     <strong>
-
-                        <span
-                            id="questionNumber"
-                        >
-                            1
-                        </span>
-
+                        <span id="questionNumber">1</span>
                         /
-
-                        <span
-                            id="questionTotal"
-                        >
-                            1
-                        </span>
-
+                        <span id="questionTotal">1</span>
                     </strong>
 
                 </div>
-
 
                 <div class="stat-item">
 
@@ -129,13 +110,10 @@
 
                     <strong>
                         ⭐
-                        <span id="score">
-                            0
-                        </span>
+                        <span id="score">0</span>
                     </strong>
 
                 </div>
-
 
                 <div class="stat-item">
 
@@ -157,22 +135,48 @@
         </header>
 
 
-        <!-- =================================================
-             PĂDURE REALĂ
-        ================================================== -->
+        <!-- =====================================================
+             SCENĂ PĂDURE
+        ====================================================== -->
 
         <div class="forest">
 
-            <!--
-                Fundalul este o fotografie reală de pădure.
-                Nu mai există aici emoji-uri decorative
-                pentru cer, munți, copaci, iarbă sau pietre.
-            -->
+            <div class="sky">
+
+                <div class="sun">
+                    ☀️
+                </div>
+
+                <div class="cloud cloud-1">
+                    ☁️
+                </div>
+
+                <div class="cloud cloud-2">
+                    ☁️
+                </div>
+
+            </div>
 
 
-            <!-- =================================================
-                 DRUM
-            ================================================== -->
+            <div class="mountains">
+                ⛰️
+            </div>
+
+
+            <div class="background-trees">
+
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
+                <span>🌳</span>
+                <span>🌲</span>
+                <span>🌳</span>
+
+            </div>
+
+
+            <div class="ground"></div>
+
 
             <div class="path">
 
@@ -181,37 +185,123 @@
             </div>
 
 
+            <div class="grass grass-1">
+                🌿
+            </div>
+
+            <div class="grass grass-2">
+                🌱
+            </div>
+
+            <div class="grass grass-3">
+                🌿
+            </div>
+
+
+            <div class="rock rock-1">
+                🪨
+            </div>
+
+            <div class="rock rock-2">
+                🪨
+            </div>
+
+
             <!-- =================================================
-                 PERSONAJ
+                 PERSONAJ REALIST
             ================================================== -->
 
-            <div class="player">
+            <div
+                class="player"
+                id="player"
+            >
 
                 <div class="player-shadow"></div>
 
-                <!--
-                    Imaginea personajului este introdusă
-                    din quiz.js.
-                -->
+                <div class="human-character">
+
+                    <div class="human-head">
+
+                        <div class="human-hair"></div>
+
+                        <div class="human-face">
+
+                            <span class="eye eye-left"></span>
+                            <span class="eye eye-right"></span>
+
+                            <span class="nose"></span>
+
+                            <span class="mouth"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="human-neck"></div>
+
+
+                    <div class="human-body">
+
+                        <div class="shirt"></div>
+
+                    </div>
+
+
+                    <div class="human-arm human-arm-left"></div>
+
+                    <div class="human-arm human-arm-right"></div>
+
+
+                    <div class="human-leg human-leg-left"></div>
+
+                    <div class="human-leg human-leg-right"></div>
+
+
+                    <div class="human-shoe human-shoe-left"></div>
+
+                    <div class="human-shoe human-shoe-right"></div>
+
+                </div>
+
+
+                <!-- LOVITURĂ -->
+
+                <div
+                    id="playerHitEffect"
+                    class="player-hit-effect"
+                >
+                    💥
+                </div>
+
+
+                <!-- AMEȚEALĂ -->
+
+                <div
+                    id="dizzyEffect"
+                    class="dizzy-effect"
+                >
+                    <span>★</span>
+                    <span>✦</span>
+                    <span>★</span>
+                </div>
 
             </div>
 
 
             <!-- =================================================
-                 ANIMAL
+                 ANIMAL EMOJI
             ================================================== -->
 
             <div
                 id="animal"
-                class="animal"
-                aria-label="Animal"
+                class="animal animal-emoji"
             >
+                🦊
             </div>
 
 
-            <!-- =================================================
-                 BULĂ ANIMAL
-            ================================================== -->
+            <!-- BULĂ ANIMAL -->
 
             <div
                 id="animalBubble"
@@ -221,27 +311,19 @@
             </div>
 
 
-            <!-- =================================================
-                 EFECT RĂSPUNS GREȘIT
-            ================================================== -->
+            <!-- EFECT GENERAL -->
 
             <div
                 id="attackEffect"
                 class="attack-effect"
-                aria-hidden="true"
             >
                 💥
             </div>
 
 
-            <!-- =================================================
-                 EFECT RĂSPUNS CORECT
-            ================================================== -->
-
             <div
                 id="successEffect"
                 class="success-effect"
-                aria-hidden="true"
             >
                 🎉
             </div>
@@ -249,33 +331,24 @@
         </div>
 
 
-        <!-- =================================================
+        <!-- =====================================================
              PANOU ÎNTREBARE
-        ================================================== -->
+        ====================================================== -->
 
-        <section
-            class="question-panel"
-        >
-
-            <!-- Animalul apare și aici ca icon mic -->
+        <section class="question-panel">
 
             <div
                 id="questionAnimal"
-                class="question-animal"
+                class="question-animal emoji-question-animal"
             >
+                🦊
             </div>
 
 
-            <h2
-                id="questionText"
-            >
+            <h2 id="questionText">
                 Întrebarea va apărea aici
             </h2>
 
-
-            <!-- =================================================
-                 RĂSPUNSURI
-            ================================================== -->
 
             <div class="answers">
 
@@ -286,15 +359,11 @@
                     data-answer="A"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         A
                     </span>
 
-                    <span
-                        class="answer-text"
-                    >
+                    <span class="answer-text">
                     </span>
 
                 </button>
@@ -307,15 +376,11 @@
                     data-answer="B"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         B
                     </span>
 
-                    <span
-                        class="answer-text"
-                    >
+                    <span class="answer-text">
                     </span>
 
                 </button>
@@ -328,15 +393,11 @@
                     data-answer="C"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         C
                     </span>
 
-                    <span
-                        class="answer-text"
-                    >
+                    <span class="answer-text">
                     </span>
 
                 </button>
@@ -349,15 +410,11 @@
                     data-answer="D"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         D
                     </span>
 
-                    <span
-                        class="answer-text"
-                    >
+                    <span class="answer-text">
                     </span>
 
                 </button>
@@ -365,24 +422,19 @@
             </div>
 
 
-            <!-- =================================================
-                 MESAJ RĂSPUNS
-            ================================================== -->
-
             <div
                 id="questionMessage"
                 class="question-message"
-            >
-            </div>
+            ></div>
 
         </section>
 
     </section>
 
 
-    <!-- =================================================
+    <!-- =====================================================
          REZULTAT
-    ================================================== -->
+    ====================================================== -->
 
     <section
         id="quizResultScreen"
@@ -399,23 +451,15 @@
             </div>
 
 
-            <h1
-                id="resultTitle"
-            >
+            <h1 id="resultTitle">
                 Felicitări!
             </h1>
 
 
-            <p
-                id="resultSubtitle"
-            >
+            <p id="resultSubtitle">
                 Ai terminat aventura prin pădure!
             </p>
 
-
-            <!-- =================================================
-                 SCOR FINAL
-            ================================================== -->
 
             <div class="final-score">
 
@@ -423,9 +467,7 @@
                     Scor
                 </span>
 
-                <strong
-                    id="finalScore"
-                >
+                <strong id="finalScore">
                     0
                 </strong>
 
@@ -436,62 +478,42 @@
             </div>
 
 
-            <!-- =================================================
-                 DETALII
-            ================================================== -->
-
             <div class="result-details">
 
                 <div>
-
                     <span>
                         Corecte
                     </span>
 
-                    <strong
-                        id="correctAnswers"
-                    >
+                    <strong id="correctAnswers">
                         0
                     </strong>
-
                 </div>
 
 
                 <div>
-
                     <span>
                         Greșite
                     </span>
 
-                    <strong
-                        id="wrongAnswers"
-                    >
+                    <strong id="wrongAnswers">
                         0
                     </strong>
-
                 </div>
 
 
                 <div>
-
                     <span>
                         Vieți rămase
                     </span>
 
-                    <strong
-                        id="remainingLives"
-                    >
+                    <strong id="remainingLives">
                         0
                     </strong>
-
                 </div>
 
             </div>
 
-
-            <!-- =================================================
-                 MESAJ FINAL
-            ================================================== -->
 
             <div
                 id="resultMessage"
@@ -500,10 +522,6 @@
                 Bravo!
             </div>
 
-
-            <!-- =================================================
-                 BUTOANE
-            ================================================== -->
 
             <div class="result-buttons">
 
@@ -533,15 +551,7 @@
 </main>
 
 
-<!-- =====================================================
-     SUPABASE / INIT
-====================================================== -->
-
 <script src="js/init.js"></script>
-
-<!-- =====================================================
-     LOGICA QUIZ
-====================================================== -->
 
 <script src="js/quiz.js"></script>
 
