@@ -11,7 +11,7 @@
     >
 
     <title>
-        Quiz - Aventura din pădure
+        Aventura din pădure
     </title>
 
     <link
@@ -30,9 +30,9 @@
 
 <main class="quiz-page">
 
-    <!-- =================================================
+    <!-- =====================================================
          SELECTARE QUIZ
-    ================================================== -->
+    ====================================================== -->
 
     <section
         id="quizSelectScreen"
@@ -50,8 +50,8 @@
             </h1>
 
             <p>
-                Intră în pădure, mergi prin natură
-                și întâlnește animalele.
+                Pornește într-o aventură prin pădure,
+                mergi pe potecă și întâlnește animalele.
             </p>
 
             <div
@@ -70,9 +70,9 @@
     </section>
 
 
-    <!-- =================================================
+    <!-- =====================================================
          JOC
-    ================================================== -->
+    ====================================================== -->
 
     <section
         id="quizGameScreen"
@@ -81,12 +81,21 @@
 
         <header class="game-header">
 
-            <div
-                id="gameQuizTitle"
-                class="game-title"
-            >
-                Aventura
+            <div class="game-title-area">
+
+                <div class="game-mini-icon">
+                    🌲
+                </div>
+
+                <div
+                    id="gameQuizTitle"
+                    class="game-title"
+                >
+                    Aventura
+                </div>
+
             </div>
+
 
             <div class="game-stats">
 
@@ -98,23 +107,20 @@
 
                     <strong>
 
-                        <span
-                            id="questionNumber"
-                        >
+                        <span id="questionNumber">
                             1
                         </span>
 
                         /
 
-                        <span
-                            id="questionTotal"
-                        >
+                        <span id="questionTotal">
                             1
                         </span>
 
                     </strong>
 
                 </div>
+
 
                 <div class="stat-item">
 
@@ -130,6 +136,7 @@
                     </strong>
 
                 </div>
+
 
                 <div class="stat-item">
 
@@ -157,48 +164,77 @@
 
         <div class="forest">
 
-            <div class="sky">
+            <div class="forest-light"></div>
 
-                <div class="sun">
-                    ☀️
-                </div>
+            <div class="distance-fog"></div>
 
-                <div class="cloud cloud-1">
-                    ☁️
-                </div>
 
-                <div class="cloud cloud-2">
-                    ☁️
-                </div>
+            <!-- SOARE -->
 
+            <div class="sun">
+                ☀️
             </div>
 
 
-            <div class="mountains">
-                🏔️
+            <!-- NORI -->
+
+            <div class="cloud cloud-1">
+                ☁️
             </div>
 
+            <div class="cloud cloud-2">
+                ☁️
+            </div>
+
+
+            <!-- COPACI DECORATIVI -->
 
             <div class="background-trees">
 
-                <span>🌲</span>
-                <span>🌳</span>
-                <span>🌲</span>
-                <span>🌳</span>
-                <span>🌲</span>
+                <span class="tree tree-1">
+                    🌲
+                </span>
+
+                <span class="tree tree-2">
+                    🌳
+                </span>
+
+                <span class="tree tree-3">
+                    🌲
+                </span>
+
+                <span class="tree tree-4">
+                    🌳
+                </span>
+
+                <span class="tree tree-5">
+                    🌲
+                </span>
+
+                <span class="tree tree-6">
+                    🌳
+                </span>
 
             </div>
 
+
+            <!-- PĂMÂNT -->
 
             <div class="ground"></div>
 
 
+            <!-- POTECĂ -->
+
             <div class="path">
+
+                <div class="path-texture"></div>
 
                 <div class="path-line"></div>
 
             </div>
 
+
+            <!-- IARBĂ -->
 
             <div class="grass grass-1">
                 🌿
@@ -212,6 +248,12 @@
                 🌿
             </div>
 
+            <div class="grass grass-4">
+                🌾
+            </div>
+
+
+            <!-- PIETRE -->
 
             <div class="rock rock-1">
                 🪨
@@ -222,25 +264,107 @@
             </div>
 
 
-            <!-- PERSONAJ -->
+            <!-- =================================================
+                 PERSONAJ COMPLET
+            ================================================== -->
 
-            <div class="player">
+            <div
+                class="player"
+                id="player"
+            >
 
                 <div class="player-shadow"></div>
+
+
+                <div class="person">
+
+                    <!-- CAP -->
+
+                    <div class="person-head">
+
+                        <div class="person-hair"></div>
+
+                        <div class="person-face">
+
+                            <span class="eye eye-left"></span>
+                            <span class="eye eye-right"></span>
+
+                            <span class="person-nose"></span>
+
+                            <span class="person-mouth"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- GÂT -->
+
+                    <div class="person-neck"></div>
+
+
+                    <!-- TRUNCHI -->
+
+                    <div class="person-body">
+
+                        <div class="shirt-detail"></div>
+
+                    </div>
+
+
+                    <!-- BRAȚ STÂNGA -->
+
+                    <div class="person-arm arm-left">
+
+                        <div class="person-hand"></div>
+
+                    </div>
+
+
+                    <!-- BRAȚ DREAPTA -->
+
+                    <div class="person-arm arm-right">
+
+                        <div class="person-hand"></div>
+
+                    </div>
+
+
+                    <!-- PICIOR STÂNGA -->
+
+                    <div class="person-leg leg-left">
+
+                        <div class="person-shoe"></div>
+
+                    </div>
+
+
+                    <!-- PICIOR DREAPTA -->
+
+                    <div class="person-leg leg-right">
+
+                        <div class="person-shoe"></div>
+
+                    </div>
+
+                </div>
 
             </div>
 
 
-            <!-- ANIMAL REAL -->
+            <!-- =================================================
+                 ANIMAL
+            ================================================== -->
 
             <div
                 id="animal"
                 class="animal"
             >
+
             </div>
 
 
-            <!-- BULĂ -->
+            <!-- BULĂ ANIMAL -->
 
             <div
                 id="animalBubble"
@@ -250,7 +374,7 @@
             </div>
 
 
-            <!-- EFECT ATAC -->
+            <!-- EFECT GREȘIT -->
 
             <div
                 id="attackEffect"
@@ -260,13 +384,23 @@
             </div>
 
 
-            <!-- EFECT SUCCES -->
+            <!-- EFECT CORECT -->
 
             <div
                 id="successEffect"
                 class="success-effect"
             >
                 🎉
+            </div>
+
+
+            <!-- INDICATOR DE DISTANȚĂ -->
+
+            <div
+                id="walkingMessage"
+                class="walking-message"
+            >
+                Mergi prin pădure...
             </div>
 
         </div>
@@ -276,14 +410,25 @@
              PANOU ÎNTREBARE
         ================================================== -->
 
-        <section
-            class="question-panel"
-        >
+        <section class="question-panel">
 
             <div
                 id="questionAnimal"
                 class="question-animal"
             >
+            </div>
+
+
+            <div class="question-location">
+
+                <span>
+                    🐾
+                </span>
+
+                <span id="questionLocationText">
+                    O întâlnire în pădure
+                </span>
+
             </div>
 
 
@@ -303,15 +448,11 @@
                     data-answer="A"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         A
                     </span>
 
-                    <span
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text"></span>
 
                 </button>
 
@@ -323,15 +464,11 @@
                     data-answer="B"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         B
                     </span>
 
-                    <span
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text"></span>
 
                 </button>
 
@@ -343,15 +480,11 @@
                     data-answer="C"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         C
                     </span>
 
-                    <span
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text"></span>
 
                 </button>
 
@@ -363,15 +496,11 @@
                     data-answer="D"
                 >
 
-                    <span
-                        class="answer-letter"
-                    >
+                    <span class="answer-letter">
                         D
                     </span>
 
-                    <span
-                        class="answer-text"
-                    ></span>
+                    <span class="answer-text"></span>
 
                 </button>
 
@@ -388,9 +517,9 @@
     </section>
 
 
-    <!-- =================================================
+    <!-- =====================================================
          REZULTAT
-    ================================================== -->
+    ====================================================== -->
 
     <section
         id="quizResultScreen"
@@ -442,9 +571,7 @@
                         Corecte
                     </span>
 
-                    <strong
-                        id="correctAnswers"
-                    >
+                    <strong id="correctAnswers">
                         0
                     </strong>
 
@@ -457,9 +584,7 @@
                         Greșite
                     </span>
 
-                    <strong
-                        id="wrongAnswers"
-                    >
+                    <strong id="wrongAnswers">
                         0
                     </strong>
 
@@ -472,9 +597,7 @@
                         Vieți rămase
                     </span>
 
-                    <strong
-                        id="remainingLives"
-                    >
+                    <strong id="remainingLives">
                         0
                     </strong>
 
@@ -518,11 +641,6 @@
 
 </main>
 
-
-<!-- =====================================================
-     SUPABASE / INIT
-     PĂSTREAZĂ AICI SCRIPTURILE TALE EXISTENTE
-====================================================== -->
 
 <script src="js/init.js"></script>
 
