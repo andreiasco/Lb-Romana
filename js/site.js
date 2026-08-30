@@ -1764,13 +1764,6 @@ async function incarcaQuizuriSite() {
     const container =
         document.getElementById("listaQuizuriSite");
 
-    console.log("📦 CONTAINER:", container);
-
-    console.log(
-        "🔌 SUPABASE:",
-        typeof supabaseClient
-    );
-
     if (!container) {
         console.warn("Nu există #listaQuizuriSite");
         return;
@@ -1778,9 +1771,7 @@ async function incarcaQuizuriSite() {
 
     if (typeof supabaseClient === "undefined") {
 
-        console.error(
-            "supabaseClient NU este definit!"
-        );
+        console.error("supabaseClient NU este definit!");
 
         container.innerHTML = `
             <p class="quiz-eroare">
@@ -1791,9 +1782,8 @@ async function incarcaQuizuriSite() {
         return;
     }
 
-    container.innerHTML = `
-        <p>🌲 Se încarcă aventurile...</p>
-    `;
+    container.innerHTML =
+        "<p>🌲 Se încarcă aventurile...</p>";
 
     try {
 
@@ -1808,15 +1798,8 @@ async function incarcaQuizuriSite() {
                 ascending: false
             });
 
-        console.log(
-            "QUIZURI GĂSITE:",
-            quizuri
-        );
-
-        console.log(
-            "EROARE QUIZURI:",
-            error
-        );
+        console.log("QUIZURI GĂSITE:", quizuri);
+        console.log("EROARE QUIZURI:", error);
 
         if (error) {
 
@@ -1839,7 +1822,7 @@ async function incarcaQuizuriSite() {
             container.innerHTML = `
                 <div class="quiz-fara-rezultate">
 
-                    <div style="font-size: 50px;">
+                    <div style="font-size:50px;">
                         🌲
                     </div>
 
@@ -1857,8 +1840,8 @@ async function incarcaQuizuriSite() {
             return;
         }
 
-        container.innerHTML = quizuri.map(
-            quiz => {
+        container.innerHTML = quizuri
+            .map(quiz => {
 
                 return `
                     <div class="quiz-aventura-card">
@@ -1914,8 +1897,8 @@ async function incarcaQuizuriSite() {
                     </div>
                 `;
 
-            }
-        ).join("");
+            })
+            .join("");
 
         console.log(
             "QUIZURILE AU FOST AFIȘATE:",
@@ -1942,8 +1925,21 @@ async function incarcaQuizuriSite() {
 // ======================================================
 async function pornesteQuiz(quizId) {
 
-    console.log("AM APĂSAT ÎNCEPE AVENTURA");
+    console.log("🌲 AM APĂSAT ÎNCEPE AVENTURA");
     console.log("quizId:", quizId);
+
+    if (typeof supabaseClient === "undefined") {
+
+        console.error(
+            "supabaseClient NU este definit!"
+        );
+
+        alert(
+            "Conexiunea cu baza de date nu este disponibilă."
+        );
+
+        return;
+    }
 
     try {
 
@@ -1997,10 +1993,6 @@ async function pornesteQuiz(quizId) {
 
         if (eroareIntrebari) {
 
-            console.error(
-                eroareIntrebari
-            );
-
             alert(
                 "Nu am putut încărca întrebările."
             );
@@ -2018,7 +2010,7 @@ async function pornesteQuiz(quizId) {
         }
 
         console.log(
-            "PORNESC JOCUL:",
+            "🌲 PORNESC JOCUL:",
             quiz.titlu
         );
 
@@ -2039,9 +2031,6 @@ async function pornesteQuiz(quizId) {
         );
     }
 }
-
- 
-       
 
 // ======================================================
 // JOC QUIZ - PĂDURE
