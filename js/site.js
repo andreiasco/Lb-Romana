@@ -1759,6 +1759,18 @@ async function descarcaRezumatWord(wordUrl) {
 
 async function incarcaQuizuriSite() {
 
+    console.log("🔥 INCARCA QUIZURI PORNITĂ");
+
+    const container =
+        document.getElementById("listaQuizuriSite");
+
+    console.log("📦 CONTAINER:", container);
+
+    console.log(
+        "🔌 SUPABASE:",
+        typeof supabaseClient
+    );
+
     console.log("=== INCARC QUIZURILE ===");
 
     const container = document.getElementById("listaQuizuriSite");
