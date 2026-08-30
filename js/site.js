@@ -1877,7 +1877,6 @@ incarcaQuizuriSite();
 // ======================================================
 // PORNIRE QUIZ
 // ======================================================
-
 async function pornesteQuiz(quizId) {
 
     console.log("AM APĂSAT ÎNCEPE AVENTURA");
@@ -1885,16 +1884,19 @@ async function pornesteQuiz(quizId) {
 
     try {
 
+        // ================================
+        // 1. ÎNCĂRCĂM QUIZUL
+        // ================================
+
         const {
             data: quiz,
             error: eroareQuiz
-        } =
-            await supabaseClient
-                .from("quizuri")
-                .select("*")
-                .eq("id", quizId)
-                
-                .single();
+        } = await supabaseClient
+            .from("quizuri")
+            .select("*")
+            .eq("id", quizId)
+            .eq("activ", true)
+            .single();
 
         console.log("QUIZ GĂSIT:", quiz);
         console.log("EROARE QUIZ:", eroareQuiz);
@@ -1908,24 +1910,27 @@ async function pornesteQuiz(quizId) {
             );
 
             alert(
-                "Nu am putut încărca acest quiz."
+                "Nu am găsit quizul."
             );
 
             return;
         }
 
 
+        // ================================
+        // 2. ÎNCĂRCĂM ÎNTREBĂRILE
+        // ================================
+
         const {
             data: intrebari,
             error: eroareIntrebari
-        } =
-            await supabaseClient
-                .from("intrebari_quiz")
-                .select("*")
-                .eq("quiz_id", quizId)
-                .order("ordine", {
-                    ascending: true
-                });
+        } = await supabaseClient
+            .from("intrebari_quiz")
+            .select("*")
+            .eq("quiz_id", quizId)
+            .order("ordine", {
+                ascending: true
+            });
 
 
         console.log(
@@ -1942,7 +1947,7 @@ async function pornesteQuiz(quizId) {
         if (eroareIntrebari) {
 
             console.error(
-                "Eroare încărcare întrebări:",
+                "Eroare întrebări:",
                 eroareIntrebari
             );
 
@@ -1953,6 +1958,10 @@ async function pornesteQuiz(quizId) {
             return;
         }
 
+
+        // ================================
+        // 3. VERIFICĂM DACĂ EXISTĂ ÎNTREBĂRI
+        // ================================
 
         if (
             !intrebari ||
@@ -1967,11 +1976,14 @@ async function pornesteQuiz(quizId) {
         }
 
 
+        // ================================
+        // 4. PORNIM JOCUL
+        // ================================
+
         console.log(
             "PORNESC JOCUL:",
             quiz.titlu
         );
-
 
         pornesteJocQuiz(
             quiz,
@@ -1993,6 +2005,7 @@ async function pornesteQuiz(quizId) {
     }
 
 }
+
 
 // ======================================================
 // JOC QUIZ - PĂDURE
@@ -2551,19 +2564,23 @@ function opresteQuiz() {
             Alege aventura pe care vrei să o începi.
         </p>
 
-        <div class="quizuri-create">
+       <section id="quiz">
 
-            <h3>
-                🌲 Quizuri interactive
-            </h3>
+    <div class="quizuri-create">
 
-            <div id="listaQuizuriSite">
-                Se încarcă...
-            </div>
+        <h3>🌲 Quizuri interactive</h3>
 
+        <p>
+            Alege un quiz și pornește aventura prin pădure.
+        </p>
+
+        <div id="listaQuizuriSite">
+            <p>Se încarcă quizurile...</p>
         </div>
 
-    `;
+    </div>
+
+</section>
 
 
     incarcaQuizuriSite();
