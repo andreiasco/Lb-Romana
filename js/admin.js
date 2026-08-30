@@ -1,3 +1,1036 @@
+// =====================================================
+// QUIZ ADMIN
+// =====================================================
+
+let quizSelectatId = null;
+
+
+// =====================================================
+// CREEAZĂ QUIZ
+// =====================================================
+
+async function creeazaQuiz() {
+
+    const titlu =
+        document
+            .getElementById("quizTitlu")
+            .value
+            .trim();
+
+    const categorie =
+        document
+            .getElementById("quizCategorie")
+            .value
+            .trim();
+
+    const descriere =
+        document
+            .getElementById("quizDescriere")
+            .value
+            .trim();
+
+    const status =
+        document.getElementById(
+            "quizCreareStatus"
+        );
+
+
+    if (!titlu) {
+
+        status.textContent =
+            "Introdu titlul quizului.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    try {
+
+        status.textContent =
+            "Se creează quizul...";
+
+        status.style.color =
+            "#7b2450";
+
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("quizuri")
+                .insert([
+                    {
+                        titlu:
+                            titlu,
+
+                        categorie:
+                            categorie || null,
+
+                        descriere:
+                            descriere || null,
+
+                        activ:
+                            true
+                    }
+                ])
+                .select()
+                .single();
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        quizSelectatId =
+            data.id;
+
+
+        status.textContent =
+            "Quizul a fost creat cu succes!";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        document
+            .getElementById("quizTitlu")
+            .value = "";
+
+        document
+            .getElementById("quizCategorie")
+            .value = "";
+
+        document
+            .getElementById("quizDescriere")
+            .value = "";
+
+
+        document
+            .getElementById("quizEditor")
+            .style.display = "block";
+
+
+        document
+            .getElementById("quizEditorTitlu")
+            .innerHTML =
+                `<strong>
+                    🎮 ${escapeHTML(data.titlu)}
+                </strong>`;
+
+
+        await incarcaQuizuriAdmin();
+
+        await incarcaIntrebariQuizAdmin();
+
+    } catch (error) {
+
+        console.error(
+            "Eroare creare quiz:",
+            error
+        );
+
+
+        status.textContent =
+            "Nu am putut crea quizul: " +
+            error.message;
+
+        status.style.color =
+            "#c62828";
+    }
+}
+
+// =====================================================
+// ADAUGĂ ÎNTREBARE QUIZ
+// =====================================================
+
+async function adaugaIntrebareQuiz() {
+
+    if (!quizSelectatId) {
+
+        alert(
+            "Mai întâi selectează sau creează un quiz."
+        );
+
+        return;
+    }
+
+
+    const intrebare =
+        document
+            .getElementById("quizIntrebare")
+            .value
+            .trim();
+
+    const raspunsA =
+        document
+            .getElementById("quizRaspunsA")
+            .value
+            .trim();
+
+    const raspunsB =
+        document
+            .getElementById("quizRaspunsB")
+            .value
+            .trim();
+
+    const raspunsC =
+        document
+            .getElementById("quizRaspunsC")
+            .value
+            .trim();
+
+    const raspunsD =
+        document
+            .getElementById("quizRaspunsD")
+            .value
+            .trim();
+
+    const raspunsCorect =
+        document
+            .getElementById("quizRaspunsCorect")
+            .value;
+
+    const animal =
+        document
+            .getElementById("quizAnimal")
+            .value;
+
+    const imagineInput =
+        document.getElementById(
+            "quizImagineAnimal"
+        );
+
+    const imagine =
+        imagineInput.files[0];
+
+    const ordine =
+        Number(
+            document
+                .getElementById("quizOrdine")
+                .value
+        );
+
+
+    const status =
+        document.getElementById(
+            "intrebareQuizStatus"
+        );
+
+
+    // =================================================
+    // VALIDARE
+    // =================================================
+
+    if (!intrebare) {
+
+        status.textContent =
+            "Scrie întrebarea.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    if (
+        !raspunsA ||
+        !raspunsB ||
+        !raspunsC ||
+        !raspunsD
+    ) {
+
+        status.textContent =
+            "Completează toate cele patru variante.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    if (!raspunsCorect) {
+
+        status.textContent =
+            "Selectează răspunsul corect.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    if (
+        !Number.isInteger(ordine) ||
+        ordine < 1
+    ) {
+
+        status.textContent =
+            "Ordinea trebuie să fie un număr pozitiv.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    if (
+        imagine &&
+        !imagine.type.startsWith("image/")
+    ) {
+
+        status.textContent =
+            "Imaginea selectată nu este validă.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        status.textContent =
+            "Trebuie să fii administrator.";
+
+        status.style.color =
+            "#c62828";
+
+        return;
+    }
+
+
+    let caleImagine = null;
+
+
+    try {
+
+        status.textContent =
+            "Se adaugă întrebarea...";
+
+        status.style.color =
+            "#7b2450";
+
+
+        // =================================================
+        // UPLOAD IMAGINE ANIMAL
+        // =================================================
+
+        if (imagine) {
+
+            const extensie =
+                imagine.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            const numeImagine =
+                `${Date.now()}_${quizSelectatId}_${ordine}.${extensie}`;
+
+
+            caleImagine =
+                `quiz_animale/${numeImagine}`;
+
+
+            const {
+                error: uploadError
+            } =
+                await supabaseClient
+                    .storage
+                    .from(IMAGINI_BUCKET)
+                    .upload(
+                        caleImagine,
+                        imagine,
+                        {
+                            contentType:
+                                imagine.type,
+
+                            upsert:
+                                false
+                        }
+                    );
+
+
+            if (uploadError) {
+                throw uploadError;
+            }
+        }
+
+
+        // =================================================
+        // URL IMAGINE
+        // =================================================
+
+        let imagineUrl = null;
+
+
+        if (caleImagine) {
+
+            const {
+                data
+            } =
+                supabaseClient
+                    .storage
+                    .from(IMAGINI_BUCKET)
+                    .getPublicUrl(
+                        caleImagine
+                    );
+
+
+            imagineUrl =
+                data.publicUrl;
+        }
+
+
+        // =================================================
+        // INSERT ÎNTREBARE
+        // =================================================
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("intrebari_quiz")
+                .insert([
+                    {
+                        quiz_id:
+                            quizSelectatId,
+
+                        intrebare:
+                            intrebare,
+
+                        raspuns_a:
+                            raspunsA,
+
+                        raspuns_b:
+                            raspunsB,
+
+                        raspuns_c:
+                            raspunsC,
+
+                        raspuns_d:
+                            raspunsD,
+
+                        raspuns_corect:
+                            raspunsCorect,
+
+                        animal:
+                            animal,
+
+                        imagine_animal:
+                            imagineUrl,
+
+                        ordine:
+                            ordine
+                    }
+                ]);
+
+
+        if (error) {
+
+            if (caleImagine) {
+
+                await supabaseClient
+                    .storage
+                    .from(IMAGINI_BUCKET)
+                    .remove([
+                        caleImagine
+                    ]);
+            }
+
+            throw error;
+        }
+
+
+        // =================================================
+        // RESET FORMULAR
+        // =================================================
+
+        document
+            .getElementById("quizIntrebare")
+            .value = "";
+
+        document
+            .getElementById("quizRaspunsA")
+            .value = "";
+
+        document
+            .getElementById("quizRaspunsB")
+            .value = "";
+
+        document
+            .getElementById("quizRaspunsC")
+            .value = "";
+
+        document
+            .getElementById("quizRaspunsD")
+            .value = "";
+
+        document
+            .getElementById("quizRaspunsCorect")
+            .value = "";
+
+        document
+            .getElementById("quizImagineAnimal")
+            .value = "";
+
+
+        document
+            .getElementById("quizOrdine")
+            .value =
+                ordine + 1;
+
+
+        status.textContent =
+            "Întrebarea a fost adăugată!";
+
+        status.style.color =
+            "#2e7d32";
+
+
+        await incarcaIntrebariQuizAdmin();
+
+    } catch (error) {
+
+        console.error(
+            "Eroare adăugare întrebare:",
+            error
+        );
+
+
+        status.textContent =
+            "Nu am putut adăuga întrebarea: " +
+            error.message;
+
+        status.style.color =
+            "#c62828";
+    }
+}
+
+// =====================================================
+// ÎNCARCĂ QUIZURILE ADMIN
+// =====================================================
+
+async function incarcaQuizuriAdmin() {
+
+    const container =
+        document.getElementById(
+            "listaQuizuriAdmin"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const {
+        data: quizuri,
+        error
+    } =
+        await supabaseClient
+            .from("quizuri")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Eroare quizuri:",
+            error
+        );
+
+        container.innerHTML =
+            `<p style="color:#c62828">
+                ${escapeHTML(error.message)}
+            </p>`;
+
+        return;
+    }
+
+
+    if (
+        !quizuri ||
+        quizuri.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>Nu există quizuri.</p>";
+
+        return;
+    }
+
+
+    container.innerHTML =
+        quizuri.map(
+            quiz => `
+
+                <div class="admin-quiz-item">
+
+                    <h4>
+                        🎮
+                        ${escapeHTML(
+                            quiz.titlu
+                        )}
+                    </h4>
+
+                    <p>
+                        Categoria:
+                        <b>
+                            ${escapeHTML(
+                                quiz.categorie ||
+                                "Fără categorie"
+                            )}
+                        </b>
+                    </p>
+
+                    <p>
+                        ${escapeHTML(
+                            quiz.descriere ||
+                            ""
+                        )}
+                    </p>
+
+                    <p>
+                        Status:
+                        ${
+                            quiz.activ
+                                ? "🟢 Activ"
+                                : "🔴 Inactiv"
+                        }
+                    </p>
+
+                    <button
+                        class="admin-btn"
+                        type="button"
+                        onclick="selecteazaQuiz(
+                            ${quiz.id}
+                        )">
+
+                        ✏️ Editează quizul
+
+                    </button>
+
+                    <button
+                        class="admin-btn"
+                        type="button"
+                        onclick="schimbaActivQuiz(
+                            ${quiz.id},
+                            ${quiz.activ}
+                        )">
+
+                        ${
+                            quiz.activ
+                                ? "🔴 Dezactivează"
+                                : "🟢 Activează"
+                        }
+
+                    </button>
+
+                    <button
+                        class="admin-btn sterge-opera-btn"
+                        type="button"
+                        onclick="stergeQuiz(
+                            ${quiz.id}
+                        )">
+
+                        🗑️ Șterge
+
+                    </button>
+
+                </div>
+
+            `
+        ).join("");
+}
+// =====================================================
+// SELECTEAZĂ QUIZ
+// =====================================================
+
+async function selecteazaQuiz(
+    quizId
+) {
+
+    quizSelectatId =
+        Number(quizId);
+
+
+    const {
+        data: quiz,
+        error
+    } =
+        await supabaseClient
+            .from("quizuri")
+            .select("*")
+            .eq(
+                "id",
+                quizSelectatId
+            )
+            .single();
+
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+    }
+
+
+    const editor =
+        document.getElementById(
+            "quizEditor"
+        );
+
+
+    const titlu =
+        document.getElementById(
+            "quizEditorTitlu"
+        );
+
+
+    editor.style.display =
+        "block";
+
+
+    titlu.innerHTML =
+        `<strong>
+            🎮 ${escapeHTML(quiz.titlu)}
+        </strong>`;
+
+
+    await incarcaIntrebariQuizAdmin();
+
+
+    editor.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+// =====================================================
+// ÎNCARCĂ ÎNTREBĂRILE QUIZULUI
+// =====================================================
+
+async function incarcaIntrebariQuizAdmin() {
+
+    const container =
+        document.getElementById(
+            "listaIntrebariQuizAdmin"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    if (!quizSelectatId) {
+
+        container.innerHTML =
+            "<p>Selectează un quiz.</p>";
+
+        return;
+    }
+
+
+    const {
+        data: intrebari,
+        error
+    } =
+        await supabaseClient
+            .from("intrebari_quiz")
+            .select("*")
+            .eq(
+                "quiz_id",
+                quizSelectatId
+            )
+            .order(
+                "ordine",
+                {
+                    ascending: true
+                }
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        container.innerHTML =
+            `<p style="color:#c62828">
+                ${escapeHTML(error.message)}
+            </p>`;
+
+        return;
+    }
+
+
+    if (
+        !intrebari ||
+        intrebari.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>Quizul nu are încă întrebări.</p>";
+
+        return;
+    }
+
+
+    container.innerHTML =
+        intrebari.map(
+            intrebare => `
+
+                <div class="admin-intrebare-item">
+
+                    <h4>
+                        ❓ Întrebarea
+                        ${intrebare.ordine}
+                    </h4>
+
+                    <p>
+                        ${escapeHTML(
+                            intrebare.intrebare
+                        )}
+                    </p>
+
+                    <p>
+                        A:
+                        ${escapeHTML(
+                            intrebare.raspuns_a
+                        )}
+                    </p>
+
+                    <p>
+                        B:
+                        ${escapeHTML(
+                            intrebare.raspuns_b
+                        )}
+                    </p>
+
+                    <p>
+                        C:
+                        ${escapeHTML(
+                            intrebare.raspuns_c
+                        )}
+                    </p>
+
+                    <p>
+                        D:
+                        ${escapeHTML(
+                            intrebare.raspuns_d
+                        )}
+                    </p>
+
+                    <p>
+                        ✅ Răspuns:
+                        <strong>
+                            ${escapeHTML(
+                                intrebare.raspuns_corect
+                            )}
+                        </strong>
+                    </p>
+
+                    <p>
+                        🐾 Animal:
+                        ${escapeHTML(
+                            intrebare.animal
+                        )}
+                    </p>
+
+                    ${
+                        intrebare.imagine_animal
+                            ? `
+                                <img
+                                    src="${escapeHTML(
+                                        intrebare.imagine_animal
+                                    )}"
+                                    alt="Animal"
+                                    style="
+                                        width:120px;
+                                        height:100px;
+                                        object-fit:cover;
+                                        border-radius:12px;
+                                    "
+                                >
+                            `
+                            : ""
+                    }
+
+                    <button
+                        class="admin-btn sterge-opera-btn"
+                        type="button"
+                        onclick="stergeIntrebareQuiz(
+                            ${intrebare.id},
+                            ${intrebare.quiz_id}
+                        )">
+
+                        🗑️ Șterge întrebarea
+
+                    </button>
+
+                </div>
+
+            `
+        ).join("");
+}
+// =====================================================
+// ACTIVEAZĂ / DEZACTIVEAZĂ QUIZ
+// =====================================================
+
+async function schimbaActivQuiz(
+    quizId,
+    esteActiv
+) {
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        alert(
+            "Trebuie să fii administrator."
+        );
+
+        return;
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+            .from("quizuri")
+            .update({
+                activ:
+                    !esteActiv
+            })
+            .eq(
+                "id",
+                quizId
+            );
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "Nu am putut modifica statusul quizului."
+        );
+
+        return;
+    }
+
+
+    await incarcaQuizuriAdmin();
+}
+// =====================================================
+// ȘTERGE ÎNTREBARE
+// =====================================================
+
+async function stergeIntrebareQuiz(
+    intrebareId,
+    quizId
+) {
+
+    const confirmare =
+        confirm(
+            "Sigur vrei să ștergi această întrebare?"
+        );
+
+
+    if (!confirmare) {
+        return;
+    }
+
+
+    const user =
+        await utilizatorAutentificat();
+
+
+    if (!user) {
+
+        alert(
+            "Trebuie să fii administrator."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabaseClient
+                .from("intrebari_quiz")
+                .delete()
+                .eq(
+                    "id",
+                    intrebareId
+                );
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        await incarcaIntrebariQuizAdmin();
+
+    } catch (error) {
+
+        console.error(
+            "Eroare ștergere întrebare:",
+            error
+        );
+
+        alert(
+            "Nu am putut șterge întrebarea: " +
+            error.message
+        );
+    }
+}
+
 // ADAUGĂ AUTOR + IMAGINE
 // ======================================================
 
