@@ -2636,5 +2636,6 @@ function opresteQuiz() {
 
     `;
 
-
+ incarcaQuizuriSite();
+}
 
