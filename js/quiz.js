@@ -27,15 +27,10 @@ const QUIZ_CONFIG = {
 ===================================================== */
 
 const ANIMALE = {
-
     lup: "🐺",
-
     vulpe: "🦊",
-
     urs: "🐻",
-
     iepure: "🐰",
-
     caprioara: "🦌",
-
-    cerb: "🦌",
+    cerb: "🦌"
+};
